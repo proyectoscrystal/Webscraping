@@ -41,8 +41,8 @@ exports.manDiscount = async () => {
           const tmp = {};
           tmp.enlaceProducto = currentURL;
           tmp.categoria = document.querySelector("title").textContent;
-          tmp.nombrePrenda = document.querySelector(
-            "#main > article > .product-detail-view__main > div > .product-detail-info > h1"
+          tmp.imageName = document.querySelector(
+            "#main > article > .product-detail-view__main > div > .product-detail-info > h1" // cambiar nombrePrenda -> imageName
           ).textContent;
           tmp.precio = document.querySelector(
             "#main > article > div > div > div > div > div > span > .price__amount--old"
@@ -58,7 +58,7 @@ exports.manDiscount = async () => {
           tmp.enlaceImagen = document.querySelector(
             "#main > article > div > div > section > ul > li > button > div > div > picture > img"
           ).src;
-          tmp.gender = "Hombre";
+          tmp.gender = "Hombre"; 
           tmp.marca = "Zara";
           tmp.tag = "";
 
@@ -67,7 +67,7 @@ exports.manDiscount = async () => {
         // count--;
         rebajasHombre.push(prendasRebajaHombre);
         // if (count === 0) {
-        //   break;
+          // break;
         // }
       } catch (error) {
         console.log(error);

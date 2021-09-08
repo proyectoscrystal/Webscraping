@@ -28,14 +28,13 @@ exports.womanCategory = async () => {
     });
 
     const prendasMujer = []; //Se crea un array para guardar los productos extraidos
-    // let count = 5;
+    let count = 2;
 
     //Se crea un for el cual llevará todo el proceso
     for (let enlacemujer of enlacesmujer) {
         await page.goto(enlacemujer, { waitUntil: "domcontentloaded" });
         await page.waitForTimeout(2000); //Tiempo para cargar la página completa
         // await autoScroll(page); //Función que hace el scroll en la página
-        await autoScroll(page); //Función que hace el scroll en la página
 
         //Se obtienen los enlaces de los productos
         const enlacesproductosmujer = await page.evaluate(() => {
@@ -65,7 +64,7 @@ exports.womanCategory = async () => {
               const tmp = {};
               tmp.enlaceProducto = currentURL;
               tmp.categoria = document.querySelector("title").textContent;
-              tmp.nombrePrenda = document.querySelector(
+              tmp.imageName = document.querySelector(
                 "#main > article > .product-detail-view__main > div > .product-detail-info > h1"
               ).textContent;
               tmp.precio = document.querySelector(
@@ -87,19 +86,20 @@ exports.womanCategory = async () => {
               
               return tmp;
             });
-            // count--;
+
+            count--;
             prendasMujer.push(prendamujer); //Se guardan las prendas en la constante prendasHombre
-            // if(count === 0){                
-            //     break;
-            // }
+            if(count === 0){                
+              break;
+            }
           } catch (error) {
             console.log(error);
           }
         }
-        // console.log(prendasMujer);
-        if(count === 0){
-            break;
-        }
+        //console.log(prendasMujer);
+        //if(count === 0){
+          //break;
+        //}
         
     }
     getscraping.getscraping(prendasMujer);

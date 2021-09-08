@@ -1,12 +1,20 @@
 const categoriaHombre = require("./Zara/menCategory");
 const manDiscount = require("./Zara/manDiscount");
 const NewMan = require("./Zara/newMan");
-const descuentoMujer = require("./Zara/descuentoMujer");
+const womanDiscount = require("./Zara/womanDiscount");
 const womanCategory = require("./Zara/womanCategory");
 const newWoman = require("./Zara/newWoman");
-const Business = require("../domain/model/businessDao");
 const imageToBase64 = require("image-to-base64");
-// const business = require("./business");
+const axios = require('axios');
+const https = require("https");
+const saveImage = require("./scrapingSaveDB");
+
+const instance = axios.create({
+  httpsAgent: new https.Agent({
+    rejectUnauthorized: false,
+  }),
+});
+
 
 exports.getScraping = async (req, res) => {
   res.json({ mensaje: "se esta ejecutando scrapingCompleteWoman" });
@@ -15,12 +23,12 @@ exports.getScraping = async (req, res) => {
   await NewMan.newMan();
   await womanCategory.womanCategory();
   await newWoman.newWoman();
-  await descuentoMujer.descuentoMujer();
+  await womanDiscount.descuentoMujer();
 };
 
 exports.getCategoriaHombre = (req, res) => {
   res.json({ mensaje: "se esta ejecutando" });
-  categoriaHombre.categoriaHombre();  
+  categoriaHombre.categoriaHombre();
 };
 
 exports.getManDiscount = (req, res) => {
@@ -35,7 +43,7 @@ exports.getNewMan = (req, res) => {
 
 exports.getDescuentoMujer = (req, res) => {
   res.json({ mensaje: "se esta ejecutando" });
-  descuentoMujer.descuentoMujer();
+  womanDiscount.descuentoMujer();
 };
 
 exports.getWomanCategory = (req, res) => {
@@ -59,9 +67,10 @@ exports.getscraping = async (arreglo) => {
 
     // console.log(getImageToBase64(enlaceImagen));
 
-    let base64 = await imageToBase64(enlaceImagen)
+    let base64F = await imageToBase64(enlaceImagen)
       .then((response) => {
-        return `data:image/jpeg;base64,${response}`;
+        // return `data:image/jpeg;base64,${response}`;
+        return response;
       })
       .catch((error) => {
         console.log(error);
@@ -69,26 +78,19 @@ exports.getscraping = async (arreglo) => {
 
     let newObject = {
       ...arreglo[i],
-      imageName: enlaceImagen,
       precio,
       descuento,
       year: year(),
       quarter: quarter(),
-      use: 'exterior',
-      origin: 'Zara',
-      base64,
-      action: 'prendas',
+      use: "Exterior",
+      origin: "Zara",
+      base64: base64F,
+      action: "prendas",
+      user: "612d470390cb5641a0311cf3",
     };
 
-    // business.sendImgsModel(newObject);
+    sendImgsModel(newObject);
 
-    await Business.create(newObject, (err) => {
-      if (err && err.code === 11000) {
-        console.log("Imagen ya existe");
-      } else {
-        console.log("Imagen guardada en bd");
-      }
-    });
   }
 };
 
@@ -101,14 +103,71 @@ let year = () => {
 let quarter = () => {
   var date = new Date();
   var month = date.getMonth() + 1;
-  if(month >= 3 && month <= 6){
-    return 'Q1';
-  } else if(month >= 7 && month <= 9){
-    return 'Q2';
-  } else if(month >= 10 && month <= 12){
-    return 'Q3';
-  } else if(month >= 1 && month <= 2){
-    return 'Q4';
+  if (month >= 3 && month <= 6) {
+    return "Q1";
+  } else if (month >= 7 && month <= 9) {
+    return "Q2";
+  } else if (month >= 10 && month <= 12) {
+    return "Q3";
+  } else if (month >= 1 && month <= 2) {
+    return "Q4";
   }
-
 };
+
+
+let sendImgsModel = (data) => {
+  // console.log(data.imageName + 
+    // 'probando desde zaractol');
+
+  instance.get(process.env.MODELO_GENERAL).catch(() => {
+    console.log('General')
+  })
+
+  const agent = new https.Agent({
+    rejectUnauthorized: false,
+  });
+
+  const general = {
+    method: "post",
+    url: process.env.MODELO_GENERAL,
+    httpsAgent: agent,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data,
+  };
+
+  axios(general)
+    .then((response) => {
+      const respuesta = response.data;
+      // console.log('desde response.data');
+      // console.log(respuesta);
+      respuesta.precio = data.precio;
+      respuesta.descuento = data.descuento;
+      respuesta.caracteristicas = data.caracteristicas;
+      respuesta.categoria = data.categoria;
+      respuesta.tag = data.tag;
+      respuesta.enlaceImagen = data.enlaceImagen;
+
+
+      // console.log("Datos enviados al modelo de prendas generales");
+      saveImage.sendDataSup(data);
+      saveImage.saveImagesDB(respuesta);
+
+      if (
+        data.gender === "hjovenes" ||
+        data.gender === "hjunior" ||
+        data.gender === "hniños" ||
+        data.gender === "huniversitarios"
+      ) {
+        // console.log("Datos enviados al modelo de prendas inferiores");
+        sendDataInf(data);
+      }
+
+      
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+

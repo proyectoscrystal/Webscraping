@@ -80,11 +80,6 @@ const businessSchema = new Schema(
       require: false,
       trim: false,
     },
-    nombrePrenda: {
-      type: String,
-      require: false,
-      trim: false,
-    },
     fecha_consulta: {
       type: Date,
       default: Date.now,

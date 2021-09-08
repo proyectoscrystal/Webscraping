@@ -29,11 +29,12 @@ const routes = require('./routes/routes');
 // Rutas
 const businessRouter = require('./routes/routes');
 const zaraRouter = require('./routes/zara.routes');
+const mangoRouter = require('./routes/mango.routes');
 
 const router = express.Router();
 
 app.use('/', router);
-app.use('/zara/', router);
+mangoRouter(router);
 businessRouter(router);
 zaraRouter(router);
 

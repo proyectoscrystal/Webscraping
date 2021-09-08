@@ -942,7 +942,8 @@ const sendDataInf = (data) => {
 
 exports.sendImgsModel = (req, res) => {
   const data = req.body;
-  console.log(req);
+  // console.log(data.imageName + 
+  //   'probando desde zaractol');
 
   instance.get(process.env.MODELO_GENERAL).catch(() => {
     console.log('General')

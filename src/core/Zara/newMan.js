@@ -40,7 +40,7 @@ exports.newMan = async () => {
           const tmp = {};
           tmp.enlaceProducto = currentURL;
           tmp.categoria = document.querySelector("title").textContent;
-          tmp.nombrePrenda = document.querySelector(
+          tmp.imageName = document.querySelector(
             "#main > article > .product-detail-view__main > div > .product-detail-info > h1"
           ).textContent;
           tmp.precio = document.querySelector(
@@ -57,7 +57,7 @@ exports.newMan = async () => {
           tmp.gender = "Hombre";
           tmp.marca = "Zara";
           tmp.descuento = "";
-          tmp.tag = "";
+          tmp.tag = "nuevo";
           return tmp;
         });
         // count--;

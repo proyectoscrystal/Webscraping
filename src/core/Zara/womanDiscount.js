@@ -2,21 +2,22 @@ const puppeteer = require("puppeteer");
 const autoScroll = require("../zara");
 const getscraping = require("../zaraCtl");
 
-exports.newWoman =async () => {
+exports.descuentoMujer = async () => {
   const browser = await puppeteer.launch({ headless: false }); //headless true/false para visualizar el navegador
   try {
     const page = await browser.newPage();
 
-    //====================PRENDAS NUEVAS - MUJER==========================
+    //====================PRENDAS EN DESCUENTO - MUJER==========================
     await page.goto(
-      "https://www.zara.com/co/es/mujer-nuevo-l1180.html?v1=1881787"
+      "https://www.zara.com/co/es/woman-event-3-l1971.html?v1=1610713",
+      { waitUntil: "networkidle2" }
     );
     await page.setViewport({ width: 920, height: 1080 });
     await autoScroll(page);
 
-    const enlacesNuevoM = await page.evaluate(() => {
+    const enlacesRebajasM = await page.evaluate(() => {
       const elements = document.querySelectorAll(
-        "#main > article > div > section> ul > li > ul > li > div > a"
+        "#main > article > .product-groups > section > ul > li > div > div > a"
       );
 
       const links = [];
@@ -26,15 +27,16 @@ exports.newWoman =async () => {
       return links;
     });
 
-    const nuevoMujer = [];
+    const rebajasMujer = [];
     // let count = 2;
 
-    for (let enlaceNuevoM of enlacesNuevoM) {
-      try {
-        await page.goto(enlaceNuevoM);
-        await page.waitForTimeout(1000);
+    for (let enlaceRebajasM of enlacesRebajasM) {
+      try { // se usa el try, catch para 
+          
+        await page.goto(enlaceRebajasM, { waitUntil: "networkidle2" });
+        await autoScroll(page);
 
-        const prendasNuevoMujer = await page.evaluate(() => {
+        const prendasRebajaMujer = await page.evaluate(() => {
           const currentURL = window.location.href;
 
           const tmp = {};
@@ -44,35 +46,39 @@ exports.newWoman =async () => {
             "#main > article > .product-detail-view__main > div > .product-detail-info > h1"
           ).textContent;
           tmp.precio = document.querySelector(
-            "#main > article > div > div > div > .product-detail-info__price > div > span > span > span > span"
+            "#main > article > div > div > div > div > div > span > .price__amount--old"
           ).textContent;
-          tmp.features = document.querySelector(
+          tmp.descuento = document.querySelector(
+            "#main > article > div > div > div > div > div > span > span > span > span"
+          ).textContent;
+          tmp.tag = '';
+          tmp.caracteristicas = document.querySelector(
             "#main > article > div > div > div > .product-detail-description > div > div > div > p"
           ).textContent;
           tmp.caracteristicas = tmp.caracteristicas.split("."); // probando para separar por caracteristicas
-          tmp.caracteristicas.pop();
+          tmp.caracteristicas.pop(); 
 
           tmp.enlaceImagen = document.querySelector(
             "#main > article > div > div > section > ul > li > button > div > div > picture > img"
           ).src;
-          tmp.tag = "nuevo";
-          tmp.descuento = "";
-          tmp.gender = "Mujer";
-          tmp.marca = "Zara";
+          tmp.gender = 'Mujer';
+          tmp.marca = 'Zara';
+
           return tmp;
         });
         // count--;
-        nuevoMujer.push(prendasNuevoMujer);
-        // if(count === 0){                
+        rebajasMujer.push(prendasRebajaMujer);
+        // if(count === 0){
         //     break;
         // }
       } catch (error) {
         console.log(error);
       }
-    }
-    getscraping.getscraping(nuevoMujer);
-    // console.log(nuevoMujer);
-    //====================PRENDAS NUEVAS - MUJER==========================
+    } 
+
+    getscraping.getscraping(rebajasMujer);
+
+    //====================PRENDAS EN DESCUENTO - MUJER==========================
   } catch (err) {
     console.error(err.message);
   } finally {

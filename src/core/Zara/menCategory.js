@@ -31,80 +31,79 @@ exports.categoriaHombre = async () => {
 
     //Se crea un for el cual llevará todo el proceso
     for (let enlacehombre of enlaceshombre) {
-        await page.goto(enlacehombre, { waitUntil: "domcontentloaded" });
-        await page.waitForTimeout(2000); //Tiempo para cargar la página completa
-        await autoScroll(page); //Función que hace el scroll en la página
+      await page.goto(enlacehombre, { waitUntil: "domcontentloaded" });
+      await page.waitForTimeout(2000); //Tiempo para cargar la página completa
+      await autoScroll(page); //Función que hace el scroll en la página
 
-        //Se obtienen los enlaces de los productos
-        const enlacesproductoshombre = await page.evaluate(() => {
-          const elements = document.querySelectorAll(
-            "#main > article > .product-groups > section > ul > li > ul > li > div > a"
-          );
+      //Se obtienen los enlaces de los productos
+      const enlacesproductoshombre = await page.evaluate(() => {
+        const elements = document.querySelectorAll(
+          "#main > article > .product-groups > section > ul > li > ul > li > div > a"
+        );
 
-          const productoshombre = [];
-          for (let element of elements) {
-            productoshombre.push(element.href);
-          }
-          return productoshombre;
-        });
-
-        //Se crea un for dentro del otro for para entrar a cada enlace de los productos
-        // let count = 2;
-
-        for (let enlaceproductohombre of enlacesproductoshombre) {
-          try {
-            await page.goto(enlaceproductohombre, {
-              waitUntil: "domcontentloaded",
-            });
-            await autoScroll(page);
-
-            //Se evalua cada enlace del cual se extrae el categoria, nombre, precio y caracteristicas
-
-            const prendahombre = await page.evaluate(() => {
-              const currentURL = window.location.href;
-
-              const tmp = {};
-              tmp.enlaceProducto = currentURL;
-              tmp.categoria = document.querySelector("title").textContent;
-              tmp.nombrePrenda = document.querySelector(
-                "#main > article > .product-detail-view__main > div > .product-detail-info > h1"
-              ).textContent;
-              tmp.precio = document.querySelector(
-                ".price__amount > span"
-              ).textContent;
-              tmp.caracteristicas = document.querySelector(
-                "#main > article > div > div > div > .product-detail-description > div > div > div > p"
-              ).textContent;
-              tmp.caracteristicas = tmp.caracteristicas.split("."); // probando para separar por caracteristicas
-              tmp.caracteristicas.pop();
-
-              tmp.enlaceImagen = document.querySelector(
-                "#main > article > div > div > section > ul > li > button > div > div > picture > img"
-              ).src;
-              tmp.gender = 'Hombre';
-              tmp.marca = 'Zara';
-              tmp.descuento = "";
-              tmp.tag = "";
-
-              return tmp;
-            });
-            // count--;
-            prendasHombre.push(prendahombre); //Se guardan las prendas en la constante prendasHombre
-            // if (count === 0) {
-            //   break;
-            // }
-          } catch (error) {
-            console.log(error);
-          }
+        const productoshombre = [];
+        for (let element of elements) {
+          productoshombre.push(element.href);
         }
-        getScraping.getscraping(prendasHombre);
-        // console.log(prendasHombre);
-        if(count === 0){
-          break;
-      }      
+        return productoshombre;
+      });
+
+      //Se crea un for dentro del otro for para entrar a cada enlace de los productos
+      // let count = 2;
+
+      for (let enlaceproductohombre of enlacesproductoshombre) {
+        try {
+          await page.goto(enlaceproductohombre, {
+            waitUntil: "domcontentloaded",
+          });
+          await autoScroll(page);
+
+          //Se evalua cada enlace del cual se extrae el categoria, nombre, precio y caracteristicas
+
+          const prendahombre = await page.evaluate(() => {
+            const currentURL = window.location.href;
+
+            const tmp = {};
+            tmp.enlaceProducto = currentURL;
+            tmp.categoria = document.querySelector("title").textContent;
+            tmp.imageName = document.querySelector(
+              "#main > article > .product-detail-view__main > div > .product-detail-info > h1"
+            ).textContent;
+            tmp.precio = document.querySelector(
+              ".price__amount > span"
+            ).textContent;
+            tmp.caracteristicas = document.querySelector(
+              "#main > article > div > div > div > .product-detail-description > div > div > div > p"
+            ).textContent;
+            tmp.caracteristicas = tmp.caracteristicas.split("."); // probando para separar por caracteristicas
+            tmp.caracteristicas.pop();
+
+            tmp.enlaceImagen = document.querySelector(
+              "#main > article > div > div > section > ul > li > button > div > div > picture > img"
+            ).src;
+            tmp.gender = "Hombre";
+            tmp.marca = "Zara";
+            tmp.descuento = "";
+            tmp.tag = "";
+
+            return tmp;
+          });
+          // count--;
+          prendasHombre.push(prendahombre); //Se guardan las prendas en la constante prendasHombre
+          // if (count === 0) {
+          //   break;
+          // }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      getScraping.getscraping(prendasHombre);
+      // console.log(prendasHombre);
+      // if (count === 0) {
+      //   break;
+      // }
     }
 
-    
     //====================CATEGORIAS HOMBRE==========================
   } catch (err) {
     console.error(err.message);
