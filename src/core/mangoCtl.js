@@ -165,6 +165,7 @@ exports.getscraping = async (arreglo) => {
         respuesta.talla = data.talla;
         respuesta.color = data.color;
         respuesta.materiales = data.materiales;
+        respuesta.numeroTallas = data.numeroTallas;
   
   
         // console.log("Datos enviados al modelo de prendas generales");

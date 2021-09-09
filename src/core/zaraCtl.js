@@ -5,7 +5,7 @@ const womanDiscount = require("./Zara/womanDiscount");
 const womanCategory = require("./Zara/womanCategory");
 const newWoman = require("./Zara/newWoman");
 const imageToBase64 = require("image-to-base64");
-const axios = require('axios');
+const axios = require("axios");
 const https = require("https");
 const saveImage = require("./scrapingSaveDB");
 
@@ -14,7 +14,6 @@ const instance = axios.create({
     rejectUnauthorized: false,
   }),
 });
-
 
 exports.getScraping = async (req, res) => {
   res.json({ mensaje: "se esta ejecutando scrapingCompleteWoman" });
@@ -67,8 +66,11 @@ exports.getscraping = async (arreglo) => {
       descuento = parseInt(descuento.split(" ")[0].split(".").join(""), 10);
     }
 
-    
+    // se extrae el numero de tallas
+    let numeroTallas = talla.length;
+    console.log(numeroTallas);
 
+    // se genera el base64 de la imagen que se obtiene de la url
     let base64F = await imageToBase64(enlaceImagen)
       .then((response) => {
         // return `data:image/jpeg;base64,${response}`;
@@ -89,10 +91,10 @@ exports.getscraping = async (arreglo) => {
       base64: base64F,
       action: "prendas",
       user: "612d470390cb5641a0311cf3",
+      numeroTallas,
     };
 
     sendImgsModel(newObject);
-
   }
 };
 
@@ -116,14 +118,13 @@ let quarter = () => {
   }
 };
 
-
 let sendImgsModel = (data) => {
-  // console.log(data.imageName + 
-    // 'probando desde zaractol');
+  // console.log(data.imageName +
+  // 'probando desde zaractol');
 
   instance.get(process.env.MODELO_GENERAL).catch(() => {
-    console.log('General')
-  })
+    console.log("General");
+  });
 
   const agent = new https.Agent({
     rejectUnauthorized: false,
@@ -153,7 +154,7 @@ let sendImgsModel = (data) => {
       respuesta.talla = data.talla;
       respuesta.color = data.color;
       respuesta.materiales = data.materiales;
-
+      respuesta.numeroTallas = data.numeroTallas;
 
       // console.log("Datos enviados al modelo de prendas generales");
       saveImage.sendDataSup(data);
@@ -168,11 +169,8 @@ let sendImgsModel = (data) => {
         // console.log("Datos enviados al modelo de prendas inferiores");
         sendDataInf(data);
       }
-
-      
     })
     .catch((error) => {
       console.log(error);
     });
 };
-

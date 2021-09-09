@@ -170,6 +170,7 @@ exports.saveImagesDB = async (data) => {
         talla: data.talla,
         color: data.color,
         materiales: data.materiales,
+        numeroTallas: data.numeroTallas,
       };
       // `data:image/jpeg;base64,${data.base_64}`
     //   console.log('desde imageData');
