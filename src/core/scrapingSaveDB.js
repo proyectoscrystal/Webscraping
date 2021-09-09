@@ -1,3 +1,28 @@
+const {
+  BlobServiceClient,
+  StorageSharedKeyCredential,
+  newPipeline,
+} = require("@azure/storage-blob");
+
+const getStream = require("into-stream");
+
+const containerName = process.env.CONTAINER_NAME;
+
+const ONE_MEGABYTE = 1024 * 1024;
+const uploadOptions = { bufferSize: 4 * ONE_MEGABYTE, maxBuffers: 20 };
+
+const sharedKeyCredential = new StorageSharedKeyCredential(
+  process.env.AZURE_STORAGE_ACCOUNT_NAME,
+  process.env.AZURE_STORAGE_ACCOUNT_ACCESS_KEY
+);
+const pipeline = newPipeline(sharedKeyCredential);
+
+const blobServiceClient = new BlobServiceClient(
+  `https://${process.env.AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net`,
+  pipeline
+);
+
+
 const axios = require("axios");
 const https = require("https");
 const Business = require("../domain/model/businessDao");
@@ -53,6 +78,19 @@ exports.saveImagesDB = async (data) => {
     // console.log('from saveImagesDB' );
     // console.log(data);
     // console.log("Almacenando imagen en DB...");
+
+    // trasformar la base 64 en buffer
+
+    // let blobName = data.imageName
+    // const base64 = data.base_64;
+  
+    // const buffer = Buffer.from(base64, "base64");
+  
+    // const stream = getStream(buffer);
+    // const containerClient = blobServiceClient.getContainerClient(containerName);
+    // const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+  
+    // fin trasformar la base 64 en buffer 
   
     // Pasar a minusculas todas las prendas generales
     const prendaGenLower = [];
@@ -95,6 +133,19 @@ exports.saveImagesDB = async (data) => {
     });
   
     try {
+      // mandar el buffer al blogstorage
+      // await blockBlobClient.uploadStream(
+      //   stream,
+      //   uploadOptions.bufferSize,
+      //   uploadOptions.maxBuffers,
+      //   { blobHTTPHeaders: { blobContentType: "image/jpeg" } }
+      // );
+  
+      // let blobImage = containerClient.getBlobClient(blobName);
+  
+      // let url = blobImage.url;      
+
+      // fin mandar el buffer al blogStorage
   
       const imageData = {
         imageName: data.imageName,
@@ -104,7 +155,7 @@ exports.saveImagesDB = async (data) => {
         pantoneColors: data.pantoneColors,
         colores,
         prendaColor: prendaColorLower,
-        base64: `data:image/jpeg;base64,${data.base_64}`,
+        base64: data.enlaceImagen,
         year: data.year,
         gender: data.gender,
         origin: data.origin,
@@ -115,8 +166,12 @@ exports.saveImagesDB = async (data) => {
         precio: data.precio,
         tag: data.tag,
         descuento: data.descuento,
-        caracteristicas: data.caracteristicas
+        caracteristicas: data.caracteristicas,
+        talla: data.talla,
+        color: data.color,
+        materiales: data.materiales,
       };
+      // `data:image/jpeg;base64,${data.base_64}`
     //   console.log('desde imageData');
     //   console.log(imageData);
   

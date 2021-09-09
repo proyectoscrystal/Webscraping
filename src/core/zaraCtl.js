@@ -27,7 +27,7 @@ exports.getScraping = async (req, res) => {
 };
 
 exports.getCategoriaHombre = (req, res) => {
-  res.json({ mensaje: "se esta ejecutando" });
+  res.json({ mensaje: "se esta ejecutando hombre categoria" });
   categoriaHombre.categoriaHombre();
 };
 
@@ -58,6 +58,8 @@ exports.getNewWoman = (req, res) => {
 
 exports.getscraping = async (arreglo) => {
   // console.log(arreglo);
+
+  // se formatean los datos descuento y precio, para llevarlos a la db
   for (let i = 0; i < arreglo.length; i++) {
     let { precio, enlaceImagen, descuento } = arreglo[i];
     precio = parseInt(precio.split(" ")[0].split(".").join(""), 10);
@@ -65,7 +67,7 @@ exports.getscraping = async (arreglo) => {
       descuento = parseInt(descuento.split(" ")[0].split(".").join(""), 10);
     }
 
-    // console.log(getImageToBase64(enlaceImagen));
+    
 
     let base64F = await imageToBase64(enlaceImagen)
       .then((response) => {
@@ -148,6 +150,9 @@ let sendImgsModel = (data) => {
       respuesta.categoria = data.categoria;
       respuesta.tag = data.tag;
       respuesta.enlaceImagen = data.enlaceImagen;
+      respuesta.talla = data.talla;
+      respuesta.color = data.color;
+      respuesta.materiales = data.materiales;
 
 
       // console.log("Datos enviados al modelo de prendas generales");

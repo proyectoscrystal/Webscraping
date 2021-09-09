@@ -12,7 +12,7 @@ exports.categoriaHombre = async () => {
       "https://www.zara.com/co/es/join-life-man-new-in-l3023.html?v1=1886329"
     ); //Se especifica el enlace para categoría de hombre
     await page.setViewport({ width: 920, height: 1080 }); //Tamaño de la página
-    await page.waitForTimeout(3000); //Tiempo para cargar la página completa
+    await page.waitForTimeout(5000); //Tiempo para cargar la página completa
 
     //Se obtienen los enlaces de las categorías
     const enlaceshombre = await page.evaluate(() => {
@@ -38,7 +38,7 @@ exports.categoriaHombre = async () => {
       //Se obtienen los enlaces de los productos
       const enlacesproductoshombre = await page.evaluate(() => {
         const elements = document.querySelectorAll(
-          "#main > article > .product-groups > section > ul > li > ul > li > div > a"
+          "#main > article > div > section > ul > li > ul > li > div > div > div > a"
         );
 
         const productoshombre = [];
@@ -49,7 +49,7 @@ exports.categoriaHombre = async () => {
       });
 
       //Se crea un for dentro del otro for para entrar a cada enlace de los productos
-      // let count = 2;
+      let count = 2;
 
       for (let enlaceproductohombre of enlacesproductoshombre) {
         try {
@@ -59,7 +59,6 @@ exports.categoriaHombre = async () => {
           await autoScroll(page);
 
           //Se evalua cada enlace del cual se extrae el categoria, nombre, precio y caracteristicas
-
           const prendahombre = await page.evaluate(() => {
             const currentURL = window.location.href;
 
@@ -85,23 +84,26 @@ exports.categoriaHombre = async () => {
             tmp.marca = "Zara";
             tmp.descuento = "";
             tmp.tag = "";
+            tmp.talla = Array.from(document.querySelectorAll('.product-detail-size-selector > div > ul > li > div > div > span'), xTallas => xTallas.textContent);
+            tmp.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;
+            tmp.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div > div:nth-child(6) > span > span').textContent;            
 
             return tmp;
           });
-          // count--;
+          count--;
           prendasHombre.push(prendahombre); //Se guardan las prendas en la constante prendasHombre
-          // if (count === 0) {
-          //   break;
-          // }
+          if (count === 0) {
+            break;
+          }
         } catch (error) {
           console.log(error);
         }
       }
       getScraping.getscraping(prendasHombre);
       // console.log(prendasHombre);
-      // if (count === 0) {
-      //   break;
-      // }
+      if (count === 0) {
+        break;
+      }
     }
 
     //====================CATEGORIAS HOMBRE==========================

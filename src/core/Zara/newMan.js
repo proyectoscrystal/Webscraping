@@ -16,7 +16,7 @@ exports.newMan = async () => {
 
     const enlacesNuevoH = await page.evaluate(() => {
       const elements = document.querySelectorAll(
-        "#main > article > div > .product-grid > ul > li > ul > li > div > div > a"
+        "#main > article > div > section > ul > li > ul > li > div > div > div > a"
       );
 
       const links = [];
@@ -32,7 +32,7 @@ exports.newMan = async () => {
     for (let enlaceNuevoH of enlacesNuevoH) {
       try {
         await page.goto(enlaceNuevoH);
-        //await page.waitForTimeout(1000);
+        await autoScroll(page); //Función que hace el scroll en la página
 
         const prendasNuevoHombre = await page.evaluate(() => {
           const currentURL = window.location.href;
@@ -58,6 +58,10 @@ exports.newMan = async () => {
           tmp.marca = "Zara";
           tmp.descuento = "";
           tmp.tag = "nuevo";
+          tmp.talla = Array.from(document.querySelectorAll('.product-detail-size-selector > div > ul > li > div > div > span'), xTallas => xTallas.textContent);
+          tmp.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;
+          tmp.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div > div:nth-child(6) > span > span').textContent;
+
           return tmp;
         });
         // count--;

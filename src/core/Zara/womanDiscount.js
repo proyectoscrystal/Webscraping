@@ -17,7 +17,7 @@ exports.descuentoMujer = async () => {
 
     const enlacesRebajasM = await page.evaluate(() => {
       const elements = document.querySelectorAll(
-        "#main > article > .product-groups > section > ul > li > div > div > a"
+        "#main > article > div > section > ul > li > ul > li > div > div > div > a"
       );
 
       const links = [];
@@ -63,6 +63,9 @@ exports.descuentoMujer = async () => {
           ).src;
           tmp.gender = 'Mujer';
           tmp.marca = 'Zara';
+          tmp.talla = Array.from(document.querySelectorAll('.product-detail-size-selector > div > ul > li > div > div > span'), xTallas => xTallas.textContent);
+          tmp.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;
+          tmp.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div > div:nth-child(6) > span > span').textContent;          
 
           return tmp;
         });

@@ -47,6 +47,9 @@ exports.womanDiscount = async () => {
                     prenda.gender = 'Mujer';
                     prenda.tag = '';
                     prenda.marca = 'Mango';
+                    prenda.talla = Array.from(document.querySelectorAll('#sizeSelector > div > span'), xTallas => xTallas.textContent);
+                    prenda.color = document.querySelector('#app > main > div > div > div > div.colors-info > span').textContent;
+                    prenda.materiales = document.querySelector('#app > main > div > .product-info > div > div > div > p').textContent;
 
                     return prenda;
                 });

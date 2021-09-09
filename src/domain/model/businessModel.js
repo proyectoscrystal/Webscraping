@@ -50,6 +50,10 @@ const businessSchema = new Schema(
       required: false,
       trim: true,
     },
+    numeroTallas : {
+      type: Number,
+      default: 1
+    },
     user: {
       type: mongoose.Schema.ObjectId,
     },
@@ -70,6 +74,19 @@ const businessSchema = new Schema(
         trim: false,
       },
     ],
+    talla: [
+      {
+        type: String,
+        trim: true,
+        require: false
+      },
+    ],
+    color: {
+      type: String
+    },
+    materiales: {
+      type: String
+    },
     descuento: {
       type: Number,
       require: false,
@@ -79,6 +96,12 @@ const businessSchema = new Schema(
       type: String,
       require: false,
       trim: false,
+    },
+    enlaceImagen: {
+      type: String,
+      require: true,
+      trim: false,
+      unique: false,
     },
     fecha_consulta: {
       type: Date,
@@ -132,5 +155,6 @@ const businessSchema = new Schema(
     timestamps: true,
   }
 );
+
 
 module.exports = businessSchema;

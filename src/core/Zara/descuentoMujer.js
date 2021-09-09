@@ -28,7 +28,7 @@ exports.descuentoMujer = async () => {
     });
 
     const rebajasMujer = [];
-    // let count = 2;
+    let count = 10;
 
     for (let enlaceRebajasM of enlacesRebajasM) {
       try { // se usa el try, catch para 
@@ -51,7 +51,6 @@ exports.descuentoMujer = async () => {
           tmp.descuento = document.querySelector(
             "#main > article > div > div > div > div > div > span > span > span > span"
           ).textContent;
-          tmp.tag = '';
           tmp.caracteristicas = document.querySelector(
             "#main > article > div > div > div > .product-detail-description > div > div > div > p"
           ).textContent;
@@ -61,21 +60,17 @@ exports.descuentoMujer = async () => {
           tmp.enlaceImagen = document.querySelector(
             "#main > article > div > div > section > ul > li > button > div > div > picture > img"
           ).src;
-          tmp.gender = 'Mujer';
-          tmp.marca = 'Zara';
 
           return tmp;
         });
-        // count--;
+        count--;
         rebajasMujer.push(prendasRebajaMujer);
-        // if(count === 0){
-        //     break;
-        // }
-      } catch (error) {
-        console.log(error);
-      }
-    } 
-
+        if(count === 0){
+            break;
+        }
+      } catch (error) {}
+    } // .
+    // console.log(rebajasMujer);
     getscraping.getscraping(rebajasMujer);
 
     //====================PRENDAS EN DESCUENTO - MUJER==========================

@@ -12,7 +12,7 @@ exports.womanCategory = async () => {
       "https://www.zara.com/co/es/woman-editorial-6-mkt1102.html?v1=1883903"
     ); //Se especifica el enlace para categoría de mujer
     await page.setViewport({ width: 920, height: 1080 }); //Tamaño de la página
-    await page.waitForTimeout(3000); //Tiempo para cargar la página completa
+    await page.waitForTimeout(5000); //Tiempo para cargar la página completa
 
     //Se obtienen los enlaces de las categorías
     const enlacesmujer = await page.evaluate(() => {
@@ -28,18 +28,18 @@ exports.womanCategory = async () => {
     });
 
     const prendasMujer = []; //Se crea un array para guardar los productos extraidos
-    let count = 2;
+    //let count = 2;
 
     //Se crea un for el cual llevará todo el proceso
     for (let enlacemujer of enlacesmujer) {
         await page.goto(enlacemujer, { waitUntil: "domcontentloaded" });
-        await page.waitForTimeout(2000); //Tiempo para cargar la página completa
-        // await autoScroll(page); //Función que hace el scroll en la página
+        //await page.waitForTimeout(2000); //Tiempo para cargar la página completa
+        await autoScroll(page); //Función que hace el scroll en la página
 
         //Se obtienen los enlaces de los productos
         const enlacesproductosmujer = await page.evaluate(() => {
           const elements = document.querySelectorAll(
-            "#main > article > .product-groups > section > ul > li > ul > li > div > a"
+            "#main > article > div > section > ul > li > ul > li > div > div > div > a"
           );
 
           const productosmujer = [];
@@ -83,15 +83,18 @@ exports.womanCategory = async () => {
               ).src;
               tmp.gender = 'Mujer';
               tmp.marca = 'Zara';
+              tmp.talla = Array.from(document.querySelectorAll('.product-detail-size-selector > div > ul > li > div > div > span'), xTallas => xTallas.textContent);
+              tmp.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;
+              tmp.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div > div:nth-child(6) > span > span').textContent;              
               
               return tmp;
             });
 
-            count--;
+            //count--;
             prendasMujer.push(prendamujer); //Se guardan las prendas en la constante prendasHombre
-            if(count === 0){                
-              break;
-            }
+            //if(count === 0){                
+              //break;
+            //}
           } catch (error) {
             console.log(error);
           }

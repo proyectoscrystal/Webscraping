@@ -61,13 +61,20 @@ exports.getWomanNew = (req, res) => {
 
 exports.getscraping = async (arreglo) => {
     // console.log(arreglo);
+    // se formatean los datos descuento, tallas y precio, para llevarlos a la db
     for (let i = 0; i < arreglo.length; i++) {
-      let { precio, enlaceImagen, descuento } = arreglo[i];
+      let { precio, enlaceImagen, descuento, talla } = arreglo[i];
       precio = parseInt(precio.substring(1).split(".").join(""), 10);
       if (descuento !== "") {
         descuento = parseInt(descuento.substring(1).split(".").join(""), 10);
       }
-  
+
+      // se extrae el numero de tallas 
+      let numeroTallas = talla.length;
+      console.log(numeroTallas);
+
+
+      // se genera el base64 de la imagen que se obtiene de la url
       let base64 = await imageToBase64(enlaceImagen)
         .then((response) => {
           // return `data:image/jpeg;base64,${response}`;
@@ -88,6 +95,7 @@ exports.getscraping = async (arreglo) => {
         base64,
         action: 'prendas',
         user: "612d470390cb5641a0311cf3",
+        numeroTallas,
       };
 
       sendImgsModel(newObject);
@@ -144,6 +152,7 @@ exports.getscraping = async (arreglo) => {
   
     axios(general)
       .then((response) => {
+        // se anexan los campos que el modelo no enviaba 
         const respuesta = response.data;
         // console.log('desde response.data');
         // console.log(respuesta);
@@ -153,6 +162,9 @@ exports.getscraping = async (arreglo) => {
         respuesta.categoria = data.categoria;
         respuesta.tag = data.tag;
         respuesta.enlaceImagen = data.enlaceImagen;
+        respuesta.talla = data.talla;
+        respuesta.color = data.color;
+        respuesta.materiales = data.materiales;
   
   
         // console.log("Datos enviados al modelo de prendas generales");
