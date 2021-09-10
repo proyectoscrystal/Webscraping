@@ -221,9 +221,9 @@ exports.saveImagesDB = async (data) => {
   exports.getState = (tag, descuento) => {
     if (tag === 'nuevo') {
       return state = tag;
-    } else if (tag === '' && descuento !== null) {
-      return state = 'promocion';
-    } else {
+    } else if (tag === '' && descuento === null) {
       return state = 'normal';
+    } else {
+      return state = 'promocion';
     }
   }
