@@ -35,7 +35,8 @@ exports.manDiscount = async () => {
         await page.goto(enlaceRebajasH, { waitUntil: "networkidle2" });
         await autoScroll(page);
 
-        const prendasRebajaHombre = await page.evaluate(() => {
+        const prendasRebajaHombre = await page.evaluate(() => {  
+          // try {   
           const currentURL = window.location.href;
 
           const tmp = {};
@@ -66,6 +67,11 @@ exports.manDiscount = async () => {
           tmp.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div > div:nth-child(6) > span > span').textContent;          
 
           return tmp;
+
+        // } catch (error) {
+        //     console.log(error);
+        // }
+
         });
         count--;
         rebajasHombre.push(prendasRebajaHombre);
@@ -76,8 +82,8 @@ exports.manDiscount = async () => {
         console.log(error);
       }
     }
-    getScraping.getscraping(rebajasHombre);
-    // console.log(rebajasHombre);
+    // getScraping.getscraping(rebajasHombre);
+    console.log(rebajasHombre);
     //====================PRENDAS EN DESCUENTO - HOMBRE==========================
   } catch (err) {
     console.error(err.message);

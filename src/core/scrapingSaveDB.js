@@ -81,14 +81,14 @@ exports.saveImagesDB = async (data) => {
 
     // trasformar la base 64 en buffer
 
-    // let blobName = data.imageName
-    // const base64 = data.base_64;
+    let blobName = data.imageName
+    const base64 = data.base_64;
   
-    // const buffer = Buffer.from(base64, "base64");
+    const buffer = Buffer.from(base64, "base64");
   
-    // const stream = getStream(buffer);
-    // const containerClient = blobServiceClient.getContainerClient(containerName);
-    // const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+    const stream = getStream(buffer);
+    const containerClient = blobServiceClient.getContainerClient(containerName);
+    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
   
     // fin trasformar la base 64 en buffer 
   
@@ -134,16 +134,18 @@ exports.saveImagesDB = async (data) => {
   
     try {
       // mandar el buffer al blogstorage
-      // await blockBlobClient.uploadStream(
-      //   stream,
-      //   uploadOptions.bufferSize,
-      //   uploadOptions.maxBuffers,
-      //   { blobHTTPHeaders: { blobContentType: "image/jpeg" } }
-      // );
+
+      await blockBlobClient.uploadStream(
+        stream,
+        uploadOptions.bufferSize,
+        uploadOptions.maxBuffers,
+        { blobHTTPHeaders: { blobContentType: "image/jpeg" } }
+      );
   
-      // let blobImage = containerClient.getBlobClient(blobName);
+      let blobImage = containerClient.getBlobClient(blobName);
   
-      // let url = blobImage.url;      
+      let url = blobImage.url;  
+      
 
       // fin mandar el buffer al blogStorage
   
@@ -155,7 +157,7 @@ exports.saveImagesDB = async (data) => {
         pantoneColors: data.pantoneColors,
         colores,
         prendaColor: prendaColorLower,
-        base64: data.enlaceImagen,
+        base64: url,
         year: data.year,
         gender: data.gender,
         origin: data.origin,
@@ -171,6 +173,7 @@ exports.saveImagesDB = async (data) => {
         color: data.color,
         materiales: data.materiales,
         numeroTallas: data.numeroTallas,
+        estado: data.estado
       };
       // `data:image/jpeg;base64,${data.base_64}`
     //   console.log('desde imageData');
@@ -215,12 +218,12 @@ exports.saveImagesDB = async (data) => {
   };
 
 
-  exports.getState = (estado) => {
-    let state = '';
-    if (estado === 'nuevo') {
-      return state = estado;
-    } else if (estado === '') {
-      
+  exports.getState = (tag, descuento) => {
+    if (tag === 'nuevo') {
+      return state = tag;
+    } else if (tag === '' && descuento !== null) {
+      return state = 'promocion';
+    } else {
+      return state = 'normal';
     }
-
   }

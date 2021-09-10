@@ -99,8 +99,8 @@ exports.categoriaHombre = async () => {
           console.log(error);
         }
       }
-      getScraping.getscraping(prendasHombre);
-      // console.log(prendasHombre);
+      // getScraping.getscraping(prendasHombre);
+      console.log(prendasHombre);
       if (count === 0) {
         break;
       }

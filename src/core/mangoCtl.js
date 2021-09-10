@@ -70,8 +70,8 @@ exports.getscraping = async (arreglo) => {
       }
 
       // se extrae el numero de tallas 
-      let numeroTallas = talla.length;
-      // console.log(numeroTallas);
+      const numeroTallas = talla.length;
+      console.log(numeroTallas);
 
 
       // se genera el base64 de la imagen que se obtiene de la url
@@ -161,11 +161,11 @@ exports.getscraping = async (arreglo) => {
         respuesta.caracteristicas = data.caracteristicas;
         respuesta.categoria = data.categoria;
         respuesta.tag = data.tag;
+        respuesta.numeroTallas = data.numeroTallas;
         respuesta.enlaceImagen = data.enlaceImagen;
         respuesta.talla = data.talla;
-        respuesta.color = data.color;
         respuesta.materiales = data.materiales;
-        respuesta.numeroTallas = data.numeroTallas;
+        respuesta.color = data.color;
   
   
         // console.log("Datos enviados al modelo de prendas generales");
