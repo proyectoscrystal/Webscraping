@@ -17,7 +17,7 @@ exports.manDiscount = async () => {
 
     const enlacesRebajasH = await page.evaluate(() => {
       const elements = document.querySelectorAll(
-        "#main > article > div > section > ul > li > ul > li > div > div > div > a"
+        "#main > article > .product-groups > section > ul > li > div > div > div > a"
       );
 
       const links = [];
