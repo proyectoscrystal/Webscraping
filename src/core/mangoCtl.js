@@ -64,6 +64,11 @@ exports.getscraping = async (arreglo) => {
     // se formatean los datos descuento, tallas y precio, para llevarlos a la db
     for (let i = 0; i < arreglo.length; i++) {
       let { precio, enlaceImagen, descuento, talla, tag } = arreglo[i];
+
+       // obtener el estado
+    let estado = saveImage.getState(tag, descuento);
+    console.log(estado);
+
       precio = parseInt(precio.substring(1).split(".").join(""), 10);
       if (descuento !== "") {
         descuento = parseInt(descuento.substring(1).split(".").join(""), 10);
@@ -73,9 +78,7 @@ exports.getscraping = async (arreglo) => {
       const numeroTallas = talla.length;
       console.log(numeroTallas);
 
-      // obtener el estado
-    let estado = saveImage.getState(tag, descuento);
-    console.log(estado);
+     
 
 
       // se genera el base64 de la imagen que se obtiene de la url
@@ -170,6 +173,7 @@ exports.getscraping = async (arreglo) => {
         respuesta.talla = data.talla;
         respuesta.materiales = data.materiales;
         respuesta.color = data.color;
+        respuesta.estado = data.estado;
   
   
         // console.log("Datos enviados al modelo de prendas generales");

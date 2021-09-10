@@ -76,8 +76,8 @@ exports.manDiscount = async () => {
         console.log(error);
       }
     }
-    // getScraping.getscraping(rebajasHombre);
-    console.log(rebajasHombre);
+    getScraping.getscraping(rebajasHombre);
+    // console.log(rebajasHombre);
     //====================PRENDAS EN DESCUENTO - HOMBRE==========================
   } catch (err) {
     console.error(err.message);
