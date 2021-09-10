@@ -213,3 +213,14 @@ exports.saveImagesDB = async (data) => {
         console.log("Error superior: ", error);
       });
   };
+
+
+  exports.getState = (estado) => {
+    let state = '';
+    if (estado === 'nuevo') {
+      return state = estado;
+    } else if (estado === '') {
+      
+    }
+
+  }

@@ -28,7 +28,7 @@ exports.manDiscount = async () => {
     });
 
     const rebajasHombre = [];
-    // let count = 2;
+    let count = 2;
 
     for (let enlaceRebajasH of enlacesRebajasH) {
       try {
@@ -67,11 +67,11 @@ exports.manDiscount = async () => {
 
           return tmp;
         });
-        // count--;
+        count--;
         rebajasHombre.push(prendasRebajaHombre);
-        // if (count === 0) {
-          // break;
-        // }
+        if (count === 0) {
+          break;
+        }
       } catch (error) {
         console.log(error);
       }

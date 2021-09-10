@@ -51,8 +51,10 @@ const businessSchema = new Schema(
       trim: true,
     },
     numeroTallas : {
-      type: Number,
-      default: 1
+      type: Number
+    },
+    estado:{
+      type: String
     },
     user: {
       type: mongoose.Schema.ObjectId,

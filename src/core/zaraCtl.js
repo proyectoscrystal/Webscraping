@@ -60,7 +60,7 @@ exports.getscraping = async (arreglo) => {
 
   // se formatean los datos descuento y precio, para llevarlos a la db
   for (let i = 0; i < arreglo.length; i++) {
-    let { precio, enlaceImagen, descuento } = arreglo[i];
+    let { precio, enlaceImagen, descuento, talla } = arreglo[i];
     precio = parseInt(precio.split(" ")[0].split(".").join(""), 10);
     if (descuento !== "") {
       descuento = parseInt(descuento.split(" ")[0].split(".").join(""), 10);
@@ -171,6 +171,6 @@ let sendImgsModel = (data) => {
       }
     })
     .catch((error) => {
-      console.log(error);
+      console.log('error en el sendImageModel ZaraCtl');
     });
 };

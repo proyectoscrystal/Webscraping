@@ -71,7 +71,7 @@ exports.getscraping = async (arreglo) => {
 
       // se extrae el numero de tallas 
       let numeroTallas = talla.length;
-      console.log(numeroTallas);
+      // console.log(numeroTallas);
 
 
       // se genera el base64 de la imagen que se obtiene de la url
