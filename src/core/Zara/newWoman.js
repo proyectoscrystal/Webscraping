@@ -27,7 +27,7 @@ exports.newWoman =async () => {
     });
 
     const nuevoMujer = [];
-    // let count = 2;
+    // let count = 10;
 
     for (let enlaceNuevoM of enlacesNuevoM) {
       try {
@@ -46,7 +46,7 @@ exports.newWoman =async () => {
           tmp.precio = document.querySelector(
             "#main > article > div > div > div > .product-detail-info__price > div > span > span > span > span"
           ).textContent;
-          tmp.features = document.querySelector(
+          tmp.caracteristicas = document.querySelector(
             "#main > article > div > div > div > .product-detail-description > div > div > div > p"
           ).textContent;
           tmp.caracteristicas = tmp.caracteristicas.split("."); // probando para separar por caracteristicas
@@ -71,7 +71,7 @@ exports.newWoman =async () => {
         //     break;
         // }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
     getscraping.getscraping(nuevoMujer);

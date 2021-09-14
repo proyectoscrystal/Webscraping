@@ -28,7 +28,7 @@ exports.manDiscount = async () => {
     });
 
     const rebajasHombre = [];
-    let count = 2;
+    let count = 6;
 
     for (let enlaceRebajasH of enlacesRebajasH) {
       try {
@@ -73,7 +73,6 @@ exports.manDiscount = async () => {
           break;
         }
       } catch (error) {
-        console.log(error);
       }
     }
     getScraping.getscraping(rebajasHombre);

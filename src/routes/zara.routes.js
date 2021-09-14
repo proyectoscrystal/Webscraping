@@ -8,7 +8,7 @@ module.exports = (router) => {
     // rutas para extraer zara mujer
     router.get('/womanCategory', zaraCtl.getWomanCategory);
     router.get('/womanDiscount', zaraCtl.getDescuentoMujer);
-    router.get('/newWoman', zaraCtl.getNewWoman);
+    router.get('/womanNew', zaraCtl.getNewWoman);
 
     // rutas para extraer zara hombre
     router.get('/manCategory', zaraCtl.getCategoriaHombre);

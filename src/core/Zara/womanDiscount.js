@@ -75,7 +75,7 @@ exports.descuentoMujer = async () => {
         //     break;
         // }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     } 
 

@@ -22,7 +22,7 @@ exports.womanDiscount = async () => {
             }
             return linksRebajas;
         });
-        let count = 2;
+        // let count = 2;
 
         for (let enlaceRebajas of enlacesRebajas) {
             await page.goto(enlaceRebajas);
@@ -53,13 +53,12 @@ exports.womanDiscount = async () => {
 
                     return prenda;
                 });
-                count--;
+                // count--;
                 rebajasMujer.push(prendaRebajas);
-                if(count === 0){
-                    break;
-                }
+                // if(count === 0){
+                //     break;
+                // }
             } catch (error) {
-                console.log(error);
             }
         }
         // console.log(rebajasMujer);

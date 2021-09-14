@@ -40,7 +40,7 @@ exports.womanCategory = async () => {
         return productosmujer;
       });
       //console.log(enlacesproductosmujer);
-      let count = 2;
+      // let count = 2;
 
       for (let enlaceproductomujer of enlacesproductosmujer) {
         await page.goto(enlaceproductomujer);
@@ -80,20 +80,20 @@ exports.womanCategory = async () => {
 
             return prenda;
           });
-          count--;
+          // count--;
           prendasMujer.push(prendaMujer);
-          if (count === 0) {
-            break;
-          }
+          // if (count === 0) {
+          //   break;
+          // }
         } catch (error) {
           
         }
       }
     //   console.log(prendasMujer);
       getScraping.getscraping(prendasMujer);
-      if (count === 0) {
-        break;
-      }
+      // if (count === 0) {
+      //   break;
+      // }
     }
     //====================CATEGORIAS MUJER===========================
   } catch (err) {

@@ -12,7 +12,7 @@ const businessSchema = new Schema(
       type: String,
       required: false, // debe ser true, se cambia por prueba
       trim: true,
-      unique: false,
+      unique: true,
     },
     base64: {
       type: String,

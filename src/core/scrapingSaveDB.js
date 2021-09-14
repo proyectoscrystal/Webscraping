@@ -223,7 +223,7 @@ exports.saveImagesDB = async (data) => {
       return state = tag;
     } else if (tag === '' && descuento === '') {
       return state = 'normal';
-    } else if(descuento === '') {
+    } else {
       return state = 'promocion';
     }
   }

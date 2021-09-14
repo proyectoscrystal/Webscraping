@@ -67,7 +67,7 @@ exports.getscraping = async (arreglo) => {
 
        // obtener el estado
     let estado = saveImage.getState(tag, descuento);
-    console.log(estado);
+    // console.log(estado);
 
       precio = parseInt(precio.substring(1).split(".").join(""), 10);
       if (descuento !== "") {
@@ -76,7 +76,7 @@ exports.getscraping = async (arreglo) => {
 
       // se extrae el numero de tallas 
       const numeroTallas = talla.length;
-      console.log(numeroTallas);
+      // console.log(numeroTallas);
 
      
 
@@ -103,6 +103,7 @@ exports.getscraping = async (arreglo) => {
         action: 'prendas',
         user: "612d470390cb5641a0311cf3",
         numeroTallas,
+        estado
       };
 
       sendImgsModel(newObject);
