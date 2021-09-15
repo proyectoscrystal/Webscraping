@@ -10,7 +10,7 @@ exports.womanNew = async () => {
         const nuevoMujer = [];
 
         //====================MUJER NUEVA COLECCIÓN===========================
-        await page.goto('https://shop.mango.com/co/mujer/destacados/nueva-coleccion_d34952837');
+        await page.goto('https://shop.mango.com/co/mujer/destacados/nuevo_d18713172');
         await autoScroll(page);
 
         const enlacesNuevo = await page.evaluate(() => {
