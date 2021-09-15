@@ -44,7 +44,7 @@ exports.womanNew = async () => {
                     prenda.enlaceImagen = http;
                     prenda.enlaceImagen += document.querySelector('#renderedImages > ul > li > div > img').src;
                     prenda.gender = 'Mujer';
-                    prenda.tag = 'Nueva';
+                    prenda.tag = 'nuevo';
                     prenda.marca = 'Mango';
                     prenda.descuento = '';
                     prenda.talla = Array.from(document.querySelectorAll('#sizeSelector > div > span'), xTallas => xTallas.textContent);

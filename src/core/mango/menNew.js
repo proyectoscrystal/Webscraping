@@ -24,7 +24,7 @@ exports.menNew = async () => {
         });
 
         const nuevoHombre = [];
-        // let count = 2;
+        let count = 2;
 
         for (let enlaceNuevo of enlacesNuevo) {
             await page.goto(enlaceNuevo);
@@ -47,7 +47,7 @@ exports.menNew = async () => {
                     prenda.enlaceImagen = http;
                     prenda.enlaceImagen += document.querySelector('#renderedImages > ul > li > div > img').src;
                     prenda.gender = 'Hombre';
-                    prenda.tag = 'Nueva';
+                    prenda.tag = 'nuevo';
                     prenda.marca = 'Mango';
                     prenda.talla = Array.from(document.querySelectorAll('#sizeSelector > div > span'), xTallas => xTallas.textContent);
                     prenda.color = document.querySelector('#app > main > div > div > div > div.colors-info > span').textContent;
@@ -55,11 +55,11 @@ exports.menNew = async () => {
 
                     return prenda;
                 });
-                // count--;
+                count--;
                 nuevoHombre.push(prendaNuevo);
-                // if(count === 0) {
-                //     break;
-                // }
+                if(count === 0) {
+                    break;
+                }
             } catch (error) {
                 console.log(error);
             }

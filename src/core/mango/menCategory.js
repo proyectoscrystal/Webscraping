@@ -43,7 +43,7 @@ exports.menCategory = async () => {
       });
       //console.log(enlacesproductoshombre);
 
-      //let count = 2;
+      // let count = 8;
 
       for (let enlaceproductohombre of enlacesproductoshombre) {
         try {
@@ -83,11 +83,11 @@ exports.menCategory = async () => {
 
             return prenda;
           });
-          //count--;
+          // count--;
           prendasHombre.push(prendaHombre);
-          //if (count === 0) {
-            //break;
-          //}
+          // if (count === 0) {
+          //   break;
+          // }
         } catch (error) {
           console.log(error);
         }
@@ -95,10 +95,9 @@ exports.menCategory = async () => {
       // console.log(prendasHombre);
       getScraping.getscraping(prendasHombre);
 
-      //break;  // para solo dar una ronda
-      //if (count === 0) {
-        //break;
-      //}
+      // if (count === 0) {
+      //   break;
+      // }
     }
 
     //====================CATEGORIAS HOMBRE===========================
