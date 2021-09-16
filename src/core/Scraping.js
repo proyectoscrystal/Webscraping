@@ -30,6 +30,7 @@ exports.Scraping = async (req, res) => {
     await womanDiscounts.womanDiscount();
     await womanNew.womanNew();
 
+    res.json({success: "Se completo el Web Scraping"});
     mensaje();
 
 }

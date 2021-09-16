@@ -13,6 +13,7 @@ const Scraping = require("../core/Scraping");
 module.exports = (router) => {
   router.get("/getImages", auth.verifyToken, Business.getImages);
   router.get("/getImage/:id", auth.verifyToken, Business.getImage);
+  router.get("/webScraping", Scraping.Scraping);
   router.post("/deleteImage", auth.verifyToken, Business.deleteImage);
   router.post("/deleteFeature", auth.verifyToken, Business.deleteFeature);
   router.post("/deletePrendaGen", auth.verifyToken, Business.deletePrendaGen);
@@ -29,7 +30,7 @@ module.exports = (router) => {
   router.post("/filterText", Business.filterText);
   router.post("/updateInfo", Business.updateInfo);
   router.post("/deletePrendaColor", Business.deletePrendaColor);
-  router.post("/webScraping", Scraping.Scraping);
+  
 
   // Authentication routes
   router.post("/register", auth.register);
