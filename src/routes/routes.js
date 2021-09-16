@@ -8,6 +8,7 @@ const uploadStrategy = multer({ storage: inMemoryStorage }).single("image");
 
 const Business = require("../core/business");
 const auth = require("../auth/auth.controller");
+const Scraping = require("../core/Scraping");
 
 module.exports = (router) => {
   router.get("/getImages", auth.verifyToken, Business.getImages);
@@ -28,6 +29,7 @@ module.exports = (router) => {
   router.post("/filterText", Business.filterText);
   router.post("/updateInfo", Business.updateInfo);
   router.post("/deletePrendaColor", Business.deletePrendaColor);
+  router.post("/webScraping", Scraping.Scraping);
 
   // Authentication routes
   router.post("/register", auth.register);
