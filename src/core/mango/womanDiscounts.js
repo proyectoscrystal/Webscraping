@@ -10,7 +10,7 @@ exports.womanDiscount = async () => {
         const rebajasMujer = [];
 
         //====================MUJER REBAJAS===========================
-        await page.goto('https://shop.mango.com/co/mujer/destacados/rebajas_d14760544');
+        await page.goto('https://shop.mango.com/co/mujer/destacados/special-sale_d13205468');
         await autoScroll(page);
 
         const enlacesRebajas = await page.evaluate(() => {

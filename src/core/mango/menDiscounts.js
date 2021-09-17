@@ -9,7 +9,7 @@ exports.menDiscount = async () => {
 
     //====================HOMBRE REBAJAS===========================
     await page.goto(
-      "https://shop.mango.com/co/hombre/destacados/rebajas_d14332139"
+      "https://shop.mango.com/co/hombre/destacados/special-sale_d19494954"
     );
     await page.setViewport({ width: 920, height: 1080 });
     await page.waitForTimeout(5000);
