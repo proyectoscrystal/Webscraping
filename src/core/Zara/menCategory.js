@@ -49,7 +49,7 @@ exports.categoriaHombre = async () => {
       });
 
       //Se crea un for dentro del otro for para entrar a cada enlace de los productos
-      // let count = 2;
+      let count = 5;
 
       for (let enlaceproductohombre of enlacesproductoshombre) {
         try {
@@ -90,19 +90,19 @@ exports.categoriaHombre = async () => {
 
             return tmp;
           });
-          // count--;
+          count--;
           prendasHombre.push(prendahombre); //Se guardan las prendas en la constante prendasHombre
-          // if (count === 0) {
-          //   break;
-          // }
+          if (count === 0) {
+            break;
+          }
         } catch (error) {
         }
       }
       getScraping.getscraping(prendasHombre);
       // console.log(prendasHombre);
-      // if (count === 0) {
-      //   break;
-      // }
+      if (count === 0) {
+        break;
+      }
     }
 
     //====================CATEGORIAS HOMBRE==========================

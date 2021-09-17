@@ -24,7 +24,7 @@ exports.menNew = async () => {
         });
 
         const nuevoHombre = [];
-        let count = 2;
+        let count = 5;
 
         for (let enlaceNuevo of enlacesNuevo) {
             await page.goto(enlaceNuevo);

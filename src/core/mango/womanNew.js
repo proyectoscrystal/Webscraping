@@ -22,7 +22,7 @@ exports.womanNew = async () => {
             }
             return linksNuevo;
         });
-        // let count = 2;
+        let count = 5;
 
         for (let enlaceNuevo of enlacesNuevo) {
             await page.goto(enlaceNuevo);
@@ -53,11 +53,11 @@ exports.womanNew = async () => {
 
                     return prenda;
                 });
-                // count--;
+                count--;
                 nuevoMujer.push(prendaNuevo);
-                // if (count === 0) {
-                //     break;
-                // }
+                if (count === 0) {
+                    break;
+                }
             } catch (error) {
             }
         }        

@@ -28,7 +28,7 @@ exports.womanCategory = async () => {
     });
 
     const prendasMujer = []; //Se crea un array para guardar los productos extraidos
-    // let count = 10;
+    let count = 5;
 
     //Se crea un for el cual llevará todo el proceso
     for (let enlacemujer of enlacesmujer) {
@@ -90,19 +90,19 @@ exports.womanCategory = async () => {
               return tmp;
             });
 
-            // count--;
+            count--;
             prendasMujer.push(prendamujer); //Se guardan las prendas en la constante prendasHombre
-            // if(count === 0){                
-            //   break;
-            // }
+            if(count === 0){                
+              break;
+            }
           } catch (error) {
             console.log(error);
           }
         }
         //console.log(prendasMujer);
-        // if(count === 0){
-        //   break;
-        // }
+        if(count === 0){
+          break;
+        }
         
     }
     getscraping.getscraping(prendasMujer);

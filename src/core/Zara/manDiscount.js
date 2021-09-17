@@ -28,7 +28,7 @@ exports.manDiscount = async () => {
     });
 
     const rebajasHombre = [];
-    let count = 6;
+    let count = 5;
 
     for (let enlaceRebajasH of enlacesRebajasH) {
       try {

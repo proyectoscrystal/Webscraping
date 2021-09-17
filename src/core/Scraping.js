@@ -16,13 +16,12 @@ const womanNew = require('./Mango/womanNew');
 
 exports.Scraping = async (req, res) => {
     res.json({mensaje: "se ejecuta el scraping completo"});
-    await categoriaHombre.categoriaHombre();
     await manDiscount.manDiscount();
+    await categoriaHombre.categoriaHombre();
     await NewMan.newMan();
+    await womanDiscount.descuentoMujer();
     await womanCategory.womanCategory();
     await newWoman.newWoman();
-    await womanDiscount.descuentoMujer();
-
     await menCategory.menCategory();
     await menDiscount.menDiscount();
     await menNew.menNew();
@@ -30,7 +29,6 @@ exports.Scraping = async (req, res) => {
     await womanDiscounts.womanDiscount();
     await womanNew.womanNew();
 
-    res.json({success: "Se completo el Web Scraping"});
     mensaje();
 
 }

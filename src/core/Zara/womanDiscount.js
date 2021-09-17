@@ -28,7 +28,7 @@ exports.descuentoMujer = async () => {
     });
 
     const rebajasMujer = [];
-    // let count = 2;
+    let count = 5;
 
     for (let enlaceRebajasM of enlacesRebajasM) {
       try { // se usa el try, catch para 
@@ -69,11 +69,11 @@ exports.descuentoMujer = async () => {
 
           return tmp;
         });
-        // count--;
+        count--;
         rebajasMujer.push(prendasRebajaMujer);
-        // if(count === 0){
-        //     break;
-        // }
+        if(count === 0){
+            break;
+        }
       } catch (error) {
         // console.log(error);
       }
