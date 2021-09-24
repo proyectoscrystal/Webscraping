@@ -22,7 +22,7 @@ exports.womanDiscount = async () => {
             }
             return linksRebajas;
         });
-        let count = 5;
+        // let count = 5;
 
         for (let enlaceRebajas of enlacesRebajas) {
             await page.goto(enlaceRebajas);
@@ -49,15 +49,17 @@ exports.womanDiscount = async () => {
                     prenda.marca = 'Mango';
                     prenda.talla = Array.from(document.querySelectorAll('#sizeSelector > div > span'), xTallas => xTallas.textContent);
                     prenda.color = document.querySelector('#app > main > div > div > div > div.colors-info > span').textContent;
+                    prenda.color = prenda.color.split(' ')[0];
+                    prenda.color = prenda.color.toLowerCase();
                     prenda.materiales = document.querySelector('#app > main > div > .product-info > div > div > div > p').textContent;
 
                     return prenda;
                 });
-                count--;
+                // count--;
                 rebajasMujer.push(prendaRebajas);
-                if(count === 0){
-                    break;
-                }
+                // if(count === 0){
+                //     break;
+                // }
             } catch (error) {
             }
         }

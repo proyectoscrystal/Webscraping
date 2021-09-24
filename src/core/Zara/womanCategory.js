@@ -9,7 +9,7 @@ exports.womanCategory = async () => {
 
     const prendasMujer = []; //Se crea un array para guardar los productos extraidos
 
-    let count = 5;
+    // let count = 5;
 
     //====================CATEGORIAS MUJER===========================
     await page.goto("https://www.zara.com/co/es/woman-editorial-6-mkt1102.html?v1=1883903"); //Se especifica el enlace para categoría de mujer
@@ -85,11 +85,11 @@ exports.womanCategory = async () => {
             return tmp;
           });
 
-          count--;
+          // count--;
           prendasMujer.push(prendamujer); //Se guardan las prendas en la constante prendasMujer
-          if(count === 0){                
-            break;
-          }
+          // if(count === 0){                
+          //   break;
+          // }
 
         } catch (error) {
           //console.error(error.message);
@@ -98,14 +98,14 @@ exports.womanCategory = async () => {
 
       prendasMujer.forEach((dato) => {dato.categoria = nombrecategoria});
 
-      console.log(prendasMujer);
+      // console.log(prendasMujer);
 
-      if (count === 0) {
-        break;
-      }
+      // if (count === 0) {
+      //   break;
+      // }
     }
 
-    // getscraping.getscraping(prendasMujer);
+    getscraping.getscraping(prendasMujer);
 
     
     //====================CATEGORIAS MUJER===========================

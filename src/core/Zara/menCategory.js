@@ -9,7 +9,7 @@ exports.categoriaHombre = async () => {
     
     const prendasHombre = []; //Se crea un array para guardar los productos extraidos
 
-    let count = 1;
+    // let count = 1;
 
     //====================CATEGORIAS HOMBRE==========================
     await page.goto("https://www.zara.com/co/es/man-editorial-1-l629.html?v1=1945312"); //Se especifica el enlace para categoría de hombre
@@ -86,11 +86,11 @@ exports.categoriaHombre = async () => {
             return tmp;
           });
 
-          count--;
+          // count--;
           prendasHombre.push(prendahombre); //Se guardan las prendas en la constante prendasHombre
-          if (count === 0) {
-            break;
-          }
+          // if (count === 0) {
+          //   break;
+          // }
 
         } catch (error) {
           //console.error(error.message);
@@ -99,10 +99,10 @@ exports.categoriaHombre = async () => {
 
       prendasHombre.forEach((dato) => {dato.categoria = nombrecategoria});
 
-      console.log(prendasHombre);
+      // console.log(prendasHombre);
     }
 
-    //getScraping.getscraping(prendasHombre);
+    getScraping.getscraping(prendasHombre);
     //====================CATEGORIAS HOMBRE==========================
 
   } catch (err) {

@@ -28,7 +28,7 @@ exports.descuentoMujer = async () => {
     });
 
     const rebajasMujer = [];
-    let count = 5;
+    // let count = 5;
 
     for (let enlaceRebajasM of enlacesRebajasM) {
       try { // se usa el try, catch para 
@@ -65,15 +65,17 @@ exports.descuentoMujer = async () => {
           tmp.marca = 'Zara';
           tmp.talla = Array.from(document.querySelectorAll('.product-detail-size-selector > div > ul > li > div > div > span'), xTallas => xTallas.textContent);
           tmp.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;
+          tmp.color = tmp.color.split(' ')[1];
+          tmp.color = tmp.color.toLowerCase();
           tmp.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div > div:nth-child(6) > span > span').textContent;          
 
           return tmp;
         });
-        count--;
+        // count--;
         rebajasMujer.push(prendasRebajaMujer);
-        if(count === 0){
-            break;
-        }
+        // if(count === 0){
+        //     break;
+        // }
       } catch (error) {
         // console.log(error);
       }

@@ -22,7 +22,7 @@ exports.womanNew = async () => {
             }
             return linksNuevo;
         });
-        let count = 5;
+        // let count = 5;
 
         for (let enlaceNuevo of enlacesNuevo) {
             await page.goto(enlaceNuevo);
@@ -49,15 +49,17 @@ exports.womanNew = async () => {
                     prenda.descuento = '';
                     prenda.talla = Array.from(document.querySelectorAll('#sizeSelector > div > span'), xTallas => xTallas.textContent);
                     prenda.color = document.querySelector('#app > main > div > div > div > div.colors-info > span').textContent;
+                    prenda.color = prenda.color.split(' ')[0];
+                    prenda.color = prenda.color.toLowerCase();
                     prenda.materiales = document.querySelector('#app > main > div > .product-info > div > div > div > p').textContent;
 
                     return prenda;
                 });
-                count--;
+                // count--;
                 nuevoMujer.push(prendaNuevo);
-                if (count === 0) {
-                    break;
-                }
+                // if (count === 0) {
+                //     break;
+                // }
             } catch (error) {
             }
         }        

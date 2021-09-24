@@ -90,20 +90,20 @@ exports.womanCategory = async () => {
 
             return prenda;
           });
-          count--;
+          // count--;
           prendasMujer.push(prendaMujer);
-          if (count === 0) {
-            break;
-          }
+          // if (count === 0) {
+          //   break;
+          // }
         } catch (error) {
           
         }
       }
-      console.log(prendasMujer);
-      // getScraping.getscraping(prendasMujer);
-      if (count === 0) {
-        break;
-      }
+      // console.log(prendasMujer);
+      getScraping.getscraping(prendasMujer);
+      // if (count === 0) {
+      //   break;
+      // }
     }
     //====================CATEGORIAS MUJER===========================
   } catch (err) {
