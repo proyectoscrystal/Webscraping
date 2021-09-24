@@ -9,7 +9,7 @@ exports.categoriaHombre = async () => {
     
     const prendasHombre = []; //Se crea un array para guardar los productos extraidos
 
-    let count = 5;
+    let count = 1;
 
     //====================CATEGORIAS HOMBRE==========================
     await page.goto("https://www.zara.com/co/es/join-life-man-new-in-l3023.html?v1=1886329"); //Se especifica el enlace para categoría de hombre
@@ -71,6 +71,8 @@ exports.categoriaHombre = async () => {
             tmp.tag = "";
             tmp.talla = Array.from(document.querySelectorAll('.product-detail-size-selector > div > ul > li > div > div > span'), xTallas => xTallas.textContent);
             tmp.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;
+            tmp.color = tmp.color.split(' ')[1];
+            tmp.color = tmp.color.toLowerCase();
             tmp.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div > div:nth-child(6) > span > span').textContent;            
 
             return tmp;
@@ -89,10 +91,15 @@ exports.categoriaHombre = async () => {
 
       prendasHombre.forEach((dato) => {dato.categoria = nombrecategoria});
 
-      //console.log(prendasHombre);
+      console.log(prendasHombre);
+      if (count === 0) {
+        break;
+      }
     }
 
-    getScraping.getscraping(prendasHombre);
+    // getScraping.getscraping(prendasHombre);
+
+    
     //====================CATEGORIAS HOMBRE==========================
 
   } catch (err) {
