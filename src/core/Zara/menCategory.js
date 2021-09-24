@@ -14,11 +14,11 @@ exports.categoriaHombre = async () => {
     //====================CATEGORIAS HOMBRE==========================
     await page.goto("https://www.zara.com/co/es/man-editorial-1-l629.html?v1=1945312"); //Se especifica el enlace para categoría de hombre
     await page.setViewport({ width: 920, height: 1080 }); //Tamaño de la página
-    await page.waitForSelector("#sidebar > div > nav > div > ul > li > ul > li > ul > .layout-categories-category--level-3 > a");
+    await page.waitForTimeout(5000);
 
     //Se obtienen los enlaces de los tipos de prenda
     const enlaceshombre = await page.evaluate(() => {
-      const elements = document.querySelectorAll("#sidebar > div > nav > div > ul > li > ul > li > ul > .layout-categories-category--level-3 > a");
+      const elements = document.querySelectorAll("#sidebar > div > nav > div > ul > .layout-categories-category--level-1 > ul > .layout-categories-category--level-2 > ul > li > a");
 
       const linkshombre = [];
       for (let element of elements) {
@@ -32,15 +32,14 @@ exports.categoriaHombre = async () => {
     for (let enlacehombre of enlaceshombre) {
       try {
 
-        await page.goto(enlacehombre);
+        await page.goto(enlacehombre, { waitUntil: "domcontentloaded" });
 
       } catch (error) {
         console.log("No se ha encontrado un enlace");
       }
       console.log("Ingresando a: " + enlacehombre);
 
-      await page.waitForTimeout(2000); //Tiempo para cargar la página completa
-      //await autoScroll(page); //Función que hace el scroll en la página
+      await autoScroll(page); //Función que hace el scroll en la página
 
       //Se obtienen los enlaces de los productos
       const enlacesproductoshombre = await page.evaluate(() => {
@@ -60,7 +59,7 @@ exports.categoriaHombre = async () => {
       for (let enlaceproductohombre of enlacesproductoshombre) {
         try {
           await page.goto(enlaceproductohombre);
-          //await autoScroll(page);
+          await autoScroll(page);
 
           //Se evalua cada enlace del cual se extrae el categoria, nombre, precio y caracteristicas
           const prendahombre = await page.evaluate(() => {

@@ -29,8 +29,15 @@ exports.womanCategory = async () => {
 
     //Se crea un for el cual llevará todo el proceso
     for (let enlacemujer of enlacesmujer) {
-      await page.goto(enlacemujer, { waitUntil: "domcontentloaded" });
-      //await page.waitForTimeout(2000); //Tiempo para cargar la página completa
+      try {
+
+        await page.goto(enlacemujer, { waitUntil: "domcontentloaded" });
+
+      } catch (error) {
+        console.log("No se ha encontrado un enlace");
+      }
+      console.log("Ingresando a: " + enlacehombre);
+
       await autoScroll(page); //Función que hace el scroll en la página
 
       //Se obtienen los enlaces de los productos

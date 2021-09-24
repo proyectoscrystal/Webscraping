@@ -27,7 +27,15 @@ exports.womanCategory = async () => {
     //console.log(enlacesmujer);
 
     for (let enlacemujer of enlacesmujer) {
-      await page.goto(enlacemujer);
+      try {
+        
+        await page.goto(enlacemujer);
+
+      } catch (error) {
+        console.log("No se ha encontrado un enlace");
+      }
+      console.log("Ingresando a: " + enlacehombre);
+
       await autoScroll(page);
 
       const enlacesproductosmujer = await page.evaluate(() => {

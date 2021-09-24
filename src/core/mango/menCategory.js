@@ -28,8 +28,15 @@ exports.menCategory = async () => {
     
 
     for (let enlacehombre of enlaceshombre) {
-      await page.goto(enlacehombre);
-      await page.waitForSelector("._10aZC > a");
+      try {
+
+        await page.goto(enlacehombre);
+
+      } catch (error) {
+        console.log("No se ha encontrado un enlace");
+      }
+      console.log("Ingresando a: " + enlacehombre);
+
       await autoScroll(page);
 
       const enlacesproductoshombre = await page.evaluate(() => {
