@@ -1,5 +1,5 @@
 const puppeteer = require("puppeteer");
-const autoScroll = require("../zara");
+const autoScroll = require("../autoScrollFunction");
 const getscraping = require("../zaraCtl");
 
 exports.newWoman =async () => {
@@ -12,6 +12,7 @@ exports.newWoman =async () => {
       "https://www.zara.com/co/es/mujer-nuevo-l1180.html?v1=1881787"
     );
     await page.setViewport({ width: 920, height: 1080 });
+    await page.waitForTimeout(5000);
     await autoScroll(page);
 
     const enlacesNuevoM = await page.evaluate(() => {
@@ -55,7 +56,7 @@ exports.newWoman =async () => {
           tmp.enlaceImagen = document.querySelector(
             "#main > article > div > div > section > ul > li > button > div > div > picture > img"
           ).src;
-          tmp.tag = "nuevo";
+          tmp.tag = "Nuevo";
           tmp.descuento = "";
           tmp.gender = "Mujer";
           tmp.marca = "Zara";
@@ -73,7 +74,7 @@ exports.newWoman =async () => {
         //     break;
         // }
       } catch (error) {
-        // console.log(error);
+        //console.log(error.message);;
       }
     }
     getscraping.getscraping(nuevoMujer);

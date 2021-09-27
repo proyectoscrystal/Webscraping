@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-const autoScroll = require('../zara');
+const autoScroll = require('../autoScrollFunction');
 const getScraping = require('../mangoCtl');
 
 exports.womanNew = async () => {
@@ -11,6 +11,7 @@ exports.womanNew = async () => {
 
         //====================MUJER NUEVA COLECCIÓN===========================
         await page.goto('https://shop.mango.com/co/mujer/destacados/nuevo_d18713172');
+        await page.waitForTimeout(5000);
         await autoScroll(page);
 
         const enlacesNuevo = await page.evaluate(() => {
@@ -61,6 +62,7 @@ exports.womanNew = async () => {
                 //     break;
                 // }
             } catch (error) {
+                //console.log(error.message);
             }
         }        
         // console.log(nuevoMujer);

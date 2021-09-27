@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-const autoScroll = require('../zara');
+const autoScroll = require('../autoScrollFunction');
 const getScraping = require('../mangoCtl');
 
 exports.womanDiscount = async () => {
@@ -11,6 +11,7 @@ exports.womanDiscount = async () => {
 
         //====================MUJER REBAJAS===========================
         await page.goto('https://shop.mango.com/co/mujer/destacados/special-sale_d13205468');
+        await page.waitForTimeout(5000);
         await autoScroll(page);
 
         const enlacesRebajas = await page.evaluate(() => {
@@ -61,6 +62,7 @@ exports.womanDiscount = async () => {
                 //     break;
                 // }
             } catch (error) {
+                //console.log(error.message);
             }
         }
         // console.log(rebajasMujer);

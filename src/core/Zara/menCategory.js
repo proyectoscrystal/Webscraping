@@ -1,5 +1,5 @@
 const puppeteer = require("puppeteer");
-const autoScroll = require("../zara");
+const autoScroll = require("../autoScrollFunction");
 const getScraping = require("../zaraCtl");
 
 exports.categoriaHombre = async () => {
@@ -100,9 +100,9 @@ exports.categoriaHombre = async () => {
       prendasHombre.forEach((dato) => {dato.categoria = nombrecategoria});
 
       // console.log(prendasHombre);
+      getScraping.getscraping(prendasHombre);
     }
 
-    getScraping.getscraping(prendasHombre);
     //====================CATEGORIAS HOMBRE==========================
 
   } catch (err) {

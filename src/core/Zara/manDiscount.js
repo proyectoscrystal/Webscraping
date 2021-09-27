@@ -1,5 +1,5 @@
 const puppeteer = require("puppeteer");
-const autoScroll = require("../zara");
+const autoScroll = require("../autoScrollFunction");
 const getScraping = require("../zaraCtl");
 
 exports.manDiscount = async () => {
@@ -13,6 +13,7 @@ exports.manDiscount = async () => {
       { waitUntil: "networkidle2" }
     );
     await page.setViewport({ width: 920, height: 1080 });
+    await page.waitForTimeout(5000);
     await autoScroll(page);
 
     const enlacesRebajasH = await page.evaluate(() => {
@@ -75,6 +76,7 @@ exports.manDiscount = async () => {
         //   break;
         // }
       } catch (error) {
+        //console.log(error.message);
       }
     }
     getScraping.getscraping(rebajasHombre);

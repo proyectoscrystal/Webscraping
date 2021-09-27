@@ -1,5 +1,5 @@
 const puppeteer = require("puppeteer");
-const autoScroll = require("../zara");
+const autoScroll = require("../autoScrollFunction");
 const getScraping = require("../mangoCtl");
 
 exports.menDiscount = async () => {
@@ -13,7 +13,7 @@ exports.menDiscount = async () => {
     );
     await page.setViewport({ width: 920, height: 1080 });
     await page.waitForTimeout(5000);
-    // await autoScroll(page);
+    await autoScroll(page);
 
     const enlacesRebajas = await page.evaluate(() => {
       const elements = document.querySelectorAll("._10aZC > a");
@@ -76,7 +76,7 @@ exports.menDiscount = async () => {
         //   break;
         // }
       } catch (error) {
-          console.log(error);
+        //console.log(error.message);
       }
     }
     // console.log(rebajasHombre);
