@@ -141,7 +141,7 @@ exports.getscraping = async (arreglo) => {
   let sendImgsModel = (data) => {
   
     instance.get(process.env.MODELO_GENERAL).catch(() => {
-      console.log('General')
+      // console.log('General')
     })
   
     const agent = new https.Agent({

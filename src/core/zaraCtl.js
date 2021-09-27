@@ -64,7 +64,7 @@ exports.getscraping = async (arreglo) => {
 
     // obtener el estado
     let estado = saveImage.getState(tag, descuento);
-    console.log(estado);
+    // console.log(estado);
 
     precio = parseInt(precio.split(" ")[0].split(".").join(""), 10);
     if (descuento !== "") {

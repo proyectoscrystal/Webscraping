@@ -69,7 +69,7 @@ let updateImagesDB = async (data) => {
       if (err) {
         console.log("No se ha podido actualizar el documento");
       }
-      console.log("Features actualizadas");
+      // console.log("Features actualizadas");
     });
   };
 
@@ -194,7 +194,7 @@ exports.saveImagesDB = async (data) => {
 
   exports.sendDataSup = (data) => {
     instance.get(process.env.MODELO_SUPERIOR).catch(() => {
-      console.log('Superior')
+      // console.log('Superior')
     })
   
     const superior = {
@@ -209,7 +209,7 @@ exports.saveImagesDB = async (data) => {
   
     axios(superior)
       .then((responseSup) => {
-        console.log("Datos enviados al modelo de prendas superiores");
+        // console.log("Datos enviados al modelo de prendas superiores");
         updateImagesDB(responseSup.data);
       })
       .catch((error) => {
