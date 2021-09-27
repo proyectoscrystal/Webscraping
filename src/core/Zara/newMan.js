@@ -1,5 +1,5 @@
 const puppeteer = require("puppeteer");
-const autoScroll = require("../zara");
+const autoScroll = require("../autoScrollFunction");
 const getScraping = require("../zaraCtl");
 
 exports.newMan = async () => {
@@ -12,6 +12,7 @@ exports.newMan = async () => {
       "https://www.zara.com/co/es/hombre-nuevo-l711.html?v1=1886951"
     );
     await page.setViewport({ width: 920, height: 1080 });
+    await page.waitForTimeout(5000);
     await autoScroll(page);
 
     const enlacesNuevoH = await page.evaluate(() => {
@@ -57,7 +58,7 @@ exports.newMan = async () => {
           tmp.gender = "Hombre";
           tmp.marca = "Zara";
           tmp.descuento = "";
-          tmp.tag = "nuevo";
+          tmp.tag = "Nuevo";
           tmp.talla = Array.from(document.querySelectorAll('.product-detail-size-selector > div > ul > li > div > div > span'), xTallas => xTallas.textContent);
           tmp.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;
           tmp.color = tmp.color.split(' ')[1];
@@ -72,9 +73,10 @@ exports.newMan = async () => {
         //   break;
         // }
       } catch (error) {
+        //console.log(error.message);
       }
     }
-    // console.log(nuevoHombre);
+    //console.log(nuevoHombre);
     getScraping.getscraping(nuevoHombre);
     //====================PRENDAS NUEVAS - HOMBRE==========================
   } catch (err) {

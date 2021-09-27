@@ -1,5 +1,5 @@
 const puppeteer = require("puppeteer");
-const autoScroll = require("../zara");
+const autoScroll = require("../autoScrollFunction");
 const getScraping = require("../mangoCtl");
 
 exports.menCategory = async () => {
@@ -25,7 +25,6 @@ exports.menCategory = async () => {
       return linkshombre;
     });
     //console.log(enlaceshombre);
-    
 
     for (let enlacehombre of enlaceshombre) {
       try {
@@ -98,7 +97,7 @@ exports.menCategory = async () => {
           //   break;
           // }
         } catch (error) {
-          console.log(error);
+          //console.log(error.message);
         }
       }
       // console.log(prendasHombre);

@@ -1,5 +1,5 @@
 const puppeteer = require("puppeteer");
-const autoScroll = require("../zara");
+const autoScroll = require("../autoScrollFunction");
 const getscraping = require("../zaraCtl");
 
 exports.womanCategory = async () => {
@@ -36,7 +36,7 @@ exports.womanCategory = async () => {
       } catch (error) {
         console.log("No se ha encontrado un enlace");
       }
-      console.log("Ingresando a: " + enlacehombre);
+      console.log("Ingresando a: " + enlacemujer);
 
       await autoScroll(page); //Función que hace el scroll en la página
 
