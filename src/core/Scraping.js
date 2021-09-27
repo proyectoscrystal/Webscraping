@@ -15,25 +15,25 @@ const womanNew = require('./Mango/womanNew');
 
 
 exports.Scraping = async (req, res) => {
-    res.json({mensaje: "se ejecuta el scraping completo"});
     await manDiscount.manDiscount();
-    await categoriaHombre.categoriaHombre();
     await NewMan.newMan();
     await womanDiscount.descuentoMujer();
-    await womanCategory.womanCategory();
     await newWoman.newWoman();
-    await menCategory.menCategory();
     await menDiscount.menDiscount();
     await menNew.menNew();
-    await womanCategoryMango.womanCategory();
     await womanDiscounts.womanDiscount();
     await womanNew.womanNew();
+    await womanCategory.womanCategory();
+    await menCategory.menCategory();
+    await womanCategoryMango.womanCategory();
+    await categoriaHombre.categoriaHombre();
+    
 
-    mensaje();
+    // await mensaje();
 
 }
 
 
-let mensaje = () => {
-    console.log("se completo correctamente el scraping");
-}
+// mensaje = async (req, res) => {
+//     res.json({mensaje: "se ejecuta el scraping completo"});
+// }

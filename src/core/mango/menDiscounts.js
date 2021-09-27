@@ -3,7 +3,9 @@ const autoScroll = require("../autoScrollFunction");
 const getScraping = require("../mangoCtl");
 
 exports.menDiscount = async () => {
-  const browser = await puppeteer.launch({ headless: false }); //headless true/false para visualizar el navegador
+  const browser = await puppeteer.launch({
+    headless: false
+  }); //headless true/false para visualizar el navegador
   try {
     const page = await browser.newPage();
 
@@ -11,7 +13,10 @@ exports.menDiscount = async () => {
     await page.goto(
       "https://shop.mango.com/co/hombre/destacados/special-sale_d19494954"
     );
-    await page.setViewport({ width: 920, height: 1080 });
+    await page.setViewport({
+      width: 920,
+      height: 1080
+    });
     await page.waitForTimeout(5000);
     await autoScroll(page);
 
@@ -67,6 +72,7 @@ exports.menDiscount = async () => {
           prenda.color = prenda.color.split(' ')[0];
           prenda.color = prenda.color.toLowerCase();
           prenda.materiales = document.querySelector('#app > main > div > .product-info > div > div > div > p').textContent;
+
 
           return prenda;
         });
