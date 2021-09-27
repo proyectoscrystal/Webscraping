@@ -68,6 +68,7 @@ exports.menDiscount = async () => {
           prenda.color = prenda.color.toLowerCase();
           prenda.materiales = document.querySelector('#app > main > div > .product-info > div > div > div > p').textContent;
 
+
           return prenda;
         });
         // count--;
@@ -76,7 +77,7 @@ exports.menDiscount = async () => {
         //   break;
         // }
       } catch (error) {
-          console.log(error);
+        console.log(error);
       }
     }
     // console.log(rebajasHombre);
