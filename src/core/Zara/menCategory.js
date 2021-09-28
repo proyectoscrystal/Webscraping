@@ -106,7 +106,7 @@ exports.categoriaHombre = async () => {
     //====================CATEGORIAS HOMBRE==========================
 
   } catch (err) {
-    console.error(err.message);
+    //console.error(err.message);
   } finally {
     await browser.close();
   }
