@@ -173,11 +173,12 @@ exports.saveImagesDB = async (data) => {
         color: data.color,
         materiales: data.materiales,
         numeroTallas: data.numeroTallas,
-        estado: data.estado
+        estado: data.estado,
+        enlaceImagen: data.enlaceImagen,
       };
       // `data:image/jpeg;base64,${data.base_64}`
     //   console.log('desde imageData');
-    //   console.log(imageData);
+      // console.log(imageData);
   
       await Business.create(imageData, (err) => {
         if (err && err.code === 11000) {
@@ -192,7 +193,7 @@ exports.saveImagesDB = async (data) => {
   };
 
 
-  exports.sendDataSup = (data) => {
+  exports.sendDataSup = async (data) => {
     instance.get(process.env.MODELO_SUPERIOR).catch(() => {
       // console.log('Superior')
     })
@@ -207,13 +208,13 @@ exports.saveImagesDB = async (data) => {
       data,
     };
   
-    axios(superior)
+    await axios(superior)
       .then((responseSup) => {
         // console.log("Datos enviados al modelo de prendas superiores");
         updateImagesDB(responseSup.data);
       })
       .catch((error) => {
-        console.log("Error superior: ", error);
+        console.log("Error superior: ");
       });
   };
 

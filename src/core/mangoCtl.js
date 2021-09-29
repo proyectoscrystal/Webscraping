@@ -16,7 +16,6 @@ const instance = axios.create({
 });
 
 exports.getScrapingMango = async (req, res) => {
-  res.json({mensaje: "scraping completo de Mango"});
   await menCategory.menCategory();
   await menDiscount.menDiscount();
   await menNew.menNew();
@@ -138,7 +137,7 @@ exports.getscraping = async (arreglo) => {
 
 
   // envio de la informacion obtenida del scraping para el modelo cognitivo
-  let sendImgsModel = (data) => {
+  let sendImgsModel = async (data) => {
   
     instance.get(process.env.MODELO_GENERAL).catch(() => {
       // console.log('General')
@@ -158,7 +157,7 @@ exports.getscraping = async (arreglo) => {
       data,
     };
   
-    axios(general)
+    await axios(general)
       .then((response) => {
         // se anexan los campos que el modelo no enviaba 
         const respuesta = response.data;
@@ -175,6 +174,7 @@ exports.getscraping = async (arreglo) => {
         respuesta.materiales = data.materiales;
         respuesta.color = data.color;
         respuesta.estado = data.estado;
+        respuesta.enlaceImagen = data.enlaceImagen;
   
   
         // console.log("Datos enviados al modelo de prendas generales");
@@ -194,7 +194,7 @@ exports.getscraping = async (arreglo) => {
         
       })
       .catch((error) => {
-        console.log(error);
+        console.log("error en el sendImageModel MangoCtl");
       });
   };
   

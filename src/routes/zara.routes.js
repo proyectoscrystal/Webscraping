@@ -3,7 +3,7 @@ const zaraCtl = require('../core/zaraCtl')
 module.exports = (router) => {
 
     // scraping completo de Zara
-    router.get('/scraping_1', zaraCtl.getScraping);
+    router.get('/scraping_1', zaraCtl.getScrapingZara);
 
     // rutas para extraer zara mujer
     router.get('/womanCategory', zaraCtl.getWomanCategory);

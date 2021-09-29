@@ -15,8 +15,7 @@ const instance = axios.create({
   }),
 });
 
-exports.getScraping = async (req, res) => {
-  res.json({ mensaje: "se esta ejecutando scrapingCompleteWoman" });
+exports.getScrapingZara = async (req, res) => {
   await categoriaHombre.categoriaHombre();
   await manDiscount.manDiscount();
   await NewMan.newMan();
@@ -126,7 +125,7 @@ let quarter = () => {
   }
 };
 
-let sendImgsModel = (data) => {
+let sendImgsModel = async (data) => {
   // console.log(data.imageName +
   // 'probando desde zaractol');
 
@@ -148,7 +147,7 @@ let sendImgsModel = (data) => {
     data,
   };
 
-  axios(general)
+  await axios(general)
     .then((response) => {
       const respuesta = response.data;
       // console.log('desde response.data');
@@ -164,6 +163,7 @@ let sendImgsModel = (data) => {
       respuesta.materiales = data.materiales;
       respuesta.color = data.color;
       respuesta.estado = data.estado;
+      respuesta.enlaceImagen = data.enlaceImagen;
 
       // console.log("Datos enviados al modelo de prendas generales");
       saveImage.sendDataSup(data);
