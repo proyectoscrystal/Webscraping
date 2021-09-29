@@ -40,7 +40,7 @@ exports.newMan = async () => {
 
           const tmp = {};
           tmp.enlaceProducto = currentURL;
-          tmp.categoria = document.querySelector("title").textContent;
+          tmp.tipoPrenda = document.querySelector("title").textContent;
           tmp.imageName = document.querySelector(
             "#main > article > .product-detail-view__main > div > .product-detail-info > h1"
           ).textContent;
@@ -55,10 +55,10 @@ exports.newMan = async () => {
           tmp.enlaceImagen = document.querySelector(
             "#main > article > div > div > section > ul > li > button > div > div > picture > img"
           ).src;
-          tmp.gender = "Hombre";
+          tmp.categoria = "Hombre";
           tmp.marca = "Zara";
           tmp.descuento = "";
-          tmp.tag = "Nuevo";
+          tmp.tag = "nuevo";
           tmp.talla = Array.from(document.querySelectorAll('.product-detail-size-selector > div > ul > li > div > div > span'), xTallas => xTallas.textContent);
           tmp.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;
           tmp.color = tmp.color.split(' ')[1];

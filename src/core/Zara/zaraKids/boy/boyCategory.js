@@ -70,7 +70,7 @@ exports.boyCategory = async () => {
                         prenda.caracteristicas = prenda.caracteristicas.split(".");
                         prenda.caracteristicas.pop();
                         prenda.enlaceImagen = document.querySelector("#main > article > div > div > section > ul > li > button > div > div > picture > img").src;
-                        prenda.gender = "Niño";
+                        prenda.categoria = "Niño";
                         prenda.marca = "Zara";
                         prenda.descuento = "";
                         prenda.tag = "";
@@ -94,7 +94,7 @@ exports.boyCategory = async () => {
                 }
             }
 
-            prendasBoy.forEach((dato) => {dato.categoria = nombrecategoria});
+            prendasBoy.forEach((dato) => {dato.tipoPrenda = nombrecategoria});
 
             //console.log(prendasBoy);
             getScraping.getscraping(prendasBoy);

@@ -10,7 +10,7 @@ exports.babyBoyCategory = async () => {
 
         //====================CATEGORIAS BEBE NIÑO | 6 MESES - 5 AÑOS===========================
         const prendasBabyBoy = [];
-        //let count = 2;
+        // let count = 2;
 
         await page.goto("https://www.zara.com/co/es/ninos-bebe-nino-join-life-l37.html?v1=1939307");
         await page.setViewport( {width: 920, height: 1080} );
@@ -70,7 +70,7 @@ exports.babyBoyCategory = async () => {
                         prenda.caracteristicas = prenda.caracteristicas.split(".");
                         prenda.caracteristicas.pop();
                         prenda.enlaceImagen = document.querySelector("#main > article > div > div > section > ul > li > button > div > div > picture > img").src;
-                        prenda.gender = "Niño";
+                        prenda.categoria = "Niño";
                         prenda.marca = "Zara";
                         prenda.descuento = "";
                         prenda.tag = "";
@@ -94,7 +94,7 @@ exports.babyBoyCategory = async () => {
                 }
             }
 
-            prendasBabyBoy.forEach((dato) => {dato.categoria = nombrecategoria});
+            prendasBabyBoy.forEach((dato) => {dato.tipoPrenda = nombrecategoria});
 
             //console.log(prendasBabyBoy);
             getScraping.getscraping(prendasBabyBoy);

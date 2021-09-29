@@ -4,6 +4,8 @@ const NewMan = require("./Zara/newMan");
 const womanDiscount = require("./Zara/womanDiscount");
 const womanCategory = require("./Zara/womanCategory");
 const newWoman = require("./Zara/newWoman");
+const babyBoyCategory = require("./Zara/zaraKids/babyBoy/babyBoyCategory");
+const babyBoyDiscount = require("./Zara/zaraKids/babyBoy/babyBoyDiscount");
 const imageToBase64 = require("image-to-base64");
 const axios = require("axios");
 const https = require("https");
@@ -40,7 +42,7 @@ exports.getNewMan = (req, res) => {
 };
 
 exports.getDescuentoMujer = (req, res) => {
-  res.json({ mensaje: "se esta ejecutando" });
+  res.json({ mensaje: "se esta ejecutando womanDiscount" });
   womanDiscount.descuentoMujer();
 };
 
@@ -54,6 +56,28 @@ exports.getNewWoman = (req, res) => {
   newWoman.newWoman();
 };
 
+// metodos para el scraping kid
+exports.getBabyBoyCategory = (req, res) => {
+  res.json({mensaje: "se esta ejecutando BabyBoyCategory"});
+  babyBoyCategory.babyBoyCategory();
+  
+};
+
+exports.getBabyBoyDiscount = (req, res) => {
+  res.json({mensaje: "se esta ejecutando BabyBoyDiscount"});
+  babyBoyDiscount.babyBoyDiscount();
+  
+};
+
+exports.getBabyBoyNew = (req, res) => {
+  res.json({mensaje: "se esta ejecutando BabyBoyNew"});
+  babyBoyDiscount.babyBoyDiscount();
+  
+};
+
+
+
+// metodo para procesar y guardar la info del scraping 
 exports.getscraping = async (arreglo) => {
   // console.log(arreglo);
 
@@ -128,58 +152,61 @@ let quarter = () => {
 let sendImgsModel = async (data) => {
   // console.log(data.imageName +
   // 'probando desde zaractol');
+  saveImage.saveImagesDB(data);
 
-  instance.get(process.env.MODELO_GENERAL).catch(() => {
-    console.log("General");
-  });
+  // instance.get(process.env.MODELO_GENERAL).catch(() => {
+  //   console.log("General");
+  // });
 
-  const agent = new https.Agent({
-    rejectUnauthorized: false,
-  });
+  // saveImage.saveImagesDB(respuesta);
 
-  const general = {
-    method: "post",
-    url: process.env.MODELO_GENERAL,
-    httpsAgent: agent,
-    headers: {
-      "Content-Type": "application/json",
-    },
-    data,
-  };
+  // const agent = new https.Agent({
+  //   rejectUnauthorized: false,
+  // });
 
-  await axios(general)
-    .then((response) => {
-      const respuesta = response.data;
-      // console.log('desde response.data');
-      // console.log(respuesta);
-      respuesta.precio = data.precio;
-      respuesta.descuento = data.descuento;
-      respuesta.caracteristicas = data.caracteristicas;
-      respuesta.categoria = data.categoria;
-      respuesta.tag = data.tag;
-      respuesta.numeroTallas = data.numeroTallas;
-      respuesta.enlaceImagen = data.enlaceImagen;
-      respuesta.talla = data.talla;
-      respuesta.materiales = data.materiales;
-      respuesta.color = data.color;
-      respuesta.estado = data.estado;
-      respuesta.enlaceImagen = data.enlaceImagen;
+  // const general = {
+  //   method: "post",
+  //   url: process.env.MODELO_GENERAL,
+  //   httpsAgent: agent,
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   data,
+  // };
 
-      // console.log("Datos enviados al modelo de prendas generales");
-      saveImage.sendDataSup(data);
-      saveImage.saveImagesDB(respuesta);
+  // await axios(general)
+  //   .then((response) => {
+  //     const respuesta = response.data;
+  //     // console.log('desde response.data');
+  //     // console.log(respuesta);
+  //     respuesta.precio = data.precio;
+  //     respuesta.descuento = data.descuento;
+  //     respuesta.caracteristicas = data.caracteristicas;
+  //     respuesta.categoria = data.categoria;
+  //     respuesta.tag = data.tag;
+  //     respuesta.numeroTallas = data.numeroTallas;
+  //     respuesta.enlaceImagen = data.enlaceImagen;
+  //     respuesta.talla = data.talla;
+  //     respuesta.materiales = data.materiales;
+  //     respuesta.color = data.color;
+  //     respuesta.estado = data.estado;
+  //     respuesta.enlaceImagen = data.enlaceImagen;
 
-      if (
-        data.gender === "hjovenes" ||
-        data.gender === "hjunior" ||
-        data.gender === "hniños" ||
-        data.gender === "huniversitarios"
-      ) {
-        // console.log("Datos enviados al modelo de prendas inferiores");
-        sendDataInf(data);
-      }
-    })
-    .catch((error) => {
-      console.log('error en el sendImageModel ZaraCtl');
-    });
+  //     // console.log("Datos enviados al modelo de prendas generales");
+  //     saveImage.sendDataSup(data);
+  //     saveImage.saveImagesDB(respuesta);
+
+  //     if (
+  //       data.gender === "hjovenes" ||
+  //       data.gender === "hjunior" ||
+  //       data.gender === "hniños" ||
+  //       data.gender === "huniversitarios"
+  //     ) {
+  //       // console.log("Datos enviados al modelo de prendas inferiores");
+  //       sendDataInf(data);
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     console.log('error en el sendImageModel ZaraCtl');
+  //   });
 };

@@ -60,7 +60,7 @@ exports.girlCategory = async () => {
                         const http = 'https:';
                         const prenda = {};
                         prenda.enlaceProducto = currentURL;
-                        prenda.categoria = document.querySelector(
+                        prenda.tipoPrenda = document.querySelector(
                             "#app > main > div > .product-info > div > div:nth-child(1) > ol > li:nth-child(2) > a > span"
                         ).textContent;
                         prenda.imageName = document.querySelector(
@@ -78,7 +78,7 @@ exports.girlCategory = async () => {
                         prenda.enlaceImagen += document.querySelector(
                             "#renderedImages > ul > li > div > img"
                         ).src;
-                        prenda.gender = "Niña";
+                        prenda.categoria = "Niña";
                         prenda.marca = "Mango";
                         prenda.tag = "";
                         prenda.descuento = "";

@@ -42,7 +42,7 @@ exports.descuentoMujer = async () => {
 
           const tmp = {};
           tmp.enlaceProducto = currentURL;
-          tmp.categoria = document.querySelector("title").textContent;
+          tmp.tipoPrenda = document.querySelector("title").textContent;
           tmp.imageName = document.querySelector(
             "#main > article > .product-detail-view__main > div > .product-detail-info > h1"
           ).textContent;
@@ -52,7 +52,7 @@ exports.descuentoMujer = async () => {
           tmp.descuento = document.querySelector(
             "#main > article > div > div > div > div > div > span > span > span > span"
           ).textContent;
-          tmp.tag = '';
+          tmp.tag = 'descuento';
           tmp.caracteristicas = document.querySelector(
             "#main > article > div > div > div > .product-detail-description > div > div > div > p"
           ).textContent;
@@ -62,7 +62,7 @@ exports.descuentoMujer = async () => {
           tmp.enlaceImagen = document.querySelector(
             "#main > article > div > div > section > ul > li > button > div > div > picture > img"
           ).src;
-          tmp.gender = 'Mujer';
+          tmp.categoria = 'Mujer';
           tmp.marca = 'Zara';
           tmp.talla = Array.from(document.querySelectorAll('.product-detail-size-selector > div > ul > li > div > div > span'), xTallas => xTallas.textContent);
           tmp.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;

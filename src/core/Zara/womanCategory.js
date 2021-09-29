@@ -72,7 +72,7 @@ exports.womanCategory = async () => {
             tmp.caracteristicas = tmp.caracteristicas.split("."); // probando para separar por caracteristicas
             tmp.caracteristicas.pop();
             tmp.enlaceImagen = document.querySelector("#main > article > div > div > section > ul > li > button > div > div > picture > img").src;
-            tmp.gender = 'Mujer';
+            tmp.categoria = 'Mujer';
             tmp.marca = 'Zara';
             tmp.descuento = "";
             tmp.tag = "";            
@@ -96,7 +96,7 @@ exports.womanCategory = async () => {
         }
       }
 
-      prendasMujer.forEach((dato) => {dato.categoria = nombrecategoria});
+      prendasMujer.forEach((dato) => {dato.tipoPrenda = nombrecategoria});
 
       // console.log(prendasMujer);
 

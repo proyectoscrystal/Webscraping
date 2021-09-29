@@ -40,7 +40,7 @@ exports.babyBoyDiscount = async () => {
 
                     const prendas = {};
                     prendas.enlaceProducto = currentURL;
-                    //prendas.categoria = document.querySelector("title").textContent;
+                    prendas.tipoPrenda = document.querySelector("title").textContent;
                     prendas.imageName = document.querySelector("#main > article > .product-detail-view__main > div > .product-detail-info > h1").textContent;
                     prendas.precio = document.querySelector("#main > article > div > div > div > div > div > span > .price__amount--old").textContent;
                     prendas.descuento = document.querySelector("#main > article > div > div > div > div > div > span > span > span > span").textContent;
@@ -49,7 +49,7 @@ exports.babyBoyDiscount = async () => {
                     prendas.caracteristicas = prendas.caracteristicas.split("."); // probando para separar por caracteristicas
                     prendas.caracteristicas.pop();
                     prendas.enlaceImagen = document.querySelector("#main > article > div > div > section > ul > li > button > div > div > picture > img").src;
-                    prendas.gender = 'Niño';
+                    prendas.categoria = 'Niño';
                     prendas.marca = 'Zara';
                     prendas.talla = Array.from(document.querySelectorAll('.product-detail-size-selector > div > ul > li > div > div > span'), xTallas => xTallas.textContent);
                     prendas.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;

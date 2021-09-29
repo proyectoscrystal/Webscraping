@@ -28,7 +28,7 @@ exports.newWoman =async () => {
     });
 
     const nuevoMujer = [];
-    // let count = 5;
+    let count = 5;
 
     for (let enlaceNuevoM of enlacesNuevoM) {
       try {
@@ -40,7 +40,7 @@ exports.newWoman =async () => {
 
           const tmp = {};
           tmp.enlaceProducto = currentURL;
-          tmp.categoria = document.querySelector("title").textContent;
+          tmp.tipoPrenda = document.querySelector("title").textContent;
           tmp.imageName = document.querySelector(
             "#main > article > .product-detail-view__main > div > .product-detail-info > h1"
           ).textContent;
@@ -56,9 +56,9 @@ exports.newWoman =async () => {
           tmp.enlaceImagen = document.querySelector(
             "#main > article > div > div > section > ul > li > button > div > div > picture > img"
           ).src;
-          tmp.tag = "Nuevo";
+          tmp.tag = "nuevo";
           tmp.descuento = "";
-          tmp.gender = "Mujer";
+          tmp.categoria = "Mujer";
           tmp.marca = "Zara";
           tmp.talla = Array.from(document.querySelectorAll('.product-detail-size-selector > div > ul > li > div > div > span'), xTallas => xTallas.textContent);
           tmp.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;
@@ -68,11 +68,11 @@ exports.newWoman =async () => {
 
           return tmp;
         });
-        // count--;
+        count--;
         nuevoMujer.push(prendasNuevoMujer);
-        // if(count === 0){                
-        //     break;
-        // }
+        if(count === 0){                
+            break;
+        }
       } catch (error) {
         //console.log(error.message);;
       }

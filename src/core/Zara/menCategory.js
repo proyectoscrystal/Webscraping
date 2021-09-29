@@ -73,7 +73,7 @@ exports.categoriaHombre = async () => {
             tmp.caracteristicas = tmp.caracteristicas.split("."); // probando para separar por caracteristicas
             tmp.caracteristicas.pop();
             tmp.enlaceImagen = document.querySelector("#main > article > div > div > section > ul > li > button > div > div > picture > img").src;
-            tmp.gender = "Hombre";
+            tmp.categoria = "Hombre";
             tmp.marca = "Zara";
             tmp.descuento = "";
             tmp.tag = "";
@@ -97,7 +97,7 @@ exports.categoriaHombre = async () => {
         }
       }
 
-      prendasHombre.forEach((dato) => {dato.categoria = nombrecategoria});
+      prendasHombre.forEach((dato) => {dato.tipoPrenda = nombrecategoria});
 
       // console.log(prendasHombre);
       getScraping.getscraping(prendasHombre);

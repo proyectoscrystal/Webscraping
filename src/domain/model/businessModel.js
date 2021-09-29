@@ -30,7 +30,7 @@ const businessSchema = new Schema(
       required: false,
       trim: true,
     },
-    gender: {
+    categoria: {
       type: String,
       required: false,
       trim: true,
@@ -59,7 +59,7 @@ const businessSchema = new Schema(
     user: {
       type: mongoose.Schema.ObjectId,
     },
-    categoria: {
+    tipoPrenda: {
       type: String,
       require: false,
       trim: false,

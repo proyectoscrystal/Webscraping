@@ -14,4 +14,9 @@ module.exports = (router) => {
     router.get('/manCategory', zaraCtl.getCategoriaHombre);
     router.get('/manDiscount', zaraCtl.getManDiscount);
     router.get('/newMan', zaraCtl.getNewMan);
+
+    // rutas para extrar zara kids
+    router.get('/babyBoyCategory', zaraCtl.getBabyBoyCategory);   
+    router.get('/babyBoyDiscount', zaraCtl.getBabyBoyDiscount);   
+
 }

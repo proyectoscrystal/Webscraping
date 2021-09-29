@@ -38,14 +38,14 @@ exports.boyNew = async () => {
 
                     const prenda = {};
                     prenda.enlaceProducto = currentURL;
-                    //prenda.categoria = document.querySelector("title").textContent;
+                    prenda.tipoPrenda = document.querySelector("title").textContent;
                     prenda.imageName = document.querySelector("#main > article > .product-detail-view__main > div > .product-detail-info > h1").textContent;
                     prenda.precio = document.querySelector("#main > article > div > div > div > .product-detail-info__price > div > span > span > span > span").textContent;
                     prenda.caracteristicas = document.querySelector("#main > article > div > div > div > .product-detail-description > div > div > div > p").textContent;
                     prenda.caracteristicas = prenda.caracteristicas.split(".");
                     prenda.caracteristicas.pop();
                     prenda.enlaceImagen = document.querySelector("#main > article > div > div > section > ul > li > button > div > div > picture > img").src;
-                    prenda.gender = "Niño";
+                    prenda.categoria = "Niño";
                     prenda.marca = "Zara";
                     prenda.descuento = "";
                     prenda.tag = "Nuevo";

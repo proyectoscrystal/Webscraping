@@ -138,64 +138,67 @@ exports.getscraping = async (arreglo) => {
 
   // envio de la informacion obtenida del scraping para el modelo cognitivo
   let sendImgsModel = async (data) => {
+
+    saveImage.saveImagesDB(data);
+
   
-    instance.get(process.env.MODELO_GENERAL).catch(() => {
-      // console.log('General')
-    })
+    // instance.get(process.env.MODELO_GENERAL).catch(() => {
+    //   // console.log('General')
+    // })
   
-    const agent = new https.Agent({
-      rejectUnauthorized: false,
-    });
+    // const agent = new https.Agent({
+    //   rejectUnauthorized: false,
+    // });
   
-    const general = {
-      method: "post",
-      url: process.env.MODELO_GENERAL,
-      httpsAgent: agent,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data,
-    };
+    // const general = {
+    //   method: "post",
+    //   url: process.env.MODELO_GENERAL,
+    //   httpsAgent: agent,
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   data,
+    // };
   
-    await axios(general)
-      .then((response) => {
-        // se anexan los campos que el modelo no enviaba 
-        const respuesta = response.data;
-        // console.log('desde response.data');
-        // console.log(respuesta);
-        respuesta.precio = data.precio;
-        respuesta.descuento = data.descuento;
-        respuesta.caracteristicas = data.caracteristicas;
-        respuesta.categoria = data.categoria;
-        respuesta.tag = data.tag;
-        respuesta.numeroTallas = data.numeroTallas;
-        respuesta.enlaceImagen = data.enlaceImagen;
-        respuesta.talla = data.talla;
-        respuesta.materiales = data.materiales;
-        respuesta.color = data.color;
-        respuesta.estado = data.estado;
-        respuesta.enlaceImagen = data.enlaceImagen;
+    // await axios(general)
+    //   .then((response) => {
+    //     // se anexan los campos que el modelo no enviaba 
+    //     const respuesta = response.data;
+    //     // console.log('desde response.data');
+    //     // console.log(respuesta);
+    //     respuesta.precio = data.precio;
+    //     respuesta.descuento = data.descuento;
+    //     respuesta.caracteristicas = data.caracteristicas;
+    //     respuesta.categoria = data.categoria;
+    //     respuesta.tag = data.tag;
+    //     respuesta.numeroTallas = data.numeroTallas;
+    //     respuesta.enlaceImagen = data.enlaceImagen;
+    //     respuesta.talla = data.talla;
+    //     respuesta.materiales = data.materiales;
+    //     respuesta.color = data.color;
+    //     respuesta.estado = data.estado;
+    //     respuesta.enlaceImagen = data.enlaceImagen;
   
   
-        // console.log("Datos enviados al modelo de prendas generales");
-        saveImage.sendDataSup(data);
-        saveImage.saveImagesDB(respuesta);
+    //     // console.log("Datos enviados al modelo de prendas generales");
+    //     saveImage.sendDataSup(data);
+    //     saveImage.saveImagesDB(respuesta);
   
-        if (
-          data.gender === "hjovenes" ||
-          data.gender === "hjunior" ||
-          data.gender === "hniños" ||
-          data.gender === "huniversitarios"
-        ) {
-          // console.log("Datos enviados al modelo de prendas inferiores");
-          sendDataInf(data);
-        }
+    //     if (
+    //       data.gender === "hjovenes" ||
+    //       data.gender === "hjunior" ||
+    //       data.gender === "hniños" ||
+    //       data.gender === "huniversitarios"
+    //     ) {
+    //       // console.log("Datos enviados al modelo de prendas inferiores");
+    //       sendDataInf(data);
+    //     }
   
         
-      })
-      .catch((error) => {
-        console.log("error en el sendImageModel MangoCtl");
-      });
+    //   })
+    //   .catch((error) => {
+    //     console.log("error en el sendImageModel MangoCtl");
+    //   });
   };
   
   

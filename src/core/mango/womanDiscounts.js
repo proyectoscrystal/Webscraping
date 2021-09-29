@@ -36,7 +36,7 @@ exports.womanDiscount = async () => {
                     const http = 'https:';
                     const prenda = {};
                     prenda.enlaceProducto = currentURL;
-                    prenda.categoria = document.querySelector('#app > main > div > .product-info > div > div:nth-child(1) > ol > li:nth-child(2) > a > span').textContent;
+                    prenda.tipoPrenda = document.querySelector('#app > main > div > .product-info > div > div:nth-child(1) > ol > li:nth-child(2) > a > span').textContent;
                     prenda.imageName = document.querySelector('#app > main > div > div.product-actions > .product-features-prices > .product-features > h1').textContent;
                     prenda.precio = document.querySelector('#app > main > div > div > div > .product-prices > .product-sale--cross').textContent;
                     prenda.descuento = document.querySelector('#app > main > div > div > div > .product-prices > .product-sale--discount').textContent;
@@ -45,8 +45,8 @@ exports.womanDiscount = async () => {
                     prenda.caracteristicas.pop();
                     prenda.enlaceImagen = http;
                     prenda.enlaceImagen += document.querySelector('#renderedImages > ul > li > div > img').src;
-                    prenda.gender = 'Mujer';
-                    prenda.tag = '';
+                    prenda.categoria = 'Mujer';
+                    prenda.tag = 'descuento';
                     prenda.marca = 'Mango';
                     prenda.talla = Array.from(document.querySelectorAll('#sizeSelector > div > span'), xTallas => xTallas.textContent);
                     prenda.color = document.querySelector('#app > main > div > div > div > div.colors-info > span').textContent;

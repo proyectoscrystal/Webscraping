@@ -43,7 +43,7 @@ exports.menDiscount = async () => {
           const http = 'https:';
           const prenda = {};
           prenda.enlaceProducto = currentURL;
-          prenda.categoria = document.querySelector(
+          prenda.tipoPrenda = document.querySelector(
             "#app > main > div > .product-info > div > div:nth-child(1) > ol > li:nth-child(2) > a > span"
           ).textContent;
           prenda.imageName = document.querySelector(
@@ -64,8 +64,8 @@ exports.menDiscount = async () => {
           prenda.enlaceImagen += document.querySelector(
             "#renderedImages > ul > li > div > img"
           ).src;
-          prenda.gender = "Hombre";
-          prenda.tag = "";
+          prenda.categoria = "Hombre";
+          prenda.tag = "descuento";
           prenda.marca = "Mango";
           prenda.talla = Array.from(document.querySelectorAll('#sizeSelector > div > span'), xTallas => xTallas.textContent);
           prenda.color = document.querySelector('#app > main > div > div > div > div.colors-info > span').textContent;
