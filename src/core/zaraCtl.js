@@ -6,6 +6,19 @@ const womanCategory = require("./Zara/womanCategory");
 const newWoman = require("./Zara/newWoman");
 const babyBoyCategory = require("./Zara/zaraKids/babyBoy/babyBoyCategory");
 const babyBoyDiscount = require("./Zara/zaraKids/babyBoy/babyBoyDiscount");
+const babyBoyNew = require("./Zara/zaraKids/babyBoy/babyBoyNew");
+const babyGirlCategory = require("./Zara/zaraKids/babyGirl/babyGirlCategory");
+const babyGirlDiscount = require("./Zara/zaraKids/babyGirl/babyGirlDiscount");
+const babyGirlNew = require("./Zara/zaraKids/babyGirl/babyGirlNew");
+const boyCategory = require("./Zara/zaraKids/boy/boyCategory");
+const boyDiscount = require("./Zara/zaraKids/boy/boyDiscount");
+const boyNew = require("./Zara/zaraKids/boy/boyNew");
+const girlCategory = require("./Zara/zaraKids/girl/girlCategory");
+const girlDiscount = require("./Zara/zaraKids/girl/girlDiscount");
+const girlNew = require("./Zara/zaraKids/girl/girlNew");
+const miniKids = require("./Zara/zaraKids/miniKids");
+const miniKidsNew = require("./Zara/zaraKids/miniKidsNew");
+
 const imageToBase64 = require("image-to-base64");
 const axios = require("axios");
 const https = require("https");
@@ -24,6 +37,20 @@ exports.getScrapingZara = async (req, res) => {
   await womanCategory.womanCategory();
   await newWoman.newWoman();
   await womanDiscount.descuentoMujer();
+  await babyBoyNew.babyBoyNew();
+  await babyBoyCategory.babyBoyCategory();
+  await babyBoyDiscount.babyBoyDiscount();
+  await babyGirlCategory.babyGirlCategory();
+  await babyGirlDiscount.babyGirlDiscount();
+  await babyGirlNew.babyGirlNew();
+  await boyCategory.boyCategory();
+  await boyDiscount.boyDiscount();  
+  await boyNew.boyNew();
+  await girlCategory.girlCategory();
+  await girlDiscount.girlDiscount();
+  await girlNew.girlNew();
+  await miniKidsNew.miniKidsNew(); 
+  await miniKids.miniKids();
 };
 
 exports.getCategoriaHombre = (req, res) => {
@@ -71,8 +98,63 @@ exports.getBabyBoyDiscount = (req, res) => {
 
 exports.getBabyBoyNew = (req, res) => {
   res.json({mensaje: "se esta ejecutando BabyBoyNew"});
-  babyBoyDiscount.babyBoyDiscount();
+  babyBoyNew.babyBoyNew();
   
+};
+
+exports.getBabyGirlCategory = (req, res) => {
+  res.json({mensaje: "se esta ejecutando BabyGirlCategory"});
+  babyGirlCategory.babyGirlCategory();  
+};
+
+exports.getBabyGirlDiscount = (req, res) => {
+  res.json({mensaje: "se esta ejecutando BabyGirlDiscount"});
+  babyGirlDiscount.babyGirlDiscount();  
+};
+
+exports.getBabyGirlNew = (req, res) => {
+  res.json({mensaje: "se esta ejecutando BabyGirlNew"});
+  babyGirlNew.babyGirlNew();  
+};
+
+exports.getBoyCategory = (req, res) => {
+  res.json({mensaje: "se esta ejecutando BoyCategory"});
+  boyCategory.boyCategory();
+};
+
+exports.getBoyDiscount = (req, res) => {
+  res.json({mensaje: "se esta ejecutando boyDiscount"});
+  boyDiscount.boyDiscount();
+};
+
+exports.getBoyNew = (req, res) => {
+  res.json({mensaje: "se esta ejecutando boyNew"});
+  boyNew.boyNew(); 
+};
+
+exports.getGirlCategory = (req, res) => {
+  res.json({mensaje: "se esta ejecutando GirlCategory"});
+  girlCategory.girlCategory(); 
+};
+
+exports.getGirlDiscount = (req, res) => {
+  res.json({mensaje: "se esta ejecutando GirlDiscount"});
+  girlDiscount.girlDiscount(); 
+};
+
+exports.getGirlNew = (req, res) => {
+  res.json({mensaje: "se esta ejecutando GirlNew"});
+  girlNew.girlNew(); 
+};
+
+exports.getMiniKidsNew = (req, res) => {
+  res.json({mensaje: "se esta ejecutando miniKidsNews"});
+  miniKidsNew.miniKidsNew(); 
+};
+
+exports.getMiniKids = (req, res) => {
+  res.json({mensaje: "se esta ejecutando GirlNew"});
+  miniKids.miniKids();
 };
 
 

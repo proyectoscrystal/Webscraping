@@ -4,6 +4,19 @@ const menNew = require('./Mango/menNew');
 const womanCategory = require('./Mango/womanCategory');
 const womanDiscounts = require('./Mango/womanDiscounts');
 const womanNew = require('./Mango/womanNew');
+const babyBoyCategory = require('./Mango/mangoKids/babyBoy/babyBoyCategory');
+const babyBoyDiscount = require('./Mango/mangoKids/babyBoy/babyBoyDiscount');
+const babyBoyNew = require('./Mango/mangoKids/babyBoy/babyBoyNew');
+const boyCategory = require('./Mango/mangoKids/boy/boyCategory');
+const boyDiscount = require('./Mango/mangoKids/boy/boyDiscount');
+const boyNew = require('./Mango/mangoKids/boy/boyNew');
+const girlCategory = require('./Mango/mangoKids/girl/girlCategory');
+const girlDiscount = require('./Mango/mangoKids/girl/girlDiscount');
+const girlNew = require('./Mango/mangoKids/girl/girlNew');
+const babyGirlCategory = require('./Mango/mangoKids/babyGirl/babyGirlCategory');
+const babyGirlNew = require('./Mango/mangoKids/babyGirl/babyGirlNew');
+const miniKids = require('./Mango/mangoKids/miniKids');
+const miniKidsNew = require('./Mango/mangoKids/miniKidsNew');
 const imageToBase64 = require("image-to-base64");
 const axios = require('axios');
 const https = require("https");
@@ -52,6 +65,71 @@ exports.getWomanDiscount = (req, res) => {
 exports.getWomanNew = (req, res) => {
   res.json({mensaje: "conectado desde mango woman new"});
   womanNew.womanNew();
+}
+
+exports.getBabyBoyCategory = (req, res) => {
+  res.json({mensaje: "conectado desde mango babyboycategory"});
+  babyBoyCategory.babyBoyCategory();
+}
+
+exports.getBabyBoyDiscount = (req, res) => {
+  res.json({mensaje: "conectado desde mango babyboy discount"});
+  babyBoyDiscount.babyBoyDiscount();
+}
+
+exports.getBabyBoyNew = (req, res) => {
+  res.json({mensaje: "conectado desde mango babyBoy new"});
+  babyBoyNew.babyBoyNew();
+}
+
+exports.getBabyGirlCategory = (req, res) => {
+  res.json({mensaje: "conectado desde mango babyGirlcategory"});
+  babyGirlCategory.babyGirlCategory();
+}
+
+exports.getBabyGirlNew = (req, res) => {
+  res.json({mensaje: "conectado desde mango babyGirl new"});
+  babyGirlNew.babyGirlNew();
+}
+
+exports.getBoyCategory = (req, res) => {
+  res.json({mensaje: "conectado desde mango boycategory"});
+  boyCategory.boyCategory();
+}
+
+exports.getBoyDiscount = (req, res) => {
+  res.json({mensaje: "conectado desde mango boy discount"});
+  boyDiscount.boyDiscount();
+}
+
+exports.getBoyNew = (req, res) => {
+  res.json({mensaje: "conectado desde mango Boy new"});
+  boyNew.boyNew();
+}
+
+exports.getGirlCategory = (req, res) => {
+  res.json({mensaje: "conectado desde mango girlcategory"});
+  girlCategory.girlCategory();
+}
+
+exports.getGirlDiscount = (req, res) => {
+  res.json({mensaje: "conectado desde mango girl discount"});
+  girlDiscount.girlDiscount();
+}
+
+exports.getGirlNew = (req, res) => {
+  res.json({mensaje: "conectado desde mango girl new"});
+  girlNew.girlNew();
+}
+
+exports.getMiniKids = (req, res) => {
+  res.json({mensaje: "conectado desde mango miniKids"});
+  miniKids.miniKids();
+}
+
+exports.getMiniKidsNew = (req, res) => {
+  res.json({mensaje: "conectado desde mango miniKids new"});
+  miniKidsNew.miniKidsNew();
 }
 
 

@@ -1,42 +1,40 @@
 // scraping categorias zara
-// const categoriaHombre = require("./Zara/menCategory");
-// const manDiscount = require("./Zara/manDiscount");
-// const NewMan = require("./Zara/newMan");
-// const womanDiscount = require("./Zara/womanDiscount");
-// const womanCategory = require("./Zara/womanCategory");
-// const newWoman = require("./Zara/newWoman");
-// // scraping categorias mango
-// const menCategory = require('./Mango/menCategory');
-// const menDiscount = require('./Mango/menDiscounts');
-// const menNew = require('./Mango/menNew');
-// const womanCategoryMango = require('./Mango/womanCategory');
-// const womanDiscounts = require('./Mango/womanDiscounts');
-// const womanNew = require('./Mango/womanNew');
-
-const mangoScraping = require('./mangoCtl');
-
-const zaraScraping = require('./zaraCtl');
-
+const fs = require("fs");
+const mangoScraping = require("./mangoCtl");
+const zaraScraping = require("./zaraCtl");
 
 exports.Scraping = async (req, res) => {
+  //  uso de fs
+  let hora1 = new Date();
+  console.log(`Hora ${hora1.getHours()} : ${hora1.getMinutes()}`);
+  let lyrics1 = `Hora ${hora1.getHours().toString()} : ${hora1
+    .getMinutes()
+    .toString()}`;
+  // write to a new file named 2pac.txt
+  fs.writeFile("horaInicio.txt", lyrics1, (err) => {
+    // throws an error, you could also catch it here
+    if (err) throw err;
+    // success case, the file was saved
+    console.log("Lyric saved!");
+  });
 
-    await mangoScraping.getScrapingMango();
+  //
 
-    await zaraScraping.getScrapingZara();
+  await mangoScraping.getScrapingMango();
 
-    // await manDiscount.manDiscount();
-    // await NewMan.newMan();
-    // await womanDiscount.descuentoMujer();
-    // await newWoman.newWoman();
-    // await menDiscount.menDiscount();
-    // await menNew.menNew();
-    // await womanDiscounts.womanDiscount();
-    // await womanNew.womanNew();
-    // await womanCategory.womanCategory();
-    // await menCategory.menCategory();
-    // await womanCategoryMango.womanCategory();
-    // await categoriaHombre.categoriaHombre();
-    
+  await zaraScraping.getScrapingZara();
 
-}
-
+  //  uso de fs
+  let hora = new Date();
+  console.log(`Hora ${hora.getHours()} : ${hora.getMinutes()}`);
+  let lyrics = `Hora ${hora.getHours().toString()} : ${hora
+    .getMinutes()
+    .toString()}`;
+  // write to a new file named 2pac.txt
+  fs.writeFile("horaFin.txt", lyrics, (err) => {
+    // throws an error, you could also catch it here
+    if (err) throw err;
+    // success case, the file was saved
+    console.log("Lyric saved!");
+  });
+};
