@@ -64,6 +64,10 @@ const businessSchema = new Schema(
       require: false,
       trim: false,
     },
+    subcategoria: {
+      type: String,
+      require: false
+    },
     precio: {
       type: Number,
       require: false,
