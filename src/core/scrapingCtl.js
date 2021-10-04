@@ -5,9 +5,9 @@ const avgPrice = require("./filtersScraping/AveragePrice");
 exports.averagePrice = async (req, res) => {
     const filtro = req.body;
     let arr;
-
-    // ver que valores llegan desde el front
-    // console.log(filtro);
+    let obj;
+    let values = [];
+    let origin = '';
 
     try {
         arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1});
@@ -16,12 +16,29 @@ exports.averagePrice = async (req, res) => {
         return res.json({mensaje: "no hubo respuesta para los criterios de busqueda"});
     }
 
+    if (filtro.origin === undefined) {
+        values = avgPrice.averagePriceMonthGeneral(arr);
+        origin = 'general';
+        
+    } else if(filtro.origin === 'Zara'){
+        origin = 'Zara';
+        values = avgPrice.averagePriceMonthGeneral(arr);
+
+    } else if(filtro.origin === 'Mango'){
+        origin = 'Mango';
+        values = avgPrice.averagePriceMonthGeneral(arr);
+
+    }
+
+
     
     // respuesta para el frontend
-    let obj = {  
+    obj = {  
         sku:calculateSKU(arr),
         totalProductos: arr.length,
-        precioPromedio: avgPrice.averagePriceYear(arr)
+        precioPromedio: avgPrice.averagePriceYear(arr),
+        origin,
+        values,
     }
 
 
@@ -32,8 +49,6 @@ exports.averagePrice = async (req, res) => {
 
 let calculateSKU = (arr) => {
     let totalSKU = 0;
-    arr.forEach(element => {
-        totalSKU += element.numeroTallas;
-    });
+    arr.forEach(element => {totalSKU += element.numeroTallas;});
     return totalSKU;
 }
