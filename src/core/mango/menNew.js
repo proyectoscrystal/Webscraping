@@ -24,7 +24,7 @@ exports.menNew = async () => {
         });
 
         const nuevoHombre = [];
-        // let count = 5;
+        let count = 1;
 
         for (let enlaceNuevo of enlacesNuevo) {
             await page.goto(enlaceNuevo);
@@ -57,11 +57,11 @@ exports.menNew = async () => {
 
                     return prenda;
                 });
-                // count--;
+                count--;
                 nuevoHombre.push(prendaNuevo);
-                // if(count === 0) {
-                //     break;
-                // }
+                if(count === 0) {
+                    break;
+                }
             } catch (error) {
                 //console.log(error.message);
             }

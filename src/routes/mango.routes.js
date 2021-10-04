@@ -1,4 +1,5 @@
 const mangoCtl = require("../core/mangoCtl");
+const scrapingCtl = require("../core/scrapingCtl");
 
 
 
@@ -39,4 +40,9 @@ module.exports = (router) => {
     // miniKids routes
     router.get('/m_miniKids',mangoCtl.getMiniKids);
     router.get('/m_miniKidsNew',mangoCtl.getMiniKidsNew);
+
+
+    // respuestas a solicitudes desde el front
+    router.get('/m_averagePrice',scrapingCtl.averagePrice);
+
 }
