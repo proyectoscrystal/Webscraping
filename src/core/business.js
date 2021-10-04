@@ -58,16 +58,10 @@ const agent = new https.Agent({
 let sendData;
 const consultaFiltro = async (data) => {
   const prendaGenLower = [];
-  const prendasMangoLower = [];
-
 
   // Pasar a misnusculas todas las prendas generales
   data.prendasGenerales.forEach((prenda) => {
     prendaGenLower.push(prenda.toLowerCase());
-  });
-
-  data.prendasScrapingMango.forEach((prenda) => {
-    prendasMangoLower.push(prenda.toLowerCase());
   });
 
   const consulta = await Business.aggregate([
@@ -77,11 +71,6 @@ const consultaFiltro = async (data) => {
           {
             prendasGenerales: {
               $in: prendaGenLower,
-            },
-          },
-          {
-            prendasScrapingMango: {
-              $in: prendasMangoLower,
             },
           },
           {
@@ -628,25 +617,7 @@ exports.getImagesFilter = async (request, response) => {
 
       queryArray.push(queryDB);
     }
-  }
-
-  if (query.categorias !== undefined) {
-    if (typeof query.categorias !== "object") {
-      const queryDB = {
-        prendasScrapingMango: {
-          $in: [query.categorias],
-        },
-      };
-      queryArray.push(queryDB);
-    } else {
-      const queryDB = {
-        prendasScrapingMango: {
-          $in: query.categorias,
-        },
-      };
-      queryArray.push(queryDB);
-    }
-  }  
+  } 
 
   if (query.color !== undefined) {
     if (typeof query.color !== "object") {
@@ -766,11 +737,6 @@ const saveImagesDB = async (data) => {
     prendaGenLower.push(prenda.toLowerCase());
   });
 
-  const prendasMangoLower = [];
-  data.prendasScrapingMango.forEach((prenda) => {
-    prendasMangoLower.push(prenda.toLowerCase());
-  });
-
   const prendaColorLower = [];
   let prendaColor = {};
   data.prendaColor.forEach((prenda) => {
@@ -819,7 +785,6 @@ const saveImagesDB = async (data) => {
 
     const imageData = {
       imageName: blobName,
-      prendasScrapingMango: prendasMangoLower,
       prendasGenerales: prendaGenLower,
       hexColors: data.hexColors,
       principalColors: colorPpalLower,

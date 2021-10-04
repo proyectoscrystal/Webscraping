@@ -15,7 +15,7 @@ exports.Scraping = async (req, res) => {
     // throws an error, you could also catch it here
     if (err) throw err;
     // success case, the file was saved
-    console.log("Lyric saved!");
+    console.log("Hora guardada!");
   });
 
   //
@@ -35,6 +35,6 @@ exports.Scraping = async (req, res) => {
     // throws an error, you could also catch it here
     if (err) throw err;
     // success case, the file was saved
-    console.log("Lyric saved!");
+    console.log("Hora guardada!");
   });
 };

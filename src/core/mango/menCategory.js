@@ -15,9 +15,7 @@ exports.menCategory = async () => {
     await page.waitForTimeout(5000);
 
     const enlaceshombre = await page.evaluate(() => {
-      const elements = document.querySelectorAll(
-        "#header > .menu-component > .section-detail-container > div > ul:nth-child(2) > li > a"
-      );
+      const elements = document.querySelectorAll("#header > .menu-component > .section-detail-container > div > ul:nth-child(2) > li > a");
       const linkshombre = [];
       for (let element of elements) {
         linkshombre.push(element.href);
