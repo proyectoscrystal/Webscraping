@@ -12,7 +12,7 @@ exports.womanCategory = async () => {
     // let count = 5;
 
     //====================CATEGORIAS MUJER===========================
-    await page.goto("https://www.zara.com/co/es/woman-editorial-6-mkt1102.html?v1=1883903"); //Se especifica el enlace para categoría de mujer
+    await page.goto("https://www.zara.com/co/es/mujer-blazers-l1055.html?v1=1882224"); //Se especifica el enlace para categoría de mujer
     await page.setViewport({ width: 920, height: 1080 }); //Tamaño de la página
     await page.waitForTimeout(5000); //Tiempo para cargar la página completa
 
@@ -26,6 +26,7 @@ exports.womanCategory = async () => {
       }
       return linksmujer;
     });
+    console.log(enlacesmujer);
 
     //Se crea un for el cual llevará todo el proceso
     for (let enlacemujer of enlacesmujer) {
@@ -98,15 +99,13 @@ exports.womanCategory = async () => {
 
       prendasMujer.forEach((dato) => {dato.tipoPrenda = nombrecategoria});
 
-      // console.log(prendasMujer);
+      //console.log(prendasMujer);
+      getscraping.getscraping(prendasMujer);
 
       // if (count === 0) {
       //   break;
       // }
     }
-
-    getscraping.getscraping(prendasMujer);
-
     
     //====================CATEGORIAS MUJER===========================
 
