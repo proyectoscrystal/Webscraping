@@ -62,11 +62,12 @@ const businessSchema = new Schema(
     tipoPrenda: {
       type: String,
       require: false,
-      trim: false,
+      trim: true,
     },
-    subcategoria: {
+    subCategoria: {
       type: String,
-      require: false
+      require: false,
+      trim: true
     },
     precio: {
       type: Number,
@@ -105,9 +106,9 @@ const businessSchema = new Schema(
     },
     enlaceImagen: {
       type: String,
-      require: true,
+      require: false,
       trim: false,
-      unique: true,
+      unique: false,
     },
     fecha_consulta: {
       type: Date,

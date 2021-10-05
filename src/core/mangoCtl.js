@@ -22,6 +22,9 @@ const axios = require('axios');
 const https = require("https");
 const saveImage = require("./scrapingSaveDB");
 
+// arreglo con las subcategorias
+const verificarSub = require("../utils/index");
+
 const instance = axios.create({
   httpsAgent: new https.Agent({
     rejectUnauthorized: false,
@@ -140,11 +143,22 @@ exports.getscraping = async (arreglo) => {
     // console.log(arreglo);
     // se formatean los datos descuento, tallas y precio, para llevarlos a la db
     for (let i = 0; i < arreglo.length; i++) {
-      let { precio, enlaceImagen, descuento, talla, tag } = arreglo[i];
+      let { precio, enlaceImagen, descuento, talla, tag, tipoPrenda } = arreglo[i];
+
+
+      let subCategoria = '';
+      
+        // convertir en minusculas
+        tipoPrenda = tipoPrenda.trim().toLowerCase();
+  
+        
+        subCategoria = setSubCategory(tipoPrenda);
+        // fin funcion para setear subCategoria
+      
 
        // obtener el estado
-    let estado = saveImage.getState(tag, descuento);
-    // console.log(estado);
+      let estado = saveImage.getState(tag, descuento);
+      // console.log(estado);
 
       precio = parseInt(precio.substring(1).split(".").join(""), 10);
       if (descuento !== "") {
@@ -180,7 +194,9 @@ exports.getscraping = async (arreglo) => {
         action: 'prendas',
         user: "612d470390cb5641a0311cf3",
         numeroTallas,
-        estado
+        estado,
+        tipoPrenda,
+        subCategoria
       };
 
       sendImgsModel(newObject);
@@ -212,6 +228,16 @@ exports.getscraping = async (arreglo) => {
     }
   
   };
+
+  let setSubCategory = (tipoPrenda) => {
+    for (let index = 0; index < verificarSub.subCategoria.length; index++) {
+      // console.log(`sub: ${verificarSub.subCategoria[index]} - tipo: ${verificarSub.tipoPrenda[index]}`);
+      if (tipoPrenda === verificarSub.tipoPrenda[index]) {
+        return  verificarSub.subCategoria[index]
+      }      
+    }
+    return tipoPrenda;
+  }
 
 
   // envio de la informacion obtenida del scraping para el modelo cognitivo

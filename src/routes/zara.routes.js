@@ -1,4 +1,5 @@
-const zaraCtl = require('../core/zaraCtl')
+const zaraCtl = require('../core/zaraCtl');
+const pruebaCicloVida = require('../core/pruebaCicloVida');
 
 module.exports = (router) => {
 
@@ -36,6 +37,10 @@ module.exports = (router) => {
     //rutas para extraer zara minikids
     router.get('/miniKidsNew', zaraCtl.getMiniKidsNew); 
     router.get('/miniKids', zaraCtl.getMiniKids); 
+
+
+    // ruta de prueba
+    router.post('/test', pruebaCicloVida.saveImagesDBPrueba);
 
 
 }

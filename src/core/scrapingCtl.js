@@ -22,12 +22,11 @@ exports.averagePrice = async (req, res) => {
         
     } else if(filtro.origin === 'Zara'){
         origin = 'Zara';
-        values = avgPrice.averagePriceMonthGeneral(arr);
+        values = avgPrice.averagePriceMonthOrigin(arr);
 
     } else if(filtro.origin === 'Mango'){
         origin = 'Mango';
-        values = avgPrice.averagePriceMonthGeneral(arr);
-
+        values = avgPrice.averagePriceMonthOrigin(arr);
     }
 
 

@@ -26,6 +26,7 @@ const blobServiceClient = new BlobServiceClient(
 const axios = require("axios");
 const https = require("https");
 const Business = require("../domain/model/businessDao");
+const businessSchema = require("../domain/model/businessModel");
 
 const instance = axios.create({
     httpsAgent: new https.Agent({
@@ -161,10 +162,9 @@ exports.saveImagesDB = async (data) => {
         // prendaColor: prendaColorLower,
         base64: 'https://blackboxscraping.blob.core.windows.net/scraping/VESTIDO%20LARGO%20BRILLOS%20LIMITED%20EDITION', // aca va el valor de url del blobstorage
         year: data.year,
-        gender: data.gender,
         origin: data.origin,
         quarter: data.quarter,
-        use: data.use,
+        // use: data.use,
         user: data.user,
         categoria: data.categoria,
         precio: data.precio,
@@ -173,6 +173,7 @@ exports.saveImagesDB = async (data) => {
         caracteristicas: data.caracteristicas,
         talla: data.talla,
         color: data.color,
+        subCategoria: data.subCategoria,
         materiales: data.materiales,
         numeroTallas: data.numeroTallas,
         estado: data.estado,
@@ -180,14 +181,56 @@ exports.saveImagesDB = async (data) => {
         tipoPrenda: data.tipoPrenda,
       };
       // console.log(imageData);
-  
-      await Business.create(imageData, (err) => {
-        if (err && err.code === 11000) {
-          console.log("Imagen ya existe");
+
+
+
+      // ciclo de vida de los productos
+      try {
+
+        // nuevos
+        let inBD = await Business.find({"enlaceImagen": imageData.enlaceImagen, "color": imageData.color});
+
+        if (inBD.length !== 0 ) {
+          console.log(inBD);
+
+          if(inBD.estado === imageData.estado && inBD.enlaceImagen === imageData.enlaceImagen ){
+            console.log('No ha cambiado el estado');
+          } else if(inBD.estado !== imageData.estado ){
+
+            console.log('guardo doc estado cambiado'); 
+            await Business.create(imageData, (err) => {
+              if (err && err.code === 11000) {
+                console.log("Imagen ya existe");
+              } else {
+                console.log("Imagen guardada en bd");
+              }
+            });
+          }
+
         } else {
-          console.log("Imagen guardada en bd");
+
+          await Business.create(imageData, (err) => {
+            if (err && err.code === 11000) {
+              console.log("Imagen ya existe");
+            } else {
+              console.log("Imagen guardada en bd");
+            }
+          });
         }
-      });
+
+
+        
+      } catch (error) {
+        console.log('error desde el ciclo de vida');
+        console.log(error);
+      }
+
+
+  
+      // metodo para guardar en la bd
+      
+
+
     } catch (error) {
       console.log(error);
     }

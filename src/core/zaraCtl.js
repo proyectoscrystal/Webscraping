@@ -19,6 +19,9 @@ const girlNew = require("./Zara/zaraKids/girl/girlNew");
 const miniKids = require("./Zara/zaraKids/miniKids");
 const miniKidsNew = require("./Zara/zaraKids/miniKidsNew");
 
+// arreglo con las subcategorias
+const subCategory = require("../utils/index");
+
 const imageToBase64 = require("image-to-base64");
 const axios = require("axios");
 const https = require("https");
@@ -165,7 +168,21 @@ exports.getscraping = async (arreglo) => {
 
   // se formatean los datos descuento y precio, para llevarlos a la db
   for (let i = 0; i < arreglo.length; i++) {
-    let { precio, enlaceImagen, descuento, talla, tag } = arreglo[i];
+    let { precio, enlaceImagen, descuento, talla, tag, tipoPrenda } = arreglo[i];
+
+    
+
+    let subCategoria = '';
+    if(arreglo[i].tipoPrenda === undefined) {
+      return ; 
+    } else {
+      // convertir en minusculas
+      tipoPrenda = tipoPrenda.trim().toLowerCase();
+
+      
+      subCategoria = setSubCategory(tipoPrenda);
+      // fin funcion para setear subCategoria
+    }
 
     // obtener el estado
     let estado = saveImage.getState(tag, descuento);
@@ -205,6 +222,8 @@ exports.getscraping = async (arreglo) => {
       user: "612d470390cb5641a0311cf3",
       numeroTallas,
       estado,
+      tipoPrenda,
+      subCategoria
     };
 
     sendImgsModel(newObject);
@@ -230,6 +249,16 @@ let quarter = () => {
     return "Q4";
   }
 };
+
+let setSubCategory = (tipoPrenda) => {
+  for (let index = 0; index < verificarSub.subCategoria.length; index++) {
+    // console.log(`sub: ${verificarSub.subCategoria[index]} - tipo: ${verificarSub.tipoPrenda[index]}`);
+    if (tipoPrenda === verificarSub.tipoPrenda[index]) {
+      return  verificarSub.subCategoria[index]
+    }      
+  }
+  return tipoPrenda;
+}
 
 let sendImgsModel = async (data) => {
   // console.log(data.imageName +

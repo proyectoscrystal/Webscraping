@@ -38,4 +38,7 @@ module.exports = (router) => {
   router.get("/private", auth.verifyToken, auth.privateRoute);
 
   // router.get('/test', Business.test);
+  
+
+
 };
