@@ -8,7 +8,7 @@ exports.menNew = async () => {
         const page = await browser.newPage();
 
         //====================HOMBRE NUEVA COLECCIÓN===========================
-        await page.goto('https://shop.mango.com/co/hombre/destacados/nueva-coleccion_d15834751');
+        await page.goto('https://shop.mango.com/co/hombre/destacados/nuevo_d28067354');
         await page.setViewport({ width: 920, height: 1080 });
         await page.waitForTimeout(4000);
         await autoScroll(page);

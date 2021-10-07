@@ -188,16 +188,25 @@ exports.saveImagesDB = async (data) => {
       try {
 
         // nuevos
-        let inBD = await Business.find({"enlaceImagen": imageData.enlaceImagen, "color": imageData.color});
+        let inBD = await Business.findOne({"enlaceImagen": imageData.enlaceImagen, "color": imageData.color});
 
-        if (inBD.length !== 0 ) {
-          console.log(inBD);
+        if (inBD == null || inBD.length != 0  ) {
 
-          if(inBD.estado === imageData.estado && inBD.enlaceImagen === imageData.enlaceImagen ){
+          if (inBD == null) {
+            console.log('producto almacenado'); 
+            await Business.create(imageData, (err) => {
+              if (err && err.code === 11000) {
+                console.log("Imagen ya existe");
+              } else {
+                console.log("Imagen guardada en bd");
+              }
+            });
+            
+          } else if(inBD.estado == imageData.estado){
             console.log('No ha cambiado el estado');
           } else if(inBD.estado !== imageData.estado ){
 
-            console.log('guardo doc estado cambiado'); 
+            console.log('guardo doc, estado cambiado'); 
             await Business.create(imageData, (err) => {
               if (err && err.code === 11000) {
                 console.log("Imagen ya existe");
@@ -207,16 +216,7 @@ exports.saveImagesDB = async (data) => {
             });
           }
 
-        } else {
-
-          await Business.create(imageData, (err) => {
-            if (err && err.code === 11000) {
-              console.log("Imagen ya existe");
-            } else {
-              console.log("Imagen guardada en bd");
-            }
-          });
-        }
+        } 
 
 
         

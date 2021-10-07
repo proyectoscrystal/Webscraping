@@ -44,5 +44,6 @@ module.exports = (router) => {
 
     // respuestas a solicitudes desde el front
     router.get('/m_averagePrice',scrapingCtl.averagePrice);
+    router.get('/m_infoCards',scrapingCtl.cardsInfo);
 
 }
