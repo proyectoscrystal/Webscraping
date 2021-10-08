@@ -466,7 +466,7 @@ exports.averagePriceMonthGeneral = (arr) => {
 
 };
 
-// metodo para filtrar por mango o zara
+// metodo para filtrar por mango o zara array de precios promedios por mes
 exports.averagePriceMonthOrigin = (arr) => {
   let eneZ = [];
   let febZ = [];
