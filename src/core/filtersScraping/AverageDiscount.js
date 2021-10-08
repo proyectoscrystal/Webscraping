@@ -240,7 +240,7 @@ exports.averageDiscount = arr => {
     if (descuentoPromedio === 0) {
         return descuentoPromedio
     } else {
-        return parseInt((descuentoPromedio / arr.length).toFixed());
+        return parseFloat((descuentoPromedio / arr.length).toFixed(2));
     }
   };
 
@@ -264,7 +264,7 @@ exports.averageDiscount = arr => {
         return descuentoPromedio
     } else {
         // console.log(parseInt((descuentoPromedio / arr.length).toFixed()));
-        return parseInt((descuentoPromedio / totalProductosDescuento).toFixed());
+        return parseFloat((descuentoPromedio / totalProductosDescuento).toFixed());
     }
 
   };

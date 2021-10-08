@@ -46,13 +46,14 @@ exports.averagePriceMonthGeneral = (arr) => {
   let nov = [];
   let dic = [];
 
+  
+  let date = new Date();
+  let currentMonth = date.getMonth() - 1;
   // let count = 1;
 
   try {
     arr.forEach((element) => {
-      let date = new Date();
       let currentYear = date.getFullYear();
-      let currentMonth = date.getMonth() - 1;
       let lastYear = date.getFullYear() - 1;
       let fecha = element.createdAt + ""; // funcion para obtener la fecha
       let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero
@@ -459,6 +460,7 @@ exports.averagePriceMonthGeneral = (arr) => {
   valuesZ[45] = setAveragePriceMonth(oct2);
   valuesZ[46] = setAveragePriceMonth(nov2);
   valuesZ[47] = setAveragePriceMonth(dic2);
+  valuesZ[48] = currentMonth;
 
   return valuesZ;
 
