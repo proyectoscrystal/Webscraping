@@ -290,6 +290,7 @@ exports.averageNews = async (req, res) => {
         }
     });
 
+    months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
     
     // respuesta para el frontend
@@ -297,6 +298,7 @@ exports.averageNews = async (req, res) => {
         totalProductos: arr.length,
         origin,
         nuevos,
+        months,
         newsCounts
     }
 
@@ -333,11 +335,13 @@ exports.averageSKU = async (req, res) => {
         skuCounts = avgSKU.averageSKUMonthGeneral(arr);
     }
 
+    months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
     
     // respuesta para el frontend
     obj = {  
         origin,
-        skuCounts
+        skuCounts,
+        months
     }
 
 
