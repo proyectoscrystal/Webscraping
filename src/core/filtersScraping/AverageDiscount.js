@@ -274,39 +274,39 @@ exports.averageDiscountMonthGeneral = (arr) => {
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
 
-          return eneZ.push(discount);
+          return enem.push(discount);
         } 
         if(mes === 'Feb' && element.descuento !== null)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
 
-          febZ.push(discount);
+          febm.push(discount);
         }
          if(mes === 'Mar' && element.descuento !== null)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
 
-          marZ.push(discount);
+          marm.push(discount);
         }
         if(mes === 'Apr' && element.descuento !== null)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-          abrZ.push(discount);
+          abrm.push(discount);
         }
         if(mes === 'May' && element.descuento !== null)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-          mayZ.push(discount);
+          maym.push(discount);
         }
         if(mes === 'Jun' && element.descuento !== null)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-          junZ.push(discount);
+          junm.push(discount);
         }
         if(mes === 'Jul' && element.descuento !== null)  {
           let { precio, descuento} = element;
@@ -318,19 +318,19 @@ exports.averageDiscountMonthGeneral = (arr) => {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-          agosZ.push(discount);
+          agosm.push(discount);
         }
         if(mes === 'Sep' && element.descuento !== null)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-          sepZ.push(discount);
+          sepm.push(discount);
         }
         if(mes === 'Oct' && element.descuento !== null)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-          octZ.push(discount);
+          octm.push(discount);
         }
         if(mes === 'Nov' && element.descuento !== null)  {
           let { precio, descuento} = element;
@@ -342,7 +342,7 @@ exports.averageDiscountMonthGeneral = (arr) => {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-          dicZ.push(discount);
+          dicm.push(discount);
         }
       }
 
@@ -351,73 +351,73 @@ exports.averageDiscountMonthGeneral = (arr) => {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-          ene.push(discount);
+          ene2.push(discount);
         }
         if(mes === 'Feb' && element.descuento !== null)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-          feb.push(discount);
+          feb2.push(discount);
         }
         if(mes === 'Mar' && element.descuento !== null)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-          mar.push(discount);
+          mar2.push(discount);
         }
         if(mes === 'Apr' && element.descuento !== null)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-          abr.push(discount);
+          abr2.push(discount);
         }
         if(mes === 'May' && element.descuento !== null)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-          may.push(discount);
+          may2.push(discount);
         }
         if (mes === 'Jun' && element.descuento !== null)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-          jun.push(discount);
+          jun2.push(discount);
         }
         if (mes === 'Jul' && element.descuento !== null)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-          jul.push(discount);
+          jul2.push(discount);
         }
         if (mes === 'Aug' && element.descuento !== null)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-          agos.push(discount);
+          agos2.push(discount);
         }
         if (mes === 'Sep' && element.descuento !== null)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-          sep.push(discount);
+          sep2.push(discount);
         }
         if (mes === 'Oct' && element.descuento !== null)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-          oct.push(discount);
+          oct2.push(discount);
         }
         if (mes === 'Nov' && element.descuento !== null)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-          nov.push(discount);
+          nov2.push(discount);
         }
         if (mes === 'Dec' && element.descuento !== null)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-          dic.push(discount);
+          dic2.push(discount);
         }
       }
     }); // fin del ciclo que guarda los precios de cada mes
