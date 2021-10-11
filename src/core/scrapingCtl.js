@@ -13,20 +13,17 @@ exports.cardsInfo = async (req, res) => {
 
     // arreglo de mango y zara para los precios 
     let zm = [];
-
     // arreglo de mango y zara para los descuentos
     let dzm = [];
+    // arreglo de mango y zara para los nuevos
+    let nzm = [];
 
     let arr;
     let obj;
     let origin = '';
     let values = [];
-    let value = [];
     let discounts = [];
-    let discount = 0;
-    let nuevos = 0;
     let descontinuados = 0;
-    let currentMonthPrice = 0; // mes actual precio
     let newsCounts = 0;
     // variables para la diferencia entre mes actual y anterior
     let differencePrice = [];
@@ -58,15 +55,19 @@ exports.cardsInfo = async (req, res) => {
         zm[1] += values[month + 24]; // valor actual de mango
 
 
+        newsCounts = avgNews.averageNewsMonthGeneral(arr); // calcula el precio promedio por mes dos marcas 2 años
+        nzm[0] = newsCounts[month - 1];
+        nzm[1] =  newsCounts[month]; // valor actual de zara 
+        nzm[0] += newsCounts[month + 23];
+        nzm[1] += newsCounts[month + 24]; // valor actual de mango
 
 
-
-        // newsCard = avgNews;
         origin = 'general';        
 
         // array de dos valores para setear la diferencia entre mes actual y anterior
         differencePrice =  percentageDifferencePrice(zm[1], zm[0]);
         differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
+        differenceNew = percentageDifferencesnews(nzm[1], nzm[0]);
 
 
         
@@ -79,12 +80,17 @@ exports.cardsInfo = async (req, res) => {
         // valores de diferencia de porcentajes
         dzm[0] = discounts[month - 1];
         dzm[1] = discounts[month];
+        
+        // valores de diferencia de nuevos
+        nzm[0] = newsCounts[month - 1];
+        nzm[1] = newsCounts[month];
 
         zm[0] = values[month - 1];
         zm[1] =  values[month]; // valor actual 
 
         differencePrice =  percentageDifferencePrice(zm[1], zm[0]);
         differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
+        differenceNew = percentageDifferencesnews(nzm[1], nzm[0]);
 
     } else if(filtro.origin === 'Mango'){
         origin = 'Mango';
@@ -97,11 +103,16 @@ exports.cardsInfo = async (req, res) => {
         dzm[0] = discounts[month - 1];
         dzm[1] = discounts[month];
 
+        // valores de diferencia de nuevos
+        nzm[0] = newsCounts[month - 1];
+        nzm[1] = newsCounts[month];
+
         zm[0] = values[month - 1];
         zm[1] =  values[month]; // valor actual de zara 
 
         differencePrice =  percentageDifferencePrice(zm[1], zm[0]);
         differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
+        differenceNew = percentageDifferencesnews(nzm[1], nzm[0]);
     }
 
     
@@ -119,6 +130,7 @@ exports.cardsInfo = async (req, res) => {
         descontinuados,
         differencePrice, // porcentaje de diferencia
         differencePorcentage,
+        differenceNew,
     }
 
 
@@ -233,18 +245,16 @@ exports.averageNews = async (req, res) => {
     }
 
     if (filtro.origin === undefined) {
-        discounts = avgDiscount.averageDiscountMonthGeneral(arr);
+        newsCounts = avgNews.averageNewsMonthGeneral(arr);
         origin = 'general';
         
     } else if(filtro.origin === 'Zara'){
         origin = 'Zara';
-        values = avgPrice.averagePriceMonthOrigin(arr);
-        discounts = avgDiscount.averageDiscount(arr);
+        newsCounts = avgPrice.averagePriceMonthOrigin(arr);
 
     } else if(filtro.origin === 'Mango'){
         origin = 'Mango';
-        values = avgPrice.averagePriceMonthOrigin(arr);
-        discounts = avgDiscount.averageDiscount(arr);
+        newsCounts = avgPrice.averagePriceMonthOrigin(arr);
     }
 
     // cantidad de prendas nuevas
@@ -259,13 +269,10 @@ exports.averageNews = async (req, res) => {
     
     // respuesta para el frontend
     obj = {  
-        sku:calculateSKU(arr),
         totalProductos: arr.length,
-        precioPromedio: avgPrice.averagePriceYear(arr),
         origin,
         nuevos,
-        values,
-        discounts
+        newsCounts
     }
 
 
@@ -355,6 +362,25 @@ percentageDifferencePrice = (current, before) => {
     } else if (current < before) {
         difference[0] = 0;
         difference[1] =  parseFloat(Math.abs( ((current*100)/before)-100 ).toFixed(2));
+        return difference;
+    } else {
+        difference[0] = 0;
+        difference[1] = 0;
+        return difference;
+    }
+
+}
+
+percentageDifferencesnews = (current, before) => {
+    // 1 positive 0 negative
+    let difference = [];
+    if (current >= before) {
+        difference[0] = 1;
+        difference[1] =  parseInt((current-before));
+        return difference;
+    } else if (current < before) {
+        difference[0] = 0;
+        difference[1] =  parseInt((before-current));
         return difference;
     } else {
         difference[0] = 0;
