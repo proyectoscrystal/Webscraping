@@ -8,6 +8,7 @@ const avgSKU = require("./filtersScraping/SKU");
 // info cards response
 exports.cardsInfo = async (req, res) => {
     const filtro = req.body;
+    console.log(req);
     //mes actual
     let date = new Date();
     let month = date.getMonth() - 1; // cambiar quitar el - 1 esta asi por pruebas en mes octubre
