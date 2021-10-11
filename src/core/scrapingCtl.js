@@ -2,6 +2,7 @@ const Business = require("../domain/model/businessDao");
 const avgPrice = require("./filtersScraping/AveragePrice");
 const avgDiscount = require("./filtersScraping/AverageDiscount");
 const avgNews = require("./filtersScraping/newProducts")
+const avgSKU = require("./filtersScraping/SKU");
 
 
 // info cards response
@@ -17,6 +18,8 @@ exports.cardsInfo = async (req, res) => {
     let dzm = [];
     // arreglo de mango y zara para los nuevos
     let nzm = [];
+    // arreglo de mango y zara para los SKU
+    let skuzm = [];
 
     let arr;
     let obj;
@@ -25,6 +28,7 @@ exports.cardsInfo = async (req, res) => {
     let discounts = [];
     let descontinuados = 0;
     let newsCounts = 0;
+    let skuCounts = 0;
     // variables para la diferencia entre mes actual y anterior
     let differencePrice = [];
     let differencePorcentage = [];
@@ -62,12 +66,20 @@ exports.cardsInfo = async (req, res) => {
         nzm[1] += newsCounts[month + 24]; // valor actual de mango
 
 
+        skuCounts = avgSKU.averageSKUMonthGeneral(arr); // calcula el precio promedio por mes dos marcas 2 años
+        skuzm[0] = skuCounts[month - 1];
+        skuzm[1] =  skuCounts[month]; // valor actual de zara 
+        skuzm[0] += skuCounts[month + 23];
+        skuzm[1] += skuCounts[month + 24]; // valor actual de mango
+
+
         origin = 'general';        
 
         // array de dos valores para setear la diferencia entre mes actual y anterior
         differencePrice =  percentageDifferencePrice(zm[1], zm[0]);
         differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
         differenceNew = percentageDifferencesnews(nzm[1], nzm[0]);
+        differenceSKU = percentageDifferencesSku(skuzm[1], skuzm[0]);
 
 
         
@@ -76,6 +88,7 @@ exports.cardsInfo = async (req, res) => {
         discounts = avgDiscount.averageDiscount(arr); // calcula los promedios por mes una marca 2 años
         values = avgPrice.averagePriceMonthOrigin(arr); // promedio precio de la marca seleccionada por mes 2 años
         newsCounts = avgNews.averageNewsMonthOrigin(arr); // promedio precio de la marca seleccionada por mes 2 años
+        skuCounts = avgSKU.averageSKUMonthOrigin(arr); // calcula el precio promedio por mes dos marcas 2 años
         
         // valores de diferencia de porcentajes
         dzm[0] = discounts[month - 1];
@@ -84,6 +97,10 @@ exports.cardsInfo = async (req, res) => {
         // valores de diferencia de nuevos
         nzm[0] = newsCounts[month - 1];
         nzm[1] = newsCounts[month];
+        
+        // valores de diferencia de nuevos
+        skuzm[0] = skuCounts[month - 1];
+        skuzm[1] = skuCounts[month];
 
         zm[0] = values[month - 1];
         zm[1] =  values[month]; // valor actual 
@@ -91,12 +108,14 @@ exports.cardsInfo = async (req, res) => {
         differencePrice =  percentageDifferencePrice(zm[1], zm[0]);
         differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
         differenceNew = percentageDifferencesnews(nzm[1], nzm[0]);
+        differenceSKU = percentageDifferencesSku(skuzm[1], skuzm[0]);
 
     } else if(filtro.origin === 'Mango'){
         origin = 'Mango';
         discounts = avgDiscount.averageDiscount(arr); // calcula los promedios por mes
         values = avgPrice.averagePriceMonthOrigin(arr); // precio promedio por mes dos años una marca
         newsCounts = avgNews.averageNewsMonthOrigin(arr); // promedio precio de la marca seleccionada por mes 2 años
+        skuCounts = avgSKU.averageSKUMonthOrigin(arr); // calcula el precio promedio por mes dos marcas 2 años
         
 
         // valores de diferencia de porcentajes
@@ -107,12 +126,17 @@ exports.cardsInfo = async (req, res) => {
         nzm[0] = newsCounts[month - 1];
         nzm[1] = newsCounts[month];
 
+        // valores de diferencia de nuevos
+        skuzm[0] = skuCounts[month - 1];
+        skuzm[1] = skuCounts[month];
+
         zm[0] = values[month - 1];
         zm[1] =  values[month]; // valor actual de zara 
 
         differencePrice =  percentageDifferencePrice(zm[1], zm[0]);
         differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
         differenceNew = percentageDifferencesnews(nzm[1], nzm[0]);
+        differenceSKU = percentageDifferencesSku(skuzm[1], skuzm[0]);
     }
 
     
@@ -124,20 +148,21 @@ exports.cardsInfo = async (req, res) => {
         discount:  avgDiscount.averageDiscountQuery(arr),  // guarda el descuento de toda la consulta
         nuevos : news(arr),
         origin,
-        discounts, // guarda el descuento por mes de la consulta
-        values, // precio promedio una marca un año
-        newsCounts,
+        discounts, // guarda el descuento
+        values, // precio promedio 
+        newsCounts, // nuevos 
+        skuCounts,
         descontinuados,
         differencePrice, // porcentaje de diferencia
         differencePorcentage,
         differenceNew,
+        differenceSKU
     }
 
 
     res.status(200).json({obj});
 }
 // fin info cards response
-
 
 
 // precio promedio por los ultimos 2 años y descuento promedio (charts y tablas)
@@ -296,39 +321,23 @@ exports.averageSKU = async (req, res) => {
     }
 
     if (filtro.origin === undefined) {
-        discounts = avgDiscount.averageDiscountMonthGeneral(arr);
+        skuCounts = avgSKU.averageSKUMonthGeneral(arr);        
         origin = 'general';
         
     } else if(filtro.origin === 'Zara'){
         origin = 'Zara';
-        values = avgPrice.averagePriceMonthOrigin(arr);
-        discounts = avgDiscount.averageDiscount(arr);
+        skuCounts = avgSKU.averageSKUMonthGeneral(arr);
 
     } else if(filtro.origin === 'Mango'){
         origin = 'Mango';
-        values = avgPrice.averagePriceMonthOrigin(arr);
-        discounts = avgDiscount.averageDiscount(arr);
+        skuCounts = avgSKU.averageSKUMonthGeneral(arr);
     }
-
-    // cantidad de prendas nuevas
-    let nuevos = 0;
-    arr.forEach(element => {
-        if (element.tag === 'nuevo') {
-            nuevos += 1;
-        }
-    });
-
 
     
     // respuesta para el frontend
     obj = {  
-        sku:calculateSKU(arr),
-        totalProductos: arr.length,
-        precioPromedio: avgPrice.averagePriceYear(arr),
         origin,
-        nuevos,
-        values,
-        discounts
+        skuCounts
     }
 
 
@@ -374,7 +383,7 @@ percentageDifferencePrice = (current, before) => {
 percentageDifferencesnews = (current, before) => {
     // 1 positive 0 negative
     let difference = [];
-    if (current >= before) {
+    if (current >= before && current !== 0) {
         difference[0] = 1;
         difference[1] =  parseInt((current-before));
         return difference;
@@ -393,13 +402,32 @@ percentageDifferencesnews = (current, before) => {
 percentageDifferencesDiscount = (current, before) => {
     // 1 positive 0 negative
     let difference = [];
-    if (current >= before) {
+    if (current >= before && current !== 0) {
         difference[0] = 1;
         difference[1] =  parseFloat((current-before).toFixed(2));
         return difference;
     } else if (current < before) {
         difference[0] = 0;
         difference[1] =  parseFloat((before-current).toFixed(2));
+        return difference;
+    } else {
+        difference[0] = 0;
+        difference[1] = 0;
+        return difference;
+    }
+
+}
+
+percentageDifferencesSku = (current, before) => {
+    // 1 positive 0 negative
+    let difference = [];
+    if (current >= before && current !== 0) {
+        difference[0] = 1;
+        difference[1] =  parseInt((current-before));
+        return difference;
+    } else if (current < before) {
+        difference[0] = 0;
+        difference[1] =  parseInt((before-current));
         return difference;
     } else {
         difference[0] = 0;
