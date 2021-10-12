@@ -7,8 +7,11 @@ const avgSKU = require("./filtersScraping/SKU");
 
 // info cards response
 exports.cardsInfo = async (req, res) => {
-    const filtro = req.body;
-    console.log(req);
+    let filtro = req.query;
+    
+    filtro = organizarQuery(filtro);
+
+    // console.log(filtro);
     //mes actual
     let date = new Date();
     let month = date.getMonth() - 1; // cambiar quitar el - 1 esta asi por pruebas en mes octubre
@@ -168,7 +171,9 @@ exports.cardsInfo = async (req, res) => {
 
 // precio promedio por los ultimos 2 años y descuento promedio (charts y tablas)
 exports.averagePrice = async (req, res) => {
-    const filtro = req.body;
+    let filtro = req.query;
+    
+    filtro = organizarQuery(filtro);
     let arr;
     let obj;
     let values = [];
@@ -212,7 +217,9 @@ exports.averagePrice = async (req, res) => {
 
 // descuento promedio
 exports.averageDiscount = async (req, res) => {
-    const filtro = req.body;
+    let filtro = req.query;
+    
+    filtro = organizarQuery(filtro);
     let arr;
     let obj;
     let values = [];
@@ -257,7 +264,9 @@ exports.averageDiscount = async (req, res) => {
 
 // nuevos
 exports.averageNews = async (req, res) => {
-    const filtro = req.body;
+    let filtro = req.query;
+    
+    filtro = organizarQuery(filtro);
     let arr;
     let obj;
     let values = [];
@@ -310,7 +319,9 @@ exports.averageNews = async (req, res) => {
 
 // average SKU
 exports.averageSKU = async (req, res) => {
-    const filtro = req.body;
+    let filtro = req.query;
+    
+    filtro = organizarQuery(filtro);
     let arr;
     let obj;
     let values = [];
@@ -421,6 +432,28 @@ percentageDifferencesDiscount = (current, before) => {
         return difference;
     }
 
+}
+
+organizarQuery = (query) => {
+    let obj = {};
+    if(query.origin !== ''){
+        obj.origin = query.origin;
+    }
+    if(query.categoria !== ''){
+        obj.categoria = query.categoria; 
+    }
+    if(query.subCategoria !== ''){
+        obj.subCategoria = query.subCategoria;
+    }
+    if(query.tipoPrenda !== ''){
+        obj.tipoPrenda = query.tipoPrenda; 
+    }
+    if(query.color !== ''){
+        obj.color = query.color; 
+    }
+
+
+    return obj;
 }
 
 percentageDifferencesSku = (current, before) => {
