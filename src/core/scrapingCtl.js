@@ -27,7 +27,6 @@ exports.cardsInfo = async (req, res) => {
 
     let arr;
     let obj;
-    let origin = '';
     let values = [];
     let discounts = [];
     let descontinuados = 0;
@@ -177,7 +176,6 @@ exports.averagePrice = async (req, res) => {
     let arr;
     let obj;
     let values = [];
-    let origin = '';
 
     try {
         arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
@@ -223,7 +221,6 @@ exports.averageDiscount = async (req, res) => {
     let arr;
     let obj;
     let values = [];
-    let origin = '';
 
     try {
         arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
@@ -233,16 +230,16 @@ exports.averageDiscount = async (req, res) => {
     }
 
     if (filtro.origin === undefined) {
-        discounts = avgDiscount.averageDiscountMonthGeneral(arr);
+        values = avgDiscount.averageDiscountMonthGeneral(arr);
         origin = 'general';
         
     } else if(filtro.origin === 'Zara'){
         origin = 'Zara';
-        discounts = avgDiscount.averageDiscount(arr);
+        values = avgDiscount.averageDiscount(arr);
 
     } else if(filtro.origin === 'Mango'){
         origin = 'Mango';
-        discounts = avgDiscount.averageDiscount(arr);
+        values = avgDiscount.averageDiscount(arr);
     }
 
     months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -254,7 +251,7 @@ exports.averageDiscount = async (req, res) => {
     obj = {  
         totalProductos: arr.length,        
         origin,
-        discounts,
+        values,
         months
     }
 
