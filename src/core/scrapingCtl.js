@@ -230,7 +230,7 @@ exports.averageDiscount = async (req, res) => {
     }
 
     if (filtro.origin === undefined) {
-        values = avgDiscount.averageDiscountMonthGeneral(arr);
+        values = avgDiscount.averageDiscountMonthGeneral(arr);        
         origin = 'general';
         
     } else if(filtro.origin === 'Zara'){
@@ -267,7 +267,6 @@ exports.averageNews = async (req, res) => {
     let arr;
     let obj;
     let values = [];
-    let origin = '';
 
     try {
         arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
@@ -277,16 +276,16 @@ exports.averageNews = async (req, res) => {
     }
 
     if (filtro.origin === undefined) {
-        newsCounts = avgNews.averageNewsMonthGeneral(arr);
+        values = avgNews.averageNewsMonthGeneral(arr);
         origin = 'general';
         
     } else if(filtro.origin === 'Zara'){
         origin = 'Zara';
-        newsCounts = avgPrice.averagePriceMonthOrigin(arr);
+        values = avgPrice.averagePriceMonthOrigin(arr);
 
     } else if(filtro.origin === 'Mango'){
         origin = 'Mango';
-        newsCounts = avgPrice.averagePriceMonthOrigin(arr);
+        values = avgPrice.averagePriceMonthOrigin(arr);
     }
 
     // cantidad de prendas nuevas
@@ -306,7 +305,7 @@ exports.averageNews = async (req, res) => {
         origin,
         nuevos,
         months,
-        newsCounts
+        values
     }
 
 
@@ -322,7 +321,6 @@ exports.averageSKU = async (req, res) => {
     let arr;
     let obj;
     let values = [];
-    let origin = '';
 
     try {
         arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
@@ -332,16 +330,16 @@ exports.averageSKU = async (req, res) => {
     }
 
     if (filtro.origin === undefined) {
-        skuCounts = avgSKU.averageSKUMonthGeneral(arr);        
+        values = avgSKU.averageSKUMonthGeneral(arr);        
         origin = 'general';
         
     } else if(filtro.origin === 'Zara'){
         origin = 'Zara';
-        skuCounts = avgSKU.averageSKUMonthGeneral(arr);
+        values = avgSKU.averageSKUMonthOrigin(arr);
 
     } else if(filtro.origin === 'Mango'){
         origin = 'Mango';
-        skuCounts = avgSKU.averageSKUMonthGeneral(arr);
+        values = avgSKU.averageSKUMonthOrigin(arr);
     }
 
     months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -349,7 +347,7 @@ exports.averageSKU = async (req, res) => {
     // respuesta para el frontend
     obj = {  
         origin,
-        skuCounts,
+        values,
         months
     }
 
