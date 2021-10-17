@@ -38,6 +38,7 @@ exports.cardsInfo = async (req, res) => {
     let differenceNew = [];
     let differenceDiscontinued = [];
     let differenceSKU = [];
+    let origin = '';
 
     try {
         arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
@@ -60,6 +61,7 @@ exports.cardsInfo = async (req, res) => {
         zm[1] =  values[month]; // valor actual de zara 
         zm[0] += values[month + 23];
         zm[1] += values[month + 24]; // valor actual de mango
+        precioPromedio = ((values[month] + values[month + 24]) / 2);
 
 
         newsCounts = avgNews.averageNewsMonthGeneral(arr); // calcula el precio promedio por mes dos marcas 2 años
@@ -90,6 +92,7 @@ exports.cardsInfo = async (req, res) => {
         origin = 'Zara';
         discounts = avgDiscount.averageDiscount(arr); // calcula los promedios por mes una marca 2 años
         values = avgPrice.averagePriceMonthOrigin(arr); // promedio precio de la marca seleccionada por mes 2 años
+        precioPromedio = values[month];
         newsCounts = avgNews.averageNewsMonthOrigin(arr); // promedio precio de la marca seleccionada por mes 2 años
         skuCounts = avgSKU.averageSKUMonthOrigin(arr); // calcula el precio promedio por mes dos marcas 2 años
         
@@ -117,6 +120,7 @@ exports.cardsInfo = async (req, res) => {
         origin = 'Mango';
         discounts = avgDiscount.averageDiscount(arr); // calcula los promedios por mes
         values = avgPrice.averagePriceMonthOrigin(arr); // precio promedio por mes dos años una marca
+        precioPromedio = values[month];
         newsCounts = avgNews.averageNewsMonthOrigin(arr); // promedio precio de la marca seleccionada por mes 2 años
         skuCounts = avgSKU.averageSKUMonthOrigin(arr); // calcula el precio promedio por mes dos marcas 2 años
         
@@ -147,7 +151,7 @@ exports.cardsInfo = async (req, res) => {
     obj = {  
         sku:calculateSKU(arr),
         totalProductos: arr.length,
-        precioPromedio: avgPrice.averagePriceYear(arr), // precio promedio de ambas marcas 
+        precioPromedio, // precio promedio de ambas marcas 
         discount:  avgDiscount.averageDiscountQuery(arr),  // guarda el descuento de toda la consulta
         nuevos : news(arr),
         origin,
@@ -176,6 +180,7 @@ exports.averagePrice = async (req, res) => {
     let arr;
     let obj;
     let values = [];
+    let origin = '';
 
     try {
         arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
@@ -218,9 +223,12 @@ exports.averageDiscount = async (req, res) => {
     let filtro = req.query;
     
     filtro = organizarQuery(filtro);
+    filtro.descuento = {$ne: null};
+    
     let arr;
     let obj;
     let values = [];
+    let origin = '';
 
     try {
         arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
@@ -267,6 +275,7 @@ exports.averageNews = async (req, res) => {
     let arr;
     let obj;
     let values = [];
+    let origin = '';
 
     try {
         arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
@@ -321,6 +330,7 @@ exports.averageSKU = async (req, res) => {
     let arr;
     let obj;
     let values = [];
+    let origin = '';
 
     try {
         arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
@@ -355,6 +365,52 @@ exports.averageSKU = async (req, res) => {
     res.status(200).json({obj});
 }
 
+// precio promedio por los ultimos 2 años y descuento promedio (charts y tablas)
+exports.tableInfo = async (req, res) => {
+    let filtro = req.query;
+    
+    filtro = organizarQuery(filtro);
+    let arr;
+    let obj;
+    let values = [];
+
+    try {
+        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
+    } catch (error) {
+        console.log("no se obtuvo respuesta");
+        return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
+    }
+
+    if (filtro.origin === undefined) {
+        values = avgPrice.averagePriceMonthGeneral(arr);
+        origin = 'general';
+        
+    } else if(filtro.origin === 'Zara'){
+        origin = 'Zara';
+        values = avgPrice.averagePriceMonthOrigin(arr);
+
+    } else if(filtro.origin === 'Mango'){
+        origin = 'Mango';
+        values = avgPrice.averagePriceMonthOrigin(arr);
+    }
+
+    months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+
+    
+    // respuesta para el frontend
+    obj = {  
+        precioPromedio: avgPrice.averagePriceYear(arr),
+        origin,
+        values,
+        months,
+    }
+
+
+    res.status(200).json({obj});
+}
+
+
 let calculateSKU = (arr) => {
     let totalSKU = 0;
     arr.forEach(element => {totalSKU += element.numeroTallas});
@@ -377,10 +433,12 @@ percentageDifferencePrice = (current, before) => {
     let difference = [];
     if (current >= before  && current !== 0) {
         difference[0] = 1;
+        difference[1] = difference[1]/2;
         difference[1] =  parseFloat(Math.abs( ((before*100)/current)-100 ).toFixed(2));
         return difference;
     } else if (current < before) {
         difference[0] = 0;
+        difference[1] = difference[1]/2;
         difference[1] =  parseFloat(Math.abs( ((current*100)/before)-100 ).toFixed(2));
         return difference;
     } else {

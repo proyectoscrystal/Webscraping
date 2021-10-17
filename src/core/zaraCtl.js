@@ -20,7 +20,8 @@ const miniKids = require("./Zara/zaraKids/miniKids");
 const miniKidsNew = require("./Zara/zaraKids/miniKidsNew");
 
 // arreglo con las subcategorias
-const subCategory = require("../utils/index");
+
+const verificarSub = require("../utils/index");
 
 const imageToBase64 = require("image-to-base64");
 const axios = require("axios");
@@ -168,9 +169,19 @@ exports.getscraping = async (arreglo) => {
 
   // se formatean los datos descuento y precio, para llevarlos a la db
   for (let i = 0; i < arreglo.length; i++) {
-    let { precio, enlaceImagen, descuento, talla, tag, tipoPrenda } = arreglo[i];
+    let { precio, enlaceImagen, descuento, talla, tag, tipoPrenda, color } = arreglo[i];
 
-    
+    // esperar validacion de parte de camilo, saber si se puede implementar en zara
+    let tallasAux = [];
+      let tallasAgotadas = [];
+      talla.forEach(element => {
+        if (element.length > 3) {
+          tallasAgotadas.push(element.split(' ')[0])
+        } else {
+          tallasAux.push(element)
+        }        
+      });
+      talla = tallasAux;
 
     let subCategoria = '';
     if(arreglo[i].tipoPrenda === undefined) {
@@ -183,6 +194,9 @@ exports.getscraping = async (arreglo) => {
       subCategoria = setSubCategory(tipoPrenda);
       // fin funcion para setear subCategoria
     }
+
+    // funcion para homologar el color
+    color = setColor(color);
 
     // obtener el estado
     let estado = saveImage.getState(tag, descuento);
@@ -223,7 +237,10 @@ exports.getscraping = async (arreglo) => {
       numeroTallas,
       estado,
       tipoPrenda,
-      subCategoria
+      subCategoria,
+      color,
+      talla,
+      tallasAgotadas
     };
 
     sendImgsModel(newObject);
@@ -258,6 +275,17 @@ let setSubCategory = (tipoPrenda) => {
     }      
   }
   return tipoPrenda;
+}
+
+let setColor = (color) => {
+  for (let index = 0; index < verificarSub.colorSinHomologar.length; index++) {
+    // console.log(`sub: ${verificarSub.subCategoria[index]} - tipo: ${verificarSub.tipoPrenda[index]}`);
+
+    if (color === verificarSub.colorSinHomologar[index]) {
+      return  verificarSub.colorHomologado[index]
+    }      
+  }
+  return color;
 }
 
 let sendImgsModel = async (data) => {

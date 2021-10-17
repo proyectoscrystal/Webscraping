@@ -52,7 +52,7 @@ const businessSchema = new Schema(
     },
     numeroTallas : {
       type: Number
-    },
+    },    
     estado:{
       type: String
     },
@@ -86,6 +86,12 @@ const businessSchema = new Schema(
         type: String,
         trim: true,
         require: false
+      },
+    ],
+    tallasAgotadas: [
+      {
+        type: String,
+        trim: true
       },
     ],
     color: {

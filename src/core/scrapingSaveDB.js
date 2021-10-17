@@ -76,10 +76,6 @@ let updateImagesDB = async (data) => {
 
   // save images
 exports.saveImagesDB = async (data) => {
-    // console.log('from saveImagesDB' );
-    // console.log(data);
-    // console.log("Almacenando imagen en DB...");
-
 
     // trasformar la base 64 en buffer
 
@@ -94,47 +90,7 @@ exports.saveImagesDB = async (data) => {
   
     // fin trasformar la base 64 en buffer 
     
-  
-    // Pasar a minusculas todas las prendas generales
-    // const prendaGenLower = [];
-    // data.prendasGenerales.forEach((prenda) => {
-    //   prendaGenLower.push(prenda.toLowerCase());
-    // });
-  
-    // const prendaColorLower = [];
-    // let prendaColor = {};
-    // data.prendaColor.forEach((prenda) => {
-    //   const colorLower = prenda.ppal.toLowerCase();
-    //   const prendaLower = prenda.prenda.toLowerCase();
-  
-    //   prendaColor = {
-    //     ppal: colorLower,
-    //     prenda: prendaLower,
-    //   };
-  
-    //   prendaColorLower.push(prendaColor);
-    //   for (let j = 0; j < prendaColorLower.length; j++) {
-    //     prendaColor.hexaColor = data.hexColors[j];
-    //     prendaColor.pantoneColor = data.pantoneColors[j];
-    //   }
-    // });
-  
-    // const colorPpalLower = [];
-    // data.principalColors.forEach((color) => {
-    //   colorPpalLower.push(color.toLowerCase());
-    // });
-  
-    // const colores = [];
-    // data.colores.forEach((color) => {
-    //   const ppalColor = color.ppal.toLowerCase();
-    //   const arrayNew = {
-    //     ppal: ppalColor,
-    //     hexa: color.hexa,
-    //   };
-  
-    //   colores.push(arrayNew);
-    // });
-  
+   
     try {
       // mandar el buffer al blogstorage
 
@@ -154,12 +110,6 @@ exports.saveImagesDB = async (data) => {
   
       const imageData = {
         imageName: data.imageName,
-        // prendasGenerales: prendaGenLower,
-        // hexColors: data.hexColors,
-        // principalColors: colorPpalLower,
-        // pantoneColors: data.pantoneColors,
-        // colores,
-        // prendaColor: prendaColorLower,
         base64: 'https://blackboxscraping.blob.core.windows.net/scraping/VESTIDO%20LARGO%20BRILLOS%20LIMITED%20EDITION', // aca va el valor de url del blobstorage
         year: data.year,
         origin: data.origin,
@@ -179,8 +129,9 @@ exports.saveImagesDB = async (data) => {
         estado: data.estado,
         enlaceImagen: data.enlaceImagen,
         tipoPrenda: data.tipoPrenda,
+        tallasAgotadas: data.tallasAgotadas
       };
-      // console.log(imageData);
+      console.log(imageData);
 
 
 
