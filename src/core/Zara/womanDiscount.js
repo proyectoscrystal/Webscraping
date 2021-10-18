@@ -9,7 +9,7 @@ exports.descuentoMujer = async () => {
 
     //====================PRENDAS EN DESCUENTO - MUJER==========================
     await page.goto(
-      "https://www.zara.com/co/es/woman-event-3-l1971.html?v1=1610713",
+      "https://www.zara.com/co/es/mujer-precios-especiales-l1314.html?v1=1883601",
       { waitUntil: "networkidle2" }
     );
     await page.setViewport({ width: 920, height: 1080 });
