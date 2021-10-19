@@ -14,7 +14,7 @@ exports.cardsInfo = async (req, res) => {
     // console.log(filtro);
     //mes actual
     let date = new Date();
-    let month = date.getMonth() - 1; // cambiar quitar el - 1 esta asi por pruebas en mes octubre
+    let month = date.getMonth(); 
 
     // arreglo de mango y zara para los precios 
     let zm = [];
@@ -208,7 +208,6 @@ exports.averagePrice = async (req, res) => {
     
     // respuesta para el frontend
     obj = {  
-        precioPromedio: avgPrice.averagePriceYear(arr),
         origin,
         values,
         months,
@@ -256,8 +255,7 @@ exports.averageDiscount = async (req, res) => {
 
     
     // respuesta para el frontend
-    obj = {  
-        totalProductos: arr.length,        
+    obj = {       
         origin,
         values,
         months
@@ -309,8 +307,7 @@ exports.averageNews = async (req, res) => {
 
     
     // respuesta para el frontend
-    obj = {  
-        totalProductos: arr.length,
+    obj = {
         origin,
         nuevos,
         months,
@@ -320,7 +317,9 @@ exports.averageNews = async (req, res) => {
 
     res.status(200).json({obj});
 }
+
 // fin average news
+
 
 // average SKU
 exports.averageSKU = async (req, res) => {
@@ -410,6 +409,51 @@ exports.tableInfo = async (req, res) => {
     res.status(200).json({obj});
 }
 
+exports.prendasInfo = async (req, res) => {
+    let filtro = req.query;
+    
+    filtro = organizarQuery(filtro);
+
+    // console.log(filtro);
+    //mes actual
+    let date = new Date();
+    let month = date.getMonth();
+    
+    try {
+        arr = await Business.find(filtro,{"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
+    } catch (error) {
+        console.log("no se obtuvo respuesta");
+        return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
+    }
+
+    if (filtro.origin === undefined) {
+        values = avgPrice.averagePriceMonthGeneral(arr);
+        origin = 'general';
+        
+    } else if(filtro.origin === 'Zara'){
+        origin = 'Zara';
+        values = avgPrice.averagePriceMonthOrigin(arr);
+
+    } else if(filtro.origin === 'Mango'){
+        origin = 'Mango';
+        values = avgPrice.averagePriceMonthOrigin(arr);
+    }
+
+
+
+
+    // respuesta para el frontend
+    obj = {  
+        precioPromedio: avgPrice.averagePriceYear(arr),
+        origin,
+        values,
+        months,
+    }
+
+
+    res.status(200).json({obj});
+
+}
 
 let calculateSKU = (arr) => {
     let totalSKU = 0;
@@ -527,3 +571,4 @@ percentageDifferencesSku = (current, before) => {
     }
 
 }
+

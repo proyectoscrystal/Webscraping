@@ -155,9 +155,9 @@ exports.saveImagesDB = async (data) => {
             
           } else if(inBD.estado == imageData.estado){
             console.log('No ha cambiado el estado');
-          } else if(inBD.estado !== imageData.estado ){
+          } else if(inBD.estado !== imageData.estado || inBD.tallasAgotadas !== imageData.tallasAgotadas){
 
-            console.log('guardo doc, estado cambiado'); 
+            console.log('estado o tallas han cambiado se guarda documento'); 
             await Business.create(imageData, (err) => {
               if (err && err.code === 11000) {
                 console.log("Imagen ya existe");
