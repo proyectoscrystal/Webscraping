@@ -1,0 +1,4 @@
+
+exports.prendasCategoria = (arr) => {
+
+}
