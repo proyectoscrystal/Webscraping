@@ -38,6 +38,13 @@ exports.girlDiscount = async () => {
                 const prendas = await page.evaluate(() => {
                     const currentURL = window.location.href;
 
+                    var tallas = Array.from(document.querySelectorAll('.product-detail-size-selector > div > ul > li > div > div > span'), xTallas => xTallas.textContent);
+                    var tallaDisabled = Array.from(document.querySelectorAll('.product-detail-size-selector__size-list-item[disabled]'), TallasDisabled => TallasDisabled.textContent);
+                    if(tallaDisabled !== null) {
+                      tallaDisabledVal = tallaDisabled;
+                    }
+                    var tallaValidacion = tallaDisabledVal;
+
                     const prendas = {};
                     prendas.enlaceProducto = currentURL;
                     prendas.tipoPrenda = document.querySelector("title").textContent;
@@ -51,7 +58,8 @@ exports.girlDiscount = async () => {
                     prendas.enlaceImagen = document.querySelector("#main > article > div > div > section > ul > li > button > div > div > picture > img").src;
                     prendas.categoria = 'Niña';
                     prendas.marca = 'Zara';
-                    prendas.talla = Array.from(document.querySelectorAll('.product-detail-size-selector > div > ul > li > div > div > span'), xTallas => xTallas.textContent);
+                    prenda.talla = tallas;
+                    prenda.tallasAgotadas = tallaValidacion;
                     prendas.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;
                     prendas.color = prendas.color.split(' ')[1];
                     prendas.color = prendas.color.toLowerCase();

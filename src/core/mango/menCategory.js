@@ -34,6 +34,7 @@ exports.menCategory = async () => {
       }
       console.log("Ingresando a: " + enlacehombre);
 
+      await page.waitForTimeout(5000);
       await autoScroll(page);
 
       const enlacesproductoshombre = await page.evaluate(() => {

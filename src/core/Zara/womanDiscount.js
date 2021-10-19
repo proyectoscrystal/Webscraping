@@ -40,37 +40,45 @@ exports.descuentoMujer = async () => {
         const prendasRebajaMujer = await page.evaluate(() => {
           const currentURL = window.location.href;
 
-          const tmp = {};
-          tmp.enlaceProducto = currentURL;
-          tmp.tipoPrenda = document.querySelector("title").textContent;
-          tmp.imageName = document.querySelector(
+          var tallas = Array.from(document.querySelectorAll('.product-detail-size-selector > div > ul > li > div > div > span'), xTallas => xTallas.textContent);
+          var tallaDisabled = Array.from(document.querySelectorAll('.product-detail-size-selector__size-list-item[disabled]'), TallasDisabled => TallasDisabled.textContent);
+          if(tallaDisabled !== null) {
+            tallaDisabledVal = tallaDisabled;
+          }
+          var tallaValidacion = tallaDisabledVal;
+
+          const prenda = {};
+          prenda.enlaceProducto = currentURL;
+          prenda.tipoPrenda = document.querySelector("title").textContent;
+          prenda.imageName = document.querySelector(
             "#main > article > .product-detail-view__main > div > .product-detail-info > h1"
           ).textContent;
-          tmp.precio = document.querySelector(
+          prenda.precio = document.querySelector(
             "#main > article > div > div > div > div > div > span > .price__amount--old"
           ).textContent;
-          tmp.descuento = document.querySelector(
+          prenda.descuento = document.querySelector(
             "#main > article > div > div > div > div > div > span > span > span > span"
           ).textContent;
-          tmp.tag = 'descuento';
-          tmp.caracteristicas = document.querySelector(
+          prenda.tag = 'descuento';
+          prenda.caracteristicas = document.querySelector(
             "#main > article > div > div > div > .product-detail-description > div > div > div > p"
           ).textContent;
-          tmp.caracteristicas = tmp.caracteristicas.split("."); // probando para separar por caracteristicas
-          tmp.caracteristicas.pop(); 
+          prenda.caracteristicas = prenda.caracteristicas.split("."); // probando para separar por caracteristicas
+          prenda.caracteristicas.pop(); 
 
-          tmp.enlaceImagen = document.querySelector(
+          prenda.enlaceImagen = document.querySelector(
             "#main > article > div > div > section > ul > li > button > div > div > picture > img"
           ).src;
-          tmp.categoria = 'Mujer';
-          tmp.marca = 'Zara';
-          tmp.talla = Array.from(document.querySelectorAll('.product-detail-size-selector > div > ul > li > div > div > span'), xTallas => xTallas.textContent);
-          tmp.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;
-          tmp.color = tmp.color.split(' ')[1];
-          tmp.color = tmp.color.toLowerCase();
-          tmp.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div > div:nth-child(6) > span > span').textContent;          
+          prenda.categoria = 'Mujer';
+          prenda.marca = 'Zara';
+          prenda.talla = tallas;
+          prenda.tallasAgotadas = tallaValidacion;
+          prenda.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;
+          prenda.color = prenda.color.split(' ')[1];
+          prenda.color = prenda.color.toLowerCase();
+          prenda.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div > div:nth-child(6) > span > span').textContent;          
 
-          return tmp;
+          return prenda;
         });
         // count--;
         rebajasMujer.push(prendasRebajaMujer);

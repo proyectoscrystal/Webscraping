@@ -37,8 +37,8 @@ exports.babyBoyCategory = async () => {
             }
             console.log("Ingresando a: " + enlace);
 
+            await page.waitForTimeout(5000);
             await autoScroll(page); 
-            //await page.waitForTimeout(2000);
 
             const enlacesproductos = await page.evaluate(() => {
                 const elements = document.querySelectorAll("li > ul > li > div > div > a");
@@ -62,6 +62,13 @@ exports.babyBoyCategory = async () => {
                     const prendas = await page.evaluate(() => {
                         const currentURL = window.location.href;
 
+                        var tallas = Array.from(document.querySelectorAll('.product-detail-size-selector > div > ul > li > div > div > span'), xTallas => xTallas.textContent);
+                        var tallaDisabled = Array.from(document.querySelectorAll('.product-detail-size-selector__size-list-item[disabled]'), TallasDisabled => TallasDisabled.textContent);
+                        if(tallaDisabled !== null) {
+                          tallaDisabledVal = tallaDisabled;
+                        }
+                        var tallaValidacion = tallaDisabledVal;
+
                         const prenda = {};
                         prenda.enlaceProducto = currentURL;
                         prenda.imageName = document.querySelector("#main > article > .product-detail-view__main > div > .product-detail-info > h1").textContent;
@@ -74,7 +81,8 @@ exports.babyBoyCategory = async () => {
                         prenda.marca = "Zara";
                         prenda.descuento = "";
                         prenda.tag = "";
-                        prenda.talla = Array.from(document.querySelectorAll('.product-detail-size-selector > div > ul > li > div > div > span'), xTallas => xTallas.textContent);
+                        prenda.talla = tallas;
+                        prenda.tallasAgotadas = tallaValidacion;
                         prenda.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;
                         prenda.color = prenda.color.split(' ')[1];
                         prenda.color = prenda.color.toLowerCase();

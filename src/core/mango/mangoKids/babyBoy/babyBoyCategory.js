@@ -42,8 +42,8 @@ exports.babyBoyCategory = async () => {
             }
             console.log("Ingresando a: " + enlacehombre);
 
+            await page.waitForTimeout(5000);
             await autoScroll(page);
-            //await page.waitForTimeout(2000);
 
             const enlaces = await page.evaluate(() => {
                 const elements = document.querySelectorAll("._10aZC > a");

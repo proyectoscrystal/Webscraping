@@ -36,6 +36,13 @@ exports.boyNew = async () => {
                 const prendas = await page.evaluate(() => {
                     const currentURL = window.location.href;
 
+                    var tallas = Array.from(document.querySelectorAll('.product-detail-size-selector > div > ul > li > div > div > span'), xTallas => xTallas.textContent);
+                    var tallaDisabled = Array.from(document.querySelectorAll('.product-detail-size-selector__size-list-item[disabled]'), TallasDisabled => TallasDisabled.textContent);
+                    if(tallaDisabled !== null) {
+                      tallaDisabledVal = tallaDisabled;
+                    }
+                    var tallaValidacion = tallaDisabledVal;
+
                     const prenda = {};
                     prenda.enlaceProducto = currentURL;
                     prenda.tipoPrenda = document.querySelector("title").textContent;
@@ -49,7 +56,8 @@ exports.boyNew = async () => {
                     prenda.marca = "Zara";
                     prenda.descuento = "";
                     prenda.tag = "Nuevo";
-                    prenda.talla = Array.from(document.querySelectorAll('.product-detail-size-selector > div > ul > li > div > div > span'), xTallas => xTallas.textContent);
+                    prenda.talla = tallas;
+                    prenda.tallasAgotadas = tallaValidacion;
                     prenda.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;
                     prenda.color = prenda.color.split(' ')[1];
                     prenda.color = prenda.color.toLowerCase();
