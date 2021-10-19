@@ -10,7 +10,7 @@ exports.menNew = async () => {
         //====================HOMBRE NUEVA COLECCIÓN===========================
         await page.goto('https://shop.mango.com/co/hombre/destacados/coat-time_d10359389');
         await page.setViewport({ width: 920, height: 1080 });
-        await page.waitForTimeout(4000);
+        await page.waitForTimeout(5000);
         await autoScroll(page);
 
         const enlacesNuevo = await page.evaluate(() => {

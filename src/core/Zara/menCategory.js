@@ -39,6 +39,7 @@ exports.categoriaHombre = async () => {
       }
       console.log("Ingresando a: " + enlacehombre);
 
+      await page.waitForTimeout(5000);
       await autoScroll(page); //Función que hace el scroll en la página
 
       //Se obtienen los enlaces de los productos
@@ -65,25 +66,33 @@ exports.categoriaHombre = async () => {
           const prendahombre = await page.evaluate(() => {
             const currentURL = window.location.href;
 
-            const tmp = {};
-            tmp.enlaceProducto = currentURL;
-            tmp.imageName = document.querySelector("#main > article > .product-detail-view__main > div > .product-detail-info > h1").textContent;
-            tmp.precio = document.querySelector(".price__amount > span").textContent;
-            tmp.caracteristicas = document.querySelector("#main > article > div > div > div > .product-detail-description > div > div > div > p").textContent;
-            tmp.caracteristicas = tmp.caracteristicas.split("."); // probando para separar por caracteristicas
-            tmp.caracteristicas.pop();
-            tmp.enlaceImagen = document.querySelector("#main > article > div > div > section > ul > li > button > div > div > picture > img").src;
-            tmp.categoria = "Hombre";
-            tmp.marca = "Zara";
-            tmp.descuento = "";
-            tmp.tag = "";
-            tmp.talla = Array.from(document.querySelectorAll('.product-detail-size-selector > div > ul > li > div > div > span'), xTallas => xTallas.textContent);
-            tmp.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;
-            tmp.color = tmp.color.split(' ')[1];
-            tmp.color = tmp.color.toLowerCase();
-            tmp.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div > div:nth-child(6) > span > span').textContent;            
+            var tallas = Array.from(document.querySelectorAll('.product-detail-size-selector > div > ul > li > div > div > span'), xTallas => xTallas.textContent);
+            var tallaDisabled = Array.from(document.querySelectorAll('.product-detail-size-selector__size-list-item[disabled]'), TallasDisabled => TallasDisabled.textContent);
+            if(tallaDisabled !== null) {
+              tallaDisabledVal = tallaDisabled;
+            }
+            var tallaValidacion = tallaDisabledVal;
 
-            return tmp;
+            const prenda = {};
+            prenda.enlaceProducto = currentURL;
+            prenda.imageName = document.querySelector("#main > article > .product-detail-view__main > div > .product-detail-info > h1").textContent;
+            prenda.precio = document.querySelector(".price__amount > span").textContent;
+            prenda.caracteristicas = document.querySelector("#main > article > div > div > div > .product-detail-description > div > div > div > p").textContent;
+            prenda.caracteristicas = prenda.caracteristicas.split("."); // probando para separar por caracteristicas
+            prenda.caracteristicas.pop();
+            prenda.enlaceImagen = document.querySelector("#main > article > div > div > section > ul > li > button > div > div > picture > img").src;
+            prenda.categoria = "Hombre";
+            prenda.marca = "Zara";
+            prenda.descuento = "";
+            prenda.tag = "";
+            prenda.talla = tallas;
+            prenda.tallasAgotadas = tallaValidacion;
+            prenda.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;
+            prenda.color = prenda.color.split(' ')[1];
+            prenda.color = prenda.color.toLowerCase();
+            prenda.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div > div:nth-child(6) > span > span').textContent;            
+
+            return prenda;
           });
 
           // count--;

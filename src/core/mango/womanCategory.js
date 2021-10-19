@@ -36,6 +36,7 @@ exports.womanCategory = async () => {
       }
       console.log("Ingresando a: " + enlacemujer);
 
+      await page.waitForTimeout(5000);
       await autoScroll(page);
 
       const enlacesproductosmujer = await page.evaluate(() => {
