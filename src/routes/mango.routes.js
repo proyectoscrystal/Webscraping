@@ -49,5 +49,6 @@ module.exports = (router) => {
     router.get('/m_averageNews',scrapingCtl.averageNews);
     router.get('/m_averageSKU',scrapingCtl.averageSKU);
     router.get('/m_prendasInfo',scrapingCtl.prendasInfo);
+    router.get('/m_tablePriceInfo',scrapingCtl.tablePriceInfo);
 
 }

@@ -365,8 +365,8 @@ exports.averageSKU = async (req, res) => {
     res.status(200).json({obj});
 }
 
-// precio promedio por los ultimos 2 años y descuento promedio (charts y tablas)
-exports.tableInfo = async (req, res) => {
+// para las tablas de la vista categoria aun no se crea el endpoint ni el servicio en angular
+exports.tableCategoryInfo = async (req, res) => {
     let filtro = req.query;
     
     filtro = organizarQuery(filtro);
@@ -410,6 +410,32 @@ exports.tableInfo = async (req, res) => {
     res.status(200).json({obj});
 }
 // fin table info
+
+exports.tablePriceInfo = async (req, res) => {
+    let filtro = req.query;
+    
+    filtro = organizarQuery(filtro);
+    let arr;
+    let obj;
+    let values = [];
+
+    try {
+        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1}).limit(200);
+    } catch (error) {
+        console.log("no se obtuvo respuesta");
+        return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
+    }
+
+
+    
+    // respuesta para el frontend
+    obj = { 
+        arr
+    }
+
+
+    res.status(200).json({obj});
+}
 
 exports.prendasInfo = async (req, res) => {
     let filtro = req.query;
