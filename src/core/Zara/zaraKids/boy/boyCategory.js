@@ -1,9 +1,12 @@
 const puppeteer = require('puppeteer');
 const autoScroll = require("../../../autoScrollFunction");
 const getScraping = require("../../../zaraCtl");
+const Url = require("../../../linksUrls");
 
 exports.boyCategory = async () => {
     const browser = await puppeteer.launch( {headless: false} );
+
+    const boyCategory = Url.boyCategoryLink;
 
     try {
         const page = await browser.newPage();
@@ -12,7 +15,7 @@ exports.boyCategory = async () => {
         const prendasBoy = [];
         //let count = 2;
 
-        await page.goto("https://www.zara.com/co/es/ninos-nino-join-life-l222.html?v1=1937807");
+        await page.goto(boyCategory, { waitUntil: "networkidle2" });
         await page.setViewport( {width: 920, height: 1080} );
         await page.waitForTimeout(5000);
 

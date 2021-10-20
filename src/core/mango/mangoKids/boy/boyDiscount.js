@@ -1,9 +1,13 @@
 const puppeteer = require('puppeteer');
 const autoScroll = require("../../../autoScrollFunction");
 const getScraping = require("../../../mangoCtl");
+const Url = require("../../../linksUrls");
 
 exports.boyDiscount = async () => {
     const browser = await puppeteer.launch({ headless: false }); //headless true/false para visualizar el navegador
+
+    const boyDiscount = Url.boyDiscountLinkMango;
+
     try {
         const page = await browser.newPage();
 
@@ -11,7 +15,7 @@ exports.boyDiscount = async () => {
         const rebajasBoy = [];
         //let count = 2;
 
-        await page.goto('https://shop.mango.com/co/nino/destacados/special-sale_d15011353');
+        await page.goto(boyDiscount, { waitUntil: "networkidle2" });
         await page.setViewport({width: 920, height: 1080});
         await autoScroll(page);
         //await page.waitForTimeout(5000);

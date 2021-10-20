@@ -1,9 +1,13 @@
 const puppeteer = require("puppeteer");
 const autoScroll = require("../autoScrollFunction");
 const getscraping = require("../zaraCtl");
+const Url = require("../linksUrls");
 
 exports.womanCategory = async () => {
   const browser = await puppeteer.launch({ headless: false }); //headless true/false para visualizar el navegador
+
+  const womanCategory = Url.womanCategoryLink;
+
   try {
     const page = await browser.newPage();
 
@@ -12,7 +16,7 @@ exports.womanCategory = async () => {
     // let count = 5;
 
     //====================CATEGORIAS MUJER===========================
-    await page.goto("https://www.zara.com/co/es/mujer-blazers-l1055.html?v1=1882224"); //Se especifica el enlace para categoría de mujer
+    await page.goto(womanCategory, { waitUntil: "networkidle2" });
     await page.setViewport({ width: 920, height: 1080 }); //Tamaño de la página
     await page.waitForTimeout(5000); //Tiempo para cargar la página completa
 

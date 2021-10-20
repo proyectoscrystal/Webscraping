@@ -1,16 +1,20 @@
 const puppeteer = require("puppeteer");
 const autoScroll = require("../autoScrollFunction");
 const getScraping = require("../mangoCtl");
+const Url = require("../linksUrls");
 
 exports.menCategory = async () => {
   const browser = await puppeteer.launch({ headless: false }); //headless true/false para visualizar el navegador
+
+  const menCategory = Url.menCategoryLinkMango;
+
   try {
     const page = await browser.newPage();
 
     const prendasHombre = [];
 
     //====================CATEGORIAS HOMBRE===========================
-    await page.goto("https://shop.mango.com/co/hombre");
+    await page.goto(menCategory, { waitUntil: "networkidle2" });
     await page.setViewport({ width: 920, height: 1080 });
     await page.waitForTimeout(5000);
 

@@ -1,11 +1,12 @@
 const puppeteer = require('puppeteer');
 const autoScroll = require("../../../autoScrollFunction");
 const getScraping = require("../../../zaraCtl");
+const Url = require("../../../linksUrls");
 
 exports.boyDiscount = async () => {
-    const browser = await puppeteer.launch({
-        headless: false
-    });
+    const browser = await puppeteer.launch( {headless: false} );
+
+    const boyDiscount = Url.boyDiscountLink;
 
     try {
         const page = await browser.newPage();
@@ -14,7 +15,7 @@ exports.boyDiscount = async () => {
         const rebajasBoy = [];
         //let count = 2;
 
-        await page.goto("https://www.zara.com/co/es/ninos-nino-precios-especiales-l263.html?v1=1887594");
+        await page.goto(boyDiscount, { waitUntil: "networkidle2" });
         await page.setViewport({width: 920,height: 1080});
         await autoScroll(page);
         //await page.waitForTimeout(5000);

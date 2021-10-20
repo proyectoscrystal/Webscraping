@@ -1,9 +1,13 @@
 const puppeteer = require('puppeteer');
 const autoScroll = require("../../../autoScrollFunction");
 const getScraping = require("../../../mangoCtl");
+const Url = require("../../../linksUrls");
 
 exports.babyBoyNew = async () => {
     const browser = await puppeteer.launch({ headless: false }); //headless true/false para visualizar el navegador
+
+    const babyBoyNew = Url.babyBoyNewLinkMango;
+
     try {
         const page = await browser.newPage();
 
@@ -11,7 +15,7 @@ exports.babyBoyNew = async () => {
         const nuevoBabyBoy = [];
         //let count = 2;
 
-        await page.goto('https://shop.mango.com/co/bebe-nino/destacados/nuevo_d11657091');
+        await page.goto(babyBoyNew, { waitUntil: "networkidle2" });
         await page.setViewport({width: 920, height: 1080});
         await autoScroll(page);
         //await page.waitForTimeout(5000);

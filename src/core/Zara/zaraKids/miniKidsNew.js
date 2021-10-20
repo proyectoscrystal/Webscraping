@@ -1,9 +1,12 @@
 const puppeteer = require('puppeteer');
 const autoScroll = require("../../autoScrollFunction");
 const getScraping = require("../../zaraCtl");
+const Url = require("../../linksUrls");
 
 exports.miniKidsNew = async () => {
     const browser = await puppeteer.launch({headless: false});
+
+    const miniKidsNew = Url.miniKidsNewLink;
 
     try {
         const page = await browser.newPage();
@@ -12,7 +15,7 @@ exports.miniKidsNew = async () => {
         const nuevoBoy = [];
         //let count = 2;
 
-        await page.goto("https://www.zara.com/co/es/ninos-recien-nacido-novedades-l504.html?v1=1889626");
+        await page.goto(miniKidsNew, { waitUntil: "networkidle2" });
         await page.setViewport( {width: 920, height: 1080} );
         await autoScroll(page);
         //await page.waitForTimeout(5000);

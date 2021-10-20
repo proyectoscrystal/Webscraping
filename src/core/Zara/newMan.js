@@ -1,16 +1,18 @@
 const puppeteer = require("puppeteer");
 const autoScroll = require("../autoScrollFunction");
 const getScraping = require("../zaraCtl");
+const Url = require("../linksUrls");
 
 exports.newMan = async () => {
   const browser = await puppeteer.launch({ headless: false }); //headless true/false para visualizar el navegador
+
+  const newMan = Url.menCategoryLink;
+
   try {
     const page = await browser.newPage();
 
     //====================PRENDAS NUEVAS - HOMBRE==========================
-    await page.goto(
-      "https://www.zara.com/co/es/hombre-nuevo-l711.html?v1=1886951"
-    );
+    await page.goto(newMan, { waitUntil: "networkidle2" });
     await page.setViewport({ width: 920, height: 1080 });
     await page.waitForTimeout(5000);
     await autoScroll(page);

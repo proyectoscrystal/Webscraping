@@ -1,16 +1,18 @@
 const puppeteer = require("puppeteer");
 const autoScroll = require("../autoScrollFunction");
 const getscraping = require("../zaraCtl");
+const Url = require("../linksUrls");
 
 exports.newWoman =async () => {
   const browser = await puppeteer.launch({ headless: false }); //headless true/false para visualizar el navegador
+
+  const newWoman = Url.newWomanLink;
+
   try {
     const page = await browser.newPage();
 
     //====================PRENDAS NUEVAS - MUJER==========================
-    await page.goto(
-      "https://www.zara.com/co/es/mujer-nuevo-l1180.html?v1=1881787"
-    );
+    await page.goto(newWoman, { waitUntil: "networkidle2" });
     await page.setViewport({ width: 920, height: 1080 });
     await page.waitForTimeout(5000);
     await autoScroll(page);
