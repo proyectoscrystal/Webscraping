@@ -1,9 +1,12 @@
 const puppeteer = require('puppeteer');
 const autoScroll = require("../../../autoScrollFunction");
 const getScraping = require("../../../zaraCtl");
+const Url = require("../../../linksUrls");
 
 exports.babyGirlNew = async () => {
     const browser = await puppeteer.launch({headless: false});
+
+    const babyGirlNew = Url.babyGirlNewLink;
 
     try {
         const page = await browser.newPage();
@@ -12,7 +15,7 @@ exports.babyGirlNew = async () => {
         const nuevoBabyBoy = [];
         //let count = 2;
 
-        await page.goto("https://www.zara.com/co/es/ninos-bebe-nina-novedades-l127.html?v1=1888736");
+        await page.goto(babyGirlNew, { waitUntil: "networkidle2" });
         await page.setViewport( {width: 920, height: 1080} );
         await page.waitForTimeout(5000);
         await autoScroll(page);

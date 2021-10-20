@@ -1,17 +1,18 @@
 const puppeteer = require("puppeteer");
 const autoScroll = require("../autoScrollFunction");
 const getScraping = require("../zaraCtl");
+const Url = require("../linksUrls");
 
 exports.manDiscount = async () => {
   const browser = await puppeteer.launch({ headless: false }); //headless true/false para visualizar el navegador
+
+  const manDiscount = Url.manDiscountLink;
+
   try {
     const page = await browser.newPage();
 
     //====================PRENDAS EN DESCUENTO - HOMBRE==========================
-    await page.goto(
-      "https://www.zara.com/co/es/hombre-precios-especiales-l806.html?v1=1865130",
-      { waitUntil: "networkidle2" }
-    );
+    await page.goto(manDiscount, { waitUntil: "networkidle2" });
     await page.setViewport({ width: 920, height: 1080 });
     await page.waitForTimeout(5000);
     await autoScroll(page);

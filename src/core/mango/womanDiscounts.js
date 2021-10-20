@@ -1,16 +1,20 @@
 const puppeteer = require('puppeteer');
 const autoScroll = require('../autoScrollFunction');
 const getScraping = require('../mangoCtl');
+const Url = require("../linksUrls");
 
 exports.womanDiscount = async () => {
     const browser = await puppeteer.launch({ headless: false }); //headless true/false para visualizar el navegador
+
+    const womanDiscount = Url.womanDiscountLinkMango;
+    
     try {
         const page = await browser.newPage();
 
         const rebajasMujer = [];
 
         //====================MUJER REBAJAS===========================
-        await page.goto('https://shop.mango.com/co/mujer/destacados/special-sale_d13205468');
+        await page.goto(womanDiscount, { waitUntil: "networkidle2" });
         await page.waitForTimeout(5000);
         await autoScroll(page);
 

@@ -1,17 +1,18 @@
 const puppeteer = require("puppeteer");
 const autoScroll = require("../autoScrollFunction");
 const getscraping = require("../zaraCtl");
+const Url = require("../linksUrls");
 
 exports.descuentoMujer = async () => {
   const browser = await puppeteer.launch({ headless: false }); //headless true/false para visualizar el navegador
+
+  const womanDiscount = Url.womanDiscountLink;
+
   try {
     const page = await browser.newPage();
 
     //====================PRENDAS EN DESCUENTO - MUJER==========================
-    await page.goto(
-      "https://www.zara.com/co/es/mujer-precios-especiales-l1314.html?v1=1883601",
-      { waitUntil: "networkidle2" }
-    );
+    await page.goto(womanDiscount, { waitUntil: "networkidle2" });
     await page.setViewport({ width: 920, height: 1080 });
     await page.waitForTimeout(5000);
     await autoScroll(page);

@@ -1,9 +1,13 @@
 const puppeteer = require('puppeteer');
 const autoScroll = require("../../../autoScrollFunction");
 const getScraping = require("../../../mangoCtl");
+const Url = require("../../../linksUrls");
 
 exports.girlNew = async () => {
     const browser = await puppeteer.launch({ headless: false }); //headless true/false para visualizar el navegador
+
+    const girlNew = Url.girlNewLinkMango;
+    
     try {
         const page = await browser.newPage();
 
@@ -11,7 +15,7 @@ exports.girlNew = async () => {
         const nuevoGirl = [];
         //let count = 2;
 
-        await page.goto('https://shop.mango.com/co/nina/destacados/nuevo_d15971383');
+        await page.goto(girlNew, { waitUntil: "networkidle2" });
         await autoScroll(page);
         //await page.waitForTimeout(5000);
 

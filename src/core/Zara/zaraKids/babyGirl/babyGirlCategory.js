@@ -1,9 +1,12 @@
 const puppeteer = require('puppeteer');
 const autoScroll = require("../../../autoScrollFunction");
 const getScraping = require("../../../zaraCtl");
+const Url = require("../../../linksUrls");
 
 exports.babyGirlCategory = async () => {
     const browser = await puppeteer.launch( {headless: false} );
+
+    const babyGirlCategory = Url.babyGirlCategoryLink;
 
     try {
         const page = await browser.newPage();
@@ -12,7 +15,7 @@ exports.babyGirlCategory = async () => {
         const prendasBabyGirl = [];
         //let count = 2;
 
-        await page.goto("https://www.zara.com/co/es/ninos-bebe-nina-join-life-l119.html?v1=1939805");
+        await page.goto(babyGirlCategory, { waitUntil: "networkidle2" });
         await page.setViewport( {width: 920, height: 1080} );
         await page.waitForTimeout(5000);
 

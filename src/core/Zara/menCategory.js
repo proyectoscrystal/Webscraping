@@ -1,18 +1,22 @@
 const puppeteer = require("puppeteer");
 const autoScroll = require("../autoScrollFunction");
 const getScraping = require("../zaraCtl");
+const Url = require("../linksUrls");
 
 exports.categoriaHombre = async () => {
   const browser = await puppeteer.launch({ headless: false }); //headless true/false para visualizar el navegador
+
+  const menCategory = Url.menCategoryLink;
+  
   try {
     const page = await browser.newPage();
-    
+
     const prendasHombre = []; //Se crea un array para guardar los productos extraidos
 
     // let count = 1;
 
     //====================CATEGORIAS HOMBRE==========================
-    await page.goto("https://www.zara.com/co/es/man-editorial-1-l629.html?v1=1945312"); //Se especifica el enlace para categoría de hombre
+    await page.goto(menCategory, { waitUntil: "networkidle2" });
     await page.setViewport({ width: 920, height: 1080 }); //Tamaño de la página
     await page.waitForTimeout(5000);
 

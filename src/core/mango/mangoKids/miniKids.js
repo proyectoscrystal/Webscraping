@@ -1,9 +1,12 @@
 const puppeteer = require('puppeteer');
 const autoScroll = require("../../autoScrollFunction");
 const getScraping = require("../../mangoCtl");
+const Url = require("../../linksUrls")
 
 exports.miniKids = async () => {
     const browser = await puppeteer.launch({headless: false});
+
+    const miniKidsNew = Url.miniKidsLinkMango;
 
     try {
         const page = await browser.newPage();
@@ -12,7 +15,7 @@ exports.miniKids = async () => {
         const prendasMiniKids = [];
         //let count = 2;
 
-        await page.goto("https://shop.mango.com/co/ninos");
+        await page.goto(miniKidsNew, { waitUntil: "networkidle2" });
         await page.setViewport({width: 920, height: 1080});
         await page.waitForTimeout(5000);
 

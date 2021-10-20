@@ -1,9 +1,13 @@
 const puppeteer = require('puppeteer');
 const autoScroll = require("../../../autoScrollFunction");
 const getScraping = require("../../../mangoCtl");
+const Url = require("../../../linksUrls");
 
 exports.babyBoyDiscount = async () => {
     const browser = await puppeteer.launch({ headless: false }); //headless true/false para visualizar el navegador
+    
+    const babyBoyDiscount = Url.babyBoyDiscountLinkMango;
+
     try {
         const page = await browser.newPage();
 
@@ -11,7 +15,7 @@ exports.babyBoyDiscount = async () => {
         const rebajasBabyBoy = [];
         //let count = 2;
 
-        await page.goto('https://shop.mango.com/co/bebe-nino/destacados/special-sale_d19248612');
+        await page.goto(babyBoyDiscount, { waitUntil: "networkidle2" });
         await page.setViewport({width: 920, height: 1080});
         await autoScroll(page);
         //await page.waitForTimeout(5000);
