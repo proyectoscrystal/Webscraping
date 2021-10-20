@@ -3,6 +3,7 @@ const avgPrice = require("./filtersScraping/AveragePrice");
 const avgDiscount = require("./filtersScraping/AverageDiscount");
 const avgNews = require("./filtersScraping/newProducts")
 const avgSKU = require("./filtersScraping/SKU");
+const prendasInfo = require("./filtersScraping/prendasInfo");
 
 
 // info cards response
@@ -408,13 +409,13 @@ exports.tableInfo = async (req, res) => {
 
     res.status(200).json({obj});
 }
+// fin table info
 
 exports.prendasInfo = async (req, res) => {
     let filtro = req.query;
     
     filtro = organizarQuery(filtro);
 
-    // console.log(filtro);
     //mes actual
     let date = new Date();
     let month = date.getMonth();
@@ -426,28 +427,23 @@ exports.prendasInfo = async (req, res) => {
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
-    if (filtro.origin === undefined) {
-        values = avgPrice.averagePriceMonthGeneral(arr);
-        origin = 'general';
-        
-    } else if(filtro.origin === 'Zara'){
-        origin = 'Zara';
-        values = avgPrice.averagePriceMonthOrigin(arr);
-
-    } else if(filtro.origin === 'Mango'){
-        origin = 'Mango';
-        values = avgPrice.averagePriceMonthOrigin(arr);
-    }
-
-
+    values = prendasInfo.cardsPrendas(arr);
 
 
     // respuesta para el frontend
-    obj = {  
-        precioPromedio: avgPrice.averagePriceYear(arr),
-        origin,
-        values,
-        months,
+    obj = {
+        newWomen: values[0],
+        discontinuedWomen: values[1],
+        promotionWomen: values[2],
+        totalskuWomen: values[3],
+        newMen: values[4],
+        discontinuedMen: values[5],
+        promotionMen: values[6],
+        totalskuMen: values[7],
+        newKids: values[8],
+        discontinuedKids: values[9],
+        promotionKids: values[10],
+        totalskuKids: values[11],
     }
 
 
