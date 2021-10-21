@@ -64,73 +64,73 @@ exports.averagePriceMonthGeneral = (arr) => {
           // estructura interna del if
           return eneZ.push(element.precio);
         } else if (mes === "Jan" && element.descuento !== null) {
-          eneZ.push(element.descuento);
+          return eneZ.push(element.descuento);
         }
         if (mes === "Feb" && element.descuento === null) {
           // estructura interna del if
           return febZ.push(element.precio);
         } else if (mes === "Feb" && element.descuento !== null) {
-          febZ.push(element.descuento);
+          return febZ.push(element.descuento);
         }
         if (mes === "Mar" && element.descuento === null) {
           // estructura interna del if
           return marZ.push(element.precio);
         } else if (mes === "Mar" && element.descuento !== null) {
-          marZ.push(element.descuento);
+          return marZ.push(element.descuento);
         }
         if (mes === "Apr" && element.descuento === null) {
           // estructura interna del if
           return abrZ.push(element.precio);
         } else if (mes === "Apr" && element.descuento !== null) {
-          abrZ.push(element.descuento);
+          return abrZ.push(element.descuento);
         }
         if (mes === "May" && element.descuento === null) {
           // estructura interna del if
           return mayZ.push(element.precio);
         } else if (mes === "May" && element.descuento !== null) {
-          mayZ.push(element.descuento);
+          return mayZ.push(element.descuento);
         }
         if (mes === "Jun" && element.descuento === null) {
           // estructura interna del if
           return junZ.push(element.precio);
         } else if (mes === "Jun" && element.descuento !== null) {
-          junZ.push(element.descuento);
+          return junZ.push(element.descuento);
         }
         if (mes === "Jul" && element.descuento === null) {
           // estructura interna del if
           return julZ.push(element.precio);
         } else if (mes === "Jul" && element.descuento !== null) {
-          julZ.push(element.descuento);
+          return julZ.push(element.descuento);
         }
         if (mes === "Aug" && element.descuento === null) {
           // estructura interna del if
           return agosZ.push(element.precio);
         } else if (mes === "Aug" && element.descuento !== null) {
-          agosZ.push(element.descuento);
+          return agosZ.push(element.descuento);
         }
         if (mes === "Sep" && element.descuento === null) {
           // estructura interna del if
           return sepZ.push(element.precio);
         } else if (mes === "Sep" && element.descuento !== null) {
-          sepZ.push(element.descuento);
+          return sepZ.push(element.descuento);
         }
         if (mes === "Oct" && element.descuento === null) {
           // estructura interna del if
           return octZ.push(element.precio);
         } else if (mes === "Oct" && element.descuento !== null) {
-          octZ.push(element.descuento);
+          return octZ.push(element.descuento);
         }
         if (mes === "Nov" && element.descuento === null) {
           // estructura interna del if
           return novZ.push(element.precio);
         } else if (mes === "Nov" && element.descuento !== null) {
-          novZ.push(element.descuento);
+          return novZ.push(element.descuento);
         }
         if (mes === "Dec" && element.descuento === null) {
           // estructura interna del if
           return dicZ.push(element.precio);
         } else if (mes === "Dec" && element.descuento !== null) {
-          dicZ.push(element.descuento);
+          return dicZ.push(element.descuento);
         }
       }
 
