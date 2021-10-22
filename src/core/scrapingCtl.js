@@ -567,7 +567,6 @@ exports.tableNewsInfo = async (req, res) => {
 
     if (filtro.origin === undefined) {
         values = avgNews.averageNewsMonthGeneral(arr);
-        console.log(values);
         // obtener precios promedio mes actual y anterior 
         nuevosPromedio = (values[month] + values[month + 24]);
         nuevosPromedioAnterior = (values[month - 1] + values[month + 23]);
@@ -578,7 +577,6 @@ exports.tableNewsInfo = async (req, res) => {
         
     } else if(filtro.origin === 'Zara'){
         values = avgNews.averageNewsMonthOrigin(arr);
-        console.log(values);
         // obtener precios promedio mes actual y anterior 
         nuevosPromedio = values[month];
         nuevosPromedioAnterior = values[month - 1];
@@ -587,7 +585,6 @@ exports.tableNewsInfo = async (req, res) => {
 
     } else if(filtro.origin === 'Mango'){
         values = avgNews.averageNewsMonthOrigin(arr);
-        console.log(values);
         // obtener descuentos promedio mes actual y anterior 
         nuevosPromedio = values[month];
         nuevosPromedioAnterior = values[month - 1];
@@ -595,13 +592,72 @@ exports.tableNewsInfo = async (req, res) => {
         differences = percentageDifferencesnews(nuevosPromedio, nuevosPromedioAnterior);
     }
 
-    // console.log(differences);
-    // console.log(nuevosPromedio);
 
     // respuesta para el frontend
     obj = { 
         arr,
         nuevosPromedio,
+        differences
+    }
+
+
+    res.status(200).json({obj});
+}
+
+exports.tableSKUInfo = async (req, res) => {
+    let filtro = req.query;
+    
+    filtro = organizarQuery(filtro);
+    let arr;
+    let obj;
+    let values = [];
+    let origin = '';
+    let SKU = 0;
+    let SKUAnterior = 0;
+    let differences = [];
+
+    //mes actual
+    let date = new Date();
+    let month = date.getMonth(); 
+
+    try {
+        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1}).limit(100);
+    } catch (error) {
+        console.log("no se obtuvo respuesta");
+        return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
+    }
+
+    if (filtro.origin === undefined) {
+        values = avgSKU.averageSKUMonthGeneral(arr);
+        // obtener precios promedio mes actual y anterior 
+        SKU = (values[month] + values[month + 24]);
+        SKUAnterior = (values[month - 1] + values[month + 23]);
+        // determinar la diferencia porcentual en los precios
+        differences = percentageDifferencesSku(SKU, SKUAnterior);
+
+        
+    } else if(filtro.origin === 'Zara'){
+        values = avgSKU.averageSKUMonthOrigin(arr);
+        // obtener precios promedio mes actual y anterior 
+        SKU = values[month];
+        SKUAnterior = values[month - 1];
+        // determinar la diferencia porcentual en los precios
+        differences = percentageDifferencesSku(SKU, SKUAnterior);
+
+    } else if(filtro.origin === 'Mango'){
+        values = avgSKU.averageSKUMonthOrigin(arr);
+        // obtener precios promedio mes actual y anterior 
+        SKU = values[month];
+        SKUAnterior = values[month - 1];
+        // determinar la diferencia porcentual en los precios
+        differences = percentageDifferencesSku(SKU, SKUAnterior);
+    }
+
+
+    // respuesta para el frontend
+    obj = { 
+        arr,
+        SKU,
         differences
     }
 

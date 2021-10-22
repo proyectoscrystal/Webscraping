@@ -54,5 +54,6 @@ module.exports = (router) => {
     router.get('/m_tablePriceInfo',scrapingCtl.tablePriceInfo);
     router.get('/m_tableDiscountInfo',scrapingCtl.tableDiscountInfo);
     router.get('/m_tableNewsInfo',scrapingCtl.tableNewsInfo);
+    router.get('/m_tableSKUInfo',scrapingCtl.tableSKUInfo);
 
 }
