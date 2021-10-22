@@ -463,7 +463,7 @@ exports.averageDiscountMonthGeneral = (arr) => {
   valuesZ[30] = setAverageDiscount(julm);
   valuesZ[31] = setAverageDiscount(agosm);
   valuesZ[32] = setAverageDiscount(sepm);
-  valuesZ[33] = setAverageDiscount(octm);
+  valuesZ[33] = setAverageDiscount(octm);  
   valuesZ[34] = setAverageDiscount(novm);
   valuesZ[35] = setAverageDiscount(dicm);
 
@@ -481,6 +481,8 @@ exports.averageDiscountMonthGeneral = (arr) => {
   valuesZ[46] = setAverageDiscount(nov2);
   valuesZ[47] = setAverageDiscount(dic2);
   valuesZ[48] = currentMonth;
+
+  // console.log(oct2);
 
   return valuesZ;
 
@@ -721,6 +723,7 @@ exports.averageDiscount = arr => {
     let descuentoPromedio = 0;
     arr.forEach((element) => {
         descuentoPromedio += element
+        // console.log(descuentoPromedio);
     });
     if (descuentoPromedio === 0) {
         return descuentoPromedio

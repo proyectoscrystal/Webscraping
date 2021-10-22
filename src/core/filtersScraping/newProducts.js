@@ -38,35 +38,36 @@ exports.averageNewsMonthOrigin = (arr) => {
         let fecha = element.createdAt + ""; // funcion para obtener la fecha
         let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero
         let year = parseInt(fecha.split(" ")[3]);
+        // console.log(year);
   
         if (year === currentYear) {
-          if (mes === "Jan" && element.tag === 'nuevo')  return eneZ++; 
-          if (mes === "Feb" && element.tag === 'nuevo')  return febZ++;
-          if (mes === "Mar" && element.tag === 'nuevo')  return marZ++;
-          if (mes === "Apr" && element.tag === 'nuevo')  return abrZ++;
-          if (mes === "May" && element.tag === 'nuevo')  return mayZ++;
-          if (mes === "Jun" && element.tag === 'nuevo')  return junZ++;
-          if (mes === "Jul" && element.tag === 'nuevo')  return julZ++;
-          if (mes === "Aug" && element.tag === 'nuevo')  return agosZ++;
-          if (mes === "Sep" && element.tag === 'nuevo')  return sepZ++;
-          if (mes === "Oct" && element.tag === 'nuevo')  return octZ++;
-          if (mes === "Nov" && element.tag === 'nuevo')  return novZ++;
-          if (mes === "Dec" && element.tag === 'nuevo')  return dicZ++;
+          if (mes === "Jan") eneZ++; 
+          if (mes === "Feb") febZ++;
+          if (mes === "Mar") marZ++;
+          if (mes === "Apr") abrZ++;
+          if (mes === "May") mayZ++;
+          if (mes === "Jun") junZ++;
+          if (mes === "Jul") julZ++;
+          if (mes === "Aug") agosZ++;
+          if (mes === "Sep") sepZ++;
+          if (mes === "Oct") octZ++;
+          if (mes === "Nov") novZ++;
+          if (mes === "Dec") dicZ++;
         }
   
         if (year === lastYear) {
-          if (mes === "Jan" && element.tag === 'nuevo') return ene++;
-          if (mes === "Feb" && element.tag === 'nuevo') return feb++;
-          if (mes === "Mar" && element.tag === 'nuevo') return mar++;
-          if (mes === "Apr" && element.tag === 'nuevo') return abr++;
-          if (mes === "May" && element.tag === 'nuevo') return may++;
-          if (mes === "Jun" && element.tag === 'nuevo') return jun++;
-          if (mes === "Jul" && element.tag === 'nuevo') return jul++;
-          if (mes === "Aug" && element.tag === 'nuevo') return agos++;
-          if (mes === "Sep" && element.tag === 'nuevo') return sep++;
-          if (mes === "Oct" && element.tag === 'nuevo') return oct++;
-          if (mes === "Nov" && element.tag === 'nuevo') return nov++;
-          if (mes === "Dec" && element.tag === 'nuevo') return dic++;
+          if (mes === "Jan") ene++;
+          if (mes === "Feb") feb++;
+          if (mes === "Mar") mar++;
+          if (mes === "Apr") abr++;
+          if (mes === "May") may++;
+          if (mes === "Jun") jun++;
+          if (mes === "Jul") jul++;
+          if (mes === "Aug") agos++;
+          if (mes === "Sep") sep++;
+          if (mes === "Oct") oct++;
+          if (mes === "Nov") nov++;
+          if (mes === "Dec") dic++;
         }
       }); // fin del ciclo que guarda los precios de cada mes
     } catch (error) {
@@ -147,33 +148,33 @@ exports.averageNewsMonthGeneral = (arr) => {
         let year = parseInt(fecha.split(" ")[3]);
   
         if (year === currentYear && element.origin == 'Zara') {
-          if (mes === "Jan" && element.tag === 'nuevo') return eneZ++;
-          if (mes === "Feb" && element.tag === 'nuevo') return febZ++;
-          if (mes === "Mar" && element.tag === 'nuevo') return marZ++;
-          if (mes === "Apr" && element.tag === 'nuevo') return abrZ++;
-          if (mes === "May" && element.tag === 'nuevo') return mayZ++;
-          if (mes === "Jun" && element.tag === 'nuevo') return junZ++;
-          if (mes === "Jul" && element.tag === 'nuevo') return julZ++;
-          if (mes === "Aug" && element.tag === 'nuevo') return agosZ++;
-          if (mes === "Sep" && element.tag === 'nuevo') return sepZ++;
-          if (mes === "Oct" && element.tag === 'nuevo') return octZ++;
-          if (mes === "Nov" && element.tag === 'nuevo') return novZ++;
-          if (mes === "Dec" && element.tag === 'nuevo') return dicZ++;
+          if (mes === "Jan") eneZ++;
+          if (mes === "Feb") febZ++;
+          if (mes === "Mar") marZ++;
+          if (mes === "Apr") abrZ++;
+          if (mes === "May") mayZ++;
+          if (mes === "Jun") junZ++;
+          if (mes === "Jul") julZ++;
+          if (mes === "Aug") agosZ++;
+          if (mes === "Sep") sepZ++;
+          if (mes === "Oct") octZ++;
+          if (mes === "Nov") novZ++;
+          if (mes === "Dec") dicZ++;
         }
   
         if (year === lastYear  && element.origin == 'Zara') {
-          if (mes === "Jan" && element.tag === 'nuevo') return ene++;
-          if (mes === "Feb" && element.tag === 'nuevo') return feb++;
-          if (mes === "Mar" && element.tag === 'nuevo') return mar++;
-          if (mes === "Apr" && element.tag === 'nuevo') return abr++;
-          if (mes === "May" && element.tag === 'nuevo') return may++;
-          if (mes === "Jun" && element.tag === 'nuevo') return jun++;
-          if (mes === "Jul" && element.tag === 'nuevo') return jul++;
-          if (mes === "Aug" && element.tag === 'nuevo') return agos++;
-          if (mes === "Sep" && element.tag === 'nuevo') return sep++;
-          if (mes === "Oct" && element.tag === 'nuevo') return oct++;
-          if (mes === "Nov" && element.tag === 'nuevo') return nov++;
-          if (mes === "Dec" && element.tag === 'nuevo') return dic++;
+          if (mes === "Jan") ene++;
+          if (mes === "Feb") feb++;
+          if (mes === "Mar") mar++;
+          if (mes === "Apr") abr++;
+          if (mes === "May") may++;
+          if (mes === "Jun") jun++;
+          if (mes === "Jul") jul++;
+          if (mes === "Aug") agos++;
+          if (mes === "Sep") sep++;
+          if (mes === "Oct") oct++;
+          if (mes === "Nov") nov++;
+          if (mes === "Dec") dic++;
           
         }
       }); // fin del ciclo que guarda los precios de cada mes
@@ -247,33 +248,33 @@ exports.averageNewsMonthGeneral = (arr) => {
         let year = parseInt(fecha.split(" ")[3]);
   
         if (year === currentYear && element.origin == 'Mango') {
-          if (mes === "Jan" && element.tag === 'nuevo') return enem++;
-          if (mes === "Feb" && element.tag === 'nuevo') return febm++;
-          if (mes === "Mar" && element.tag === 'nuevo') return marm++;
-          if (mes === "Apr" && element.tag === 'nuevo') return abrm++;
-          if (mes === "May" && element.tag === 'nuevo') return maym++;
-          if (mes === "Jun" && element.tag === 'nuevo') return junm++;
-          if (mes === "Jul" && element.tag === 'nuevo') return julm++;
-          if (mes === "Aug" && element.tag === 'nuevo') return agosm++;
-          if (mes === "Sep" && element.tag === 'nuevo') return sepm++;
-          if (mes === "Oct" && element.tag === 'nuevo') return octm++;
-          if (mes === "Nov" && element.tag === 'nuevo') return novm++;
-          if (mes === "Dec" && element.tag === 'nuevo') return dicm++;
+          if (mes === "Jan") enem++;
+          if (mes === "Feb") febm++;
+          if (mes === "Mar") marm++;
+          if (mes === "Apr") abrm++;
+          if (mes === "May") maym++;
+          if (mes === "Jun") junm++;
+          if (mes === "Jul") julm++;
+          if (mes === "Aug") agosm++;
+          if (mes === "Sep") sepm++;
+          if (mes === "Oct") octm++;
+          if (mes === "Nov") novm++;
+          if (mes === "Dec") dicm++;
         }
   
         if (year === lastYear  && element.origin == 'Mango') {
-          if (mes === "Jan" && element.tag === 'nuevo') return ene2++;
-          if (mes === "Feb" && element.tag === 'nuevo') return feb2++;
-          if (mes === "Mar" && element.tag === 'nuevo') return mar2++;
-          if (mes === "Apr" && element.tag === 'nuevo') return abr2++;
-          if (mes === "May" && element.tag === 'nuevo') return may2++;
-          if (mes === "Jun" && element.tag === 'nuevo') return jun2++;
-          if (mes === "Jul" && element.tag === 'nuevo') return jul2++;
-          if (mes === "Aug" && element.tag === 'nuevo') return agos2++;
-          if (mes === "Sep" && element.tag === 'nuevo') return sep2++;
-          if (mes === "Oct" && element.tag === 'nuevo') return oct2++;
-          if (mes === "Nov" && element.tag === 'nuevo') return nov2++;
-          if (mes === "Dec" && element.tag === 'nuevo') return dic2++;
+          if (mes === "Jan") ene2++;
+          if (mes === "Feb") feb2++;
+          if (mes === "Mar") mar2++;
+          if (mes === "Apr") abr2++;
+          if (mes === "May") may2++;
+          if (mes === "Jun") jun2++;
+          if (mes === "Jul") jul2++;
+          if (mes === "Aug") agos2++;
+          if (mes === "Sep") sep2++;
+          if (mes === "Oct") oct2++;
+          if (mes === "Nov") nov2++;
+          if (mes === "Dec") dic2++;
         }
       }); // fin del ciclo que guarda los precios de cada mes
     } catch (error) {
@@ -307,6 +308,8 @@ exports.averageNewsMonthGeneral = (arr) => {
     valuesZ[46] = nov2;
     valuesZ[47] = dic2;
     valuesZ[48] = currentMonth;
+
+    
   
     return valuesZ;
   

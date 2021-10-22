@@ -271,6 +271,7 @@ exports.averageNews = async (req, res) => {
     let filtro = req.query;
     
     filtro = organizarQuery(filtro);
+    filtro.estado = {$eq: "nuevo"};
     let arr;
     let obj;
     let values = [];
@@ -476,6 +477,8 @@ exports.tableDiscountInfo = async (req, res) => {
     let filtro = req.query;
     
     filtro = organizarQuery(filtro);
+    filtro.descuento = {$ne: null};
+
     let arr;
     let obj;
     let values = [];
@@ -497,15 +500,18 @@ exports.tableDiscountInfo = async (req, res) => {
 
     if (filtro.origin === undefined) {
         values = avgDiscount.averageDiscountMonthGeneral(arr);
+        // console.log(values);
         // obtener precios promedio mes actual y anterior 
-        descuentoPromedio = (values[month] + values[month + 24]);
-        descuentoPromedioAnterior = (values[month - 1] + values[month + 23]);
+        descuentoPromedio = ((values[month] + values[month + 24])/2);
+        descuentoPromedioAnterior = ((values[month - 1] + values[month + 23])/2);
         // determinar la diferencia porcentual en los precios
         differences = percentageDifferencesDiscount(descuentoPromedio, descuentoPromedioAnterior);
+
 
         
     } else if(filtro.origin === 'Zara'){
         values = avgDiscount.averageDiscount(arr);
+        // console.log(values);
         // obtener precios promedio mes actual y anterior 
         descuentoPromedio = values[month];
         descuentoPromedioAnterior = values[month - 1];
@@ -514,6 +520,7 @@ exports.tableDiscountInfo = async (req, res) => {
 
     } else if(filtro.origin === 'Mango'){
         values = avgDiscount.averageDiscount(arr);
+        // console.log(values);
         // obtener descuentos promedio mes actual y anterior 
         descuentoPromedio = values[month];
         descuentoPromedioAnterior = values[month - 1];
@@ -526,6 +533,75 @@ exports.tableDiscountInfo = async (req, res) => {
     obj = { 
         arr,
         descuentoPromedio,
+        differences
+    }
+
+
+    res.status(200).json({obj});
+}
+
+exports.tableNewsInfo = async (req, res) => {
+    let filtro = req.query;
+    
+    filtro = organizarQuery(filtro);
+    filtro.estado = {$eq: "nuevo"};
+    
+    let arr;
+    let obj;
+    let values = [];
+    let origin = '';
+    let nuevosPromedio = 0;
+    let nuevosPromedioAnterior = 0;
+    let differences = [];
+
+    //mes actual
+    let date = new Date();
+    let month = date.getMonth(); 
+
+    try {
+        arr = await Business.find(filtro,{"precio":1,"origin":1, "descuento": 1,"categoria":1,"subCategoria": 1,"createdAt":1, "tipoPrenda": 1, "tag": 1});
+    } catch (error) {
+        console.log("no se obtuvo respuesta");
+        return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
+    }
+
+    if (filtro.origin === undefined) {
+        values = avgNews.averageNewsMonthGeneral(arr);
+        console.log(values);
+        // obtener precios promedio mes actual y anterior 
+        nuevosPromedio = (values[month] + values[month + 24]);
+        nuevosPromedioAnterior = (values[month - 1] + values[month + 23]);
+        // determinar la diferencia porcentual en los precios
+        differences = percentageDifferencesnews(nuevosPromedio, nuevosPromedioAnterior);
+
+
+        
+    } else if(filtro.origin === 'Zara'){
+        values = avgNews.averageNewsMonthOrigin(arr);
+        console.log(values);
+        // obtener precios promedio mes actual y anterior 
+        nuevosPromedio = values[month];
+        nuevosPromedioAnterior = values[month - 1];
+        // determinar la diferencia porcentual en los nuevoss
+        differences = percentageDifferencesnews(nuevosPromedio, nuevosPromedioAnterior);
+
+    } else if(filtro.origin === 'Mango'){
+        values = avgNews.averageNewsMonthOrigin(arr);
+        console.log(values);
+        // obtener descuentos promedio mes actual y anterior 
+        nuevosPromedio = values[month];
+        nuevosPromedioAnterior = values[month - 1];
+        // determinar la diferencia porcentual en los nuevoss
+        differences = percentageDifferencesnews(nuevosPromedio, nuevosPromedioAnterior);
+    }
+
+    // console.log(differences);
+    // console.log(nuevosPromedio);
+
+    // respuesta para el frontend
+    obj = { 
+        arr,
+        nuevosPromedio,
         differences
     }
 
