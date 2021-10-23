@@ -53,8 +53,10 @@ exports.cardsInfo = async (req, res) => {
         discounts = avgDiscount.averageDiscountMonthGeneral(arr); // calcula los promedios por mes x 2 años una marca
         dzm[0] = discounts[month - 1];
         dzm[1] = discounts[month];
-        dzm[0] = discounts[month + 23];
-        dzm[1] = discounts[month + 24];
+        dzm[0] += discounts[month + 23];
+        dzm[1] += discounts[month + 24];
+        // descuento promedio mes actualizado
+        discount = ((discounts[month] + discounts[month + 24])/2);
 
 
         values = avgPrice.averagePriceMonthGeneral(arr); // calcula el precio promedio por mes dos marcas 2 años
@@ -153,7 +155,7 @@ exports.cardsInfo = async (req, res) => {
         sku:calculateSKU(arr),
         totalProductos: arr.length,
         precioPromedio, // precio promedio de ambas marcas 
-        discount:  avgDiscount.averageDiscountQuery(arr),  // guarda el descuento de toda la consulta
+        discount,  // guarda el descuento de toda la consulta
         nuevos : news(arr),
         origin,
         discounts, // guarda el descuento
@@ -767,11 +769,11 @@ percentageDifferencesDiscount = (current, before) => {
     let difference = [];
     if (current >= before && current !== 0) {
         difference[0] = 1;
-        difference[1] =  parseFloat((current-before).toFixed(2));
+        difference[1] =  parseFloat(((current-before)/2).toFixed(2));
         return difference;
     } else if (current < before) {
         difference[0] = 0;
-        difference[1] =  parseFloat((before-current).toFixed(2));
+        difference[1] =  parseFloat(((before-current)/2).toFixed(2));
         return difference;
     } else {
         difference[0] = 0;
