@@ -6,65 +6,25 @@ const avgSKU = require("./filtersScraping/SKU");
 const prendasInfo = require("./filtersScraping/prendasInfo");
 
 organizarQueryTest = (query) => {
-    // let obj = {};
-    // let inn = [];
-
-    // if(query.origin !== undefined) {
-    //     // obj.origin = query.origin;
-    //     if (query.origin.length > 1) {
-    //         obj.origin = {$in: query.origin};
-    //       } else {
-    //         obj.origin = '';
-    //       }
-
-    // }
-    // if(query.categoria !== undefined){
-    //     if (query.categoria.length !== 0) {
-    //         obj.categoria = {$in: query.categoria};
-    //       } else {
-    //         obj.categoria = '';
-    //       } 
-    // }
-    // if(query.subCategoria !== undefined){
-    //     if (query.origin.length !== 0) {
-    //         obj.origin = {$in: query.origin};
-    //       } else {
-    //         obj.origin = '';
-    //       }
-    // }
-    // if(query.tipoPrenda !== undefined){
-    //     if (query.origin.length !== 0) {
-    //         obj.origin = {$in: [query.origin]};
-    //       } else {
-    //         obj.origin = '';
-    //       } 
-    // }
-    // if(query.color !== undefined){
-    //     if (query.origin.length !== 0) {
-    //         obj.origin = {$in: [query.origin]};
-    //       } else {
-    //         obj.origin = '';
-    //       } 
-    // }
-
     let obj = {};
-    if(query.origin !== undefined){
-        obj.origin = query.origin;
+    let inn = [];
+
+    if(query.origin !== undefined) {
+        obj.origin = {$in: query.origin};
+
     }
     if(query.categoria !== undefined){
-        obj.categoria = query.categoria; 
+        obj.categoria = {$in: query.categoria};
     }
     if(query.subCategoria !== undefined){
-        obj.subCategoria = query.subCategoria;
+        obj.origin = {$in: query.origin};
     }
     if(query.tipoPrenda !== undefined){
-        obj.tipoPrenda = query.tipoPrenda; 
+        obj.origin = {$in: query.origin};
     }
     if(query.color !== undefined){
-        obj.color = query.color; 
-    }
-
-    
+        obj.origin = {$in: query.origin};
+    }   
 
 
     return obj;
@@ -73,11 +33,12 @@ organizarQueryTest = (query) => {
 // info cards response
 exports.cardsInfo = async (req, res) => {
     let filtro = req.query;
+    // console.log(zara);
 
     
     // console.log(filtro);
     filtro = organizarQueryTest(filtro);
-    console.log(filtro);
+    // console.log(filtro.origin['$in']);
 
     //mes actual
     let date = new Date();
@@ -111,12 +72,14 @@ exports.cardsInfo = async (req, res) => {
 
     try {
         arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
+        console.log(arr.length);
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
-    if (filtro.origin === undefined) {
+    // if (filtro.origin === undefined) {
+    if (req.query.origin === undefined || Array.isArray(req.query.origin) ) {
 
         discounts = avgDiscount.averageDiscountMonthGeneral(arr); // calcula los promedios por mes x 2 años una marca
         dzm[0] = discounts[month - 1];
@@ -159,13 +122,16 @@ exports.cardsInfo = async (req, res) => {
 
 
         
-    } else if(filtro.origin === 'Zara'){
+    // } else if(filtro.origin === 'Zara'){
+    } else if(req.query.origin === 'Zara'){
+        // console.log("entro a zara");
         origin = 'Zara';
         discounts = avgDiscount.averageDiscount(arr); // calcula los promedios por mes una marca 2 años
         values = avgPrice.averagePriceMonthOrigin(arr); // promedio precio de la marca seleccionada por mes 2 años
         precioPromedio = values[month];
         newsCounts = avgNews.averageNewsMonthOrigin(arr); // promedio precio de la marca seleccionada por mes 2 años
         skuCounts = avgSKU.averageSKUMonthOrigin(arr); // calcula el precio promedio por mes dos marcas 2 años
+        discount = discounts[month];
         
         // valores de diferencia de porcentajes
         dzm[0] = discounts[month - 1];
@@ -187,13 +153,15 @@ exports.cardsInfo = async (req, res) => {
         differenceNew = percentageDifferencesnews(nzm[1], nzm[0]);
         differenceSKU = percentageDifferencesSku(skuzm[1], skuzm[0]);
 
-    } else if(filtro.origin === 'Mango'){
+    // } else if(filtro.origin === 'Mango'){
+    } else if(req.query.origin === 'Mango'){
         origin = 'Mango';
         discounts = avgDiscount.averageDiscount(arr); // calcula los promedios por mes
         values = avgPrice.averagePriceMonthOrigin(arr); // precio promedio por mes dos años una marca
         precioPromedio = values[month];
         newsCounts = avgNews.averageNewsMonthOrigin(arr); // promedio precio de la marca seleccionada por mes 2 años
         skuCounts = avgSKU.averageSKUMonthOrigin(arr); // calcula el precio promedio por mes dos marcas 2 años
+        discount = discounts[month];
         
 
         // valores de diferencia de porcentajes
@@ -243,7 +211,7 @@ exports.cardsInfo = async (req, res) => {
 // fin info cards response
 
 
-// precio promedio por los ultimos 2 años y descuento promedio (charts y tablas)
+// precio promedio por los ultimos 2 años y descuento promedio (charts)
 exports.averagePrice = async (req, res) => {
     let filtro = req.query;
     
@@ -275,7 +243,7 @@ exports.averagePrice = async (req, res) => {
 
     months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
-
+    
     
     // respuesta para el frontend
     obj = {  
