@@ -5,14 +5,80 @@ const avgNews = require("./filtersScraping/newProducts")
 const avgSKU = require("./filtersScraping/SKU");
 const prendasInfo = require("./filtersScraping/prendasInfo");
 
+organizarQueryTest = (query) => {
+    // let obj = {};
+    // let inn = [];
+
+    // if(query.origin !== undefined) {
+    //     // obj.origin = query.origin;
+    //     if (query.origin.length > 1) {
+    //         obj.origin = {$in: query.origin};
+    //       } else {
+    //         obj.origin = '';
+    //       }
+
+    // }
+    // if(query.categoria !== undefined){
+    //     if (query.categoria.length !== 0) {
+    //         obj.categoria = {$in: query.categoria};
+    //       } else {
+    //         obj.categoria = '';
+    //       } 
+    // }
+    // if(query.subCategoria !== undefined){
+    //     if (query.origin.length !== 0) {
+    //         obj.origin = {$in: query.origin};
+    //       } else {
+    //         obj.origin = '';
+    //       }
+    // }
+    // if(query.tipoPrenda !== undefined){
+    //     if (query.origin.length !== 0) {
+    //         obj.origin = {$in: [query.origin]};
+    //       } else {
+    //         obj.origin = '';
+    //       } 
+    // }
+    // if(query.color !== undefined){
+    //     if (query.origin.length !== 0) {
+    //         obj.origin = {$in: [query.origin]};
+    //       } else {
+    //         obj.origin = '';
+    //       } 
+    // }
+
+    let obj = {};
+    if(query.origin !== undefined){
+        obj.origin = query.origin;
+    }
+    if(query.categoria !== undefined){
+        obj.categoria = query.categoria; 
+    }
+    if(query.subCategoria !== undefined){
+        obj.subCategoria = query.subCategoria;
+    }
+    if(query.tipoPrenda !== undefined){
+        obj.tipoPrenda = query.tipoPrenda; 
+    }
+    if(query.color !== undefined){
+        obj.color = query.color; 
+    }
+
+    
+
+
+    return obj;
+}
 
 // info cards response
 exports.cardsInfo = async (req, res) => {
     let filtro = req.query;
-    
-    filtro = organizarQuery(filtro);
 
+    
     // console.log(filtro);
+    filtro = organizarQueryTest(filtro);
+    console.log(filtro);
+
     //mes actual
     let date = new Date();
     let month = date.getMonth(); 
@@ -40,6 +106,8 @@ exports.cardsInfo = async (req, res) => {
     let differenceDiscontinued = [];
     let differenceSKU = [];
     let origin = '';
+    let precioPromedio = '';
+    let discount = 0;
 
     try {
         arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
@@ -155,9 +223,9 @@ exports.cardsInfo = async (req, res) => {
         sku:calculateSKU(arr),
         totalProductos: arr.length,
         precioPromedio, // precio promedio de ambas marcas 
-        discount,  // guarda el descuento de toda la consulta
         nuevos : news(arr),
         origin,
+        discount,
         discounts, // guarda el descuento
         values, // precio promedio 
         newsCounts, // nuevos 
@@ -226,6 +294,7 @@ exports.averageDiscount = async (req, res) => {
     
     filtro = organizarQuery(filtro);
     filtro.descuento = {$ne: null};
+    // console.log(filtro);
     
     let arr;
     let obj;
