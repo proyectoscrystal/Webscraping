@@ -85,7 +85,7 @@ exports.cardsInfo = async (req, res) => {
 
         // array de dos valores para setear la diferencia entre mes actual y anterior
         differencePrice =  percentageDifferencePrice(zm[1], zm[0]);
-        differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
+        differencePorcentage =  percentageDifferencesDiscount(dzm[1]/2, dzm[0]/2);
         differenceNew = percentageDifferencesnews(nzm[1], nzm[0]);
         differenceSKU = percentageDifferencesSku(skuzm[1], skuzm[0]);
 
@@ -769,11 +769,11 @@ percentageDifferencesDiscount = (current, before) => {
     let difference = [];
     if (current >= before && current !== 0) {
         difference[0] = 1;
-        difference[1] =  parseFloat(((current-before)/2).toFixed(2));
+        difference[1] =  parseFloat((current-before).toFixed(2));
         return difference;
     } else if (current < before) {
         difference[0] = 0;
-        difference[1] =  parseFloat(((before-current)/2).toFixed(2));
+        difference[1] =  parseFloat((before-current).toFixed(2));
         return difference;
     } else {
         difference[0] = 0;
