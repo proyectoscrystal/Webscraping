@@ -164,7 +164,7 @@ exports.getscraping = async (arreglo) => {
       for(var i = 0; i < materiales.length; i++) {
         switch(i) {
         case 0: 
-         porcentaje1 = materiales[i].split("  ")[0];
+          porcentaje1 = materiales[i].split("  ")[0];
           material1 = materiales[i].split("  ")[1];
           
           break;

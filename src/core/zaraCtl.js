@@ -179,7 +179,7 @@ exports.getscraping = async (arreglo) => {
   let porcentaje5 = "";
   let porcentaje6 = "";
   let porcentaje7 = "";
-  // console.log(arreglo);
+  // 
 
   // se formatean los datos descuento y precio, para llevarlos a la db
   for (let i = 0; i < arreglo.length; i++) {
@@ -187,6 +187,57 @@ exports.getscraping = async (arreglo) => {
 
     // procesamiento del campo materiales
     materiales = estraerMateriales(materiales);
+
+    materiales = materiales.split("·");
+    for(i = 0; i < materiales.length; i ++) {
+      materiales[i] = materiales[i].trim();
+    }
+
+    for(var i = 0; i < materiales.length; i++) {
+      switch(i) {
+      case 0: 
+       porcentaje1 = materiales[i].split(" ")[0];
+        material1 = materiales[i].split(" ")[1];
+        
+        break;
+      case 1: 
+       porcentaje2 = materiales[i].split(" ")[0];
+        material2 = materiales[i].split(" ")[1];
+       
+        break;
+      case 2: 
+       porcentaje3 = materiales[i].split(" ")[0];
+        material3 = materiales[i].split(" ")[1];
+       
+        break
+      case 3: 
+       porcentaje4 = materiales[i].split(" ")[0];
+        material4 = materiales[i].split(" ")[1];
+       
+        break
+      case 4: 
+       porcentaje5 = materiales[i].split(" ")[0];
+        material5 = materiales[i].split(" ")[1];
+       
+        break
+      case 5: 
+       porcentaje6 = materiales[i].split(" ")[0];
+        material6 = materiales[i].split(" ")[1];
+       
+        break
+      case 6: 
+       porcentaje7 = materiales[i].split(" ")[0];
+        material7 = materiales[i].split(" ")[1];
+        
+        break
+      default: 
+        break
+        
+      }
+    }
+
+    // fin de implementacion de materiales
+
 
     // implementacion tallas agotadas zaractol
     if (tallasAgotadas.length !== 0) {
@@ -258,7 +309,21 @@ exports.getscraping = async (arreglo) => {
       subCategoria,
       color,
       talla,
-      tallasAgotadas
+      tallasAgotadas,
+      material1,
+      material2,
+      material3,
+      material4,
+      material5,
+      material6,
+      material7,
+      porcentaje1,
+      porcentaje2,
+      porcentaje3,
+      porcentaje4,
+      porcentaje5,
+      porcentaje6,
+      porcentaje7,
     };
 
     sendImgsModel(newObject);
