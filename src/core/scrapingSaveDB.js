@@ -129,9 +129,23 @@ exports.saveImagesDB = async (data) => {
         estado: data.estado,
         enlaceImagen: data.enlaceImagen,
         tipoPrenda: data.tipoPrenda,
-        tallasAgotadas: data.tallasAgotadas
+        tallasAgotadas: data.tallasAgotadas,
+        material1 = data.material1,
+        material2 = data.material2,
+        material3 = data.material3,
+        material4 = data.material4,
+        material5 = data.material5,
+        material6 = data.material6,
+        material7 = data.material7,
+        porcentaje1 = data.porcentaje1,
+        porcentaje2 = data.porcentaje2,
+        porcentaje3 = data.porcentaje3,
+        porcentaje4 = data.porcentaje4,
+        porcentaje5 = data.porcentaje5,
+        porcentaje6 = data.porcentaje6,
+        porcentaje7 = data.porcentaje7,
       };
-      console.log(imageData);
+      // console.log(imageData);
 
 
 

@@ -100,6 +100,48 @@ const businessSchema = new Schema(
     materiales: {
       type: String
     },
+    material1: {
+      type: String
+    },
+    material2: {
+      type: String
+    },
+    material3: {
+      type: String
+    },
+    material4: {
+      type: String
+    },
+    material5: {
+      type: String
+    },
+    material6: {
+      type: String
+    },
+    material7: {
+      type: String
+    },
+    porcentaje1: {
+      type: String
+    },
+    porcentaje2: {
+      type: String
+    },
+    porcentaje3: {
+      type: String
+    },
+    porcentaje4: {
+      type: String
+    },
+    porcentaje5: {
+      type: String
+    },
+    porcentaje6: {
+      type: String
+    },
+    porcentaje7: {
+      type: String
+    },
     descuento: {
       type: Number,
       require: false,

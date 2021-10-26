@@ -140,14 +140,71 @@ exports.getMiniKidsNew = (req, res) => {
 // catching data from scraping
 
 exports.getscraping = async (arreglo) => {
-
-
-
-
-    // console.log(arreglo);
+  let material1 = "";
+  let material2 = "";
+  let material3 = "";
+  let material4 = "";
+  let material5 = "";
+  let material6 = "";
+  let material7 = "";
+  let porcentaje1 = "";
+  let porcentaje2 = "";
+  let porcentaje3 = "";
+  let porcentaje4 = "";
+  let porcentaje5 = "";
+  let porcentaje6 = "";
+  let porcentaje7 = "";
     // se formatean los datos descuento, tallas y precio, para llevarlos a la db
     for (let i = 0; i < arreglo.length; i++) {
-      let { precio, enlaceImagen, descuento, talla, tag, tipoPrenda, color } = arreglo[i];
+      let { precio, enlaceImagen, descuento, talla, tag, tipoPrenda, color,materiales } = arreglo[i];
+
+      // procesamiento del campo materiales
+      materiales = estraerMateriales(materiales);
+
+      for(var i = 0; i < materiales.length; i++) {
+        switch(i) {
+        case 0: 
+         porcentaje1 = materiales[i].split("  ")[0];
+          material1 = materiales[i].split("  ")[1];
+          
+          break;
+        case 1: 
+         porcentaje2 = materiales[i].split("  ")[0];
+          material2 = materiales[i].split("  ")[1];
+         
+          break;
+        case 2: 
+         porcentaje3 = materiales[i].split("  ")[0];
+          material3 = materiales[i].split("  ")[1];
+         
+          break
+        case 3: 
+         porcentaje4 = materiales[i].split("  ")[0];
+          material4 = materiales[i].split("  ")[1];
+         
+          break
+        case 4: 
+         porcentaje5 = materiales[i].split("  ")[0];
+          material5 = materiales[i].split("  ")[1];
+         
+          break
+        case 5: 
+         porcentaje6 = materiales[i].split("  ")[0];
+          material6 = materiales[i].split("  ")[1];
+         
+          break
+        case 6: 
+         porcentaje7 = materiales[i].split("  ")[0];
+          material7 = materiales[i].split("  ")[1];
+          break
+        default: 
+          break
+          
+        }
+      }
+
+
+
       
       let tallasAux = [];
       let tallasAgotadas = [];
@@ -215,7 +272,21 @@ exports.getscraping = async (arreglo) => {
         subCategoria,
         color,
         talla,
-        tallasAgotadas
+        tallasAgotadas,
+        material1,
+        material2,
+        material3,
+        material4,
+        material5,
+        material6,
+        material7,
+        porcentaje1,
+        porcentaje2,
+        porcentaje3,
+        porcentaje4,
+        porcentaje5,
+        porcentaje6,
+        porcentaje7,
       };
 
       sendImgsModel(newObject);
@@ -224,6 +295,14 @@ exports.getscraping = async (arreglo) => {
   };
   // end catching data from scraping
 
+  // metodo para extraer los materiales y sus porcentajes
+  let estraerMateriales = (materiales) => {
+    materiales = materiales.split(": ").splice(1,1);
+    materiales = materiales[0].split(".").splice(0,1);
+    materiales = materiales[0].split(",");
+
+    return materiales;
+  }
 
   // metodo para calcular el año actual
   let year = () => {

@@ -165,25 +165,41 @@ exports.getMiniKids = (req, res) => {
 
 // metodo para procesar y guardar la info del scraping 
 exports.getscraping = async (arreglo) => {
+  let material1 = "";
+  let material2 = "";
+  let material3 = "";
+  let material4 = "";
+  let material5 = "";
+  let material6 = "";
+  let material7 = "";
+  let porcentaje1 = "";
+  let porcentaje2 = "";
+  let porcentaje3 = "";
+  let porcentaje4 = "";
+  let porcentaje5 = "";
+  let porcentaje6 = "";
+  let porcentaje7 = "";
   // console.log(arreglo);
 
   // se formatean los datos descuento y precio, para llevarlos a la db
   for (let i = 0; i < arreglo.length; i++) {
-    let { precio, enlaceImagen, descuento, talla, tag, tipoPrenda, color } = arreglo[i];
+    let { precio, enlaceImagen, descuento, talla, tag, tipoPrenda, color, tallasAgotadas, materiales } = arreglo[i];
 
-    // esperar validacion de parte de camilo, saber si se puede implementar en zara
-    let tallasAux = [];
-      let tallasAgotadas = [];
-      talla.forEach(element => {
-        if (element.length > 3) {
-          tallasAgotadas.push(element.split(' ')[0])
-        } else {
-          tallasAux.push(element)
-        }        
+    // procesamiento del campo materiales
+    materiales = estraerMateriales(materiales);
+
+    // implementacion tallas agotadas zaractol
+    if (tallasAgotadas.length !== 0) {
+      let tallasAgotadasAux = [];
+      tallasAgotadas.forEach(element => {
+          tallasAgotadasAux.push(element.split(' ')[0])
       });
-      talla = tallasAux;
 
-      
+      tallasAgotadas = tallasAgotadasAux;
+
+      talla = tallasSinAgotados(talla, tallasAgotadas);
+    }
+
 
     let subCategoria = '';
     if(arreglo[i].tipoPrenda === undefined) {
@@ -248,6 +264,23 @@ exports.getscraping = async (arreglo) => {
     sendImgsModel(newObject);
   }
 };
+
+let tallasSinAgotados = (talla, tallasAgotadas) => {
+  for(var i=0;i<talla.length;i++)
+  {
+    for(var j=0;j<talla.length;j++)
+    {
+      if(talla[i]==tallasAgotadas[j])
+        talla.splice(i,1);
+    }
+  }
+
+  return talla;
+}
+
+let estraerMateriales = (materiales) => {
+
+}
 
 let year = () => {
   let date = new Date();
