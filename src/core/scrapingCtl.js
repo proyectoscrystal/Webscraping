@@ -656,13 +656,14 @@ exports.tableSKUInfo = async (req, res) => {
     let nuevosPromedio = 0;
     let descuentoPromedio = 0;
     let valuesDiscount = 0;
+    let tasaFrescura = 0;
 
     //mes actual
     let date = new Date();
     let month = date.getMonth(); 
 
     try {
-        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1}).limit(3000);
+        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
@@ -687,6 +688,9 @@ exports.tableSKUInfo = async (req, res) => {
         // obtener precios promedio mes actual y anterior 
         descuentoPromedio = ((valuesDiscount[month] + valuesDiscount[month + 24])/2);
 
+        // obtener tasa de tasaFrescura
+        tasaFrescura = (nuevosPromedio/arr.length).toFixed(2);
+
 
         // determinar la diferencia porcentual en los precios
         differences = percentageDifferencesSku(SKU, SKUAnterior);
@@ -710,6 +714,9 @@ exports.tableSKUInfo = async (req, res) => {
         // obtener precios promedio mes actual y anterior 
         descuentoPromedio = valuesDiscount[month];
 
+        // obtener tasa de tasaFrescura
+        tasaFrescura = (nuevosPromedio/arr.length).toFixed(2);
+
         // determinar la diferencia porcentual en los precios
         differences = percentageDifferencesSku(SKU, SKUAnterior);
 
@@ -731,6 +738,9 @@ exports.tableSKUInfo = async (req, res) => {
         // obtener precios promedio mes actual y anterior 
         descuentoPromedio = valuesDiscount[month];
 
+        // obtener tasa de tasaFrescura
+        tasaFrescura = (nuevosPromedio/arr.length).toFixed(2);
+
         // determinar la diferencia porcentual en los precios
         differences = percentageDifferencesSku(SKU, SKUAnterior);
     }
@@ -744,6 +754,7 @@ exports.tableSKUInfo = async (req, res) => {
         precioPromedio: precioPromedio.toFixed(2),
         nuevosPromedio,
         descuentoPromedio,
+        tasaFrescura
     }
 
 
