@@ -53,7 +53,7 @@ exports.womanCategory = async () => {
         return productosmujer;
       });
       //console.log(enlacesproductosmujer);
-      let count = 5;
+      // let count = 5;
 
       for (let enlaceproductomujer of enlacesproductosmujer) {
         await page.goto(enlaceproductomujer);

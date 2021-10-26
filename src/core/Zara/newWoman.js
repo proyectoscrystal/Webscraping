@@ -30,7 +30,7 @@ exports.newWoman =async () => {
     });
 
     const nuevoMujer = [];
-    //let count = 5;
+    let count = 5;
 
     for (let enlaceNuevoM of enlacesNuevoM) {
       try {
@@ -78,11 +78,11 @@ exports.newWoman =async () => {
 
           return prenda;
         });
-        //count--;
+        count--;
         nuevoMujer.push(prendasNuevoMujer);
-        //if(count === 0){                
-           //break;
-        //}
+        if(count === 0){                
+           break;
+        }
       } catch (error) {
         //console.log(error.message);;
       }

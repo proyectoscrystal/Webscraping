@@ -17,13 +17,13 @@ organizarQueryTest = (query) => {
         obj.categoria = {$in: query.categoria};
     }
     if(query.subCategoria !== undefined){
-        obj.origin = {$in: query.origin};
+        obj.subCategoria = {$in: query.subCategoria};
     }
     if(query.tipoPrenda !== undefined){
-        obj.origin = {$in: query.origin};
+        obj.tipoPrenda = {$in: query.tipoPrenda};
     }
     if(query.color !== undefined){
-        obj.origin = {$in: query.origin};
+        obj.color = {$in: query.color};
     }   
 
 
@@ -72,7 +72,7 @@ exports.cardsInfo = async (req, res) => {
 
     try {
         arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
-        console.log(arr.length);
+        // console.log(arr.length);
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
