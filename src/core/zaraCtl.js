@@ -193,41 +193,41 @@ exports.getscraping = async (arreglo) => {
       materiales[i] = materiales[i].trim();
     }
 
-    for(var i = 0; i < materiales.length; i++) {
-      switch(i) {
+    for(var j = 0; j < materiales.length; j++) {
+      switch(j) {
       case 0: 
-       porcentaje1 = materiales[i].split(" ")[0];
-        material1 = materiales[i].split(" ")[1];
+       porcentaje1 = materiales[j].split(" ")[0];
+        material1 = materiales[j].split(" ")[1];
         
         break;
       case 1: 
-       porcentaje2 = materiales[i].split(" ")[0];
-        material2 = materiales[i].split(" ")[1];
+       porcentaje2 = materiales[j].split(" ")[0];
+        material2 = materiales[j].split(" ")[1];
        
         break;
       case 2: 
-       porcentaje3 = materiales[i].split(" ")[0];
-        material3 = materiales[i].split(" ")[1];
+       porcentaje3 = materiales[j].split(" ")[0];
+        material3 = materiales[j].split(" ")[1];
        
         break
       case 3: 
-       porcentaje4 = materiales[i].split(" ")[0];
-        material4 = materiales[i].split(" ")[1];
+       porcentaje4 = materiales[j].split(" ")[0];
+        material4 = materiales[j].split(" ")[1];
        
         break
       case 4: 
-       porcentaje5 = materiales[i].split(" ")[0];
-        material5 = materiales[i].split(" ")[1];
+       porcentaje5 = materiales[j].split(" ")[0];
+        material5 = materiales[j].split(" ")[1];
        
         break
       case 5: 
-       porcentaje6 = materiales[i].split(" ")[0];
-        material6 = materiales[i].split(" ")[1];
+       porcentaje6 = materiales[j].split(" ")[0];
+        material6 = materiales[j].split(" ")[1];
        
         break
       case 6: 
-       porcentaje7 = materiales[i].split(" ")[0];
-        material7 = materiales[i].split(" ")[1];
+       porcentaje7 = materiales[j].split(" ")[0];
+        material7 = materiales[j].split(" ")[1];
         
         break
       default: 
