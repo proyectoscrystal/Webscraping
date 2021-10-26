@@ -325,11 +325,11 @@ exports.averageNews = async (req, res) => {
         
     } else if(req.query.origin === 'Zara'){
         origin = 'Zara';
-        values = avgPrice.averagePriceMonthOrigin(arr);
+        values = avgNews.averageNewsMonthOrigin(arr);
 
     } else if(req.query.origin === 'Mango'){
         origin = 'Mango';
-        values = avgPrice.averagePriceMonthOrigin(arr);
+        values = avgNews.averageNewsMonthOrigin(arr);
     }
 
     // cantidad de prendas nuevas
