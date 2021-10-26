@@ -33,12 +33,8 @@ organizarQueryTest = (query) => {
 // info cards response
 exports.cardsInfo = async (req, res) => {
     let filtro = req.query;
-    // console.log(zara);
-
     
-    // console.log(filtro);
     filtro = organizarQueryTest(filtro);
-    // console.log(filtro.origin['$in']);
 
     //mes actual
     let date = new Date();
@@ -78,7 +74,7 @@ exports.cardsInfo = async (req, res) => {
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
-    // if (filtro.origin === undefined) {
+
     if (req.query.origin === undefined || Array.isArray(req.query.origin) ) {
 
         discounts = avgDiscount.averageDiscountMonthGeneral(arr); // calcula los promedios por mes x 2 años una marca
@@ -215,7 +211,7 @@ exports.cardsInfo = async (req, res) => {
 exports.averagePrice = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQuery(filtro);
+    filtro = organizarQueryTest(filtro);
     let arr;
     let obj;
     let values = [];
@@ -228,15 +224,15 @@ exports.averagePrice = async (req, res) => {
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
-    if (filtro.origin === undefined) {
+    if (req.query.origin === undefined || Array.isArray(req.query.origin) ){
         values = avgPrice.averagePriceMonthGeneral(arr);
         origin = 'general';
         
-    } else if(filtro.origin === 'Zara'){
+    } else if(req.query.origin === 'Zara'){
         origin = 'Zara';
         values = avgPrice.averagePriceMonthOrigin(arr);
 
-    } else if(filtro.origin === 'Mango'){
+    } else if(req.query.origin === 'Mango'){
         origin = 'Mango';
         values = avgPrice.averagePriceMonthOrigin(arr);
     }
@@ -260,7 +256,7 @@ exports.averagePrice = async (req, res) => {
 exports.averageDiscount = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQuery(filtro);
+    filtro = organizarQueryTest(filtro);
     filtro.descuento = {$ne: null};
     // console.log(filtro);
     
@@ -276,15 +272,15 @@ exports.averageDiscount = async (req, res) => {
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
-    if (filtro.origin === undefined) {
+    if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
         values = avgDiscount.averageDiscountMonthGeneral(arr);        
         origin = 'general';
         
-    } else if(filtro.origin === 'Zara'){
+    } else if(req.query.origin === 'Zara'){
         origin = 'Zara';
         values = avgDiscount.averageDiscount(arr);
 
-    } else if(filtro.origin === 'Mango'){
+    } else if(req.query.origin === 'Mango'){
         origin = 'Mango';
         values = avgDiscount.averageDiscount(arr);
     }
@@ -305,11 +301,11 @@ exports.averageDiscount = async (req, res) => {
     res.status(200).json({obj});
 }
 
-// nuevos
+// nuevos charts
 exports.averageNews = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQuery(filtro);
+    filtro = organizarQueryTest(filtro);
     filtro.estado = {$eq: "nuevo"};
     let arr;
     let obj;
@@ -323,15 +319,15 @@ exports.averageNews = async (req, res) => {
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
-    if (filtro.origin === undefined) {
+    if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
         values = avgNews.averageNewsMonthGeneral(arr);
         origin = 'general';
         
-    } else if(filtro.origin === 'Zara'){
+    } else if(req.query.origin === 'Zara'){
         origin = 'Zara';
         values = avgPrice.averagePriceMonthOrigin(arr);
 
-    } else if(filtro.origin === 'Mango'){
+    } else if(req.query.origin === 'Mango'){
         origin = 'Mango';
         values = avgPrice.averagePriceMonthOrigin(arr);
     }
@@ -362,11 +358,11 @@ exports.averageNews = async (req, res) => {
 // fin average news
 
 
-// average SKU
+// average SKU chart
 exports.averageSKU = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQuery(filtro);
+    filtro = organizarQueryTest(filtro);
     let arr;
     let obj;
     let values = [];
@@ -379,15 +375,15 @@ exports.averageSKU = async (req, res) => {
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
-    if (filtro.origin === undefined) {
+    if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
         values = avgSKU.averageSKUMonthGeneral(arr);        
         origin = 'general';
         
-    } else if(filtro.origin === 'Zara'){
+    } else if(req.query.origin === 'Zara'){
         origin = 'Zara';
         values = avgSKU.averageSKUMonthOrigin(arr);
 
-    } else if(filtro.origin === 'Mango'){
+    } else if(req.query.origin === 'Mango'){
         origin = 'Mango';
         values = avgSKU.averageSKUMonthOrigin(arr);
     }
@@ -405,7 +401,7 @@ exports.averageSKU = async (req, res) => {
     res.status(200).json({obj});
 }
 
-// para las tablas de la vista categoria aun no se crea el endpoint ni el servicio en angular
+// para las tablas de la vista categoria prenda
 exports.tableCategoryInfo = async (req, res) => {
     let filtro = req.query;
     
@@ -449,12 +445,12 @@ exports.tableCategoryInfo = async (req, res) => {
 
     res.status(200).json({obj});
 }
-// fin table info
+
 
 exports.tablePriceInfo = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQuery(filtro);
+    filtro = organizarQueryTest(filtro);
     let arr;
     let obj;
     let values = [];
@@ -468,13 +464,13 @@ exports.tablePriceInfo = async (req, res) => {
     let month = date.getMonth(); 
 
     try {
-        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1}).limit(100);
+        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1}).limit(500);
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
-    if (filtro.origin === undefined) {
+    if (req.query.origin === undefined || Array.isArray(req.query.origin) ){
         values = avgPrice.averagePriceMonthGeneral(arr);
         // obtener precios promedio mes actual y anterior 
         precioPromedio = (values[month] + values[month + 24]);
@@ -483,7 +479,7 @@ exports.tablePriceInfo = async (req, res) => {
         differences = percentageDifferencePrice(precioPromedio, precioPromedioAnterior);
 
         
-    } else if(filtro.origin === 'Zara'){
+    } else if(req.query.origin === 'Zara'){
         values = avgPrice.averagePriceMonthOrigin(arr);
         // obtener precios promedio mes actual y anterior 
         precioPromedio = values[month];
@@ -491,7 +487,7 @@ exports.tablePriceInfo = async (req, res) => {
         // determinar la diferencia porcentual en los precios
         differences = percentageDifferencePrice(precioPromedio, precioPromedioAnterior);
 
-    } else if(filtro.origin === 'Mango'){
+    } else if(req.query.origin === 'Mango'){
         values = avgPrice.averagePriceMonthOrigin(arr);
         // obtener precios promedio mes actual y anterior 
         precioPromedio = values[month];
@@ -512,10 +508,11 @@ exports.tablePriceInfo = async (req, res) => {
     res.status(200).json({obj});
 }
 
+// table info
 exports.tableDiscountInfo = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQuery(filtro);
+    filtro = organizarQueryTest(filtro);
     filtro.descuento = {$ne: null};
 
     let arr;
@@ -531,13 +528,13 @@ exports.tableDiscountInfo = async (req, res) => {
     let month = date.getMonth(); 
 
     try {
-        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1}).limit(100);
+        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1}).limit(500);
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
-    if (filtro.origin === undefined) {
+    if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
         values = avgDiscount.averageDiscountMonthGeneral(arr);
         // console.log(values);
         // obtener precios promedio mes actual y anterior 
@@ -548,16 +545,15 @@ exports.tableDiscountInfo = async (req, res) => {
 
 
         
-    } else if(filtro.origin === 'Zara'){
+    } else if(req.query.origin === 'Zara'){
         values = avgDiscount.averageDiscount(arr);
-        // console.log(values);
         // obtener precios promedio mes actual y anterior 
         descuentoPromedio = values[month];
         descuentoPromedioAnterior = values[month - 1];
         // determinar la diferencia porcentual en los descuentos
         differences = percentageDifferencesDiscount(descuentoPromedio, descuentoPromedioAnterior);
 
-    } else if(filtro.origin === 'Mango'){
+    } else if(req.query.origin === 'Mango'){
         values = avgDiscount.averageDiscount(arr);
         // console.log(values);
         // obtener descuentos promedio mes actual y anterior 
@@ -582,7 +578,7 @@ exports.tableDiscountInfo = async (req, res) => {
 exports.tableNewsInfo = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQuery(filtro);
+    filtro = organizarQueryTest(filtro);
     filtro.estado = {$eq: "nuevo"};
     
     let arr;
@@ -604,7 +600,7 @@ exports.tableNewsInfo = async (req, res) => {
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
-    if (filtro.origin === undefined) {
+    if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
         values = avgNews.averageNewsMonthGeneral(arr);
         // obtener precios promedio mes actual y anterior 
         nuevosPromedio = (values[month] + values[month + 24]);
@@ -614,7 +610,7 @@ exports.tableNewsInfo = async (req, res) => {
 
 
         
-    } else if(filtro.origin === 'Zara'){
+    } else if(req.query.origin === 'Zara'){
         values = avgNews.averageNewsMonthOrigin(arr);
         // obtener precios promedio mes actual y anterior 
         nuevosPromedio = values[month];
@@ -622,7 +618,7 @@ exports.tableNewsInfo = async (req, res) => {
         // determinar la diferencia porcentual en los nuevoss
         differences = percentageDifferencesnews(nuevosPromedio, nuevosPromedioAnterior);
 
-    } else if(filtro.origin === 'Mango'){
+    } else if(req.query.origin === 'Mango'){
         values = avgNews.averageNewsMonthOrigin(arr);
         // obtener descuentos promedio mes actual y anterior 
         nuevosPromedio = values[month];
@@ -646,48 +642,95 @@ exports.tableNewsInfo = async (req, res) => {
 exports.tableSKUInfo = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQuery(filtro);
+    filtro = organizarQueryTest(filtro);
     let arr;
     let obj;
     let values = [];
+    let valuesPrice = [];
     let origin = '';
     let SKU = 0;
     let SKUAnterior = 0;
     let differences = [];
+    let precioPromedio = 0;
+    let valuesNuevos = 0;
+    let nuevosPromedio = 0;
+    let descuentoPromedio = 0;
+    let valuesDiscount = 0;
 
     //mes actual
     let date = new Date();
     let month = date.getMonth(); 
 
     try {
-        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1}).limit(100);
+        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1}).limit(3000);
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
-    if (filtro.origin === undefined) {
+    if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
         values = avgSKU.averageSKUMonthGeneral(arr);
         // obtener precios promedio mes actual y anterior 
         SKU = (values[month] + values[month + 24]);
         SKUAnterior = (values[month - 1] + values[month + 23]);
+
+        valuesPrice = avgPrice.averagePriceMonthGeneral(arr);
+        // obtener precios promedio mes actual y anterior 
+        precioPromedio = (valuesPrice[month] + valuesPrice[month + 24]);
+
+        valuesNuevos = avgNews.averageNewsMonthGeneral(arr);
+        // obtener precios promedio mes actual y anterior 
+        nuevosPromedio = (valuesNuevos[month] + valuesNuevos[month + 24]);
+
+        valuesDiscount = avgDiscount.averageDiscountMonthGeneral(arr);
+        // console.log(values);
+        // obtener precios promedio mes actual y anterior 
+        descuentoPromedio = ((valuesDiscount[month] + valuesDiscount[month + 24])/2);
+
+
         // determinar la diferencia porcentual en los precios
         differences = percentageDifferencesSku(SKU, SKUAnterior);
 
         
-    } else if(filtro.origin === 'Zara'){
+    } else if(req.query.origin === 'Zara'){
         values = avgSKU.averageSKUMonthOrigin(arr);
         // obtener precios promedio mes actual y anterior 
         SKU = values[month];
         SKUAnterior = values[month - 1];
+
+        valuesPrice = avgPrice.averagePriceMonthOrigin(arr);
+        // obtener precios promedio mes actual y anterior 
+        precioPromedio = valuesPrice[month].toFixed(2);
+
+        valuesNuevos = avgNews.averageNewsMonthOrigin(arr);
+        // obtener descuentos promedio mes actual y anterior 
+        nuevosPromedio = valuesNuevos[month];
+
+        valuesDiscount = avgDiscount.averageDiscount(arr);
+        // obtener precios promedio mes actual y anterior 
+        descuentoPromedio = valuesDiscount[month];
+
         // determinar la diferencia porcentual en los precios
         differences = percentageDifferencesSku(SKU, SKUAnterior);
 
-    } else if(filtro.origin === 'Mango'){
+    } else if(req.query.origin === 'Mango'){
         values = avgSKU.averageSKUMonthOrigin(arr);
         // obtener precios promedio mes actual y anterior 
         SKU = values[month];
         SKUAnterior = values[month - 1];
+
+        valuesPrice = avgPrice.averagePriceMonthOrigin(arr);
+        // obtener precios promedio mes actual y anterior 
+        precioPromedio = valuesPrice[month].toFixed(2);
+
+        valuesNuevos = avgNews.averageNewsMonthOrigin(arr);
+        // obtener descuentos promedio mes actual y anterior 
+        nuevosPromedio = valuesNuevos[month];
+
+        valuesDiscount = avgDiscount.averageDiscount(arr);
+        // obtener precios promedio mes actual y anterior 
+        descuentoPromedio = valuesDiscount[month];
+
         // determinar la diferencia porcentual en los precios
         differences = percentageDifferencesSku(SKU, SKUAnterior);
     }
@@ -697,7 +740,10 @@ exports.tableSKUInfo = async (req, res) => {
     obj = { 
         arr,
         SKU,
-        differences
+        differences,
+        precioPromedio: precioPromedio.toFixed(2),
+        nuevosPromedio,
+        descuentoPromedio,
     }
 
 

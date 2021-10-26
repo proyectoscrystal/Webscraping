@@ -183,6 +183,8 @@ exports.getscraping = async (arreglo) => {
       });
       talla = tallasAux;
 
+      
+
     let subCategoria = '';
     if(arreglo[i].tipoPrenda === undefined) {
       return ; 
