@@ -405,7 +405,7 @@ exports.averageSKU = async (req, res) => {
 exports.tableCategoryInfo = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQuery(filtro);
+    filtro = organizarQueryTest(filtro);
     let arr;
     let obj;
     let values = [];
@@ -458,13 +458,15 @@ exports.tablePriceInfo = async (req, res) => {
     let precioPromedio = 0;
     let precioPromedioAnterior = 0;
     let differences = [];
+    let valuesDiscount = [];
+    let descuentoPromedio = 0;
 
     //mes actual
     let date = new Date();
     let month = date.getMonth(); 
 
     try {
-        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1}).limit(500);
+        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "tallasAgotadas":1, "tipoPrenda": 1, "tag": 1});
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
@@ -475,6 +477,12 @@ exports.tablePriceInfo = async (req, res) => {
         // obtener precios promedio mes actual y anterior 
         precioPromedio = (values[month] + values[month + 24]);
         precioPromedioAnterior = (values[month - 1] + values[month + 23]);
+
+        valuesDiscount = avgDiscount.averageDiscountMonthGeneral(arr);
+        // console.log(values);
+        // obtener precios promedio mes actual y anterior 
+        descuentoPromedio = ((valuesDiscount[month] + valuesDiscount[month + 24])/2);
+        
         // determinar la diferencia porcentual en los precios
         differences = percentageDifferencePrice(precioPromedio, precioPromedioAnterior);
 
@@ -484,6 +492,10 @@ exports.tablePriceInfo = async (req, res) => {
         // obtener precios promedio mes actual y anterior 
         precioPromedio = values[month];
         precioPromedioAnterior = values[month - 1];
+
+        valuesDiscount = avgDiscount.averageDiscount(arr);
+        // obtener precios promedio mes actual y anterior 
+        descuentoPromedio = valuesDiscount[month];
         // determinar la diferencia porcentual en los precios
         differences = percentageDifferencePrice(precioPromedio, precioPromedioAnterior);
 
@@ -492,6 +504,10 @@ exports.tablePriceInfo = async (req, res) => {
         // obtener precios promedio mes actual y anterior 
         precioPromedio = values[month];
         precioPromedioAnterior = values[month - 1];
+
+        valuesDiscount = avgDiscount.averageDiscount(arr);
+        // obtener precios promedio mes actual y anterior 
+        descuentoPromedio = valuesDiscount[month];
         // determinar la diferencia porcentual en los precios
         differences = percentageDifferencePrice(precioPromedio, precioPromedioAnterior);
     }
@@ -501,7 +517,8 @@ exports.tablePriceInfo = async (req, res) => {
     obj = { 
         arr,
         precioPromedio,
-        differences
+        differences,
+        descuentoPromedio
     }
 
 
@@ -764,7 +781,9 @@ exports.tableSKUInfo = async (req, res) => {
 exports.prendasInfo = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQuery(filtro);
+    filtro = organizarQueryTest(filtro);
+
+    console.log(filtro);
 
     //mes actual
     let date = new Date();
@@ -823,12 +842,10 @@ percentageDifferencePrice = (current, before) => {
     let difference = [];
     if (current >= before  && current !== 0) {
         difference[0] = 1;
-        difference[1] = difference[1]/2;
-        difference[1] =  parseFloat(Math.abs( ((before*100)/current)-100 ).toFixed(2));
+        difference[1] =  parseFloat(Math.abs( (((before*100)/current)-100) ).toFixed(2));
         return difference;
     } else if (current < before) {
         difference[0] = 0;
-        difference[1] = difference[1]/2;
         difference[1] =  parseFloat(Math.abs( ((current*100)/before)-100 ).toFixed(2));
         return difference;
     } else {
