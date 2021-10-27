@@ -155,19 +155,9 @@ exports.saveImagesDB = async (data) => {
         // nuevos
         let inBD = await Business.findOne({"enlaceImagen": imageData.enlaceImagen, "color": imageData.color});
 
-        if (inBD == null || inBD.length != 0  ) {
-
-          if (inBD == null) {
-            console.log('producto almacenado'); 
-            await Business.create(imageData, (err) => {
-              if (err && err.code === 11000) {
-                console.log("Imagen ya existe");
-              } else {
-                console.log("Imagen guardada en bd");
-              }
-            });
-            
-          } else if(inBD.estado == imageData.estado){
+        if (inBD !== null) {
+          
+          if(inBD.estado == imageData.estado){
             console.log('No ha cambiado el estado');
           } else if(inBD.estado !== imageData.estado || inBD.tallasAgotadas !== imageData.tallasAgotadas){
 
@@ -181,9 +171,16 @@ exports.saveImagesDB = async (data) => {
             });
           }
 
+        } else {
+          console.log('producto almacenado'); 
+          await Business.create(imageData, (err) => {
+            if (err && err.code === 11000) {
+              console.log("Imagen ya existe");
+            } else {
+              console.log("Imagen guardada en bd");
+            }
+          });
         } 
-
-
         
       } catch (error) {
         console.log('error desde el ciclo de vida');
