@@ -83,7 +83,7 @@ exports.cardsInfo = async (req, res) => {
         dzm[0] += discounts[month + 23];
         dzm[1] += discounts[month + 24];
         // descuento promedio mes actualizado
-        discount = ((discounts[month] + discounts[month + 24])/2);
+        discount = ((discounts[month] + discounts[month + 24])/2).toFixed(2);
 
 
         values = avgPrice.averagePriceMonthGeneral(arr); // calcula el precio promedio por mes dos marcas 2 años
@@ -91,7 +91,7 @@ exports.cardsInfo = async (req, res) => {
         zm[1] =  values[month]; // valor actual de zara 
         zm[0] += values[month + 23];
         zm[1] += values[month + 24]; // valor actual de mango
-        precioPromedio = ((values[month] + values[month + 24]) / 2);
+        precioPromedio = ((values[month] + values[month + 24]) / 2).toFixed(2);
 
 
         newsCounts = avgNews.averageNewsMonthGeneral(arr); // calcula el precio promedio por mes dos marcas 2 años
@@ -686,7 +686,7 @@ exports.tableSKUInfo = async (req, res) => {
         valuesDiscount = avgDiscount.averageDiscountMonthGeneral(arr);
         // console.log(values);
         // obtener precios promedio mes actual y anterior 
-        descuentoPromedio = ((valuesDiscount[month] + valuesDiscount[month + 24])/2);
+        descuentoPromedio = ((valuesDiscount[month] + valuesDiscount[month + 24])/2).toFixed(2);
 
         // obtener tasa de tasaFrescura
         tasaFrescura = (nuevosPromedio/arr.length).toFixed(2);
