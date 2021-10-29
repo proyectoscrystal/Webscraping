@@ -151,12 +151,24 @@ exports.saveImagesDB = async (data) => {
 
       // ciclo de vida de los productos
       try {
+        let inBD; 
         // nuevos
-        let inBD = await Business.findOne({"enlaceImagen": imageData.enlaceImagen, "color": imageData.color});
+        let consulta = await Business.find({"enlaceImagen": imageData.enlaceImagen, "color": imageData.color, "origin": imageData.origin});
+
+        if(consulta.length === 0) {
+          inBD = null;
+        } else if(consulta.length === 1){
+          inBD = consulta[0];
+        } else {
+          inBD = consulta.sort((a,b) =>  new Date(b.createdAt) - new Date(a.createdAt))[0];
+        }
+
+
+
 
         // encuentra el documento y si el estado o alguna talla cambio , se almacena nuevamente
         if ( inBD !== null && (inBD.estado !== imageData.estado || compareTwoArrays(imageData.talla,inBD.talla)) ) {
-          console.log('estado ha cambiado se guarda documento'); 
+          console.log('estado o tallas ha cambiado se guarda documento'); 
             await Business.create(imageData, (err) => {
               if (err && err.code === 11000) {
                 console.log("Imagen ya existe");
