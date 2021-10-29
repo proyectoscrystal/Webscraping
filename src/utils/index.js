@@ -834,3 +834,61 @@ exports.colorHomologado = [
 'café'
 
 ]
+
+// colores sin repetir
+exports.colorSinRepetir = [
+  'amarillo',
+  'beige',
+  'azul',
+  'blanco',
+  'vinotinto',
+  'café',
+  'cobre',
+  'negro',
+  'verde',
+  'rosado',
+  'gris',
+  'morado',
+  'naranja',
+  'piel',
+  'ocre',
+  'oro',
+  'rojo',
+  'plata',
+  'acero',
+  'transparente',
+  'dorado',
+  'multicolor',
+  'otros',
+  'plomo',
+  'café'
+]
+
+// colores en formato hex
+exports.colorHEX = [
+  '#FFFF00',
+  '#CD853F',
+  '#1E90FF',
+  '#FFFFFF',
+  '#820000',
+  '#A0522D',
+  '#CB6D51',
+  '#000000',
+  '#008000',
+  '#FFC0CB',
+  '#A9A9A9',
+  '#663399',
+  '#FF4500',
+  '#fdddca',
+  '#b9935a',
+  '#ffbf00',
+  '#FF0000',
+  '#BEBEBE',
+  '#434b4d',
+  '#00F0F8FF',
+  '#a98307',
+  '#BF85A5',
+  '#85A8BF',
+  '#cdcdcd',
+  '#A0522D'
+]

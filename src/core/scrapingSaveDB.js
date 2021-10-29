@@ -151,17 +151,12 @@ exports.saveImagesDB = async (data) => {
 
       // ciclo de vida de los productos
       try {
-
         // nuevos
         let inBD = await Business.findOne({"enlaceImagen": imageData.enlaceImagen, "color": imageData.color});
 
-        if (inBD !== null) {
-          
-          if(inBD.estado == imageData.estado){
-            console.log('No ha cambiado el estado');
-          } else if(inBD.estado !== imageData.estado || inBD.tallasAgotadas !== imageData.tallasAgotadas){
-
-            console.log('estado o tallas han cambiado se guarda documento'); 
+        // encuentra el documento y si el estado o alguna talla cambio , se almacena nuevamente
+        if ( inBD !== null && (inBD.estado !== imageData.estado || compareTwoArrays(imageData.talla,inBD.talla)) ) {
+          console.log('estado ha cambiado se guarda documento'); 
             await Business.create(imageData, (err) => {
               if (err && err.code === 11000) {
                 console.log("Imagen ya existe");
@@ -169,18 +164,17 @@ exports.saveImagesDB = async (data) => {
                 console.log("Imagen guardada en bd");
               }
             });
-          }
 
-        } else {
-          console.log('producto almacenado'); 
-          await Business.create(imageData, (err) => {
-            if (err && err.code === 11000) {
-              console.log("Imagen ya existe");
-            } else {
-              console.log("Imagen guardada en bd");
-            }
-          });
-        } 
+        } else if (inBD === null){   // se almacena producto nuevo
+            console.log('producto almacenado'); 
+            await Business.create(imageData, (err) => {
+              if (err && err.code === 11000) {
+                console.log("Imagen ya existe");
+              } else {
+                console.log("Imagen guardada en bd");
+              }
+            });
+          } 
         
       } catch (error) {
         console.log('error desde el ciclo de vida');
@@ -233,4 +227,13 @@ exports.saveImagesDB = async (data) => {
     } else {
       return state = 'promocion';
     }
+  }
+
+  let compareTwoArrays = (array1, array2) => {
+    if(array1.length !== array2.length) return false;
+
+    array1.sort();
+    array2.sort();
+
+    return array1.every( (element,index) => element == array2[index] );
   }

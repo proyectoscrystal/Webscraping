@@ -18,6 +18,7 @@ const girlDiscount = require("./Zara/zaraKids/girl/girlDiscount");
 const girlNew = require("./Zara/zaraKids/girl/girlNew");
 const miniKids = require("./Zara/zaraKids/miniKids");
 const miniKidsNew = require("./Zara/zaraKids/miniKidsNew");
+const Business = require("../domain/model/businessDao");
 
 // arreglo con las subcategorias
 
@@ -165,33 +166,33 @@ exports.getMiniKids = (req, res) => {
 
 // metodo para procesar y guardar la info del scraping 
 exports.getscraping = async (arreglo) => {
-  let material1 = "";
-  let material2 = "";
-  let material3 = "";
-  let material4 = "";
-  let material5 = "";
-  let material6 = "";
-  let material7 = "";
-  let porcentaje1 = "";
-  let porcentaje2 = "";
-  let porcentaje3 = "";
-  let porcentaje4 = "";
-  let porcentaje5 = "";
-  let porcentaje6 = "";
-  let porcentaje7 = "";
-  // 
+  // let arregloMaster = [];
 
   // se formatean los datos descuento y precio, para llevarlos a la db
   for (let i = 0; i < arreglo.length; i++) {
     let { precio, enlaceImagen, descuento, talla, tag, tipoPrenda, color, tallasAgotadas, materiales } = arreglo[i];
 
-    // procesamiento del campo materiales
-    materiales = estraerMateriales(materiales);
+    let discontinued = false;
 
-    materiales = materiales.split("·");
-    for(i = 0; i < materiales.length; i ++) {
-      materiales[i] = materiales[i].trim();
-    }
+
+    let material1 = "";
+    let material2 = "";
+    let material3 = "";
+    let material4 = "";
+    let material5 = "";
+    let material6 = "";
+    let material7 = "";
+    let porcentaje1 = "";
+    let porcentaje2 = "";
+    let porcentaje3 = "";
+    let porcentaje4 = "";
+    let porcentaje5 = "";
+    let porcentaje6 = "";
+    let porcentaje7 = "";
+
+    // procesamiento del campo materiales
+
+    materiales = estraerMateriales(materiales);
 
     for(var j = 0; j < materiales.length; j++) {
       switch(j) {
@@ -235,7 +236,6 @@ exports.getscraping = async (arreglo) => {
         
       }
     }
-
     // fin de implementacion de materiales
 
 
@@ -277,7 +277,8 @@ exports.getscraping = async (arreglo) => {
     }
 
     // se extrae el numero de tallas
-    const numeroTallas = talla.length;
+    let numeroTallas = talla.length;
+    if(tallasAgotadas.length !== 0) numeroTallas += tallasAgotadas.length;
     // console.log(numeroTallas);
 
     
@@ -324,10 +325,20 @@ exports.getscraping = async (arreglo) => {
       porcentaje5,
       porcentaje6,
       porcentaje7,
+      discontinued
     };
 
     sendImgsModel(newObject);
+
+    // TODO: recordar cambiar apenas el scraping se realice para verificar los descontinuados
+    // arregloMaster.push(newObject);
   }
+
+
+  // await descontinuados(arregloMaster);
+
+
+  
 };
 
 let tallasSinAgotados = (talla, tallasAgotadas) => {
@@ -344,7 +355,12 @@ let tallasSinAgotados = (talla, tallasAgotadas) => {
 }
 
 let estraerMateriales = (materiales) => {
+  materiales = materiales.split("·");
+    for(i = 0; i < materiales.length; i ++) {
+      materiales[i] = materiales[i].trim();
+    }
 
+  return materiales;
 }
 
 let year = () => {
@@ -386,6 +402,61 @@ let setColor = (color) => {
     }      
   }
   return color;
+}
+
+let descontinuados = async arreglo => {
+  let inBD = await Business.find({"estado":arreglo[0].estado, "categoria": arreglo[0].categoria, "origin": arreglo[0].origin}).distinct("enlaceImagen");
+
+  inBD.forEach( async element => {
+
+    let registros = await Business.find({"enlaceImagen":element});
+
+    if(registros.length === 1 && !registros[0].discontinued) {      
+      await compareDBToScraper(registros[0],arreglo);
+    } else {
+      let registroReciente = registros.sort((a,b) =>  new Date(b.createdAt) - new Date(a.createdAt))[0];
+      if(!registroReciente.discontinued) await compareDBToScraper(registroReciente,arreglo);      
+    }
+
+  })
+
+}
+
+let compareDBToScraper = async (elementDB, dataScraper) => {
+  let found = dataScraper.some(element => element.enlaceImagen === elementDB.enlaceImagen && element.color === elementDB.color && element.quarter === elementDB.quarter);
+
+  if(found) {
+    console.log(`El elemento ${elementDB.enlaceImagen} existe en el scraper`);
+    return;
+  };
+
+  console.log(`Descontinuando el documento ${elementDB.enlaceImagen} en la bd`);
+
+  // actualizar el campo de discontinued a true y actualizamos el elementDB en la DB
+  console.log(elementDB);
+  elementDB.discontinued = true;
+  let updated = await Business.findOneAndUpdate({_id: elementDB._id}, elementDB,{
+    new: true
+  });
+
+  console.log(updated);
+
+  // actualizamos el campo estado de elementDB a descontinuado, y creamos un nuevo objeto
+  console.log("creando elemento descontinuado");
+  elementDB.estado = 'descontinuado';
+  delete elementDB._id; 
+  delete elementDB.createdAt; 
+  delete elementDB.updatedAt; 
+  delete elementDB.fecha_consulta; 
+  await business.create(elementDB, (err) => {
+    if (err && err.code === 11000) {
+      console.log("Imagen ya existe");
+    } else {
+      console.log("Producto guardada como descontinuada");
+    }
+  });
+
+  
 }
 
 let sendImgsModel = async (data) => {

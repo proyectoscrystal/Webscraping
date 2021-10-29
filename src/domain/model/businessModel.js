@@ -152,6 +152,10 @@ const businessSchema = new Schema(
       require: false,
       trim: false,
     },
+    discontinued:{
+      type: Boolean,
+      default: false
+    },
     enlaceImagen: {
       type: String,
       require: false,
