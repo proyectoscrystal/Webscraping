@@ -194,11 +194,6 @@ exports.saveImagesDB = async (data) => {
       }
 
 
-  
-      // metodo para guardar en la bd
-      
-
-
     } catch (error) {
       console.log(error);
     }
