@@ -11,7 +11,6 @@ organizarQueryTest = (query) => {
 
     if(query.origin !== undefined) {
         obj.origin = {$in: query.origin};
-
     }
     if(query.categoria !== undefined){
         obj.categoria = {$in: query.categoria};
@@ -24,16 +23,19 @@ organizarQueryTest = (query) => {
     }
     if(query.color !== undefined){
         obj.color = {$in: query.color};
-    }   
-
-
+    }
+    if(query.fechaInicio !== '' && query.fechaFin === '') {
+        obj.fecha_consulta = {$eq: query.fechaInicio}
+    }
+    if(query.fechaInicio !== undefined && query.fechaFin !== undefined) {
+        obj.fecha_consulta = {$gte: query.fechaInicio, $lte: query.fechaFin}
+    }
     return obj;
 }
 
 // info cards response
 exports.cardsInfo = async (req, res) => {
     let filtro = req.query;
-    
     filtro = organizarQueryTest(filtro);
 
     //mes actual
@@ -68,7 +70,7 @@ exports.cardsInfo = async (req, res) => {
 
     try {
         arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
-        // console.log(arr.length);
+        console.log("Total: ", arr.length);
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
@@ -115,8 +117,6 @@ exports.cardsInfo = async (req, res) => {
         differencePorcentage =  percentageDifferencesDiscount(dzm[1]/2, dzm[0]/2);
         differenceNew = percentageDifferencesnews(nzm[1], nzm[0]);
         differenceSKU = percentageDifferencesSku(skuzm[1], skuzm[0]);
-
-
         
     // } else if(filtro.origin === 'Zara'){
     } else if(req.query.origin === 'Zara'){

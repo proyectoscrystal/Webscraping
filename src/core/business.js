@@ -503,6 +503,8 @@ exports.updateInfo = async (req, res) => {
 exports.getImagesFilter = async (request, response) => {
   const { query } = request;
 
+  console.log("Sidebar: ", query);
+
   const q = {};
   const queryArray = [];
 
