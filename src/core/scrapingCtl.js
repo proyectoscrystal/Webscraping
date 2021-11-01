@@ -466,7 +466,7 @@ exports.tablePriceInfo = async (req, res) => {
     let month = date.getMonth(); 
 
     try {
-        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "tallasAgotadas":1, "tipoPrenda": 1, "tag": 1});
+        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "tallasAgotadas":1, "tipoPrenda": 1, "tag": 1}).limit(300);
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
@@ -694,7 +694,7 @@ exports.tableSKUInfo = async (req, res) => {
 
         valuesPrice = avgPrice.averagePriceMonthGeneral(arr);
         // obtener precios promedio mes actual y anterior 
-        precioPromedio = (valuesPrice[month] + valuesPrice[month + 24]);
+        precioPromedio = (valuesPrice[month] + valuesPrice[month + 24]).toFixed(2);
 
         valuesNuevos = avgNews.averageNewsMonthGeneral(arr);
         // obtener precios promedio mes actual y anterior 
@@ -768,7 +768,7 @@ exports.tableSKUInfo = async (req, res) => {
         arr,
         SKU,
         differences,
-        precioPromedio: precioPromedio.toFixed(2),
+        precioPromedio,
         nuevosPromedio,
         descuentoPromedio,
         tasaFrescura
@@ -782,8 +782,6 @@ exports.prendasInfo = async (req, res) => {
     let filtro = req.query;
     
     filtro = organizarQueryTest(filtro);
-
-    console.log(filtro);
 
     //mes actual
     let date = new Date();

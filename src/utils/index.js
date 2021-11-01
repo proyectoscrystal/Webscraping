@@ -834,3 +834,61 @@ exports.colorHomologado = [
 'café'
 
 ]
+
+// colores sin repetir
+exports.colorSinRepetir = [
+  'amarillo',
+  'beige',
+  'azul',
+  'blanco',
+  'vinotinto',
+  'café',
+  'cobre',
+  'negro',
+  'verde',
+  'rosado',
+  'gris',
+  'morado',
+  'naranja',
+  'piel',
+  'ocre',
+  'oro',
+  'rojo',
+  'plata',
+  'acero',
+  'transparente',
+  'dorado',
+  'multicolor',
+  'otros',
+  'plomo',
+  'café'
+]
+
+// colores en formato rgb
+exports.colorRGB = [
+  'rgb(255, 255, 0)',
+  'rgb(205, 133, 63)',
+  'rgb(30, 140, 255)',
+  'rgb(255, 255, 255)',
+  'rgb(130, 0, 0)',
+  'rgb(160, 82, 45)',
+  'rgb(203, 109, 81)',
+  'rgb(0, 0, 0)',
+  'rgb(0, 128, 0)',
+  'rgb(255, 192, 203)',
+  'rgb(169, 169, 169)',
+  'rgb(102, 51, 153)',
+  'rgb(255, 69, 0)',
+  'rgb(253, 221, 202)',
+  'rgb(185, 147, 90)',
+  'rgb(255, 191, 0)',
+  'rgb(255, 0, 0)',
+  'rgb(190, 190, 190)',
+  'rgb(67, 75, 77)',
+  'rgba(0, 240, 248,0.1)',
+  'rgb(169, 131, 7)',
+  'rgb(191, 133, 165)',
+  'rgb(133, 168, 191)',
+  'rgb(205, 205, 205)',
+  'rgb(160, 82, 45)'
+]

@@ -140,23 +140,25 @@ exports.getMiniKidsNew = (req, res) => {
 // catching data from scraping
 
 exports.getscraping = async (arreglo) => {
-  let material1 = "";
-  let material2 = "";
-  let material3 = "";
-  let material4 = "";
-  let material5 = "";
-  let material6 = "";
-  let material7 = "";
-  let porcentaje1 = "";
-  let porcentaje2 = "";
-  let porcentaje3 = "";
-  let porcentaje4 = "";
-  let porcentaje5 = "";
-  let porcentaje6 = "";
-  let porcentaje7 = "";
+  
     // se formatean los datos descuento, tallas y precio, para llevarlos a la db
     for (let i = 0; i < arreglo.length; i++) {
       let { precio, enlaceImagen, descuento, talla, tag, tipoPrenda, color,materiales } = arreglo[i];
+
+      let material1 = "";
+      let material2 = "";
+      let material3 = "";
+      let material4 = "";
+      let material5 = "";
+      let material6 = "";
+      let material7 = "";
+      let porcentaje1 = "";
+      let porcentaje2 = "";
+      let porcentaje3 = "";
+      let porcentaje4 = "";
+      let porcentaje5 = "";
+      let porcentaje6 = "";
+      let porcentaje7 = "";
 
       // procesamiento del campo materiales
       materiales = estraerMateriales(materiales);
@@ -202,9 +204,6 @@ exports.getscraping = async (arreglo) => {
           
         }
       }
-
-
-
       
       let tallasAux = [];
       let tallasAgotadas = [];
@@ -239,8 +238,8 @@ exports.getscraping = async (arreglo) => {
       }
 
       // se extrae el numero de tallas 
-      const numeroTallas = talla.length;
-      // console.log(numeroTallas);
+      let numeroTallas = talla.length;
+      if(tallasAgotadas.length !== 0) numeroTallas += tallasAgotadas.length;
 
      
 

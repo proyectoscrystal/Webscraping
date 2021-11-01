@@ -61,7 +61,7 @@ exports.menNew = async () => {
 
                     return prenda;
                 });
-                // count--;
+                count--;
                 nuevoHombre.push(prendaNuevo);
                 // if(count === 0) {
                 //     break;

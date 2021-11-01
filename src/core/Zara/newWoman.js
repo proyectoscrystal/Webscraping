@@ -3,7 +3,7 @@ const autoScroll = require("../autoScrollFunction");
 const getscraping = require("../zaraCtl");
 const Url = require("../linksUrls");
 
-exports.newWoman =async () => {
+exports.newWoman = async () => {
   const browser = await puppeteer.launch({ headless: false }); //headless true/false para visualizar el navegador
 
   const newWoman = Url.newWomanLink;
@@ -30,7 +30,7 @@ exports.newWoman =async () => {
     });
 
     const nuevoMujer = [];
-    let count = 5;
+    // let count = 5;
 
     for (let enlaceNuevoM of enlacesNuevoM) {
       try {
@@ -78,16 +78,16 @@ exports.newWoman =async () => {
 
           return prenda;
         });
-        count--;
+        // count--;
         nuevoMujer.push(prendasNuevoMujer);
-        if(count === 0){                
-           break;
-        }
+        // if(count === 0){                
+        //    break;
+        // }
       } catch (error) {
         //console.log(error.message);;
       }
     }
-    getscraping.getscraping(nuevoMujer);
+    await getscraping.getscraping(nuevoMujer);
     // console.log(nuevoMujer);
     //====================PRENDAS NUEVAS - MUJER==========================
   } catch (err) {

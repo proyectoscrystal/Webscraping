@@ -1,5 +1,6 @@
 const mangoCtl = require("../core/mangoCtl");
 const scrapingCtl = require("../core/scrapingCtl");
+const colorsController = require("../core/filtersColorsControllers/colorsController");
 
 
 
@@ -55,5 +56,9 @@ module.exports = (router) => {
     router.get('/m_tableDiscountInfo',scrapingCtl.tableDiscountInfo);
     router.get('/m_tableNewsInfo',scrapingCtl.tableNewsInfo);
     router.get('/m_tableSKUInfo',scrapingCtl.tableSKUInfo);
+
+    // rutas para responder a peticiones de vista colores
+    router.get('/m_infoCategoryColors',colorsController.colorGeneralCategory); 
+
 
 }
