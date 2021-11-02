@@ -144,6 +144,7 @@ exports.saveImagesDB = async (data) => {
         porcentaje5: data.porcentaje5,
         porcentaje6: data.porcentaje6,
         porcentaje7: data.porcentaje7,
+        discontinued: data.discontinued
       };
       // console.log(imageData);
 
@@ -167,8 +168,8 @@ exports.saveImagesDB = async (data) => {
 
 
         // encuentra el documento y si el estado o alguna talla cambio , se almacena nuevamente
-        if ( inBD !== null && (inBD.estado !== imageData.estado || compareTwoArrays(imageData.talla,inBD.talla)) ) {
-          console.log('estado o tallas ha cambiado se guarda documento'); 
+        if ( inBD !== null && inBD.estado !== imageData.estado) {
+          console.log('estado ha cambiado se guarda documento'); 
             await Business.create(imageData, (err) => {
               if (err && err.code === 11000) {
                 console.log("Imagen ya existe");
@@ -177,7 +178,17 @@ exports.saveImagesDB = async (data) => {
               }
             });
 
-        } else if (inBD === null){   // se almacena producto nuevo
+        } else if ( inBD !== null && !compareTwoArrays(imageData.talla,inBD.talla) ) {
+          console.log('tallas ha cambiado se guarda documento'); 
+            await Business.create(imageData, (err) => {
+              if (err && err.code === 11000) {
+                console.log("Imagen ya existe");
+              } else {
+                console.log("Imagen guardada en bd");
+              }
+            });
+
+          } else if (inBD === null){   // se almacena producto nuevo
             console.log('producto almacenado'); 
             await Business.create(imageData, (err) => {
               if (err && err.code === 11000) {

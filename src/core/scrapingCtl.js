@@ -9,6 +9,8 @@ organizarQueryTest = (query) => {
     let obj = {};
     let inn = [];
 
+    // console.log(query);
+
     if(query.origin !== undefined) {
         obj.origin = {$in: query.origin};
     }
@@ -36,6 +38,7 @@ organizarQueryTest = (query) => {
 // info cards response
 exports.cardsInfo = async (req, res) => {
     let filtro = req.query;
+    console.log(filtro);
     filtro = organizarQueryTest(filtro);
 
     //mes actual
@@ -68,9 +71,11 @@ exports.cardsInfo = async (req, res) => {
     let precioPromedio = '';
     let discount = 0;
 
+    
+
     try {
         arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
-        console.log("Total: ", arr.length);
+        // console.log("Total: ", arr.length);
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
