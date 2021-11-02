@@ -7,7 +7,6 @@ const prendasInfo = require("./filtersScraping/prendasInfo");
 
 organizarQueryTest = (query) => {
     let obj = {};
-    let inn = [];
 
 
     if(query.origin !== undefined) {
@@ -36,7 +35,6 @@ organizarQueryTest = (query) => {
 
 organizarQuery = (query) => {
     let obj = {};
-    let inn = [];
 
 
     if(query.origin !== undefined) {
