@@ -9,7 +9,6 @@ organizarQueryTest = (query) => {
     let obj = {};
     let inn = [];
 
-    // console.log(query);
 
     if(query.origin !== undefined) {
         obj.origin = {$in: query.origin};
@@ -29,16 +28,40 @@ organizarQueryTest = (query) => {
     if(query.fechaInicio !== '' && query.fechaFin === '') {
         obj.fecha_consulta = {$eq: query.fechaInicio}
     }
-    if(query.fechaInicio !== undefined && query.fechaFin !== undefined) {
+    if(query.fechaInicio !== '' && query.fechaFin !== '') {
         obj.fecha_consulta = {$gte: query.fechaInicio, $lte: query.fechaFin}
     }
+    return obj;
+}
+
+organizarQuery = (query) => {
+    let obj = {};
+    let inn = [];
+
+
+    if(query.origin !== undefined) {
+        obj.origin = {$in: query.origin};
+    }
+    if(query.categoria !== undefined){
+        obj.categoria = {$in: query.categoria};
+    }
+    if(query.subCategoria !== undefined){
+        obj.subCategoria = {$in: query.subCategoria};
+    }
+    if(query.tipoPrenda !== undefined){
+        obj.tipoPrenda = {$in: query.tipoPrenda};
+    }
+    if(query.color !== undefined){
+        obj.color = {$in: query.color};
+    }
+
+
     return obj;
 }
 
 // info cards response
 exports.cardsInfo = async (req, res) => {
     let filtro = req.query;
-    console.log(filtro);
     filtro = organizarQueryTest(filtro);
 
     //mes actual
@@ -98,7 +121,11 @@ exports.cardsInfo = async (req, res) => {
         zm[1] =  values[month]; // valor actual de zara 
         zm[0] += values[month + 23];
         zm[1] += values[month + 24]; // valor actual de mango
-        precioPromedio = ((values[month] + values[month + 24]) / 2).toFixed(2);
+        if(values[month] === 0 || values[month + 24] === 0){
+            precioPromedio = ((values[month] + values[month + 24])).toFixed(2);
+        } else {
+            precioPromedio = ((values[month] + values[month + 24])/2).toFixed(2);
+        }
 
 
         newsCounts = avgNews.averageNewsMonthGeneral(arr); // calcula el precio promedio por mes dos marcas 2 años
@@ -215,8 +242,9 @@ exports.cardsInfo = async (req, res) => {
 // precio promedio por los ultimos 2 años y descuento promedio (charts)
 exports.averagePrice = async (req, res) => {
     let filtro = req.query;
+    console.log(filtro);
     
-    filtro = organizarQueryTest(filtro);
+    filtro = organizarQuery(filtro);
     let arr;
     let obj;
     let values = [];
@@ -261,7 +289,7 @@ exports.averagePrice = async (req, res) => {
 exports.averageDiscount = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQueryTest(filtro);
+    filtro = organizarQuery(filtro);
     filtro.descuento = {$ne: null};
     // console.log(filtro);
     
@@ -310,7 +338,7 @@ exports.averageDiscount = async (req, res) => {
 exports.averageNews = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQueryTest(filtro);
+    filtro = organizarQuery(filtro);
     filtro.estado = {$eq: "nuevo"};
     let arr;
     let obj;
@@ -367,7 +395,7 @@ exports.averageNews = async (req, res) => {
 exports.averageSKU = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQueryTest(filtro);
+    filtro = organizarQuery(filtro);
     let arr;
     let obj;
     let values = [];
@@ -410,7 +438,7 @@ exports.averageSKU = async (req, res) => {
 exports.tableCategoryInfo = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQueryTest(filtro);
+    filtro = organizarQuery(filtro);
     let arr;
     let obj;
     let values = [];
@@ -455,7 +483,7 @@ exports.tableCategoryInfo = async (req, res) => {
 exports.tablePriceInfo = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQueryTest(filtro);
+    filtro = organizarQuery(filtro);
     let arr;
     let obj;
     let values = [];
@@ -534,7 +562,7 @@ exports.tablePriceInfo = async (req, res) => {
 exports.tableDiscountInfo = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQueryTest(filtro);
+    filtro = organizarQuery(filtro);
     filtro.descuento = {$ne: null};
 
     let arr;
@@ -600,7 +628,7 @@ exports.tableDiscountInfo = async (req, res) => {
 exports.tableNewsInfo = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQueryTest(filtro);
+    filtro = organizarQuery(filtro);
     filtro.estado = {$eq: "nuevo"};
     
     let arr;
@@ -664,7 +692,7 @@ exports.tableNewsInfo = async (req, res) => {
 exports.tableSKUInfo = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQueryTest(filtro);
+    filtro = organizarQuery(filtro);
     let arr;
     let obj;
     let values = [];
@@ -786,7 +814,7 @@ exports.tableSKUInfo = async (req, res) => {
 exports.prendasInfo = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQueryTest(filtro);
+    filtro = organizarQuery(filtro);
 
     //mes actual
     let date = new Date();
@@ -895,28 +923,6 @@ percentageDifferencesDiscount = (current, before) => {
         return difference;
     }
 
-}
-
-organizarQuery = (query) => {
-    let obj = {};
-    if(query.origin !== ''){
-        obj.origin = query.origin;
-    }
-    if(query.categoria !== ''){
-        obj.categoria = query.categoria; 
-    }
-    if(query.subCategoria !== ''){
-        obj.subCategoria = query.subCategoria;
-    }
-    if(query.tipoPrenda !== ''){
-        obj.tipoPrenda = query.tipoPrenda; 
-    }
-    if(query.color !== ''){
-        obj.color = query.color; 
-    }
-
-
-    return obj;
 }
 
 percentageDifferencesSku = (current, before) => {
