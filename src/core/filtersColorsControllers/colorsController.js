@@ -50,7 +50,7 @@ exports.colorGeneralCategory = async (req, res) => {
 
     let arr;
     let obj;
-    let values = [];
+    let porcentajesCategoriaColors;
     let discounts = [];
     let descontinuados = 0;
     let newsCounts = 0;
@@ -66,12 +66,16 @@ exports.colorGeneralCategory = async (req, res) => {
     let discount = 0;
 
     try {
-        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
+        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "origin":1, "color":1, "categoria":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
         // console.log(arr.length);
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
+
+
+    porcentajesCategoriaColors = SKUporcentage(arr);
+    
 
 
     // if (req.query.origin === undefined || Array.isArray(req.query.origin) ) {
@@ -88,10 +92,48 @@ exports.colorGeneralCategory = async (req, res) => {
     
     // respuesta para el frontend
     obj = {  
-       categorias
+       categorias,
+       porcentajesCategoriaColors
     }
 
 
     res.status(200).json({obj});
 }
 // fin info cards response
+
+// metodo para calcular la frecuencia de sku
+let SKUporcentage = (arr) => {
+    obj = {};
+    let mujer = 0;
+    let mujerPorcentage = 0; 
+    let hombre = 0;
+    let hombrePorcentage = 0;
+    let kids = 0;
+    let kidsPorcentage = 0;
+    colors = [];
+    countColors = [];
+    total = 0;
+
+    arr.forEach( element => {
+        if(element.categoria === "Mujer") {
+            mujer += element.numeroTallas;
+
+        } else if(element.categoria === "Hombre") {
+            hombre += element.numeroTallas;
+        } else if(element.categoria === "Niño" || element.categoria === "Niña") {
+            kids += element.numeroTallas;
+        }
+    });
+    total = (mujer + kids + hombre);
+    
+
+
+
+    obj.total = total;
+    obj.mujerSKU = mujer; 
+    obj.hombreSKU = hombre; 
+    obj.kidsSKU = kids; 
+
+
+    return obj;
+}
