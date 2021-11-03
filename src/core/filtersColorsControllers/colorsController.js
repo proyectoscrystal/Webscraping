@@ -12,7 +12,6 @@ organizarQueryfilter1 = (query) => {
 
     if(query.origin !== undefined) {
         obj.origin = {$in: query.origin};
-
     }
     if(query.categoria !== undefined){
         obj.categoria = {$in: query.categoria};
@@ -26,6 +25,15 @@ organizarQueryfilter1 = (query) => {
     if(query.color !== undefined){
         obj.color = {$in: query.color};
     }   
+    if(query.fechaInicio !== '' && query.fechaFin === '') {
+        let inicio = query.fechaInicio + "T00:00:00.000Z";
+        let fin = query.fechaInicio + "T23:59:59.999Z";
+        console.log(query.fechaInicio);
+        obj.fecha_consulta = {$gte: inicio, $lte: fin}
+    }
+    if(query.fechaInicio !== '' && query.fechaFin !== '') {
+        obj.fecha_consulta = {$gte: query.fechaInicio, $lte: query.fechaFin}
+    }
 
 
     return obj;
@@ -77,17 +85,18 @@ exports.colorGeneralCategory = async (req, res) => {
 
 
     if (req.query.origin === undefined || Array.isArray(req.query.origin) ) {
-
+        origin = "General";
     } else if(req.query.origin === 'Zara'){
+        origin = "Zara";
 
-        
     } else if(req.query.origin === 'Mango'){
-       
+        origin = "Mango";
     }
 
     
     // respuesta para el frontend
     obj = {  
+       origin
     }
 
 
