@@ -61,11 +61,11 @@ infoCards = (arr, category) => {
 infoCardsKids = (arr, category) => {
     let response = [];
 
-    let cantidadNuevos = arr.filter( element =>  element.categoria === category[2] || element.categoria === category[3]  &&  element.estado === 'nuevo');
+    let cantidadNuevos = arr.filter( element => element.estado === 'nuevo' &&  (element.categoria === category[2] || element.categoria === category[3]));
 
-    let cantidadDescontinuados = arr.filter( element =>  element.categoria === category[2] || element.categoria === category[3] &&  element.estado === 'descontinuado');
+    let cantidadDescontinuados = arr.filter( element =>  element.estado === 'descontinuado' &&  (element.categoria === category[2] || element.categoria === category[3]));
 
-    let cantidadPromotion = arr.filter( element =>  element.categoria === category[2] || element.categoria === category[3] &&  element.estado === 'promocion');
+    let cantidadPromotion = arr.filter( element =>  element.estado === 'promocion' &&  (element.categoria === category[2] || element.categoria === category[3]));
 
     let cantidadSku = 0; 
     arr.forEach(element => {

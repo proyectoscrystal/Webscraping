@@ -114,7 +114,15 @@ exports.cardsInfo = async (req, res) => {
         dzm[0] += discounts[month + 23];
         dzm[1] += discounts[month + 24];
         // descuento promedio mes actualizado
-        discount = ((discounts[month] + discounts[month + 24])/2).toFixed(2);
+        
+
+        if(discounts[month] === 0 || discount[month + 24] === 0){
+            discount = ((discounts[month] + discounts[month + 24])).toFixed(2);
+            differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
+        } else {
+            discount = ((discounts[month] + discounts[month + 24])/2).toFixed(2);
+            differencePorcentage =  percentageDifferencesDiscount(dzm[1]/2, dzm[0]/2);
+        }
 
 
         values = avgPrice.averagePriceMonthGeneral(arr); // calcula el precio promedio por mes dos marcas 2 años
@@ -146,8 +154,7 @@ exports.cardsInfo = async (req, res) => {
         origin = 'general';        
 
         // array de dos valores para setear la diferencia entre mes actual y anterior
-        differencePrice =  percentageDifferencePrice(zm[1], zm[0]);
-        differencePorcentage =  percentageDifferencesDiscount(dzm[1]/2, dzm[0]/2);
+        differencePrice =  percentageDifferencePrice(zm[1], zm[0]);        
         differenceNew = percentageDifferencesnews(nzm[1], nzm[0]);
         differenceSKU = percentageDifferencesSku(skuzm[1], skuzm[0]);
         
@@ -580,6 +587,7 @@ exports.tableDiscountInfo = async (req, res) => {
 
     try {
         arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
+        // console.log(arr.length);
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
@@ -589,8 +597,14 @@ exports.tableDiscountInfo = async (req, res) => {
         values = avgDiscount.averageDiscountMonthGeneral(arr);
         // console.log(values);
         // obtener precios promedio mes actual y anterior 
-        descuentoPromedio = ((values[month] + values[month + 24])/2);
-        descuentoPromedioAnterior = ((values[month - 1] + values[month + 23])/2);
+
+        if(values[month] === 0 || values[month + 24] === 0){
+            descuentoPromedio = ((values[month] + values[month + 24])).toFixed(2);
+            descuentoPromedioAnterior = ((values[month - 1] + values[month + 23])).toFixed(2);
+        } else {
+            descuentoPromedio = ((values[month] + values[month + 24])/2).toFixed(2);
+            descuentoPromedioAnterior = ((values[month - 1] + values[month + 23])/2).toFixed(2);
+        }
         // determinar la diferencia porcentual en los precios
         differences = percentageDifferencesDiscount(descuentoPromedio, descuentoPromedioAnterior);
 
@@ -714,7 +728,7 @@ exports.tableSKUInfo = async (req, res) => {
     let month = date.getMonth(); 
 
     try {
-        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
+        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1}).limit(2500);
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
@@ -815,6 +829,7 @@ exports.tableSKUInfo = async (req, res) => {
 exports.prendasInfo = async (req, res) => {
     let filtro = req.query;
     
+    // TODO: organizar desde el .ts para enviar fecha y cambiar a organizarQueryTest
     filtro = organizarQuery(filtro);
 
     //mes actual
@@ -944,4 +959,5 @@ percentageDifferencesSku = (current, before) => {
     }
 
 }
+
 
