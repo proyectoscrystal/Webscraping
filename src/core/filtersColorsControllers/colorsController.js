@@ -13,13 +13,13 @@ organizarQueryfilter1 = (query) => {
     if(query.origin !== undefined) {
         obj.origin = {$in: query.origin};
     }
-    if(query.sku !== undefined){
-        obj.sku = {$in: query.sku};
+    if(query.sku !== ''){
+        obj.estado = {$ne: "descontinuados"};
     }
-    if(query.discount !== undefined){
+    if(query.discount !== ''){
         obj.descuento = {$ne: null};
     }
-    if(query.new !== undefined){
+    if(query.new !== ''){
         obj.estado = {$eq: "nuevo"};
     }  
     if(query.fechaInicio !== '' && query.fechaFin === '') {
@@ -41,6 +41,7 @@ exports.colorGeneralCategory = async (req, res) => {
     let filtro = req.query;
     
     filtro = organizarQueryfilter1(filtro);
+    // console.log(filtro);
 
     //mes actual
     let date = new Date();
@@ -73,19 +74,20 @@ exports.colorGeneralCategory = async (req, res) => {
     }
 
 
-    if (req.query.origin === undefined || Array.isArray(req.query.origin) ) {
-        origin = "General";
-    } else if(req.query.origin === 'Zara'){
-        origin = "Zara";
+    // if (req.query.origin === undefined || Array.isArray(req.query.origin) ) {
+    //     origin = "General";
+    // } else if(req.query.origin === 'Zara'){
+    //     origin = "Zara";
 
-    } else if(req.query.origin === 'Mango'){
-        origin = "Mango";
-    }
+    // } else if(req.query.origin === 'Mango'){
+    //     origin = "Mango";
+    // }
+
+
 
     
     // respuesta para el frontend
     obj = {  
-       origin,
        categorias
     }
 
