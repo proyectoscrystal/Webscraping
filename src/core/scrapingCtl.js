@@ -553,6 +553,8 @@ exports.tablePriceInfo = async (req, res) => {
         differences = percentageDifferencePrice(precioPromedio, precioPromedioAnterior);
     }
 
+    precioPromedio = precioPromedio.toFixed(2);
+
 
     // respuesta para el frontend
     obj = { 
