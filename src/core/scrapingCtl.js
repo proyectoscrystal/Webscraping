@@ -607,6 +607,7 @@ exports.tableDiscountInfo = async (req, res) => {
             descuentoPromedio = ((values[month] + values[month + 24])/2).toFixed(2);
             descuentoPromedioAnterior = ((values[month - 1] + values[month + 23])/2).toFixed(2);
         }
+        
         // determinar la diferencia porcentual en los precios
         differences = percentageDifferencesDiscount(descuentoPromedio, descuentoPromedioAnterior);
 
@@ -730,7 +731,7 @@ exports.tableSKUInfo = async (req, res) => {
     let month = date.getMonth(); 
 
     try {
-        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1}).limit(2500);
+        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda

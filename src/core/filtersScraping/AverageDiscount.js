@@ -33,7 +33,6 @@ exports.averageDiscountMonthGeneral = (arr) => {
 
   
   let date = new Date();
-  let currentMonth = date.getMonth() - 1;
   // let count = 1;
 
   try {
@@ -364,8 +363,8 @@ exports.averageDiscountMonthGeneral = (arr) => {
         if(mes === 'Nov' && element.descuento !== null)  {
           let { precio, descuento} = element;
           let discount = 0;
-          discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-          novZ.push(discount);
+          discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));          
+          novm.push(discount);
         }
         if(mes === 'Dec' && element.descuento !== null)  {
           let { precio, descuento} = element;
@@ -480,7 +479,6 @@ exports.averageDiscountMonthGeneral = (arr) => {
   valuesZ[45] = setAverageDiscount(oct2);
   valuesZ[46] = setAverageDiscount(nov2);
   valuesZ[47] = setAverageDiscount(dic2);
-  valuesZ[48] = currentMonth;
 
   // console.log(oct2);
 

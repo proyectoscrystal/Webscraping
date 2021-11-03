@@ -52,7 +52,7 @@ exports.babyGirlNew = async () => {
                     prenda.enlaceImagen = http;
                     prenda.enlaceImagen += document.querySelector('#renderedImages > ul > li > div > img').src;
                     prenda.categoria = 'Niña';
-                    prenda.tag = 'Nuevo';
+                    prenda.tag = 'nuevo';
                     prenda.marca = 'Mango';
                     prenda.descuento = '';
                     prenda.talla = Array.from(document.querySelectorAll('#sizeSelector > div > span'), xTallas => xTallas.textContent);

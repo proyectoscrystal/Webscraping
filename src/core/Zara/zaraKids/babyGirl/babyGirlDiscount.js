@@ -53,7 +53,7 @@ exports.babyGirlDiscount = async () => {
                     prendas.imageName = document.querySelector("#main > article > .product-detail-view__main > div > .product-detail-info > h1").textContent;
                     prendas.precio = document.querySelector("#main > article > div > div > div > div > div > span > .price__amount--old").textContent;
                     prendas.descuento = document.querySelector("#main > article > div > div > div > div > div > span > span > span > span").textContent;
-                    prendas.tag = '';
+                    prendas.tag = 'descuento';
                     prendas.caracteristicas = document.querySelector("#main > article > div > div > div > .product-detail-description > div > div > div > p").textContent;
                     prendas.caracteristicas = prendas.caracteristicas.split("."); // probando para separar por caracteristicas
                     prendas.caracteristicas.pop();

@@ -58,7 +58,7 @@ exports.girlNew = async () => {
                     prenda.categoria = "Niña";
                     prenda.marca = "Zara";
                     prenda.descuento = "";
-                    prenda.tag = "Nuevo";
+                    prenda.tag = "nuevo";
                     prenda.talla = tallas;
                     prenda.tallasAgotadas = tallaValidacion;
                     prenda.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;

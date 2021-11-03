@@ -53,7 +53,7 @@ exports.girlDiscount = async () => {
                     prenda.enlaceImagen = http;
                     prenda.enlaceImagen += document.querySelector('#renderedImages > ul > li > div > img').src;
                     prenda.categoria = 'Niña';
-                    prenda.tag = '';
+                    prenda.tag = 'descuento';
                     prenda.marca = 'Mango';
                     prenda.talla = Array.from(document.querySelectorAll('#sizeSelector > div > span'), xTallas => xTallas.textContent);
                     prenda.color = document.querySelector('#app > main > div > div > div > div.colors-info > span').textContent;
