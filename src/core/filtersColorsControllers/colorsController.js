@@ -13,18 +13,15 @@ organizarQueryfilter1 = (query) => {
     if(query.origin !== undefined) {
         obj.origin = {$in: query.origin};
     }
-    if(query.categoria !== undefined){
-        obj.categoria = {$in: query.categoria};
+    if(query.sku !== undefined){
+        obj.sku = {$in: query.sku};
     }
-    if(query.subCategoria !== undefined){
-        obj.subCategoria = {$in: query.subCategoria};
+    if(query.discount !== undefined){
+        obj.descuento = {$ne: null};
     }
-    if(query.tipoPrenda !== undefined){
-        obj.tipoPrenda = {$in: query.tipoPrenda};
-    }
-    if(query.color !== undefined){
-        obj.color = {$in: query.color};
-    }   
+    if(query.new !== undefined){
+        obj.estado = {$eq: "nuevo"};
+    }  
     if(query.fechaInicio !== '' && query.fechaFin === '') {
         let inicio = query.fechaInicio + "T00:00:00.000Z";
         let fin = query.fechaInicio + "T23:59:59.999Z";
@@ -49,14 +46,6 @@ exports.colorGeneralCategory = async (req, res) => {
     let date = new Date();
     let month = date.getMonth(); 
 
-    // arreglo de mango y zara para los precios 
-    let zm = [];
-    // arreglo de mango y zara para los descuentos
-    let dzm = [];
-    // arreglo de mango y zara para los nuevos
-    let nzm = [];
-    // arreglo de mango y zara para los SKU
-    let skuzm = [];
 
     let arr;
     let obj;
@@ -66,7 +55,7 @@ exports.colorGeneralCategory = async (req, res) => {
     let newsCounts = 0;
     let skuCounts = 0;
     // variables para la diferencia entre mes actual y anterior
-    let differencePrice = [];
+    let categorias = ["Hombre","Mujer","Kids"];
     let differencePorcentage = [];
     let differenceNew = [];
     let differenceDiscontinued = [];
@@ -96,7 +85,8 @@ exports.colorGeneralCategory = async (req, res) => {
     
     // respuesta para el frontend
     obj = {  
-       origin
+       origin,
+       categorias
     }
 
 
