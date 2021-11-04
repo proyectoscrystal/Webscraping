@@ -86,7 +86,7 @@ exports.menDiscount = async () => {
       }
     }
     // console.log(rebajasHombre);
-    getScraping.getscraping(rebajasHombre);
+    await getScraping.getscraping(rebajasHombre);
     //====================HOMBRE REBAJAS===========================
   } catch (err) {
     //console.error(err.message);

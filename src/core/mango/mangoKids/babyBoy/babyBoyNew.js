@@ -73,7 +73,7 @@ exports.babyBoyNew = async () => {
             }
         }        
         //console.log(nuevoBabyBoy);
-        getScraping.getscraping(nuevoBabyBoy);        
+        await getScraping.getscraping(nuevoBabyBoy);        
         //====================MUJER NUEVA COLECCIÓN===========================
         
     } catch (err) {

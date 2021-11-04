@@ -110,7 +110,7 @@ exports.boyCategory = async () => {
             }
             
             //console.log(prendasBoy);
-            getScraping.getscraping(prendasBoy);
+            await getScraping.getscraping(prendasBoy);
 
             //if (count === 0) {
                 //break;

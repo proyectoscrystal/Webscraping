@@ -113,7 +113,7 @@ exports.categoriaHombre = async () => {
       prendasHombre.forEach((dato) => {dato.tipoPrenda = nombrecategoria});
 
       // console.log(prendasHombre);
-      getScraping.getscraping(prendasHombre);
+      await getScraping.getscraping(prendasHombre);
     }
 
     //====================CATEGORIAS HOMBRE==========================

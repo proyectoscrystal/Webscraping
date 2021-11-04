@@ -108,7 +108,7 @@ exports.babyBoyCategory = async () => {
             prendasBabyBoy.forEach((dato) => {dato.tipoPrenda = nombrecategoria});
 
             //console.log(prendasBabyBoy);
-            getScraping.getscraping(prendasBabyBoy);
+            await getScraping.getscraping(prendasBabyBoy);
         }
         //====================CATEGORIAS BEBE NIÑO | 6 MESES - 5 AÑOS===========================
 

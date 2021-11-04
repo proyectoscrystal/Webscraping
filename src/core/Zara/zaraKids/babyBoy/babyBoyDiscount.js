@@ -79,7 +79,7 @@ exports.babyBoyDiscount = async () => {
         }
 
         //console.log(rebajasBabyBoy);
-        getscraping.getscraping(rebajasBabyBoy);
+        await getscraping.getscraping(rebajasBabyBoy);
         //====================PRENDAS DESCUENTO - BEBE NIÑO | 6 MESES - 5 AÑOS==========================
 
     } catch (err) {

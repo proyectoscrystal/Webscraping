@@ -108,7 +108,7 @@ exports.boyCategory = async () => {
             prendasBoy.forEach((dato) => {dato.tipoPrenda = nombrecategoria});
 
             //console.log(prendasBoy);
-            getScraping.getscraping(prendasBoy);
+            await getScraping.getscraping(prendasBoy);
         }
         //====================CATEGORIAS NIÑO | 6-14 AÑOS===========================
 

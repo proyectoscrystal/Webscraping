@@ -109,7 +109,7 @@ exports.miniKids = async () => {
             prendasMiniKids.forEach((dato) => {dato.tipoPrenda = nombrecategoria});
 
             //console.log(prendasMiniKids);
-            getScraping.getscraping(prendasMiniKids);
+            await getScraping.getscraping(prendasMiniKids);
         }
         //====================CATEGORIAS BEBE NIÑA | 6 MESES - 5 AÑOS===========================
 

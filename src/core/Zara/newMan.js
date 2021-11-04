@@ -87,7 +87,7 @@ exports.newMan = async () => {
       }
     }
     //console.log(nuevoHombre);
-    getScraping.getscraping(nuevoHombre);
+    await getScraping.getscraping(nuevoHombre);
     //====================PRENDAS NUEVAS - HOMBRE==========================
   } catch (err) {
     //console.error(err.message);

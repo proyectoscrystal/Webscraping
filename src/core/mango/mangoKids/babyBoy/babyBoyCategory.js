@@ -110,7 +110,7 @@ exports.babyBoyCategory = async () => {
             }
             
             //console.log(rebajasBabyBoy);
-            getScraping.getscraping(rebajasBabyBoy);
+            await getScraping.getscraping(rebajasBabyBoy);
 
             if (count === 0) {
                 break;

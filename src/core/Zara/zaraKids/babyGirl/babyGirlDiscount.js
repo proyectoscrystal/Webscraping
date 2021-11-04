@@ -80,7 +80,7 @@ exports.babyGirlDiscount = async () => {
         }
 
         //console.log(rebajasBabyGirl);
-        getscraping.getscraping(rebajasBabyGirl);
+        await getscraping.getscraping(rebajasBabyGirl);
 
         //====================PRENDAS DESCUENTO - BEBE NIÑA | 6 MESES - 5 AÑOS==========================
 

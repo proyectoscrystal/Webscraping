@@ -110,7 +110,7 @@ exports.womanCategory = async () => {
       //   break;
       // }
     }
-    getScraping.getscraping(prendasMujer);
+    await getScraping.getscraping(prendasMujer);
     //====================CATEGORIAS MUJER===========================
   } catch (err) {
     //console.error(err.message);

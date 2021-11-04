@@ -73,7 +73,7 @@ exports.boyDiscount = async () => {
             }
         }
         //console.log(rebajasBoy);
-        getScraping.getscraping(rebajasBoy);
+        await getScraping.getscraping(rebajasBoy);
         //====================MUJER REBAJAS===========================
 
     } catch (err) {

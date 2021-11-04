@@ -30,7 +30,7 @@ exports.manDiscount = async () => {
     });
 
     const rebajasHombre = [];
-    // let count = 5;
+    let count = 2;
 
     for (let enlaceRebajasH of enlacesRebajasH) {
       try {
@@ -79,16 +79,16 @@ exports.manDiscount = async () => {
 
           return prenda;
         });
-        // count--;
+        count--;
         rebajasHombre.push(prendasRebajaHombre);
-        // if (count === 0) {
-        //   break;
-        // }
+        if (count === 0) {
+          break;
+        }
       } catch (error) {
         //console.log(error.message);
       }
     }
-    getScraping.getscraping(rebajasHombre);
+    await getScraping.getscraping(rebajasHombre);
     // console.log(rebajasHombre);
     //====================PRENDAS EN DESCUENTO - HOMBRE==========================
   } catch (err) {

@@ -79,7 +79,7 @@ exports.girlDiscount = async () => {
         }
 
         //console.log(rebajasBoy);
-        getscraping.getscraping(rebajasBoy);
+        await getscraping.getscraping(rebajasBoy);
         //====================PRENDAS EN DESCUENTO - NIÑOS | 6-14 AÑOS==========================
 
     } catch (err) {

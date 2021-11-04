@@ -71,7 +71,7 @@ exports.menNew = async () => {
             }
         }
         // console.log(nuevoHombre);
-        getScraping.getscraping(nuevoHombre);
+        await getScraping.getscraping(nuevoHombre);
         //====================HOMBRE NUEVA COLECCIÓN===========================
 
     } catch (err) {

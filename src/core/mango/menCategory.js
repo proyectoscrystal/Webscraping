@@ -104,7 +104,7 @@ exports.menCategory = async () => {
         }
       }
       // console.log(prendasHombre);
-      getScraping.getscraping(prendasHombre);
+      await getScraping.getscraping(prendasHombre);
 
       // if (count === 0) {
       //   break;

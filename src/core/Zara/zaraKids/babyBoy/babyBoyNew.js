@@ -80,7 +80,7 @@ exports.babyBoyNew = async () => {
             }
         }
         //console.log(nuevoBabyBoy);
-        getScraping.getscraping(nuevoBabyBoy);
+        await getScraping.getscraping(nuevoBabyBoy);
         //====================PRENDAS NUEVAS - BEBE NIÑO | 6 MESES - 5 AÑOS==========================
 
     } catch (err) {

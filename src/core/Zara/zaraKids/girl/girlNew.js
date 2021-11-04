@@ -80,7 +80,7 @@ exports.girlNew = async () => {
             }
         }
         //console.log(nuevoGirl);
-        getScraping.getscraping(nuevoGirl);
+        await getScraping.getscraping(nuevoGirl);
         //====================PRENDAS NUEVAS - NIÑO | 6-14 AÑOS==========================
 
     } catch (err) {

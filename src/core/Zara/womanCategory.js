@@ -113,7 +113,7 @@ exports.womanCategory = async () => {
       prendasMujer.forEach((dato) => {dato.tipoPrenda = nombrecategoria});
 
       //console.log(prendasMujer);
-      getscraping.getscraping(prendasMujer);
+      await getscraping.getscraping(prendasMujer);
 
       // if (count === 0) {
       //   break;

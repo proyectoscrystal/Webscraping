@@ -51,7 +51,7 @@ exports.miniKidsNew = async () => {
                     prenda.enlaceImagen = http;
                     prenda.enlaceImagen += document.querySelector('#renderedImages > ul > li > div > img').src;
                     prenda.categoria = 'Niño';
-                    prenda.tag = 'Nuevo';
+                    prenda.tag = 'nuevo';
                     prenda.marca = 'Mango';
                     prenda.descuento = '';
                     prenda.talla = Array.from(document.querySelectorAll('#sizeSelector > div > span'), xTallas => xTallas.textContent);
@@ -72,7 +72,7 @@ exports.miniKidsNew = async () => {
             }
         }        
         //console.log(nuevoBoy);
-        getScraping.getscraping(nuevoBoy);        
+        await getScraping.getscraping(nuevoBoy);        
         //====================MUJER NUEVA COLECCIÓN===========================
         
     } catch (err) {

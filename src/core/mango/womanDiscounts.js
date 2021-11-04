@@ -70,7 +70,7 @@ exports.womanDiscount = async () => {
             }
         }
         // console.log(rebajasMujer);
-        getScraping.getscraping(rebajasMujer);
+        await getScraping.getscraping(rebajasMujer);
         //====================MUJER REBAJAS===========================
 
     } catch (err) {

@@ -110,7 +110,7 @@ exports.miniKids = async () => {
             }
             
             //console.log(prendasMiniKids);
-            getScraping.getscraping(prendasMiniKids);
+            await getScraping.getscraping(prendasMiniKids);
 
             if (count === 0) {
                 break;

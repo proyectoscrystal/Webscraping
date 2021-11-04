@@ -104,7 +104,7 @@ exports.girlCategory = async () => {
             }
             
             //console.log(prendasGirl);
-            getScraping.getscraping(prendasGirl);
+            await getScraping.getscraping(prendasGirl);
 
             if (count === 0) {
                 break;

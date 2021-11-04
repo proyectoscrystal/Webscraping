@@ -91,7 +91,7 @@ exports.descuentoMujer = async () => {
       }
     } 
 
-    getscraping.getscraping(rebajasMujer);
+    await getscraping.getscraping(rebajasMujer);
 
     //====================PRENDAS EN DESCUENTO - MUJER==========================
   } catch (err) {
