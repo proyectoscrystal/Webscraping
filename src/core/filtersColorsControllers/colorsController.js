@@ -74,7 +74,7 @@ exports.colorGeneralCategory = async (req, res) => {
 }
 // fin info cards response
 
-// metodo para calcular la frecuencia de sku
+// metodo para calcular la frecuencia y colores de sku
 let SKUporcentage = (arr) => {
     obj = {};
     let mujer = 0;
@@ -118,13 +118,17 @@ let SKUporcentage = (arr) => {
 
         if(element.subCategoria === "ropa exterior") {
             exterior += element.numeroTallas;
+            arrayExterior.push(element);
 
         } else if(element.subCategoria === "ropa interior") {
             interior += element.numeroTallas;
+            arrayInterior.push(element);
         } else if(element.subCategoria === "calzado") {
             calzado += element.numeroTallas;
+            arrayCalzado.push(element);
         } else if(element.subCategoria === "accesorios") {
             accesorios += element.numeroTallas;
+            arrayAccesorios.push(element);
         }
 
 
@@ -143,29 +147,68 @@ let SKUporcentage = (arr) => {
     calzadoPorcentaje = parseFloat(Math.abs( (((calzado*100)/totalsku)) ).toFixed(2));
     accesoriosPorcentaje = parseFloat(Math.abs( (((accesorios*100)/totalsku)) ).toFixed(2));
 
-    // colores por categoria y subcategorias para
+    // colores por categoria y subcategorias
     let colorMujer;
     let colorHombre;
     let colorKids;
+    let colorExterior;
+    let colorInterior;
+    let colorCalzado;
+    let colorAccesorios;
 
     colorMujer = colorFrecuente(arrayMujer);
     colorHombre = colorFrecuente(arrayHombre);
     colorKids = colorFrecuente(arrayKids);
+    colorExterior = colorFrecuente(arrayExterior);
+    colorInterior = colorFrecuente(arrayInterior);
+    colorCalzado = colorFrecuente(arrayCalzado);
+    colorAccesorios = colorFrecuente(arrayAccesorios);
+
+    // colores en rgb 
+    let rgbMujer = colorToRGB(colorMujer);
+    let rgbHombre = colorToRGB(colorHombre);
+    let rgbKids = colorToRGB(colorKids);
+    let rgbExterior = colorToRGB(colorExterior);
+    let rgbInterior = colorToRGB(colorInterior);
+    let rgbCalzado = colorToRGB(colorCalzado);
+    let rgbAccesorios = colorToRGB(colorAccesorios);
+
+    let arrayColoresCategoria = [rgbHombre,rgbMujer,rgbKids]
+    // console.log(arrayColoresCategoria);
+    // console.log(`color: ${colorExterior} - rgb: ${rgbExterior}`);
+
 
 
     // construyendo el objeto respuesta
     obj.total = total;
+    // porcentajes vista general seccion categorias
     obj.mujerPorcentageSKU = mujer; 
     obj.hombrePorcentageSKU = hombre; 
     obj.kidsPorcentageSKU = kids; 
+    // cantidades en seccion subcategoria
     obj.exterior = exterior; 
     obj.interior = interior; 
     obj.calzado = calzado; 
     obj.accesorios = accesorios; 
+    // porcentajes en seccion subcategorias
     obj.exteriorPorcentaje = exteriorPorcentaje; 
     obj.interiorPorcentaje = interiorPorcentaje; 
     obj.calzadoPorcentaje = calzadoPorcentaje; 
-    obj.accesoriosPorcentaje = accesoriosPorcentaje; 
+    obj.accesoriosPorcentaje = accesoriosPorcentaje;
+    // colores frecuentes tanto en categorias como en subcategorias vista general colores 
+    // llevados a su equivalente en rgb
+    obj.colorMujer = colorMujer; 
+    obj.colorHombre = colorHombre; 
+    obj.colorKids = colorKids; 
+    obj.colorExterior = colorExterior; 
+    obj.colorInterior = colorInterior; 
+    obj.colorCalzado = colorCalzado; 
+    obj.colorAccesorios = colorAccesorios; 
+    obj.rgbColoresCategoria = arrayColoresCategoria; 
+    obj.rgbExterior = rgbExterior; 
+    obj.rgbInterior = rgbInterior; 
+    obj.rgbCalzado = rgbCalzado; 
+    obj.rgbAccesorios = rgbAccesorios; 
     // fin calcular porcentajes sku de las categorias
 
 
@@ -196,11 +239,9 @@ let colorFrecuente = (arr) => {
             }
         }
     }
-    arrayColoresSub.forEach((element, index) => {
-        console.log(`color: ${arrayColoresSub[index]} - cantidad: ${arrayCountsSub[index]}`);
-        // console.log(arrayColoresSub);
-        // console.log(arrayCountsSub);
-    })
+    // arrayColoresSub.forEach((e,index) => {
+    //     console.log(`color ${arrayColoresSub[index]} - cantidad ${arrayCountsSub[index]} `);
+    // })
     // determinar el color de mayor frecuencia 
     let mayor = 0;
     let indice = 0;
@@ -221,4 +262,14 @@ let colorFrecuente = (arr) => {
 
 
 
+}
+
+let colorToRGB = color => {
+    for (let i = 0; i < coloresRGB.colorSinRepetir.length; i++) {
+        // console.log(`sub: ${coloresRGB.subCategoria[i]} - tipo: ${coloresRGB.tipoPrenda[i]}`);
+        if (color === coloresRGB.colorSinRepetir[i]) {
+          return  coloresRGB.colorRGB[i]
+        }      
+      }
+      return color;
 }
