@@ -1,10 +1,7 @@
 const Business = require("../../domain/model/businessDao");
 
-// const avgPrice = require("./filtersScraping/AveragePrice");
-// const avgDiscount = require("./filtersScraping/AverageDiscount");
-// const avgNews = require("./filtersScraping/newProducts")
-// const avgSKU = require("./filtersScraping/SKU");
-// const prendasInfo = require("./filtersScraping/prendasInfo");
+const coloresRGB = require("./../../utils/index");
+
 
 organizarQueryfilter1 = (query) => {
     let obj = {};
@@ -96,15 +93,27 @@ let SKUporcentage = (arr) => {
     total = 0;
     totalsku = 0;
 
+    // areglos para extraer el color de CATEGORIAS
+    arrayMujer = [];
+    arrayHombre = [];
+    arrayKids = [];
+    arrayExterior = [];
+    arrayInterior = [];
+    arrayCalzado = [];
+    arrayAccesorios = [];
+
     // calculando el porcentaje de las categorias
     arr.forEach( element => {
         if(element.categoria === "Mujer") {
             mujer += element.numeroTallas;
+            arrayMujer.push(element);
 
         } else if(element.categoria === "Hombre") {
             hombre += element.numeroTallas;
+            arrayHombre.push(element);
         } else if(element.categoria === "Niño" || element.categoria === "Niña") {
             kids += element.numeroTallas;
+            arrayKids.push(element);
         }
 
         if(element.subCategoria === "ropa exterior") {
@@ -134,6 +143,17 @@ let SKUporcentage = (arr) => {
     calzadoPorcentaje = parseFloat(Math.abs( (((calzado*100)/totalsku)) ).toFixed(2));
     accesoriosPorcentaje = parseFloat(Math.abs( (((accesorios*100)/totalsku)) ).toFixed(2));
 
+    // colores por categoria y subcategorias para
+    let colorMujer;
+    let colorHombre;
+    let colorKids;
+
+    colorMujer = colorFrecuente(arrayMujer);
+    colorHombre = colorFrecuente(arrayHombre);
+    colorKids = colorFrecuente(arrayKids);
+
+
+    // construyendo el objeto respuesta
     obj.total = total;
     obj.mujerPorcentageSKU = mujer; 
     obj.hombrePorcentageSKU = hombre; 
@@ -148,8 +168,57 @@ let SKUporcentage = (arr) => {
     obj.accesoriosPorcentaje = accesoriosPorcentaje; 
     // fin calcular porcentajes sku de las categorias
 
-    // 
 
 
     return obj;
+}
+
+let colorFrecuente = (arr) => {
+    // metodo para saber el color que mas se repite para subcategoria
+    let arrayColoresSub = [];
+    let arrayCountsSub = [];
+
+    // ser crea un arreglo con todos los colores
+    for (let i = 0; i < arr.length; i++) {
+            arrayColoresSub.push(arr[i].color);
+    }
+    // se eliminan los repetidos
+    arrayColoresSub = [...new Set(arrayColoresSub)];
+    //se inicializa el array count con la cantidad de colores existente
+    arrayColoresSub.forEach((element, index) => {
+        arrayCountsSub[index] = 0;
+    })
+    // se llena el array countsSub con la cantidad de repeticiones por color
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arrayColoresSub.length; j++) {
+            if (arr[i].color === arrayColoresSub[j]) {
+                arrayCountsSub[j] += 1;
+            }
+        }
+    }
+    arrayColoresSub.forEach((element, index) => {
+        console.log(`color: ${arrayColoresSub[index]} - cantidad: ${arrayCountsSub[index]}`);
+        // console.log(arrayColoresSub);
+        // console.log(arrayCountsSub);
+    })
+    // determinar el color de mayor frecuencia 
+    let mayor = 0;
+    let indice = 0;
+
+    arrayColoresSub.forEach((element, index) => {
+        if (arrayCountsSub[index] > mayor)
+        {
+            mayor = arrayCountsSub[index];
+            
+            indice = index;
+        };
+
+    })
+    
+
+    // retorna el color que mas se presenta 
+    return arrayColoresSub[indice];
+
+
+
 }
