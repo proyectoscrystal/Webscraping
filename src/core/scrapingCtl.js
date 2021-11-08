@@ -569,6 +569,81 @@ exports.tablePriceInfo = async (req, res) => {
 }
 
 // table info
+exports.tableDiscountinuedInfo = async (req, res) => {
+    let filtro = req.query;
+    
+    filtro = organizarQuery(filtro);
+    filtro.estado = {$eq: "descontinuado"};
+
+    let arr;
+    let obj;
+    let values = [];
+    let origin = '';
+    let descuentoPromedio = 0;
+    let descuentoPromedioAnterior = 0;
+    let differences = [];
+
+    //mes actual
+    let date = new Date();
+    let month = date.getMonth(); 
+
+    try {
+        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
+        // console.log(arr.length);
+    } catch (error) {
+        console.log("no se obtuvo respuesta");
+        return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
+    }
+
+    if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
+        values = avgDiscount.averageDiscountMonthGeneral(arr);
+        // console.log(values);
+        // obtener precios promedio mes actual y anterior 
+
+        if(values[month] === 0 || values[month + 24] === 0){
+            descuentoPromedio = ((values[month] + values[month + 24])).toFixed(2);
+            descuentoPromedioAnterior = ((values[month - 1] + values[month + 23])).toFixed(2);
+        } else {
+            descuentoPromedio = ((values[month] + values[month + 24])/2).toFixed(2);
+            descuentoPromedioAnterior = ((values[month - 1] + values[month + 23])/2).toFixed(2);
+        }
+        
+        // determinar la diferencia porcentual en los precios
+        differences = percentageDifferencesDiscount(descuentoPromedio, descuentoPromedioAnterior);
+
+
+        
+    } else if(req.query.origin === 'Zara'){
+        values = avgDiscount.averageDiscount(arr);
+        // obtener precios promedio mes actual y anterior 
+        descuentoPromedio = values[month];
+        descuentoPromedioAnterior = values[month - 1];
+        // determinar la diferencia porcentual en los descuentos
+        differences = percentageDifferencesDiscount(descuentoPromedio, descuentoPromedioAnterior);
+
+    } else if(req.query.origin === 'Mango'){
+        values = avgDiscount.averageDiscount(arr);
+        // console.log(values);
+        // obtener descuentos promedio mes actual y anterior 
+        descuentoPromedio = values[month];
+        descuentoPromedioAnterior = values[month - 1];
+        // determinar la diferencia porcentual en los descuentos
+        differences = percentageDifferencesDiscount(descuentoPromedio, descuentoPromedioAnterior);
+    }
+
+
+    // respuesta para el frontend
+    obj = { 
+        arr,
+        descuentoPromedio,
+        differences
+    }
+
+
+    res.status(200).json({obj});
+}
+
+// table info
 exports.tableDiscountInfo = async (req, res) => {
     let filtro = req.query;
     
