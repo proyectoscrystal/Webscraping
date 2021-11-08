@@ -3,12 +3,16 @@ const cors = require('cors');
 const express = require('express');
 const session = require('express-session');
 
+
+
 const app = express();
 
 // Base de datos
 const db = require('./config/db');
 
 db();
+
+
 
 // Middlewares
 app.use(express.json({ limit: '50mb', extended: true }));

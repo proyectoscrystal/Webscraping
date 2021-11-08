@@ -2,8 +2,11 @@
 const fs = require("fs");
 const mangoScraping = require("./mangoCtl");
 const zaraScraping = require("./zaraCtl");
+const cron = require("node-cron");
 
-exports.Scraping = async (req, res) => {
+const scrapingPrueba = require('./zaraCtl');
+
+let Scraping = async (req, res) => {
   //  uso de fs
   let hora1 = new Date();
   console.log(`Hora ${hora1.getHours()} : ${hora1.getMinutes()}`);
@@ -38,3 +41,15 @@ exports.Scraping = async (req, res) => {
     console.log("Hora guardada!");
   });
 };
+
+
+// job para ejecutar el scraping de manera automatico
+// cron.schedule('00 17 * * *', async function() {
+//   console.log('running a task every day to 5 pm');
+//   let data = new Date().toUTCString();
+//   console.log(data);
+//   await Scraping();
+// });
+
+
+

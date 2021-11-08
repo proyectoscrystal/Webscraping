@@ -60,6 +60,7 @@ module.exports = (router) => {
     // rutas para responder a peticiones de vista colores
     router.get('/m_infoCategoryColors',colorsController.colorGeneralCategory); 
     router.get('/m_infoCategoryMujerColors',colorsController.colorMujerCategory); 
+    router.get('/m_infoCategoryHombreColors',colorsController.colorHombreCategory); 
 
 
 }
