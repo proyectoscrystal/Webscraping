@@ -61,6 +61,7 @@ module.exports = (router) => {
     router.get('/m_infoCategoryColors',colorsController.colorGeneralCategory); 
     router.get('/m_infoCategoryMujerColors',colorsController.colorMujerCategory); 
     router.get('/m_infoCategoryHombreColors',colorsController.colorHombreCategory); 
+    router.get('/m_infoCategoryKidsColors',colorsController.colorKidsCategory); 
 
 
 }

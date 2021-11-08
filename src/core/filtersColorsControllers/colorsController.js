@@ -571,6 +571,179 @@ let SKUHombreCategory = (arr) => {
     return obj;
 }
 
+// respuesta a la peticion desde vista kids colores
+exports.colorKidsCategory = async (req, res) => {
+    let filtro = req.query;
+    
+    filtro = organizarQueryfilter1(filtro);
+    console.log(filtro);
+
+    //mes actual
+    let date = new Date();
+    let month = date.getMonth(); 
+
+
+    let arr;
+    let obj;
+    let porcentajesCategoriaColors;
+
+    try {
+        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "origin":1, "color":1, "categoria":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
+        // console.log(arr.length);
+    } catch (error) {
+        console.log("no se obtuvo respuesta");
+        return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
+    }
+
+
+    porcentajesCategoriaColors = SKUKidsCategory(arr);
+    
+    // respuesta para el frontend
+    obj = {  
+       porcentajesCategoriaColors
+    }
+
+
+    res.status(200).json({obj});
+}
+
+let SKUKidsCategory = (arr) => {
+    obj = {};
+    let mujer = 0;
+    let hombre = 0;
+    let kids = 0;
+    let exterior = 0; 
+    let interior = 0;
+    let calzado = 0;
+    let accesorios = 0;
+    let exteriorPorcentaje = 0; 
+    let interiorPorcentaje = 0;
+    let calzadoPorcentaje = 0;
+    let accesoriosPorcentaje = 0;
+    colors = [];
+    countColors = [];
+    total = 0;
+    totalsku = 0;
+
+    // areglos para extraer el color de CATEGORIAS
+    arrayMujer = [];
+    arrayHombre = [];
+    arrayKids = [];
+    arrayExterior = [];
+    arrayInterior = [];
+    arrayCalzado = [];
+    arrayAccesorios = [];
+
+    // calculando el porcentaje de las categorias
+    arr.forEach( element => {
+        if(element.categoria === "Mujer") {
+            mujer += element.numeroTallas;
+            arrayMujer.push(element);
+
+        } else if(element.categoria === "Hombre") {
+            hombre += element.numeroTallas;
+            arrayHombre.push(element);
+        } else if(element.categoria === "Niño" || element.categoria === "Niña") {
+            kids += element.numeroTallas;
+            arrayKids.push(element);
+        }
+
+        if(element.subCategoria === "ropa exterior" && (element.categoria === "Niño" || element.categoria === "Niña")) {
+            exterior += element.numeroTallas;
+            arrayExterior.push(element);
+
+        } else if(element.subCategoria === "ropa interior" && (element.categoria === "Niño" || element.categoria === "Niña")) {
+            interior += element.numeroTallas;
+            arrayInterior.push(element);
+        } else if(element.subCategoria === "calzado" && (element.categoria === "Niño" || element.categoria === "Niña")) {
+            calzado += element.numeroTallas;
+            arrayCalzado.push(element);
+        } else if(element.subCategoria === "accesorios" && (element.categoria === "Niño" || element.categoria === "Niña")) {
+            accesorios += element.numeroTallas;
+            arrayAccesorios.push(element);
+        }
+
+
+    });
+    total = (mujer + kids + hombre);
+    totalsku = (exterior + interior + calzado + accesorios);
+
+    let kidsTotalSKU = kids;
+    
+    // porcentajes de categorias
+    mujer = parseFloat(Math.abs( (((mujer*100)/total)) ).toFixed(2));
+    hombre = parseFloat(Math.abs( (((hombre*100)/total)) ).toFixed(2));
+    kids = parseFloat(Math.abs( (((kids*100)/total)) ).toFixed(2));
+
+    // porcentajes de subcategoria y totalesku
+    exteriorPorcentaje = parseFloat(Math.abs( (((exterior*100)/totalsku)) ).toFixed(2));
+    interiorPorcentaje = parseFloat(Math.abs( (((interior*100)/totalsku)) ).toFixed(2));
+    calzadoPorcentaje = parseFloat(Math.abs( (((calzado*100)/totalsku)) ).toFixed(2));
+    accesoriosPorcentaje = parseFloat(Math.abs( (((accesorios*100)/totalsku)) ).toFixed(2));
+
+    // colores por categoria y subcategorias
+    // let colorMujer;
+    // let colorHombre;
+    let colorKids;
+    let colorExterior;
+    let colorInterior;
+    let colorCalzado;
+    let colorAccesorios;
+
+    // colorMujer = colorFrecuente(arrayMujer);
+    // colorHombre = colorFrecuente(arrayHombre);
+    colorKids = colorFrecuente(arrayKids);
+    colorExterior = colorFrecuente(arrayExterior);
+    colorInterior = colorFrecuente(arrayInterior);
+    colorCalzado = colorFrecuente(arrayCalzado);
+    colorAccesorios = colorFrecuente(arrayAccesorios);
+
+    // colores en rgb 
+    let rgbKids = colorToRGB(colorKids);
+    let rgbExterior = colorToRGB(colorExterior);
+    let rgbInterior = colorToRGB(colorInterior);
+    let rgbCalzado = colorToRGB(colorCalzado);
+    let rgbAccesorios = colorToRGB(colorAccesorios);
+
+
+
+    // construyendo el objeto respuesta
+    obj.total = total;
+    // porcentajes vista general seccion categorias
+    obj.mujerPorcentageSKU = mujer; 
+    obj.hombrePorcentageSKU = hombre; 
+    obj.kidsPorcentageSKU = kids; 
+    // cantidades en seccion subcategoria
+    obj.exterior = exterior; 
+    obj.interior = interior; 
+    obj.calzado = calzado; 
+    obj.accesorios = accesorios; 
+    // porcentajes en seccion subcategorias
+    obj.exteriorPorcentaje = exteriorPorcentaje; 
+    obj.interiorPorcentaje = interiorPorcentaje; 
+    obj.calzadoPorcentaje = calzadoPorcentaje; 
+    obj.accesoriosPorcentaje = accesoriosPorcentaje;
+    // colores frecuentes tanto en categorias como en subcategorias vista general colores 
+    // llevados a su equivalente en rgb
+    obj.colorKids = colorKids; 
+    obj.colorExterior = colorExterior; 
+    obj.colorInterior = colorInterior; 
+    obj.colorCalzado = colorCalzado; 
+    obj.colorAccesorios = colorAccesorios; 
+    // colores en formato rgb
+    obj.rgbKids = rgbKids; 
+    obj.rgbExterior = rgbExterior; 
+    obj.rgbInterior = rgbInterior; 
+    obj.rgbCalzado = rgbCalzado; 
+    obj.rgbAccesorios = rgbAccesorios; 
+    obj.kidsTotalSKU = kidsTotalSKU; 
+    // fin calcular porcentajes sku de las categorias
+
+
+
+    return obj;
+}
+
 let colorFrecuente = (arr) => {
     // metodo para saber el color que mas se repite para subcategoria
     let arrayColoresSub = [];
