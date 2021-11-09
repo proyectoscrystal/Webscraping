@@ -67,7 +67,7 @@ const babyBoyNewLinkMango = "https://shop.mango.com/co/bebe-nino/destacados/nuev
 //Bebe niña
 const babyGirlCategoryLinkMango = "https://shop.mango.com/co/ninos";
 const babyGirlDiscountLinkMango = "";
-const babyGirlNewLinkMango = "https://shop.mango.com/co/bebe-nina/destacados/nuevo_d17586104";
+const babyGirlNewLinkMango = "https://shop.mango.com/co/bebe-nina/destacados/descubre-la-coleccion-de-newborn_d55670692";
 
 //Mini kids
 const miniKidsLinkMango = "https://shop.mango.com/co/ninos";

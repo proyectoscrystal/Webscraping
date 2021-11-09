@@ -6,7 +6,7 @@ const Url = require("../../linksUrls");
 exports.miniKidsNew = async () => {
     const browser = await puppeteer.launch({ headless: false }); //headless true/false para visualizar el navegador
 
-    const miniKidsNew = Url.miniKidsLinkMango;
+    const miniKidsNew = Url.miniKidsNewLinkMango;
 
     try {
         const page = await browser.newPage();
