@@ -4,7 +4,7 @@ const getscraping = require("../zaraCtl");
 const Url = require("../linksUrls");
 
 exports.descuentoMujer = async () => {
-  const browser = await puppeteer.launch({ headless: false }); //headless true/false para visualizar el navegador
+  const browser = await puppeteer.launch({ headless: true }); //headless true/false para visualizar el navegador
 
   const womanDiscount = Url.womanDiscountLink;
 

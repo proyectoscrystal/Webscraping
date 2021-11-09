@@ -4,7 +4,7 @@ const getScraping = require("../../../mangoCtl");
 const Url = require("../../../linksUrls");
 
 exports.babyGirlCategory = async () => {
-    const browser = await puppeteer.launch({headless: false});
+    const browser = await puppeteer.launch({headless: true});
 
     const babyGirlCategory = Url.babyGirlCategoryLinkMango;
 

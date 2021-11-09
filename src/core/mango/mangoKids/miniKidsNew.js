@@ -4,7 +4,7 @@ const getScraping = require("../../mangoCtl");
 const Url = require("../../linksUrls");
 
 exports.miniKidsNew = async () => {
-    const browser = await puppeteer.launch({ headless: false }); //headless true/false para visualizar el navegador
+    const browser = await puppeteer.launch({ headless: true }); //headless true/false para visualizar el navegador
 
     const miniKidsNew = Url.miniKidsNewLinkMango;
 

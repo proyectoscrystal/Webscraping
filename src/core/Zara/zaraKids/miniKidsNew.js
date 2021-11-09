@@ -4,7 +4,7 @@ const getScraping = require("../../zaraCtl");
 const Url = require("../../linksUrls");
 
 exports.miniKidsNew = async () => {
-    const browser = await puppeteer.launch({headless: false});
+    const browser = await puppeteer.launch({headless: true});
 
     const miniKidsNew = Url.miniKidsNewLink;
 
