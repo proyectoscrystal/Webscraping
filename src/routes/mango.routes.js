@@ -47,6 +47,7 @@ module.exports = (router) => {
     router.get('/m_averagePrice',scrapingCtl.averagePrice);
     router.get('/m_infoCards',scrapingCtl.cardsInfo);
     router.get('/m_averageDiscount',scrapingCtl.averageDiscount);
+    router.get('/m_averageDiscountinued',scrapingCtl.averageDiscountinued);
     router.get('/m_averageNews',scrapingCtl.averageNews);
     router.get('/m_averageSKU',scrapingCtl.averageSKU);
     router.get('/m_prendasInfo',scrapingCtl.prendasInfo);
