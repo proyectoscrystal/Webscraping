@@ -22,10 +22,10 @@ let Scraping = async (req, res) => {
   });
 
   //
+  await zaraScraping.getScrapingZara();
 
   await mangoScraping.getScrapingMango();
 
-  await zaraScraping.getScrapingZara();
 
   //  uso de fs
   let hora = new Date();

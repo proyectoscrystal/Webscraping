@@ -251,6 +251,9 @@ exports.getscraping = async (arreglo) => {
       talla = tallasSinAgotados(talla, tallasAgotadas);
     }
 
+    tipoPrenda = tipoPrenda.trim();
+    tipoPrenda = saveImage.homologarTipoPrenda(tipoPrenda);
+
 
     let subCategoria = '';
     if(arreglo[i].tipoPrenda === undefined) {

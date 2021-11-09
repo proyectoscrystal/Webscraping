@@ -217,6 +217,9 @@ exports.getscraping = async (arreglo) => {
       });
       talla = tallasAux;
 
+      tipoPrenda = tipoPrenda.trim();
+      tipoPrenda = saveImage.homologarTipoPrenda(tipoPrenda);
+
       let subCategoria = '';
       
         // convertir en minusculas

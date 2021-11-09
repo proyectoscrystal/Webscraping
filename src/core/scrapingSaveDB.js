@@ -4,6 +4,8 @@ const {
   newPipeline,
 } = require("@azure/storage-blob");
 
+const arrayTipoPrenda = require('./../utils/index');
+
 const getStream = require("into-stream");
 
 const containerName = process.env.CONTAINER_NAME;
@@ -236,7 +238,7 @@ exports.saveImagesDB = async (data) => {
   };
 
 
-  exports.getState = (tag, descuento) => {
+exports.getState = (tag, descuento) => {
     if (tag === 'nuevo') {
       return state = tag;
     } else if (tag === '' && descuento === '') {
@@ -254,3 +256,15 @@ exports.saveImagesDB = async (data) => {
 
     return array1.every( (element,index) => element == array2[index] );
   }
+
+exports.homologarTipoPrenda = (tipoPrenda) => {
+  tipoPrenda = tipoPrenda.toLowerCase();
+
+  for (let i = 0; i < arrayTipoPrenda.tipoPrendaHomologada.length; i++) {
+    if(arrayTipoPrenda.tipoPrendaScraping[i] === tipoPrenda) {
+      tipoPrenda = arrayTipoPrenda.tipoPrendaHomologada[i];
+      return tipoPrenda;
+    }
+  }
+  return tipoPrenda;    
+}
