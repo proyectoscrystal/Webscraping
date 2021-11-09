@@ -79,14 +79,14 @@ exports.saveImagesDB = async (data) => {
 
     // trasformar la base 64 en buffer
 
-    // let blobName = data.imageName
-    // const base64 = data.base64; // con el modelo es base_64
+    let blobName = data.imageName
+    const base64 = data.base64; // con el modelo es base_64
   
-    // const buffer = Buffer.from(base64, "base64");
+    const buffer = Buffer.from(base64, "base64");
   
-    // const stream = getStream(buffer);
-    // const containerClient = blobServiceClient.getContainerClient(containerName);
-    // const blockBlobClient = containerClient.getBlockBlobClient(blobName);
+    const stream = getStream(buffer);
+    const containerClient = blobServiceClient.getContainerClient(containerName);
+    const blockBlobClient = containerClient.getBlockBlobClient(blobName);
   
     // fin trasformar la base 64 en buffer 
     
@@ -94,27 +94,26 @@ exports.saveImagesDB = async (data) => {
     try {
       // mandar el buffer al blogstorage
 
-      // await blockBlobClient.uploadStream(
-      //   stream,
-      //   uploadOptions.bufferSize,
-      //   uploadOptions.maxBuffers,
-      //   { blobHTTPHeaders: { blobContentType: "image/jpeg" } }
-      // );
+      await blockBlobClient.uploadStream(
+        stream,
+        uploadOptions.bufferSize,
+        uploadOptions.maxBuffers,
+        { blobHTTPHeaders: { blobContentType: "image/jpeg" } }
+      );
   
-      // let blobImage = containerClient.getBlobClient(blobName);
+      let blobImage = containerClient.getBlobClient(blobName);
   
-      // let url = blobImage.url;  
+      let url = blobImage.url;  
       
 
       // fin mandar el buffer al blogStorage
   
       const imageData = {
         imageName: data.imageName,
-        base64: 'https://blackboxscraping.blob.core.windows.net/scraping/VESTIDO%20LARGO%20BRILLOS%20LIMITED%20EDITION', // aca va el valor de url del blobstorage
+        base64: url, // aca va el valor de url del blobstorage
         year: data.year,
         origin: data.origin,
         quarter: data.quarter,
-        // use: data.use,
         user: data.user,
         categoria: data.categoria,
         precio: data.precio,

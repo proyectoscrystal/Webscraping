@@ -124,6 +124,7 @@ exports.subCategoria = [
   'ropa exterior',
   'ropa exterior',
   'ropa exterior',
+  'ropa exterior',
   'ropa interior',
   'ropa interior',
   'ropa interior', 
@@ -345,6 +346,7 @@ exports.subCategoria = [
 ]
 
 exports.tipoPrenda = [
+  'conjuntos',
   'chaquetas y chalecos',
   'cardigans y jerseis',
   'abrigos | trench',
