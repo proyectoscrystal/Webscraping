@@ -6,9 +6,7 @@ organizarQueryfilter1 = (query) => {
     let obj = {};
     let inn = [];
 
-    if(query.origin !== undefined) {
-        obj.categoria = query.origin;
-    }
+
     if(query.categoria !== undefined) {
         obj.categoria = {$in: query.categoria};
     }
@@ -32,42 +30,12 @@ organizarQueryfilter1 = (query) => {
     return obj;
 }
 
-organizarQueryfilter = (query) => {
-    let obj = {};
-    let inn = [];
-
-    if(query.origin !== undefined) {
-        obj.origin = {$in: query.origin};
-    }
-    if(query.categoria !== undefined) {
-        obj.categoria = {$in: query.categoria};
-    }
-    if(query.subCategoria !== undefined){
-        obj.subCategoria = {$in: query.subCategoria};
-    }
-    if(query.tipoPrenda !== undefined){
-        obj.tipoPrenda = {$in: query.tipoPrenda};
-    }  
-    if(query.fechaInicio !== '' && query.fechaFin === '') {
-        let inicio = query.fechaInicio + "T00:00:00.000Z";
-        let fin = query.fechaInicio + "T23:59:59.999Z";
-        console.log(query.fechaInicio);
-        obj.fecha_consulta = {$gte: inicio, $lte: fin}
-    }
-    if(query.fechaInicio !== '' && query.fechaFin !== '') {
-        obj.fecha_consulta = {$gte: query.fechaInicio, $lte: query.fechaFin}
-    }
-
-
-    return obj;
-}
 
 // metodo para calcular la frecuencia y colores de sku vista general colores pie chart
 exports.colorGeneralChart = async (req, res) => {
     let filtro = req.query;
     
     filtro = organizarQueryfilter1(filtro);
-    console.log(filtro);
 
     //mes actual
     let date = new Date();
@@ -131,42 +99,6 @@ let GeneralColorChart = (arr) => {
     return obj;
 }
 
-// metodo para calcular la frecuencia y colores de sku vista muejer colores pie chart
-exports.colorMujerChart = async (req, res) => {
-    let filtro = req.query;
-    
-    filtro = organizarQueryfilter(filtro);
-    console.log(filtro);
-
-    //mes actual
-    let date = new Date();
-    let month = date.getMonth(); 
-
-
-    let arr;
-    let obj;
-    let porcentajesCategoriaColors;
-    let coloresGeneral;
-
-    try {
-        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "origin":1, "color":1, "categoria":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
-        // console.log(arr.length);
-    } catch (error) {
-        console.log("no se obtuvo respuesta");
-        return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
-    }
-
-
-    porcentajesCategoriaColors = GeneralColorChart(arr);
-    
-    // respuesta para el frontend
-    obj = {  
-       porcentajesCategoriaColors
-    }
-
-
-    res.status(200).json({obj});
-}
 
 // metodos usados por el chart y info categoria
 let coloresFrecuentes = (arr) => {
@@ -271,3 +203,4 @@ let bubble = (arr) => {
 
     return arr;
   }
+

@@ -1,11 +1,13 @@
 const Business = require("../../domain/model/businessDao");
 
 const coloresRGB = require("./../../utils/index");
+const barChartsController = require("./barChartsController");
 
 
-organizarQueryfilter1 = (query) => {
+let organizarQueryfilter1 = (query) => {
     let obj = {};
     let inn = [];
+    console.log(query);
 
     if(query.origin !== undefined) {
         obj.origin = {$in: query.origin};
@@ -36,18 +38,16 @@ organizarQueryfilter1 = (query) => {
 // metodo para calcular la frecuencia y colores de sku vista general colores pie chart
 exports.colorGeneralCategory = async (req, res) => {
     let filtro = req.query;
-    
+    // console.log(filtro);
     filtro = organizarQueryfilter1(filtro);
 
-    //mes actual
-    let date = new Date();
-    let month = date.getMonth(); 
+
 
 
     let arr;
     let obj;
     let porcentajesCategoriaColors;
-    let coloresGeneral;
+
 
     try {
         arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "origin":1, "color":1, "categoria":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
@@ -59,6 +59,8 @@ exports.colorGeneralCategory = async (req, res) => {
 
 
     porcentajesCategoriaColors = SKUGeneralCategory(arr);
+    topTenTipoPrenda = topTenTipoPrenda(arr);
+
     
     // respuesta para el frontend
     obj = {  
@@ -802,4 +804,153 @@ let colorToRGB = color => {
       return color;
 }
 
+let topTenTipoPrenda = arr => {
+    obj = {};
 
+    // areglos para extraer el color de los charts
+    let datos = [];
+    let coloresRGB = [];
+
+    // objeto que contiene los colores en letra y las cantidades sku, tipoPrenda
+    datos = getDataTopTen(arr);
+
+    // colores en rgb 
+    coloresRGB = coloresToRGB(colores.colores);
+
+    // console.log(coloresRGB);
+    // console.log(`color: ${colorExterior} - rgb: ${rgbExterior}`);
+
+
+
+    // construyendo el objeto respuesta
+    obj.colores =  colores.colores;
+    obj.coloresCount = colores.cantidades;
+    obj.coloresRGB = coloresRGB;
+   
+    // fin calcular porcentajes sku de las categorias
+
+
+
+    return obj;
+}
+
+// metodos para calcular topTenTipoPrenda
+
+// metodos usados por el chart y info categoria
+let getDataTopTen = (arr) => {
+    // metodo para saber el color que mas se repite para subcategoria
+    let arrayTipoPrendasData = [];
+    let arrayCountsSub = [];
+    let arrayCountsTipoPrendas = [];
+
+    // crear un array de objetos con color, numeroTallas, tipoPrenda
+    let arrayColorCantidadTipoPrenda = [];
+    arrayColorCantidadTipoPrenda = arr.map((e,index) => {
+        let obj = {};
+        obj.color = arr[index].color;
+        obj.cantidadSKU = arr[index].numeroTallas;
+        obj.tipoPrenda = arr[index].tipoPrenda;
+        // console.log(`color ${arrayarrayTipoPrendasData[index]} - cantidad ${arrayCountsSub[index]}`);
+        return obj;
+    });
+
+    console.log(arrayColorCantidadTipoPrenda);
+
+
+    // ser crea un arreglo con todos los colores
+    for (let i = 0; i < arr.length; i++) {
+            arrayTipoPrendasData.push(arr[i].tipoPrenda);
+    }
+    // se eliminan los repetidos
+    arrayTipoPrendasData = [...new Set(arrayTipoPrendasData)];
+    //se inicializa el array count con la cantidad de colores existente
+    arrayTipoPrendasData.forEach((element, index) => {
+        arrayCountsSub[index] = 0;
+    })
+    // se llena el array countsSub con la cantidad de repeticiones por color *****
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arrayTipoPrendasData.length; j++) {
+            if (arr[i].color === arrayTipoPrendasData[j]) {
+                arrayCountsSub[j] += 1;
+            }
+        }
+    }
+    // se crea en arreglo con objetos color-cantidad
+    let arrayColorCantidad = [];
+    arrayColorCantidad = arrayTipoPrendasData.map((e,index) => {
+        let obj = {};
+        obj.color = arrayTipoPrendasData[index];
+        obj.cantidad = arrayCountsSub[index];
+        // console.log(`color ${arrayarrayTipoPrendasData[index]} - cantidad ${arrayCountsSub[index]}`);
+        return obj;
+    })
+    // determinar los colores y cantidadees de mayor frecuencia 
+    arrayColorCantidad = bubble(arrayColorCantidad);
+    // console.log(arrayColorCantidad);
+    // conformar los arreglos con los colores y sus cantidades
+    let arrayColores = [];
+    let arrayCantidades = [];
+    arrayColorCantidad.forEach((e,index) => {
+        arrayColores.push(e.color);
+        arrayCantidades.push(e.cantidad);
+    });
+    // prueba para ver los colores y cantidades
+    // arrayCantidades.forEach((e,index) => {
+    //     console.log(`${arrayColores[index]} ${arrayCantidades[index]}`);
+
+    // })
+    
+    let obj = {};
+    obj.colores = arrayColores;
+    obj.cantidades = arrayCantidades;
+    
+
+    // retorna el color que mas se presenta 
+    return obj;
+
+
+
+}
+
+let coloresToRGB = color => {
+    let RGB = [];
+    for (let i = 0; i < coloresRGB.colorSinRepetir.length; i++) {
+        // console.log(`sub: ${coloresRGB.subCategoria[i]} - tipo: ${coloresRGB.tipoPrenda[i]}`);
+        for (let j = 0; j < coloresRGB.colorSinRepetir.length; j++) {
+            if (color[i] === coloresRGB.colorSinRepetir[j]) {
+                RGB.push(coloresRGB.colorRGB[j]);
+              }             
+        }     
+      }
+
+      return RGB;
+}
+
+let bubble = (arr) => {
+    var len = arr.length;
+  
+    for (var i = 0; i < len ; i++) {
+      for(var j = 0 ; j < len - i - 1; j++){ // this was missing
+      if (arr[j].cantidad < arr[j + 1].cantidad) {
+        // swap
+        var tempC = arr[j].color;
+        var temp = arr[j].cantidad;
+
+        arr[j].color = arr[j+1].color;
+        arr[j].cantidad = arr[j+1].cantidad;
+
+        arr[j + 1].color = tempC;
+        arr[j + 1].cantidad = temp;
+      }
+     }
+    }
+    if(arr.length > 10) {
+        let removed = arr.splice(10);
+    } else {
+        let removed = arr.splice(arr.length);
+    }
+
+
+
+    return arr;
+  }

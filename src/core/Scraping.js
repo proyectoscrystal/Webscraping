@@ -28,11 +28,9 @@ let Scraping = async (req, res) => {
 
 
   //  uso de fs
-  let hora = new Date();
-  console.log(`Hora ${hora.getHours()} : ${hora.getMinutes()}`);
-  let lyrics = `Hora ${hora.getHours().toString()} : ${hora
-    .getMinutes()
-    .toString()}`;
+  let data = new Date().toUTCString()
+  console.log(`Fecha ${data}`);
+  let lyrics = `Fecha ${data.toString()} }`;
   // write to a new file named 2pac.txt
   fs.writeFile("horaFin.txt", lyrics, (err) => {
     // throws an error, you could also catch it here
