@@ -1005,7 +1005,6 @@ exports.colorSinRepetir = [
   'multicolor',
   'otros',
   'plomo',
-  'café'
 ]
 
 // colores en formato rgb
@@ -1033,6 +1032,5 @@ exports.colorRGB = [
   'rgb(169, 131, 7)',
   'rgb(191, 133, 165)',
   'rgb(133, 168, 191)',
-  'rgb(205, 205, 205)',
-  'rgb(160, 82, 45)'
+  'rgb(205, 205, 205)'
 ]
