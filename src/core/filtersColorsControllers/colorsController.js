@@ -47,6 +47,7 @@ exports.colorGeneralCategory = async (req, res) => {
     let arr;
     let obj;
     let porcentajesCategoriaColors;
+    let topTen;
 
 
     try {
@@ -59,7 +60,7 @@ exports.colorGeneralCategory = async (req, res) => {
 
 
     porcentajesCategoriaColors = SKUGeneralCategory(arr);
-    topTenTipoPrenda = topTenTipoPrenda(arr);
+    topTen = topTenTipoPrenda(arr);
 
     
     // respuesta para el frontend
@@ -815,7 +816,7 @@ let topTenTipoPrenda = arr => {
     datos = getDataTopTen(arr);
 
     // colores en rgb 
-    coloresRGB = coloresToRGB(colores.colores);
+    // coloresRGB = coloresToRGB(colores.colores);
 
     // console.log(coloresRGB);
     // console.log(`color: ${colorExterior} - rgb: ${rgbExterior}`);
@@ -823,9 +824,9 @@ let topTenTipoPrenda = arr => {
 
 
     // construyendo el objeto respuesta
-    obj.colores =  colores.colores;
-    obj.coloresCount = colores.cantidades;
-    obj.coloresRGB = coloresRGB;
+    // obj.colores =  colores.colores;
+    // obj.coloresCount = colores.cantidades;
+    // obj.coloresRGB = coloresRGB;
    
     // fin calcular porcentajes sku de las categorias
 
@@ -840,38 +841,54 @@ let topTenTipoPrenda = arr => {
 let getDataTopTen = (arr) => {
     // metodo para saber el color que mas se repite para subcategoria
     let arrayTipoPrendasData = [];
-    let arrayCountsSub = [];
+    let arrayColoresData = [];
+    let arrayCountsSKU = [];
     let arrayCountsTipoPrendas = [];
+
+     // ser crea un arreglo con todos los tipos de prenda y se estrae el total sku
+     let totalSKU = 0;
+     for (let i = 0; i < arr.length; i++) {
+        totalSKU += arr[i].numeroTallas;
+        arrayTipoPrendasData.push(arr[i].tipoPrenda);
+    }
+    // se eliminan los repetidos de tipo de prenda
+    arrayTipoPrendasData = [...new Set(arrayTipoPrendasData)];
 
     // crear un array de objetos con color, numeroTallas, tipoPrenda
     let arrayColorCantidadTipoPrenda = [];
+    
     arrayColorCantidadTipoPrenda = arr.map((e,index) => {
+        
         let obj = {};
         obj.color = arr[index].color;
         obj.cantidadSKU = arr[index].numeroTallas;
         obj.tipoPrenda = arr[index].tipoPrenda;
-        // console.log(`color ${arrayarrayTipoPrendasData[index]} - cantidad ${arrayCountsSub[index]}`);
+        // console.log(`color ${arrayarrayTipoPrendasData[index]} - cantidad ${arrayCountsSKU[index]}`);
         return obj;
     });
 
-    console.log(arrayColorCantidadTipoPrenda);
+    // obtener el total de sku
+    
+    arrayColorCantidadTipoPrenda.forEach((e, i) => {
+        
+    })
+
+    // sacar el porcentaje del top ten cada prenda
+    // mujer = parseFloat(Math.abs( (((mujer*100)/total)) ).toFixed(2));
+
+    // console.log(arrayColorCantidadTipoPrenda);
 
 
-    // ser crea un arreglo con todos los colores
-    for (let i = 0; i < arr.length; i++) {
-            arrayTipoPrendasData.push(arr[i].tipoPrenda);
-    }
-    // se eliminan los repetidos
-    arrayTipoPrendasData = [...new Set(arrayTipoPrendasData)];
+   
     //se inicializa el array count con la cantidad de colores existente
     arrayTipoPrendasData.forEach((element, index) => {
-        arrayCountsSub[index] = 0;
+        arrayCountsSKU[index] = 0;
     })
     // se llena el array countsSub con la cantidad de repeticiones por color *****
     for (let i = 0; i < arr.length; i++) {
         for (let j = 0; j < arrayTipoPrendasData.length; j++) {
             if (arr[i].color === arrayTipoPrendasData[j]) {
-                arrayCountsSub[j] += 1;
+                arrayCountsSKU[j] += 1;
             }
         }
     }
