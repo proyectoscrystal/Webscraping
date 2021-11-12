@@ -74,7 +74,7 @@ exports.womanNew = async () => {
         //====================MUJER NUEVA COLECCIÓN===========================
         
     } catch (err) {
-        //console.error(err.message);
+        console.error(`error en el link = ${newWoman} - error = ${err.message}`);
     } finally {
         await browser.close();
     }

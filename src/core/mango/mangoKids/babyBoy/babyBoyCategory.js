@@ -41,7 +41,7 @@ exports.babyBoyCategory = async () => {
                 await page.goto(enlacehombre);
 
             } catch (error) {
-                console.log("No se ha encontrado un enlace");
+                console.log(`No se ha encontrado el enlace ${enlacehombre}`);
             }
             console.log("Ingresando a: " + enlacehombre);
 
@@ -105,21 +105,21 @@ exports.babyBoyCategory = async () => {
                         //break;
                     //}
                 } catch (error) {
-                    //console.log(error.message);
+                    console.log(`No se ha encontrado el producto ${enlace}`);
                 }
             }
             
             //console.log(rebajasBabyBoy);
             await getScraping.getscraping(rebajasBabyBoy);
 
-            if (count === 0) {
-                break;
-            }
+            // if (count === 0) {
+            //     break;
+            // }
         }
 
         //====================CATEGORIAS HOMBRE===========================
     } catch (err) {
-        console.error(err.message);
+        console.error(`error en el link = ${babyBoyCategory} - error = ${err.message}`);
     } finally {
         await browser.close();
     }

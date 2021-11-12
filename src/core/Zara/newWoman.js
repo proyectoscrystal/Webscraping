@@ -91,7 +91,7 @@ exports.newWoman = async () => {
     // console.log(nuevoMujer);
     //====================PRENDAS NUEVAS - MUJER==========================
   } catch (err) {
-    //console.error(err.message);
+    console.error(`error en el link = ${newWoman} - error = ${err.message}`);
   } finally {
     await browser.close();
   }

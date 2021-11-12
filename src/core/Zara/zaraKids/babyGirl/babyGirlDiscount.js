@@ -85,7 +85,7 @@ exports.babyGirlDiscount = async () => {
         //====================PRENDAS DESCUENTO - BEBE NIÑA | 6 MESES - 5 AÑOS==========================
 
     } catch (err) {
-        console.error(err.message);
+        console.error(`error en el link = ${babyGirlDiscount} - error = ${err.message}`);
     } finally {
         await browser.close();
     }

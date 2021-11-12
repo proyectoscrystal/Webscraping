@@ -119,7 +119,7 @@ exports.boyCategory = async () => {
 
         //====================CATEGORIAS HOMBRE===========================
     } catch (err) {
-        console.error(err.message);
+        console.error(`error en el link = ${boyCategory} - error = ${err.message}`);
     } finally {
         await browser.close();
     }

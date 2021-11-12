@@ -84,7 +84,7 @@ exports.boyNew = async () => {
         //====================PRENDAS NUEVAS - NIÑO | 6-14 AÑOS==========================
 
     } catch (err) {
-        console.error(err.message);
+        console.error(`error en el link = ${boyNew} - error = ${err.message}`);
     } finally {
         await browser.close();
     }

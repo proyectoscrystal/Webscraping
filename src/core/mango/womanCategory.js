@@ -113,7 +113,7 @@ exports.womanCategory = async () => {
     await getScraping.getscraping(prendasMujer);
     //====================CATEGORIAS MUJER===========================
   } catch (err) {
-    //console.error(err.message);
+    console.error(`error en el link = ${womanCategory} - error = ${err.message}`);
   } finally {
     await browser.close();
   }

@@ -83,7 +83,7 @@ exports.girlDiscount = async () => {
         //====================PRENDAS EN DESCUENTO - NIÑOS | 6-14 AÑOS==========================
 
     } catch (err) {
-        console.error(err.message);
+        console.error(`error en el link = ${girlDiscount} - error = ${err.message}`);
     } finally {
         await browser.close();
     }

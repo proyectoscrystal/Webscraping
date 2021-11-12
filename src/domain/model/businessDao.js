@@ -5,7 +5,7 @@ const businessSchema = require('./businessModel');
 businessSchema.statics = {
   create(data, cb) {
     const business = new this(data);
-    console.log('Imagen almacenada');
+    // console.log('Imagen almacenada');
     business.save(cb);
   },
 

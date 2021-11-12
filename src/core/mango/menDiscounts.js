@@ -89,7 +89,7 @@ exports.menDiscount = async () => {
     await getScraping.getscraping(rebajasHombre);
     //====================HOMBRE REBAJAS===========================
   } catch (err) {
-    //console.error(err.message);
+    console.error(`error en el link = ${manDiscount} - error = ${err.message}`);
   } finally {
     await browser.close();
   }

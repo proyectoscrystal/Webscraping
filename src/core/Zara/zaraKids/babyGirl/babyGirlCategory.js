@@ -113,7 +113,7 @@ exports.babyGirlCategory = async () => {
         //====================CATEGORIAS BEBE NIÑA | 6 MESES - 5 AÑOS===========================
 
     } catch (err) {
-        console.error(err.message);
+        console.error(`error en el link = ${babyGirlCategory} - error = ${err.message}`);
     } finally {
         await browser.close();
     }

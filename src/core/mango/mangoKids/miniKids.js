@@ -119,7 +119,7 @@ exports.miniKids = async () => {
 
         //====================CATEGORIAS HOMBRE===========================
     } catch (err) {
-        console.error(err.message);
+        console.error(`error en el link = ${miniKidsNew} - error = ${err.message}`);
     } finally {
         await browser.close();
     }

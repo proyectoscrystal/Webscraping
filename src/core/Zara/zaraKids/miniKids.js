@@ -114,7 +114,7 @@ exports.miniKids = async () => {
         //====================CATEGORIAS BEBE NIÑA | 6 MESES - 5 AÑOS===========================
 
     } catch (err) {
-        console.error(err.message);
+        console.error(`error en el link = ${miniKids} - error = ${err.message}`);
     } finally {
         await browser.close();
     }

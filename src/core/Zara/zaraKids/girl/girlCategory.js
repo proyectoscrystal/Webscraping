@@ -113,7 +113,7 @@ exports.girlCategory = async () => {
         //====================CATEGORIAS NIÑA | 6-14 AÑOS===========================
 
     } catch (err) {
-        console.error(err.message);
+        console.error(`error en el link = ${girlCategory} - error = ${err.message}`);
     } finally {
         await browser.close();
     }

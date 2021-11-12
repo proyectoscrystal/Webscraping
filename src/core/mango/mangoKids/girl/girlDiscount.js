@@ -77,7 +77,7 @@ exports.girlDiscount = async () => {
         //====================MUJER REBAJAS===========================
 
     } catch (err) {
-        console.error(err.message);
+        console.error(`error en el link = ${girlDiscount} - error = ${err.message}`);
     } finally {
         await browser.close();
     }

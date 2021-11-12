@@ -95,7 +95,7 @@ exports.descuentoMujer = async () => {
 
     //====================PRENDAS EN DESCUENTO - MUJER==========================
   } catch (err) {
-    //console.error(err.message);
+    console.error(`error en el link = ${womanDiscount} - error = ${err.message}`);
   } finally {
     await browser.close();
   }

@@ -90,7 +90,7 @@ exports.newMan = async () => {
     await getScraping.getscraping(nuevoHombre);
     //====================PRENDAS NUEVAS - HOMBRE==========================
   } catch (err) {
-    //console.error(err.message);
+    console.error(`error en el link = ${newMan} - error = ${err.message}`);
   } finally {
     await browser.close();
   }
