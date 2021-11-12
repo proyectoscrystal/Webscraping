@@ -897,7 +897,7 @@ let getDataTopTen = (arr) => {
     arrayColorCantidad = arrayTipoPrendasData.map((e,index) => {
         let obj = {};
         obj.color = arrayTipoPrendasData[index];
-        obj.cantidad = arrayCountsSub[index];
+        // obj.cantidad = arrayCountsSub[index];
         // console.log(`color ${arrayarrayTipoPrendasData[index]} - cantidad ${arrayCountsSub[index]}`);
         return obj;
     })
