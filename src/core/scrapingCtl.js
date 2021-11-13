@@ -199,7 +199,7 @@ exports.cardsInfo = async (req, res) => {
         nzm[0] = newsCounts[month - 1];
         nzm[1] = newsCounts[month];
         
-        // valores de diferencia de nuevos
+        // valores de diferencia de sku
         skuzm[0] = skuCounts[month - 1];
         skuzm[1] = skuCounts[month];
 
@@ -375,7 +375,7 @@ exports.averageDiscount = async (req, res) => {
     res.status(200).json({obj});
 }
 
-// descuento promedio
+// descontinuados chart
 exports.averageDiscountinued = async (req, res) => {
     let filtro = req.query;
     
@@ -635,7 +635,7 @@ exports.tablePriceInfo = async (req, res) => {
         differences = percentageDifferencePrice(precioPromedio, precioPromedioAnterior);
     }
 
-    precioPromedio = precioPromedio.toFixed(2);
+    precioPromedio = precioPromedio.toFixed();
 
 
     // respuesta para el frontend
@@ -662,9 +662,10 @@ exports.tableDiscountinuedInfo = async (req, res) => {
     let obj;
     let values = [];
     let origin = '';
-    let descuentoPromedio = 0;
+    let descontinuados = 0;
     let descuentoPromedioAnterior = 0;
     let differences = [];
+    let ddzm = []; 
 
     //mes actual
     let date = new Date();
@@ -679,46 +680,49 @@ exports.tableDiscountinuedInfo = async (req, res) => {
     }
 
     if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
-        values = avgDiscount.averageDiscountMonthGeneral(arr);
-        // console.log(values);
-        // obtener precios promedio mes actual y anterior 
+        discontinuedCounts = discontinued.averageDiscontinuedMonthGeneral(arr);
 
-        if(values[month] === 0 || values[month + 24] === 0){
-            descuentoPromedio = ((values[month] + values[month + 24])).toFixed(2);
-            descuentoPromedioAnterior = ((values[month - 1] + values[month + 23])).toFixed(2);
-        } else {
-            descuentoPromedio = ((values[month] + values[month + 24])/2).toFixed(2);
-            descuentoPromedioAnterior = ((values[month - 1] + values[month + 23])/2).toFixed(2);
-        }
+        ddzm[0] = discontinuedCounts[month - 1];
+        ddzm[1] =  discontinuedCounts[month]; // valor actual de zara 
+        ddzm[0] += discontinuedCounts[month + 23];
+        ddzm[1] += discontinuedCounts[month + 24]; // valor actual de mango
+
+        descontinuados = discontinuedCounts[month] + discontinuedCounts[month + 24];        
+        origin = 'general';
         
         // determinar la diferencia porcentual en los precios
-        differences = percentageDifferencesDiscount(descuentoPromedio, descuentoPromedioAnterior);
+        differences = percentageDifferencesDiscount(ddzm[1], ddzm[0]);
 
 
         
     } else if(req.query.origin === 'Zara'){
-        values = avgDiscount.averageDiscount(arr);
-        // obtener precios promedio mes actual y anterior 
-        descuentoPromedio = values[month];
-        descuentoPromedioAnterior = values[month - 1];
+        origin = 'Zara';
+        discontinuedCounts = discontinued.averageDiscontinuedMonthOrigin(arr);
+        descontinuados = discontinuedCounts[month];
+
+        // valores de diferencia de descontinuados
+        ddzm[0] = discontinuedCounts[month - 1];
+        ddzm[1] = discontinuedCounts[month];
+
         // determinar la diferencia porcentual en los descuentos
-        differences = percentageDifferencesDiscount(descuentoPromedio, descuentoPromedioAnterior);
+        differences = percentageDifferencesDiscontinued(ddzm[1], ddzm[0]);
 
     } else if(req.query.origin === 'Mango'){
-        values = avgDiscount.averageDiscount(arr);
-        // console.log(values);
+        discontinuedCounts = avgDiscount.averageDiscount(arr);
+        
+        descontinuados = discontinuedCounts[month];
         // obtener descuentos promedio mes actual y anterior 
-        descuentoPromedio = values[month];
-        descuentoPromedioAnterior = values[month - 1];
+        ddzm[0] = discontinuedCounts[month - 1];
+        ddzm[1] = discontinuedCounts[month];;
         // determinar la diferencia porcentual en los descuentos
-        differences = percentageDifferencesDiscount(descuentoPromedio, descuentoPromedioAnterior);
+        differences = percentageDifferencesDiscontinued(ddzm[1], ddzm[0]);
     }
 
 
     // respuesta para el frontend
     obj = { 
         arr,
-        descuentoPromedio,
+        descontinuados,
         differences
     }
 
