@@ -95,9 +95,10 @@ exports.cardsInfo = async (req, res) => {
     let differenceDiscontinued = [];
     let differenceSKU = [];
     let origin = '';
-    let precioPromedio = '';
+    let precioPromedio = 0;
     let discountinueds = '';
     let discount = 0;
+    let nuevos = 0;
 
     
 
@@ -120,7 +121,7 @@ exports.cardsInfo = async (req, res) => {
         // descuento promedio mes actualizado
         
 
-        if(discounts[month] === 0 || discount[month + 24] === 0){
+        if(discounts[month] === 0 || discounts[month + 24] === 0){
             discount = ((discounts[month] + discounts[month + 24])).toFixed(2);
             differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
         } else {
@@ -135,9 +136,9 @@ exports.cardsInfo = async (req, res) => {
         zm[0] += values[month + 23];
         zm[1] += values[month + 24]; // valor actual de mango
         if(values[month] === 0 || values[month + 24] === 0){
-            precioPromedio = ((values[month] + values[month + 24])).toFixed(2);
+            precioPromedio = ((values[month] + values[month + 24])).toFixed();
         } else {
-            precioPromedio = ((values[month] + values[month + 24])/2).toFixed(2);
+            precioPromedio = ((values[month] + values[month + 24])/2).toFixed();
         }
 
 
@@ -178,11 +179,11 @@ exports.cardsInfo = async (req, res) => {
         origin = 'Zara';
         discounts = avgDiscount.averageDiscount(arr); // calcula los promedios por mes una marca 2 años
         values = avgPrice.averagePriceMonthOrigin(arr); // promedio precio de la marca seleccionada por mes 2 años
-        precioPromedio = values[month];
+        precioPromedio = (values[month]).toFixed();
         newsCounts = avgNews.averageNewsMonthOrigin(arr); // promedio precio de la marca seleccionada por mes 2 años
-        nuevos = newsCounts[month];
+        nuevos = (newsCounts[month]).toFixed();
         discontinuedCounts = discontinued.averageDiscontinuedMonthOrigin(arr); // discontinued
-        discontinueds = discontinuedCounts[month];
+        discontinueds = (discontinuedCounts[month]).toFixed();
         skuCounts = avgSKU.averageSKUMonthOrigin(arr); // calcula el precio promedio por mes dos marcas 2 años
         sku = skuCounts[month];
         discount = discounts[month];
@@ -217,7 +218,7 @@ exports.cardsInfo = async (req, res) => {
         origin = 'Mango';
         discounts = avgDiscount.averageDiscount(arr); // calcula los promedios por mes
         values = avgPrice.averagePriceMonthOrigin(arr); // precio promedio por mes dos años una marca
-        precioPromedio = values[month];
+        precioPromedio = (values[month]).toFixed();
         newsCounts = avgNews.averageNewsMonthOrigin(arr); // nuevos de la marca seleccionada por mes 2 años
         nuevos = newsCounts[month];
         discontinuedCounts = discontinued.averageDiscontinuedMonthOrigin(arr); // discontinued
@@ -257,7 +258,6 @@ exports.cardsInfo = async (req, res) => {
     // respuesta para el frontend
     obj = {  
         sku,
-        totalProductos: arr.length,
         precioPromedio, // precio promedio de ambas marcas 
         nuevos,
         origin,
@@ -907,7 +907,11 @@ exports.tableSKUInfo = async (req, res) => {
 
         valuesPrice = avgPrice.averagePriceMonthGeneral(arr);
         // obtener precios promedio mes actual y anterior 
-        precioPromedio = (valuesPrice[month] + valuesPrice[month + 24]).toFixed(2);
+        if(valuesPrice[month] === 0 || valuesPrice[month + 24] === 0){
+            precioPromedio = ((valuesPrice[month] + valuesPrice[month + 24])).toFixed();
+        } else {
+            precioPromedio = ((valuesPrice[month] + valuesPrice[month + 24])/2).toFixed();
+        }
 
         valuesNuevos = avgNews.averageNewsMonthGeneral(arr);
         // obtener precios promedio mes actual y anterior 
@@ -916,7 +920,11 @@ exports.tableSKUInfo = async (req, res) => {
         valuesDiscount = avgDiscount.averageDiscountMonthGeneral(arr);
         // console.log(values);
         // obtener precios promedio mes actual y anterior 
-        descuentoPromedio = ((valuesDiscount[month] + valuesDiscount[month + 24])/2).toFixed(2);
+        if(valuesDiscount[month] === 0 || valuesDiscount[month + 24] === 0){
+            descuentoPromedio = ((valuesDiscount[month] + valuesDiscount[month + 24])).toFixed(2);
+        } else {
+            descuentoPromedio = ((valuesDiscount[month] + valuesDiscount[month + 24])/2).toFixed(2);
+        }
 
         // obtener tasa de tasaFrescura
         tasaFrescura = (nuevosPromedio/arr.length).toFixed(2);
@@ -934,7 +942,7 @@ exports.tableSKUInfo = async (req, res) => {
 
         valuesPrice = avgPrice.averagePriceMonthOrigin(arr);
         // obtener precios promedio mes actual y anterior 
-        precioPromedio = valuesPrice[month].toFixed(2);
+        precioPromedio = valuesPrice[month].toFixed();
 
         valuesNuevos = avgNews.averageNewsMonthOrigin(arr);
         // obtener descuentos promedio mes actual y anterior 
@@ -942,7 +950,7 @@ exports.tableSKUInfo = async (req, res) => {
 
         valuesDiscount = avgDiscount.averageDiscount(arr);
         // obtener precios promedio mes actual y anterior 
-        descuentoPromedio = valuesDiscount[month];
+        descuentoPromedio = valuesDiscount[month].toFixed(2);
 
         // obtener tasa de tasaFrescura
         tasaFrescura = (nuevosPromedio/arr.length).toFixed(2);
@@ -958,7 +966,7 @@ exports.tableSKUInfo = async (req, res) => {
 
         valuesPrice = avgPrice.averagePriceMonthOrigin(arr);
         // obtener precios promedio mes actual y anterior 
-        precioPromedio = valuesPrice[month].toFixed(2);
+        precioPromedio = valuesPrice[month].toFixed();
 
         valuesNuevos = avgNews.averageNewsMonthOrigin(arr);
         // obtener descuentos promedio mes actual y anterior 
@@ -966,7 +974,7 @@ exports.tableSKUInfo = async (req, res) => {
 
         valuesDiscount = avgDiscount.averageDiscount(arr);
         // obtener precios promedio mes actual y anterior 
-        descuentoPromedio = valuesDiscount[month];
+        descuentoPromedio = valuesDiscount[month].toFixed(2);
 
         // obtener tasa de tasaFrescura
         tasaFrescura = (nuevosPromedio/arr.length).toFixed(2);

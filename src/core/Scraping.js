@@ -4,7 +4,6 @@ const mangoScraping = require("./mangoCtl");
 const zaraScraping = require("./zaraCtl");
 const cron = require("node-cron");
 
-const scrapingPrueba = require('./zaraCtl');
 
 let Scraping = async (req, res) => {
   //  uso de fs
@@ -50,4 +49,8 @@ cron.schedule('00 17 * * *', async function() {
 });
 
 
+exports.webScraping = async (req, res) => {
+  await zaraScraping.getScrapingZara();
 
+  await mangoScraping.getScrapingMango();
+}
