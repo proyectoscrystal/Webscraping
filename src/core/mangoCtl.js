@@ -38,6 +38,9 @@ exports.getScrapingMango = async (req, res) => {
   await womanCategory.womanCategory();
   await womanDiscounts.womanDiscount();
   await womanNew.womanNew();
+  await babyBoyCategory.babyBoyCategory();
+  await babyBoyDiscount.babyBoyDiscount();
+  await babyBoyNew.babyBoyNew();
 }
 
 exports.getMenCategory = (req, res) => {
@@ -233,7 +236,8 @@ exports.getscraping = async (arreglo) => {
       
 
        // obtener el estado
-      let estado = saveImage.getState(tag, descuento);
+      let estado = '';
+      estado = saveImage.getState(tag, descuento);
       // console.log(estado);
 
       precio = parseInt(precio.substring(1).split(".").join(""), 10);

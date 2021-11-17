@@ -125,6 +125,7 @@ exports.subCategoria = [
   'ropa exterior',
   'ropa exterior',
   'ropa exterior',
+  'ropa exterior',
   'ropa interior',
   'ropa interior',
   'ropa interior', 
@@ -346,6 +347,8 @@ exports.subCategoria = [
 ]
 
 exports.tipoPrendaScraping = [
+  'vestidos | monos',
+  'vestidos y monos',
   'relojes',
   'blazers',
   'blazer',
@@ -417,6 +420,8 @@ exports.tipoPrendaScraping = [
 ]
 
 exports.tipoPrendaHomologada = [
+  'vestidos',
+  'vestidos y monos',
   'otros accesorios',
   'chaquetas',
   'chaquetas',
@@ -488,6 +493,8 @@ exports.tipoPrendaHomologada = [
 ]
 
 exports.tipoPrenda = [
+  'vestidos | monos',
+  'chaquetas',
   'conjuntos',
   'chaquetas y chalecos',
   'cardigans y jerseis',

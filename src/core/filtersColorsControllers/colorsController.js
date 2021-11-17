@@ -61,11 +61,14 @@ exports.colorGeneralCategory = async (req, res) => {
 
     porcentajesCategoriaColors = SKUGeneralCategory(arr);
     topTen = topTenTipoPrenda(arr);
+    
+    // const {coloresLetra, coloresRGB, tipoPrenda, totalSKU, porcentajeSKU } = topTen;
 
     
     // respuesta para el frontend
     obj = {  
-       porcentajesCategoriaColors
+       porcentajesCategoriaColors,
+       topTen
     }
 
 
@@ -815,24 +818,9 @@ let topTenTipoPrenda = arr => {
     // objeto que contiene los colores en letra y las cantidades sku, tipoPrenda
     datos = getDataTopTen(arr);
 
-    // colores en rgb 
-    // coloresRGB = coloresToRGB(colores.colores);
-
-    // console.log(coloresRGB);
-    // console.log(`color: ${colorExterior} - rgb: ${rgbExterior}`);
 
 
-
-    // construyendo el objeto respuesta
-    // obj.colores =  colores.colores;
-    // obj.coloresCount = colores.cantidades;
-    // obj.coloresRGB = coloresRGB;
-   
-    // fin calcular porcentajes sku de las categorias
-
-
-
-    return obj;
+    return datos;
 }
 
 // metodos para calcular topTenTipoPrenda
@@ -840,10 +828,11 @@ let topTenTipoPrenda = arr => {
 // metodos usados por el chart y info categoria
 let getDataTopTen = (arr) => {
     // metodo para saber el color que mas se repite para subcategoria
-    let arrayTipoPrendasData = [];
+    let arrayTipoPrendasData = []; // los tipo de prenda sin repetir
     let arrayColoresData = [];
-    let arrayCountsSKU = [];
-    let arrayCountsTipoPrendas = [];
+    let arrayColoresRGBData = [];
+    let arrayCountsSKU = []; //contiene el total de sku de cada tipo de prenda
+    let arrayPercentageSKUTipoPrendas = [];
 
      // ser crea un arreglo con todos los tipos de prenda y se estrae el total sku
      let totalSKU = 0;
@@ -854,72 +843,109 @@ let getDataTopTen = (arr) => {
     // se eliminan los repetidos de tipo de prenda
     arrayTipoPrendasData = [...new Set(arrayTipoPrendasData)];
 
-    // crear un array de objetos con color, numeroTallas, tipoPrenda
-    let arrayColorCantidadTipoPrenda = [];
-    
-    arrayColorCantidadTipoPrenda = arr.map((e,index) => {
-        
+     //se inicializa el array count con la cantidad de colores existente
+     arrayTipoPrendasData.forEach((element, index) => {
+        arrayCountsSKU[index] = 0;
+    })
+    // se llena el array countsSub con la cantidad de repeticiones por tipo de prenda *****
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arrayTipoPrendasData.length; j++) {
+            if (arr[i].tipoPrenda === arrayTipoPrendasData[j]) {
+                arrayCountsSKU[j] += arr[i].numeroTallas;
+            }
+        }
+    }
+
+    // obtener el porcentaje de sku de cada tipo de prenda
+    arrayCountsSKU.forEach((e, i) => {
+        arrayPercentageSKUTipoPrendas[i] = parseFloat(Math.abs( (((arrayCountsSKU[i]*100)/totalSKU)) ).toFixed(2));
+    });
+
+    // generar objeto de los 10 tipos de prenda mas representativos
+    // primero se crea objeto con tipoPrenda, totalSku, porcentaje 
+    let arrayCantidadTipoPrendaPorcentaje = [];
+    arrayCantidadTipoPrendaPorcentaje = arrayTipoPrendasData.map((e,index) => {        
         let obj = {};
-        obj.color = arr[index].color;
-        obj.cantidadSKU = arr[index].numeroTallas;
-        obj.tipoPrenda = arr[index].tipoPrenda;
+        obj.tipoPrenda = arrayTipoPrendasData[index];
+        obj.cantidadSKU = arrayCountsSKU[index];
+        obj.porcentajeSKU = arrayPercentageSKUTipoPrendas[index];
         // console.log(`color ${arrayarrayTipoPrendasData[index]} - cantidad ${arrayCountsSKU[index]}`);
         return obj;
     });
 
-    // obtener el total de sku
+    // determinar las cantidadesSKU, porcentajesSKU y tiposPrenda de mayor frecuencia 
+    arrayCantidadTipoPrendaPorcentaje = bubbleTopTen(arrayCantidadTipoPrendaPorcentaje);
     
-    arrayColorCantidadTipoPrenda.forEach((e, i) => {
-        
-    })
-
-    // sacar el porcentaje del top ten cada prenda
-    // mujer = parseFloat(Math.abs( (((mujer*100)/total)) ).toFixed(2));
-
-    // console.log(arrayColorCantidadTipoPrenda);
-
-
-   
-    //se inicializa el array count con la cantidad de colores existente
-    arrayTipoPrendasData.forEach((element, index) => {
-        arrayCountsSKU[index] = 0;
-    })
-    // se llena el array countsSub con la cantidad de repeticiones por color *****
-    for (let i = 0; i < arr.length; i++) {
-        for (let j = 0; j < arrayTipoPrendasData.length; j++) {
-            if (arr[i].color === arrayTipoPrendasData[j]) {
-                arrayCountsSKU[j] += 1;
-            }
-        }
-    }
-    // se crea en arreglo con objetos color-cantidad
-    let arrayColorCantidad = [];
-    arrayColorCantidad = arrayTipoPrendasData.map((e,index) => {
-        let obj = {};
-        obj.color = arrayTipoPrendasData[index];
-        // obj.cantidad = arrayCountsSub[index];
-        // console.log(`color ${arrayarrayTipoPrendasData[index]} - cantidad ${arrayCountsSub[index]}`);
-        return obj;
-    })
-    // determinar los colores y cantidadees de mayor frecuencia 
-    arrayColorCantidad = bubble(arrayColorCantidad);
-    // console.log(arrayColorCantidad);
-    // conformar los arreglos con los colores y sus cantidades
+    // for para extraer todos los colores
     let arrayColores = [];
-    let arrayCantidades = [];
-    arrayColorCantidad.forEach((e,index) => {
-        arrayColores.push(e.color);
-        arrayCantidades.push(e.cantidad);
-    });
-    // prueba para ver los colores y cantidades
-    // arrayCantidades.forEach((e,index) => {
-    //     console.log(`${arrayColores[index]} ${arrayCantidades[index]}`);
+    let arrayColoresCount = [];
+    for (let i = 0; i < arrayCantidadTipoPrendaPorcentaje.length; i++) {
+        let prendaActual = arrayCantidadTipoPrendaPorcentaje[i].tipoPrenda;
+        for (let j = 0; j < arr.length; j++) {
+            // se extraen todos los colores
+            if(arrayCantidadTipoPrendaPorcentaje[i].tipoPrenda === arr[j].tipoPrenda) {
+                arrayColores.push(arr[j].color);
+            }            
+        }
+        // se eliminan los repetidos 
+        arrayColores = [...new Set(arrayColores)];
+        // conteo de colores
+        arrayColores.forEach((e,i) => {
+            arrayColoresCount[i] = 0;
+        })
+        for (let k = 0; k < arrayColores.length; k++) {
 
-    // })
+            for (let l = 0; l <  arr.length; l++) {
+                if (prendaActual === arr[l].tipoPrenda && arrayColores[k] === arr[l].color) {
+                    arrayColoresCount[k] += 1;
+                }                
+            } 
+        }
+
+        // crear objeto con colores y cantidades
+        let arrayCantidadColor = [];
+        arrayCantidadColor = arrayColores.map((e,index) => {        
+            let obj = {};
+            obj.color = arrayColores[index];
+            obj.cantidad = arrayColoresCount[index];
+            // console.log(`color ${arrayarrayTipoPrendasData[index]} - cantidad ${arrayCountsSKU[index]}`);
+            return obj;
+        });
+
+
+        arrayColoresData.push(bubbleTopTenColor(arrayCantidadColor));
+    }
+    arrayColoresData = arrayColoresData.map((e) => {
+        return e[0];
+    })
+    // arreglo con los colores en letra
+    arrayColoresData = arrayColoresData.map((element) => {
+        // console.log(element[0].color)
+        return element.color;
+    });
+
+    arrayColoresRGBData = coloresToRGB(arrayColoresData);
+    arrayCountsSKU = [];
+    arrayTipoPrendasData = [];
+    arrayPercentageSKUTipoPrendas = [];
+
+    for (let i = 0; i < arrayCantidadTipoPrendaPorcentaje.length; i++) {
+        arrayCountsSKU.push(arrayCantidadTipoPrendaPorcentaje[i].cantidadSKU);
+        arrayTipoPrendasData.push(arrayCantidadTipoPrendaPorcentaje[i].tipoPrenda);
+        arrayPercentageSKUTipoPrendas.push(arrayCantidadTipoPrendaPorcentaje[i].porcentajeSKU);
+        
+    }
+
+
+
     
     let obj = {};
-    obj.colores = arrayColores;
-    obj.cantidades = arrayCantidades;
+    obj.coloresLetra = arrayColoresData;
+    obj.coloresRGB = arrayColoresRGBData;
+    obj.tipoPrenda = arrayTipoPrendasData;
+    obj.totalSKU = arrayCountsSKU;
+    obj.porcentajeSKU = arrayPercentageSKUTipoPrendas;
+    // obj.cantidades = arrayCantidades;
     
 
     // retorna el color que mas se presenta 
@@ -943,7 +969,39 @@ let coloresToRGB = color => {
       return RGB;
 }
 
-let bubble = (arr) => {
+let bubbleTopTen = (arr) => {
+    var len = arr.length;
+  
+    for (var i = 0; i < len ; i++) {
+      for(var j = 0 ; j < len - i - 1; j++){ // this was missing
+      if (arr[j].cantidadSKU < arr[j + 1].cantidadSKU) {
+        // swap
+        var temptp = arr[j].tipoPrenda;
+        var tempC = arr[j].porcentajeSKU;
+        var temp = arr[j].cantidadSKU;
+
+        arr[j].porcentajeSKU = arr[j+1].porcentajeSKU;
+        arr[j].tipoPrenda = arr[j+1].tipoPrenda;
+        arr[j].cantidadSKU = arr[j+1].cantidadSKU;
+
+        arr[j + 1].porcentajeSKU = tempC;
+        arr[j + 1].tipoPrenda = temptp;
+        arr[j + 1].cantidadSKU = temp;
+      }
+     }
+    }
+    if(arr.length > 10) {
+        let removed = arr.splice(10);
+    } else {
+        let removed = arr.splice(arr.length);
+    }
+
+
+
+    return arr;
+  }
+
+let bubbleTopTenColor = (arr) => {
     var len = arr.length;
   
     for (var i = 0; i < len ; i++) {
@@ -961,13 +1019,10 @@ let bubble = (arr) => {
       }
      }
     }
-    if(arr.length > 10) {
-        let removed = arr.splice(10);
+    if(arr.length > 2) {
+        let removed = arr.splice(1);
     } else {
         let removed = arr.splice(arr.length);
     }
-
-
-
     return arr;
   }
