@@ -260,11 +260,13 @@ exports.getState = (tag, descuento) => {
 exports.homologarTipoPrenda = (tipoPrenda) => {
   tipoPrenda = tipoPrenda.toLowerCase();
 
-  for (let i = 0; i < arrayTipoPrenda.tipoPrendaHomologada.length; i++) {
-    if(arrayTipoPrenda.tipoPrendaScraping[i] === tipoPrenda) {
-      tipoPrenda = arrayTipoPrenda.tipoPrendaHomologada[i];
-      return tipoPrenda;
+  // for (let i = 0; i < arrayTipoPrenda.tipoPrendaHomologada.length; i++) {
+    for (let j = 0; j < arrayTipoPrenda.tipoPrenda.length; j++) {
+      if(arrayTipoPrenda.tipoPrenda[j] === tipoPrenda) {
+        tipoPrenda = arrayTipoPrenda.tipoPrendaHomologada[j];
+        return tipoPrenda;
+      }      
     }
-  }
+  
   return tipoPrenda;    
 }

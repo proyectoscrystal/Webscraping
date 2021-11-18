@@ -724,8 +724,6 @@ exports.tableDiscountinuedInfo = async (req, res) => {
         differences = percentageDifferencesDiscontinued(ddzm[1], ddzm[0]);
     }
 
-
-    console.log(descontinuados)
     // respuesta para el frontend
     obj = { 
         arr,

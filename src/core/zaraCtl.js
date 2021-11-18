@@ -391,8 +391,7 @@ let quarter = () => {
 
 let setSubCategory = (tipoPrenda) => {
   for (let index = 0; index < verificarSub.subCategoria.length; index++) {
-    // console.log(`sub: ${verificarSub.subCategoria[index]} - tipo: ${verificarSub.tipoPrenda[index]}`);
-    if (tipoPrenda === verificarSub.tipoPrenda[index]) {
+    if (tipoPrenda === verificarSub.tipoPrendaHomologada[index]) {
       return  verificarSub.subCategoria[index]
     }      
   }
