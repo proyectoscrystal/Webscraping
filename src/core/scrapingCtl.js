@@ -604,7 +604,13 @@ exports.tablePriceInfo = async (req, res) => {
         valuesDiscount = avgDiscount.averageDiscountMonthGeneral(arr);
         // console.log(values);
         // obtener precios promedio mes actual y anterior 
-        descuentoPromedio = ((valuesDiscount[month] + valuesDiscount[month + 24])/2);
+        // descuentoPromedio = ((valuesDiscount[month] + valuesDiscount[month + 24])/2);
+
+        if(valuesDiscount[month] === 0 || valuesDiscount[month + 24] === 0){
+            descuentoPromedio = ((valuesDiscount[month] + valuesDiscount[month + 24])).toFixed(2);
+        } else {
+            descuentoPromedio = ((valuesDiscount[month] + valuesDiscount[month + 24])/2).toFixed(2);
+        }
         
         // determinar la diferencia porcentual en los precios
         differences = percentageDifferencePrice(precioPromedio, precioPromedioAnterior);
@@ -618,7 +624,7 @@ exports.tablePriceInfo = async (req, res) => {
 
         valuesDiscount = avgDiscount.averageDiscount(arr);
         // obtener precios promedio mes actual y anterior 
-        descuentoPromedio = valuesDiscount[month];
+        descuentoPromedio = valuesDiscount[month].toFixed(2);
         // determinar la diferencia porcentual en los precios
         differences = percentageDifferencePrice(precioPromedio, precioPromedioAnterior);
 
@@ -630,7 +636,7 @@ exports.tablePriceInfo = async (req, res) => {
 
         valuesDiscount = avgDiscount.averageDiscount(arr);
         // obtener precios promedio mes actual y anterior 
-        descuentoPromedio = valuesDiscount[month];
+        descuentoPromedio = valuesDiscount[month].toFixed(2);
         // determinar la diferencia porcentual en los precios
         differences = percentageDifferencePrice(precioPromedio, precioPromedioAnterior);
     }
@@ -719,6 +725,7 @@ exports.tableDiscountinuedInfo = async (req, res) => {
     }
 
 
+    console.log(descontinuados)
     // respuesta para el frontend
     obj = { 
         arr,
