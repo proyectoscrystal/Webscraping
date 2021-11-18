@@ -243,10 +243,12 @@ exports.colorMujerCategory = async (req, res) => {
 
 
     porcentajesCategoriaColors = SKUMujerCategory(arr);
+    topTen = topTenTipoPrenda(arr);
     
     // respuesta para el frontend
     obj = {  
-       porcentajesCategoriaColors
+       porcentajesCategoriaColors,
+       topTen
     }
 
 
@@ -423,10 +425,12 @@ exports.colorHombreCategory = async (req, res) => {
 
 
     porcentajesCategoriaColors = SKUHombreCategory(arr);
+    topTen = topTenTipoPrenda(arr);
     
     // respuesta para el frontend
     obj = {  
-       porcentajesCategoriaColors
+       porcentajesCategoriaColors,
+       topTen
     }
 
 
@@ -583,6 +587,7 @@ exports.colorKidsCategory = async (req, res) => {
     
     filtro = organizarQueryfilter1(filtro);
     console.log(filtro);
+    // filtro.categoria = "{$in: ['Niño','Niña']}"
 
     //mes actual
     let date = new Date();
@@ -603,10 +608,12 @@ exports.colorKidsCategory = async (req, res) => {
 
 
     porcentajesCategoriaColors = SKUKidsCategory(arr);
+    topTen = topTenTipoPrenda(arr);
     
     // respuesta para el frontend
     obj = {  
-       porcentajesCategoriaColors
+       porcentajesCategoriaColors,
+       topTen
     }
 
 
@@ -827,6 +834,15 @@ let topTenTipoPrenda = arr => {
 
 // metodos usados por el chart y info categoria
 let getDataTopTen = (arr) => {
+    // let arr = arrAux.filter((e,i) => {
+    //     if (e[i].categoria === 'Niño' || e[i].categoria === 'Niña') return e[i];
+    // });
+    // let arr = [];
+
+    // for (let i = 0; i < arrAux.length; i++) {
+    //     if (arrAux[i].categoria === 'Niño' || arrAux[i].categoria === 'Niña') return arr.push(arrAux[i]);        
+    // }
+    
     // metodo para saber el color que mas se repite para subcategoria
     let arrayTipoPrendasData = []; // los tipo de prenda sin repetir
     let arrayColoresData = [];
