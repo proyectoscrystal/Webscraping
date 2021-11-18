@@ -170,12 +170,12 @@ exports.saveImagesDB = async (data) => {
 
         // encuentra el documento y si el estado o alguna talla cambio , se almacena nuevamente
         if ( inBD !== null && inBD.estado !== imageData.estado) {
-          // console.log('estado ha cambiado se guarda documento'); 
+          console.log('estado ha cambiado se guarda documento'); 
             await Business.create(imageData, (err) => {
               if (err && err.code === 11000) {
                 // console.log("Imagen ya existe");
               } else {
-                // console.log("Imagen guardada en bd");
+                console.log("Imagen guardada en bd");
               }
             });
 

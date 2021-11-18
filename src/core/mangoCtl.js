@@ -41,6 +41,16 @@ exports.getScrapingMango = async (req, res) => {
   await babyBoyCategory.babyBoyCategory();
   await babyBoyDiscount.babyBoyDiscount();
   await babyBoyNew.babyBoyNew();
+  await boyCategory.boyCategory();
+  await boyDiscount.boyDiscount();
+  await boyNew.boyNew();
+  await girlCategory.girlCategory();
+  await girlDiscount.girlDiscount();
+  await girlNew.girlNew();
+  await babyGirlCategory.babyGirlCategory();
+  await babyGirlNew.babyGirlNew();
+  await miniKids.miniKids();
+  await miniKidsNew.miniKidsNew();
 }
 
 exports.getMenCategory = (req, res) => {
@@ -298,7 +308,7 @@ exports.getscraping = async (arreglo) => {
       arregloMaster.push(newObject);
 
 
-      saveImage.saveImagesDB(newObject);
+      await saveImage.saveImagesDB(newObject);
       
 
     }

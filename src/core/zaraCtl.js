@@ -166,6 +166,7 @@ exports.getMiniKids = (req, res) => {
 
 // metodo para procesar y guardar la info del scraping 
 exports.getscraping = async (arreglo) => {
+  console.log(arreglo.length);
   let arregloMaster = [];
 
   // se formatean los datos descuento y precio, para llevarlos a la db
@@ -340,7 +341,6 @@ exports.getscraping = async (arreglo) => {
     // sendImgsModel(newObject);
   }
 
-  console.log(arregloMaster.length);
   await descontinuados(arregloMaster);
 
 
