@@ -153,6 +153,7 @@ exports.getMiniKidsNew = (req, res) => {
 // catching data from scraping
 
 exports.getscraping = async (arreglo) => {
+  console.log(arreglo.length);
   let arregloMaster = [];
   
     // se formatean los datos descuento, tallas y precio, para llevarlos a la db
