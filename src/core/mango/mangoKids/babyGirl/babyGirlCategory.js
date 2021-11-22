@@ -49,7 +49,7 @@ exports.babyGirlCategory = async () => {
             await autoScroll(page);
 
             const enlaces = await page.evaluate(() => {
-                const elements = document.querySelectorAll("._10aZC > a");
+                const elements = document.querySelectorAll(".yoqzg > a");
 
                 const productos = [];
                 for (let element of elements) {

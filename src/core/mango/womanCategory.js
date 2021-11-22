@@ -44,7 +44,7 @@ exports.womanCategory = async () => {
       await autoScroll(page);
 
       const enlacesproductosmujer = await page.evaluate(() => {
-        const elements = document.querySelectorAll("._10aZC > a");
+        const elements = document.querySelectorAll(".yoqzg > a");
 
         const productosmujer = [];
         for (let element of elements) {

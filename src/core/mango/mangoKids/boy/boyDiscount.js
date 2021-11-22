@@ -21,7 +21,7 @@ exports.boyDiscount = async () => {
         //await page.waitForTimeout(5000);
 
         const enlaces = await page.evaluate(() => {
-            const elements = document.querySelectorAll('._10aZC > a');
+            const elements = document.querySelectorAll('.yoqzg > a');
 
             const links = [];
             for (let element of elements) {
