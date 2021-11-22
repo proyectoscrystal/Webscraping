@@ -21,6 +21,7 @@ const imageToBase64 = require("image-to-base64");
 const axios = require('axios');
 const https = require("https");
 const saveImage = require("./scrapingSaveDB");
+const Business = require("../domain/model/businessDao");
 
 // arreglo con las subcategorias
 const verificarSub = require("../utils/index");

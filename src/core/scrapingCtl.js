@@ -34,6 +34,32 @@ organizarQueryTest = (query) => {
     if(query.fechaInicio !== '' && query.fechaFin !== '') {
         obj.fecha_consulta = {$gte: query.fechaInicio, $lte: query.fechaFin}
     }
+
+
+    if(query.composicion !== undefined && (typeof query.composicion === 'string')) {
+        console.log(typeof query.composicion);
+            obj.material1 = query.composicion;
+            obj.material2 = query.composicion;
+            obj.material3 = query.composicion;
+            obj.material4 = query.composicion;
+            obj.material5 = query.composicion;
+            obj.material6 = query.composicion;
+            obj.material7 = query.composicion;
+
+    } else if (query.composicion !== undefined && query.composicion.length > 1) {
+        console.log("entro if 2");
+        
+        obj.material1 = {$in: query.composicion};
+        obj.material2 = {$in: query.composicion};
+        obj.material3 = {$in: query.composicion};
+        obj.material4 = {$in: query.composicion};
+        obj.material5 = {$in: query.composicion};
+        obj.material6 = {$in: query.composicion};
+        obj.material7 = {$in: query.composicion};
+        
+    }
+
+
     return obj;
 }
 
@@ -65,6 +91,7 @@ organizarQuery = (query) => {
 exports.cardsInfo = async (req, res) => {
     let filtro = req.query;
     filtro = organizarQueryTest(filtro);
+    console.log(filtro);
 
     //mes actual
     let date = new Date();
