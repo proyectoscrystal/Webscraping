@@ -42,7 +42,7 @@ exports.menCategory = async () => {
       await autoScroll(page);
 
       const enlacesproductoshombre = await page.evaluate(() => {
-        const elements = document.querySelectorAll("._10aZC > a");
+        const elements = document.querySelectorAll(".yoqzg > a");
 
         const productoshombre = [];
         for (let element of elements) {

@@ -4,7 +4,7 @@ const getScraping = require("../mangoCtl");
 const Url = require("../linksUrls");
 
 exports.menDiscount = async () => {
-  const browser = await puppeteer.launch({ headless: true }); //headless true/false para visualizar el navegador
+  const browser = await puppeteer.launch({ headless: false }); //headless true/false para visualizar el navegador
 
   const manDiscount = Url.manDiscountLinkMango;
 
@@ -21,7 +21,7 @@ exports.menDiscount = async () => {
     await autoScroll(page);
 
     const enlacesRebajas = await page.evaluate(() => {
-      const elements = document.querySelectorAll("._10aZC > a");
+      const elements = document.querySelectorAll(".yoqzg > a");
 
       const linksRebajas = [];
       for (let element of elements) {
@@ -35,6 +35,7 @@ exports.menDiscount = async () => {
 
     for (let enlaceRebajas of enlacesRebajas) {
       await page.goto(enlaceRebajas);
+      //await page.waitForTimeout(2000);
       await autoScroll(page);
 
       try {
@@ -85,11 +86,12 @@ exports.menDiscount = async () => {
         //console.log(error.message);
       }
     }
-    // console.log(rebajasHombre);
+    //console.log(rebajasHombre);
     await getScraping.getscraping(rebajasHombre);
     //====================HOMBRE REBAJAS===========================
   } catch (err) {
     console.error(`error en el link = ${manDiscount} - error = ${err.message}`);
+    //console.error(err);
   } finally {
     await browser.close();
   }
