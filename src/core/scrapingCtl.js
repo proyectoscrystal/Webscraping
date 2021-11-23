@@ -37,25 +37,10 @@ organizarQueryTest = (query) => {
 
 
     if(query.composicion !== undefined && (typeof query.composicion === 'string')) {
-        console.log(typeof query.composicion);
             obj.material1 = query.composicion;
-            obj.material2 = query.composicion;
-            obj.material3 = query.composicion;
-            obj.material4 = query.composicion;
-            obj.material5 = query.composicion;
-            obj.material6 = query.composicion;
-            obj.material7 = query.composicion;
 
     } else if (query.composicion !== undefined && query.composicion.length > 1) {
-        console.log("entro if 2");
-        
         obj.material1 = {$in: query.composicion};
-        obj.material2 = {$in: query.composicion};
-        obj.material3 = {$in: query.composicion};
-        obj.material4 = {$in: query.composicion};
-        obj.material5 = {$in: query.composicion};
-        obj.material6 = {$in: query.composicion};
-        obj.material7 = {$in: query.composicion};
         
     }
 
@@ -82,6 +67,52 @@ organizarQuery = (query) => {
     if(query.color !== undefined){
         obj.color = {$in: query.color};
     }
+    if(query.composicion !== undefined && (typeof query.composicion === 'string')) {
+        obj.material1 = query.composicion;
+    } else if (query.composicion !== undefined && query.composicion.length > 1) {
+        obj.material1 = {$in: query.composicion};
+        
+    }
+
+
+    return obj;
+}
+
+organizarQueryPrenda = (query) => {
+    let obj = {};
+
+
+    if(query.origin !== undefined) {
+        obj.origin = {$in: query.origin};
+    }
+    if(query.categoria !== undefined){
+        obj.categoria = {$in: query.categoria};
+    }
+    if(query.subCategoria !== undefined){
+        obj.subCategoria = {$in: query.subCategoria};
+    }
+    if(query.tipoPrenda !== undefined){
+        obj.tipoPrenda = {$in: query.tipoPrenda};
+    }
+    if(query.color !== undefined){
+        obj.color = {$in: query.color};
+    }
+
+    if(query.fechaInicio !== 'undefined' && query.fechaFin === 'undefined') {
+        let inicio = query.fechaInicio + "T00:00:00.000Z";
+        let fin = query.fechaInicio + "T23:59:59.999Z";
+        obj.fecha_consulta = {$gte: inicio, $lte: fin}
+    }else if(query.fechaInicio !== 'undefined' && query.fechaFin !== 'undefined') {
+        obj.fecha_consulta = {$gte: query.fechaInicio, $lte: query.fechaFin}
+        console.log(query.fechaInicio);
+    }
+
+    if(query.composicion !== undefined && (typeof query.composicion === 'string')) {
+        obj.material1 = query.composicion;
+    } else if (query.composicion !== undefined && query.composicion.length > 1) {
+        obj.material1 = {$in: query.composicion};
+        
+    }
 
 
     return obj;
@@ -96,6 +127,12 @@ exports.cardsInfo = async (req, res) => {
     //mes actual
     let date = new Date();
     let month = date.getMonth(); 
+    let lastMonth;
+    if(month === 0){
+        lastMonth = 11;
+    } else {
+        lastMonth = month - 1;
+    }
 
     // arreglo de mango y zara para los precios 
     let zm = [];
@@ -141,7 +178,7 @@ exports.cardsInfo = async (req, res) => {
     if (req.query.origin === undefined || Array.isArray(req.query.origin) ) {
 
         discounts = avgDiscount.averageDiscountMonthGeneral(arr); // calcula los promedios por mes x 2 años una marca
-        dzm[0] = discounts[month - 1];
+        dzm[0] = discounts[lastMonth];
         dzm[1] = discounts[month];
         dzm[0] += discounts[month + 23];
         dzm[1] += discounts[month + 24];
@@ -158,7 +195,7 @@ exports.cardsInfo = async (req, res) => {
 
 
         values = avgPrice.averagePriceMonthGeneral(arr); // calcula el precio promedio por mes dos marcas 2 años
-        zm[0] = values[month - 1];
+        zm[0] = values[lastMonth];
         zm[1] =  values[month]; // valor actual de zara 
         zm[0] += values[month + 23];
         zm[1] += values[month + 24]; // valor actual de mango
@@ -170,14 +207,14 @@ exports.cardsInfo = async (req, res) => {
 
 
         newsCounts = avgNews.averageNewsMonthGeneral(arr); // calcula el precio promedio por mes dos marcas 2 años
-        nzm[0] = newsCounts[month - 1];
+        nzm[0] = newsCounts[lastMonth];
         nzm[1] =  newsCounts[month]; // valor actual de zara 
         nzm[0] += newsCounts[month + 23];
         nzm[1] += newsCounts[month + 24]; // valor actual de mango
         nuevos = ((newsCounts[month] + newsCounts[month + 24]));
 
         discontinuedCounts = discontinued.averageDiscontinuedMonthGeneral(arr); // calcula el precio promedio por mes dos marcas 2 años
-        ddzm[0] = discontinuedCounts[month - 1];
+        ddzm[0] = discontinuedCounts[lastMonth];
         ddzm[1] =  discontinuedCounts[month]; // valor actual de zara 
         ddzm[0] += discontinuedCounts[month + 23];
         ddzm[1] += discontinuedCounts[month + 24]; // valor actual de mango
@@ -185,7 +222,7 @@ exports.cardsInfo = async (req, res) => {
 
 
         skuCounts = avgSKU.averageSKUMonthGeneral(arr); // calcula el precio promedio por mes dos marcas 2 años
-        skuzm[0] = skuCounts[month - 1];
+        skuzm[0] = skuCounts[lastMonth];
         skuzm[1] =  skuCounts[month]; // valor actual de zara 
         skuzm[0] += skuCounts[month + 23];
         skuzm[1] += skuCounts[month + 24]; // valor actual de mango
@@ -216,22 +253,22 @@ exports.cardsInfo = async (req, res) => {
         discount = discounts[month];
         
         // valores de diferencia de porcentajes
-        dzm[0] = discounts[month - 1];
+        dzm[0] = discounts[lastMonth];
         dzm[1] = discounts[month];
         
         // valores de diferencia de nuevos
-        ddzm[0] = discontinuedCounts[month - 1];
+        ddzm[0] = discontinuedCounts[lastMonth];
         ddzm[1] = discontinuedCounts[month];
         
         // valores de diferencia de nuevos
-        nzm[0] = newsCounts[month - 1];
+        nzm[0] = newsCounts[lastMonth];
         nzm[1] = newsCounts[month];
         
         // valores de diferencia de sku
-        skuzm[0] = skuCounts[month - 1];
+        skuzm[0] = skuCounts[lastMonth];
         skuzm[1] = skuCounts[month];
 
-        zm[0] = values[month - 1];
+        zm[0] = values[lastMonth];
         zm[1] =  values[month]; // valor actual 
 
         differencePrice =  percentageDifferencePrice(zm[1], zm[0]);
@@ -256,22 +293,22 @@ exports.cardsInfo = async (req, res) => {
         
 
         // valores de diferencia de porcentajes
-        dzm[0] = discounts[month - 1];
+        dzm[0] = discounts[lastMonth];
         dzm[1] = discounts[month];
 
         // valores de diferencia de nuevos
-        nzm[0] = newsCounts[month - 1];
+        nzm[0] = newsCounts[lastMonth];
         nzm[1] = newsCounts[month];
 
         // valores de diferencia de nuevos
-        ddzm[0] = discontinuedCounts[month - 1];
+        ddzm[0] = discontinuedCounts[lastMonth];
         ddzm[1] = discontinuedCounts[month];
 
         // valores de diferencia de nuevos
-        skuzm[0] = skuCounts[month - 1];
+        skuzm[0] = skuCounts[lastMonth];
         skuzm[1] = skuCounts[month];
 
-        zm[0] = values[month - 1];
+        zm[0] = values[lastMonth];
         zm[1] =  values[month]; // valor actual de zara 
 
         differencePrice =  percentageDifferencePrice(zm[1], zm[0]);
@@ -614,6 +651,12 @@ exports.tablePriceInfo = async (req, res) => {
     //mes actual
     let date = new Date();
     let month = date.getMonth(); 
+    let lastMonth;
+    if(month === 0){
+        lastMonth = 11;
+    } else {
+        lastMonth = month - 1;
+    }
 
     try {
         arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "tallasAgotadas":1, "tipoPrenda": 1, "tag": 1});
@@ -626,7 +669,7 @@ exports.tablePriceInfo = async (req, res) => {
         values = avgPrice.averagePriceMonthGeneral(arr);
         // obtener precios promedio mes actual y anterior 
         precioPromedio = (values[month] + values[month + 24]);
-        precioPromedioAnterior = (values[month - 1] + values[month + 23]);
+        precioPromedioAnterior = (values[lastMonth] + values[month + 23]);
 
         valuesDiscount = avgDiscount.averageDiscountMonthGeneral(arr);
         // console.log(values);
@@ -647,7 +690,7 @@ exports.tablePriceInfo = async (req, res) => {
         values = avgPrice.averagePriceMonthOrigin(arr);
         // obtener precios promedio mes actual y anterior 
         precioPromedio = values[month];
-        precioPromedioAnterior = values[month - 1];
+        precioPromedioAnterior = values[lastMonth];
 
         valuesDiscount = avgDiscount.averageDiscount(arr);
         // obtener precios promedio mes actual y anterior 
@@ -659,7 +702,7 @@ exports.tablePriceInfo = async (req, res) => {
         values = avgPrice.averagePriceMonthOrigin(arr);
         // obtener precios promedio mes actual y anterior 
         precioPromedio = values[month];
-        precioPromedioAnterior = values[month - 1];
+        precioPromedioAnterior = values[lastMonth];
 
         valuesDiscount = avgDiscount.averageDiscount(arr);
         // obtener precios promedio mes actual y anterior 
@@ -703,6 +746,12 @@ exports.tableDiscountinuedInfo = async (req, res) => {
     //mes actual
     let date = new Date();
     let month = date.getMonth(); 
+    let lastMonth;
+    if(month === 0){
+        lastMonth = 11;
+    } else {
+        lastMonth = month - 1;
+    }
 
     try {
         arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
@@ -715,7 +764,7 @@ exports.tableDiscountinuedInfo = async (req, res) => {
     if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
         discontinuedCounts = discontinued.averageDiscontinuedMonthGeneral(arr);
 
-        ddzm[0] = discontinuedCounts[month - 1];
+        ddzm[0] = discontinuedCounts[lastMonth];
         ddzm[1] =  discontinuedCounts[month]; // valor actual de zara 
         ddzm[0] += discontinuedCounts[month + 23];
         ddzm[1] += discontinuedCounts[month + 24]; // valor actual de mango
@@ -734,7 +783,7 @@ exports.tableDiscountinuedInfo = async (req, res) => {
         descontinuados = discontinuedCounts[month];
 
         // valores de diferencia de descontinuados
-        ddzm[0] = discontinuedCounts[month - 1];
+        ddzm[0] = discontinuedCounts[lastMonth];
         ddzm[1] = discontinuedCounts[month];
 
         // determinar la diferencia porcentual en los descuentos
@@ -745,7 +794,7 @@ exports.tableDiscountinuedInfo = async (req, res) => {
         
         descontinuados = discontinuedCounts[month];
         // obtener descuentos promedio mes actual y anterior 
-        ddzm[0] = discontinuedCounts[month - 1];
+        ddzm[0] = discontinuedCounts[lastMonth];
         ddzm[1] = discontinuedCounts[month];;
         // determinar la diferencia porcentual en los descuentos
         differences = percentageDifferencesDiscontinued(ddzm[1], ddzm[0]);
@@ -780,6 +829,12 @@ exports.tableDiscountInfo = async (req, res) => {
     //mes actual
     let date = new Date();
     let month = date.getMonth(); 
+    let lastMonth;
+    if(month === 0){
+        lastMonth = 11;
+    } else {
+        lastMonth = month - 1;
+    }
 
     try {
         arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
@@ -796,10 +851,10 @@ exports.tableDiscountInfo = async (req, res) => {
 
         if(values[month] === 0 || values[month + 24] === 0){
             descuentoPromedio = ((values[month] + values[month + 24])).toFixed(2);
-            descuentoPromedioAnterior = ((values[month - 1] + values[month + 23])).toFixed(2);
+            descuentoPromedioAnterior = ((values[lastMonth] + values[month + 23])).toFixed(2);
         } else {
             descuentoPromedio = ((values[month] + values[month + 24])/2).toFixed(2);
-            descuentoPromedioAnterior = ((values[month - 1] + values[month + 23])/2).toFixed(2);
+            descuentoPromedioAnterior = ((values[lastMonth] + values[month + 23])/2).toFixed(2);
         }
         
         // determinar la diferencia porcentual en los precios
@@ -811,7 +866,7 @@ exports.tableDiscountInfo = async (req, res) => {
         values = avgDiscount.averageDiscount(arr);
         // obtener precios promedio mes actual y anterior 
         descuentoPromedio = values[month];
-        descuentoPromedioAnterior = values[month - 1];
+        descuentoPromedioAnterior = values[lastMonth];
         // determinar la diferencia porcentual en los descuentos
         differences = percentageDifferencesDiscount(descuentoPromedio, descuentoPromedioAnterior);
 
@@ -820,7 +875,7 @@ exports.tableDiscountInfo = async (req, res) => {
         // console.log(values);
         // obtener descuentos promedio mes actual y anterior 
         descuentoPromedio = values[month];
-        descuentoPromedioAnterior = values[month - 1];
+        descuentoPromedioAnterior = values[lastMonth];
         // determinar la diferencia porcentual en los descuentos
         differences = percentageDifferencesDiscount(descuentoPromedio, descuentoPromedioAnterior);
     }
@@ -854,6 +909,12 @@ exports.tableNewsInfo = async (req, res) => {
     //mes actual
     let date = new Date();
     let month = date.getMonth(); 
+    let lastMonth;
+    if(month === 0){
+        lastMonth = 11;
+    } else {
+        lastMonth = month - 1;
+    }
 
     try {
         arr = await Business.find(filtro,{"precio":1,"origin":1, "descuento": 1,"categoria":1,"subCategoria": 1,"createdAt":1, "tipoPrenda": 1, "tag": 1});
@@ -866,7 +927,7 @@ exports.tableNewsInfo = async (req, res) => {
         values = avgNews.averageNewsMonthGeneral(arr);
         // obtener precios promedio mes actual y anterior 
         nuevosPromedio = (values[month] + values[month + 24]);
-        nuevosPromedioAnterior = (values[month - 1] + values[month + 23]);
+        nuevosPromedioAnterior = (values[lastMonth] + values[month + 23]);
         // determinar la diferencia porcentual en los precios
         differences = percentageDifferencesnews(nuevosPromedio, nuevosPromedioAnterior);
 
@@ -876,7 +937,7 @@ exports.tableNewsInfo = async (req, res) => {
         values = avgNews.averageNewsMonthOrigin(arr);
         // obtener precios promedio mes actual y anterior 
         nuevosPromedio = values[month];
-        nuevosPromedioAnterior = values[month - 1];
+        nuevosPromedioAnterior = values[lastMonth];
         // determinar la diferencia porcentual en los nuevoss
         differences = percentageDifferencesnews(nuevosPromedio, nuevosPromedioAnterior);
 
@@ -884,7 +945,7 @@ exports.tableNewsInfo = async (req, res) => {
         values = avgNews.averageNewsMonthOrigin(arr);
         // obtener descuentos promedio mes actual y anterior 
         nuevosPromedio = values[month];
-        nuevosPromedioAnterior = values[month - 1];
+        nuevosPromedioAnterior = values[lastMonth];
         // determinar la diferencia porcentual en los nuevoss
         differences = percentageDifferencesnews(nuevosPromedio, nuevosPromedioAnterior);
     }
@@ -923,6 +984,12 @@ exports.tableSKUInfo = async (req, res) => {
     //mes actual
     let date = new Date();
     let month = date.getMonth(); 
+    let lastMonth;
+    if(month === 0){
+        lastMonth = 11;
+    } else {
+        lastMonth = month - 1;
+    }
 
     try {
         arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
@@ -935,7 +1002,7 @@ exports.tableSKUInfo = async (req, res) => {
         values = avgSKU.averageSKUMonthGeneral(arr);
         // obtener precios promedio mes actual y anterior 
         SKU = (values[month] + values[month + 24]);
-        SKUAnterior = (values[month - 1] + values[month + 23]);
+        SKUAnterior = (values[lastMonth] + values[month + 23]);
 
         valuesPrice = avgPrice.averagePriceMonthGeneral(arr);
         // obtener precios promedio mes actual y anterior 
@@ -970,7 +1037,7 @@ exports.tableSKUInfo = async (req, res) => {
         values = avgSKU.averageSKUMonthOrigin(arr);
         // obtener precios promedio mes actual y anterior 
         SKU = values[month];
-        SKUAnterior = values[month - 1];
+        SKUAnterior = values[lastMonth];
 
         valuesPrice = avgPrice.averagePriceMonthOrigin(arr);
         // obtener precios promedio mes actual y anterior 
@@ -994,7 +1061,7 @@ exports.tableSKUInfo = async (req, res) => {
         values = avgSKU.averageSKUMonthOrigin(arr);
         // obtener precios promedio mes actual y anterior 
         SKU = values[month];
-        SKUAnterior = values[month - 1];
+        SKUAnterior = values[lastMonth];
 
         valuesPrice = avgPrice.averagePriceMonthOrigin(arr);
         // obtener precios promedio mes actual y anterior 
@@ -1035,7 +1102,7 @@ exports.prendasInfo = async (req, res) => {
     let filtro = req.query;
     
     // TODO: organizar desde el .ts para enviar fecha y cambiar a organizarQueryTest
-    filtro = organizarQuery(filtro);
+    filtro = organizarQueryPrenda(filtro);
 
     //mes actual
     let date = new Date();

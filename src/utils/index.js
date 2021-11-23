@@ -501,7 +501,7 @@ exports.tipoPrenda = [
   'gorros',
   'mascarillas',
   'parkas',
-  ' gorras y gorros',
+  'gorras y gorros',
   'bisuteria',
   'guantes',
   'tirantes',
