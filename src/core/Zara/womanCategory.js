@@ -48,7 +48,7 @@ exports.womanCategory = async () => {
 
       //Se obtienen los enlaces de los productos
       const enlacesproductosmujer = await page.evaluate(() => {
-        const elements = document.querySelectorAll('#main > article > .product-groups > section > ul > li > ul > li:nth-child(1) > div > div > a');
+        const elements = document.querySelectorAll('li > ul > li > div > div > a');
 
         const productosmujer = [];
         for (let element of elements) {

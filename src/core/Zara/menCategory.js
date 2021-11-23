@@ -13,7 +13,7 @@ exports.categoriaHombre = async () => {
 
     const prendasHombre = []; //Se crea un array para guardar los productos extraidos
 
-    // let count = 1;
+    //let count = 5;
 
     //====================CATEGORIAS HOMBRE==========================
     await page.goto(menCategory, { waitUntil: "networkidle2" });
@@ -48,7 +48,7 @@ exports.categoriaHombre = async () => {
 
       //Se obtienen los enlaces de los productos
       const enlacesproductoshombre = await page.evaluate(() => {
-        const elements = document.querySelectorAll("#main > article > div > section > ul > li > ul > li > div > div > div > a");
+        const elements = document.querySelectorAll("li > ul > li > div > div > a");
 
         const productoshombre = [];
         for (let element of elements) {
@@ -64,6 +64,7 @@ exports.categoriaHombre = async () => {
       for (let enlaceproductohombre of enlacesproductoshombre) {
         try {
           await page.goto(enlaceproductohombre);
+          await page.waitForTimeout(2000);
           await autoScroll(page);
 
           //Se evalua cada enlace del cual se extrae el categoria, nombre, precio y caracteristicas
@@ -71,7 +72,7 @@ exports.categoriaHombre = async () => {
             const currentURL = window.location.href;
 
             var tallas = Array.from(document.querySelectorAll('.product-detail-size-selector > div > ul > li > div > div > span'), xTallas => xTallas.textContent);
-            var tallaDisabled = Array.from(document.querySelectorAll('.product-detail-size-selector__size-list-item[disabled]'), TallasDisabled => TallasDisabled.textContent);
+            var tallaDisabled = Array.from(document.querySelectorAll('.product-detail-size-selector__size-list-item--is-disabled'), TallasDisabled => TallasDisabled.textContent);
             if(tallaDisabled !== null) {
               tallaDisabledVal = tallaDisabled;
             }
@@ -99,20 +100,20 @@ exports.categoriaHombre = async () => {
             return prenda;
           });
 
-          // count--;
+          //count--;
           prendasHombre.push(prendahombre); //Se guardan las prendas en la constante prendasHombre
-          // if (count === 0) {
-          //   break;
-          // }
+          //if (count === 0) {
+            //break;
+          //}
 
         } catch (error) {
-          //console.error(error.message);
+          //console.error(error);
         }
       }
 
       prendasHombre.forEach((dato) => {dato.tipoPrenda = nombrecategoria});
 
-      // console.log(prendasHombre);
+      console.log(prendasHombre);
       await getScraping.getscraping(prendasHombre);
     }
 
@@ -120,6 +121,7 @@ exports.categoriaHombre = async () => {
 
   } catch (err) {
     console.error(`error en el link = ${menCategory} - error = ${err.message}`);
+    //console.error(err);
   } finally {
     await browser.close();
   }
