@@ -26,7 +26,7 @@ exports.menCategory = async () => {
       }
       return linkshombre;
     });
-    //console.log(enlaceshombre);
+    console.log(enlaceshombre);
 
     for (let enlacehombre of enlaceshombre) {
       try {
@@ -52,11 +52,12 @@ exports.menCategory = async () => {
       });
       //console.log(enlacesproductoshombre);
 
-      // let count = 5;
+      //let count = 5;
 
       for (let enlaceproductohombre of enlacesproductoshombre) {
         try {
           await page.goto(enlaceproductohombre);
+          await page.waitForTimeout(2000);
           await autoScroll(page);
         
           const prendaHombre = await page.evaluate(() => {
@@ -94,21 +95,17 @@ exports.menCategory = async () => {
 
             return prenda;
           });
-          // count--;
+          //count--;
           prendasHombre.push(prendaHombre);
-          // if (count === 0) {
-          //   break;
-          // }
+          //if (count === 0) {
+            //break;
+          //}
         } catch (error) {
           //console.log(error.message);
         }
       }
-      // console.log(prendasHombre);
+      //console.log(prendasHombre);
       await getScraping.getscraping(prendasHombre);
-
-      // if (count === 0) {
-      //   break;
-      // }
     }
 
     //====================CATEGORIAS HOMBRE===========================

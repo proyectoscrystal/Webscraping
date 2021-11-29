@@ -4,7 +4,7 @@ const getScraping = require('../mangoCtl');
 const Url = require("../linksUrls");
 
 exports.womanDiscount = async () => {
-    const browser = await puppeteer.launch({ headless: false }); //headless true/false para visualizar el navegador
+    const browser = await puppeteer.launch({ headless: true }); //headless true/false para visualizar el navegador
 
     const womanDiscount = Url.womanDiscountLinkMango;
     
@@ -31,6 +31,7 @@ exports.womanDiscount = async () => {
 
         for (let enlaceRebajas of enlacesRebajas) {
             await page.goto(enlaceRebajas);
+            await page.waitForTimeout(2000);
             await autoScroll(page);
 
             try {

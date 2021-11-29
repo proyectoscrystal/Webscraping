@@ -57,6 +57,7 @@ exports.womanCategory = async () => {
 
       for (let enlaceproductomujer of enlacesproductosmujer) {
         await page.goto(enlaceproductomujer);
+        await page.waitForTimeout(2000);
         await autoScroll(page);
 
         try {

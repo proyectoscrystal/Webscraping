@@ -35,7 +35,7 @@ exports.manDiscount = async () => {
     for (let enlaceRebajasH of enlacesRebajasH) {
       try {
         await page.goto(enlaceRebajasH, { waitUntil: "networkidle2" });
-        //await page.waitForTimeout(2000);
+        await page.waitForTimeout(2000);
         await autoScroll(page);
 
         const prendasRebajaHombre = await page.evaluate(() => {  
