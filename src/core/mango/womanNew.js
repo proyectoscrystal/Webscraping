@@ -31,6 +31,7 @@ exports.womanNew = async () => {
 
         for (let enlaceNuevo of enlacesNuevo) {
             await page.goto(enlaceNuevo);
+            await page.waitForTimeout(2000);
             await autoScroll(page);
 
             try {

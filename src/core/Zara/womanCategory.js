@@ -13,7 +13,7 @@ exports.womanCategory = async () => {
 
     const prendasMujer = []; //Se crea un array para guardar los productos extraidos
 
-    // let count = 5;
+    //let count = 5;
 
     //====================CATEGORIAS MUJER===========================
     await page.goto(womanCategory, { waitUntil: "networkidle2" });
@@ -64,6 +64,7 @@ exports.womanCategory = async () => {
       for (let enlaceproductomujer of enlacesproductosmujer) {
         try {
           await page.goto(enlaceproductomujer);
+          await page.waitForTimeout(2000);
           await autoScroll(page);
 
           //Se evalua cada enlace del cual se extrae el categoria, nombre, precio y caracteristicas
@@ -99,11 +100,11 @@ exports.womanCategory = async () => {
             return prenda;
           });
 
-          // count--;
+          count--;
           prendasMujer.push(prendamujer); //Se guardan las prendas en la constante prendasMujer
-          // if(count === 0){                
-          //   break;
-          // }
+          if(count === 0){                
+            break;
+          }
 
         } catch (error) {
           //console.error(error.message);

@@ -19,7 +19,7 @@ exports.descuentoMujer = async () => {
 
     const enlacesRebajasM = await page.evaluate(() => {
       const elements = document.querySelectorAll(
-        "#main > article > div > section > ul > li > ul > li > div > div > div > a"
+        "li > ul > li > div > div > a"
       );
 
       const links = [];
@@ -30,12 +30,13 @@ exports.descuentoMujer = async () => {
     });
 
     const rebajasMujer = [];
-    // let count = 5;
+    //let count = 5;
 
     for (let enlaceRebajasM of enlacesRebajasM) {
       try { // se usa el try, catch para 
           
         await page.goto(enlaceRebajasM, { waitUntil: "networkidle2" });
+        await page.waitForTimeout(2000);
         await autoScroll(page);
 
         const prendasRebajaMujer = await page.evaluate(() => {
@@ -81,16 +82,17 @@ exports.descuentoMujer = async () => {
 
           return prenda;
         });
-        // count--;
+        //count--;
         rebajasMujer.push(prendasRebajaMujer);
-        // if(count === 0){
-        //     break;
-        // }
+        //if(count === 0){
+          //break;
+        //}
       } catch (error) {
         //console.log(error.message);
       }
     } 
 
+    //console.log(rebajasMujer)
     await getscraping.getscraping(rebajasMujer);
 
     //====================PRENDAS EN DESCUENTO - MUJER==========================

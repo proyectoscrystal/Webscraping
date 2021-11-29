@@ -19,7 +19,7 @@ exports.newMan = async () => {
 
     const enlacesNuevoH = await page.evaluate(() => {
       const elements = document.querySelectorAll(
-        "#main > article > div > section > ul > li > ul > li > div > div > div > a"
+        "li > ul > li > div > div > a"
       );
 
       const links = [];
@@ -35,6 +35,7 @@ exports.newMan = async () => {
     for (let enlaceNuevoH of enlacesNuevoH) {
       try {
         await page.goto(enlaceNuevoH);
+        await page.waitForTimeout(2000);
         await autoScroll(page); //Función que hace el scroll en la página
 
         const prendasNuevoHombre = await page.evaluate(() => {
