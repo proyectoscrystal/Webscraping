@@ -49,10 +49,9 @@ organizarQueryTest = (query) => {
 }
 
 // info cards response
-exports.cardsInfo = async (req, res) => {
+exports.cardsInfoWeek = async (req, res) => {
     let filtro = req.query;
     filtro = organizarQueryTest(filtro);
-    console.log(filtro);
 
     //mes actual
     let date = new Date();

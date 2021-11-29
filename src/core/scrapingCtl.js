@@ -122,7 +122,6 @@ organizarQueryPrenda = (query) => {
 exports.cardsInfo = async (req, res) => {
     let filtro = req.query;
     filtro = organizarQueryTest(filtro);
-    console.log(filtro);
 
     //mes actual
     let date = new Date();
