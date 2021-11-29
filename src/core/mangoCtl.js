@@ -437,6 +437,7 @@ exports.getscraping = async (arreglo) => {
       subCategoria: elementDB.subCategoria,
       color: elementDB.color,
       talla: elementDB.talla,
+      categoria: elementDB.categoria,
       tallasAgotadas: elementDB.tallasAgotadas,
       material1: elementDB.material1,
       material2: elementDB.material2,

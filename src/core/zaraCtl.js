@@ -468,6 +468,7 @@ let compareDBToScraper = async (elementDB, dataScraper) => {
     base64: elementDB.base64,
     action: elementDB.action,
     user: elementDB.user,
+    categoria: elementDB.categoria,
     numeroTallas: elementDB.numeroTallas,
     estado: elementDB.estado,
     tipoPrenda: elementDB.tipoPrenda,

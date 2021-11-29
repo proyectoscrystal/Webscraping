@@ -122,6 +122,7 @@ organizarQueryPrenda = (query) => {
 exports.cardsInfo = async (req, res) => {
     let filtro = req.query;
     filtro = organizarQueryTest(filtro);
+    
 
     //mes actual
     let date = new Date();
@@ -346,9 +347,9 @@ exports.cardsInfo = async (req, res) => {
 // precio promedio por los ultimos 2 años y descuento promedio (charts)
 exports.averagePrice = async (req, res) => {
     let filtro = req.query;
-    console.log(filtro);
     
     filtro = organizarQuery(filtro);
+    filtro.discontinued = false;
     let arr;
     let obj;
     let values = [];
@@ -395,6 +396,7 @@ exports.averageDiscount = async (req, res) => {
     
     filtro = organizarQuery(filtro);
     filtro.descuento = {$ne: null};
+    filtro.discontinued = false;
     // console.log(filtro);
     
     let arr;
@@ -493,6 +495,7 @@ exports.averageNews = async (req, res) => {
     
     filtro = organizarQuery(filtro);
     filtro.estado = {$eq: "nuevo"};
+    filtro.discontinued = false;
     let arr;
     let obj;
     let values = [];
@@ -547,6 +550,7 @@ exports.averageSKU = async (req, res) => {
     let filtro = req.query;
     
     filtro = organizarQuery(filtro);
+    filtro.discontinued = false;
     let arr;
     let obj;
     let values = [];
@@ -592,6 +596,7 @@ exports.tableCategoryInfo = async (req, res) => {
     let filtro = req.query;
     
     filtro = organizarQuery(filtro);
+    filtro.discontinued = false;
     let arr;
     let obj;
     let values = [];
@@ -667,8 +672,16 @@ exports.tablePriceInfo = async (req, res) => {
     if (req.query.origin === undefined || Array.isArray(req.query.origin) ){
         values = avgPrice.averagePriceMonthGeneral(arr);
         // obtener precios promedio mes actual y anterior 
-        precioPromedio = (values[month] + values[month + 24]);
-        precioPromedioAnterior = (values[lastMonth] + values[month + 23]);
+        // precioPromedio = (values[month] + values[month + 24]);
+        // precioPromedioAnterior = (values[lastMonth] + values[month + 23]);
+
+        if(values[month] === 0 || values[month + 24] === 0){
+            precioPromedio = ((values[month] + values[month + 24]));
+            precioPromedioAnterior = (values[lastMonth] + values[month + 23]);
+        } else {
+            precioPromedio = ((values[month] + values[month + 24])/2);
+            precioPromedioAnterior = ((values[lastMonth] + values[month + 23])/2);
+        }
 
         valuesDiscount = avgDiscount.averageDiscountMonthGeneral(arr);
         // console.log(values);
@@ -816,6 +829,7 @@ exports.tableDiscountInfo = async (req, res) => {
     
     filtro = organizarQuery(filtro);
     filtro.descuento = {$ne: null};
+    
 
     let arr;
     let obj;
