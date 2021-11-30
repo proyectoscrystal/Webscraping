@@ -2,8 +2,26 @@ const puppeteer = require("puppeteer");
 const autoScroll = require("../autoScrollFunction");
 const getScraping = require("../mangoCtl");
 const Url = require("../linksUrls");
+const fs = require("fs");
 
 exports.menCategory = async () => {
+  var fecha = new Date();
+  var fechaObj = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "numeric",
+    second: "numeric",
+    timeZoneName: "long"
+  };
+  let horaInicioMango = fecha.toLocaleDateString("es", fechaObj);
+  fs.writeFile("horaInicioMango.txt", horaInicioMango, (err) => {
+    if (err) throw err;
+    console.log("Hora guardada!");
+  });
+
   const browser = await puppeteer.launch({ headless: true }); //headless true/false para visualizar el navegador
 
   const menCategory = Url.menCategoryLinkMango;
@@ -59,7 +77,7 @@ exports.menCategory = async () => {
           await page.goto(enlaceproductohombre);
           await page.waitForTimeout(2000);
           await autoScroll(page);
-        
+
           const prendaHombre = await page.evaluate(() => {
             const currentURL = window.location.href;
             const http = 'https:';
@@ -98,7 +116,7 @@ exports.menCategory = async () => {
           //count--;
           prendasHombre.push(prendaHombre);
           //if (count === 0) {
-            //break;
+          //break;
           //}
         } catch (error) {
           //console.log(error.message);
