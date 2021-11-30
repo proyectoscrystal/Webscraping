@@ -40,9 +40,7 @@ exports.colorGeneralCategory = async (req, res) => {
     let filtro = req.query;
     // console.log(filtro);
     filtro = organizarQueryfilter1(filtro);
-
-
-
+    filtro.discontinued = false;
 
     let arr;
     let obj;
@@ -223,6 +221,7 @@ exports.colorMujerCategory = async (req, res) => {
     let filtro = req.query;
     
     filtro = organizarQueryfilter1(filtro);
+    filtro.discontinued = false;
 
     //mes actual
     let date = new Date();
@@ -404,7 +403,7 @@ exports.colorHombreCategory = async (req, res) => {
     let filtro = req.query;
     
     filtro = organizarQueryfilter1(filtro);
-    console.log(filtro);
+    filtro.discontinued = false;
 
     //mes actual
     let date = new Date();
@@ -586,7 +585,7 @@ exports.colorKidsCategory = async (req, res) => {
     let filtro = req.query;
     
     filtro = organizarQueryfilter1(filtro);
-    console.log(filtro);
+    filtro.discontinued = false;
     // filtro.categoria = "{$in: ['Niño','Niña']}"
 
     //mes actual

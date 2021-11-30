@@ -672,8 +672,6 @@ exports.tablePriceInfo = async (req, res) => {
     if (req.query.origin === undefined || Array.isArray(req.query.origin) ){
         values = avgPrice.averagePriceMonthGeneral(arr);
         // obtener precios promedio mes actual y anterior 
-        // precioPromedio = (values[month] + values[month + 24]);
-        // precioPromedioAnterior = (values[lastMonth] + values[month + 23]);
 
         if(values[month] === 0 || values[month + 24] === 0){
             precioPromedio = ((values[month] + values[month + 24]));
@@ -829,6 +827,7 @@ exports.tableDiscountInfo = async (req, res) => {
     
     filtro = organizarQuery(filtro);
     filtro.descuento = {$ne: null};
+    filtro.discontinued = false;
     
 
     let arr;
@@ -910,6 +909,7 @@ exports.tableNewsInfo = async (req, res) => {
     
     filtro = organizarQuery(filtro);
     filtro.estado = {$eq: "nuevo"};
+    filtro.discontinued = false;
     
     let arr;
     let obj;
@@ -979,6 +979,7 @@ exports.tableSKUInfo = async (req, res) => {
     let filtro = req.query;
     
     filtro = organizarQuery(filtro);
+    filtro.discontinued = false;
     let arr;
     let obj;
     let values = [];
@@ -1116,6 +1117,7 @@ exports.prendasInfo = async (req, res) => {
     
     // TODO: organizar desde el .ts para enviar fecha y cambiar a organizarQueryTest
     filtro = organizarQueryPrenda(filtro);
+    filtro.discontinued = false;
 
     //mes actual
     let date = new Date();
