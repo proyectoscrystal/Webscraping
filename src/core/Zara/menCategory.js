@@ -2,12 +2,31 @@ const puppeteer = require("puppeteer");
 const autoScroll = require("../autoScrollFunction");
 const getScraping = require("../zaraCtl");
 const Url = require("../linksUrls");
+const fs = require("fs");
 
 exports.categoriaHombre = async () => {
+
+  var fecha = new Date();
+  var fechaObj = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "numeric",
+    second: "numeric",
+    timeZoneName: "long"
+  };
+  let horaInicioZara = fecha.toLocaleDateString("es", fechaObj);
+  fs.writeFile("horaInicioZara.txt", horaInicioZara, (err) => {
+    if (err) throw err;
+    console.log("Hora guardada!");
+  });
+
   const browser = await puppeteer.launch({ headless: true }); //headless true/false para visualizar el navegador
 
   const menCategory = Url.menCategoryLink;
-  
+
   try {
     const page = await browser.newPage();
 
@@ -73,7 +92,7 @@ exports.categoriaHombre = async () => {
 
             var tallas = Array.from(document.querySelectorAll('.product-detail-size-selector > div > ul > li > div > div > span'), xTallas => xTallas.textContent);
             var tallaDisabled = Array.from(document.querySelectorAll('.product-detail-size-selector__size-list-item--is-disabled'), TallasDisabled => TallasDisabled.textContent);
-            if(tallaDisabled !== null) {
+            if (tallaDisabled !== null) {
               tallaDisabledVal = tallaDisabled;
             }
             var tallaValidacion = tallaDisabledVal;
@@ -95,7 +114,7 @@ exports.categoriaHombre = async () => {
             prenda.color = document.querySelector('#main > article > .product-detail-view__main > .product-detail-view__side-bar > .product-detail-info > .product-detail-color-selector > p').textContent;
             prenda.color = prenda.color.split(' ')[1];
             prenda.color = prenda.color.toLowerCase();
-            prenda.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div > div:nth-child(6) > span > span').textContent;            
+            prenda.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div > div:nth-child(6) > span > span').textContent;
 
             return prenda;
           });
@@ -103,7 +122,7 @@ exports.categoriaHombre = async () => {
           //count--;
           prendasHombre.push(prendahombre); //Se guardan las prendas en la constante prendasHombre
           //if (count === 0) {
-            //break;
+          //break;
           //}
 
         } catch (error) {
@@ -111,7 +130,7 @@ exports.categoriaHombre = async () => {
         }
       }
 
-      prendasHombre.forEach((dato) => {dato.tipoPrenda = nombrecategoria});
+      prendasHombre.forEach((dato) => { dato.tipoPrenda = nombrecategoria });
 
       console.log(prendasHombre);
       await getScraping.getscraping(prendasHombre);

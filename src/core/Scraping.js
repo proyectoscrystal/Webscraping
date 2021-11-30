@@ -8,9 +8,7 @@ let Scraping = async (req, res) => {
   //  uso de fs
   let hora1 = new Date();
   console.log(`Hora ${hora1.getHours()} : ${hora1.getMinutes()}`);
-  let lyrics1 = `Hora ${hora1.getHours().toString()} : ${hora1
-    .getMinutes()
-    .toString()}`;
+  let lyrics1 = `Hora ${hora1.getHours().toString()} : ${hora1.getMinutes().toString()}`;
   // write to a new file named 2pac.txt
   fs.writeFile("horaInicio.txt", lyrics1, (err) => {
     // throws an error, you could also catch it here
