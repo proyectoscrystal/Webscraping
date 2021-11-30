@@ -270,3 +270,17 @@ exports.homologarTipoPrenda = (tipoPrenda) => {
   
   return tipoPrenda;    
 }
+
+exports.homologarMaterial = (material) => {
+  material = material.toLowerCase();
+
+  // for (let i = 0; i < arrayTipoPrenda.tipoPrendaHomologada.length; i++) {
+    for (let j = 0; j < arrayTipoPrenda.materialesScraping.length; j++) {
+      if(arrayTipoPrenda.materialesScraping[j] === material) {
+        material = arrayTipoPrenda.materialesScrapingHomologados[j];
+        return material;
+      }      
+    }
+  
+  return material;    
+}

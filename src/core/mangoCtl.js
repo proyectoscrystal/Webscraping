@@ -184,37 +184,46 @@ exports.getscraping = async (arreglo) => {
         case 0: 
           porcentaje1 = materiales[j].split("  ")[0];
           material1 = materiales[j].split("  ")[1];
+          material1 = saveImage.homologarMaterial(material1);
           
           break;
         case 1: 
          porcentaje2 = materiales[j].split("  ")[0];
           material2 = materiales[j].split("  ")[1];
+          material2 = saveImage.homologarMaterial(material2);
          
           break;
         case 2: 
          porcentaje3 = materiales[j].split("  ")[0];
-          material3 = materiales[j].split("  ")[1];
-         
+         material3 = materiales[j].split("  ")[1];
+         material3 = saveImage.homologarMaterial(material3);
+
           break
         case 3: 
          porcentaje4 = materiales[j].split("  ")[0];
-          material4 = materiales[j].split("  ")[1];
+         material4 = materiales[j].split("  ")[1];
+         material4 = saveImage.homologarMaterial(material4);
          
           break
         case 4: 
          porcentaje5 = materiales[j].split("  ")[0];
-          material5 = materiales[j].split("  ")[1];
+         material5 = materiales[j].split("  ")[1];
+         material5 = saveImage.homologarMaterial(material5);
          
           break
         case 5: 
          porcentaje6 = materiales[j].split("  ")[0];
-          material6 = materiales[j].split("  ")[1];
+         material6 = materiales[j].split("  ")[1];
+         material6 = saveImage.homologarMaterial(material6);
          
           break
         case 6: 
          porcentaje7 = materiales[j].split("  ")[0];
-          material7 = materiales[j].split("  ")[1];
+         material7 = materiales[j].split("  ")[1];
+         material7 = saveImage.homologarMaterial(material7);
+
           break
+          
         default: 
           break
           

@@ -100,6 +100,42 @@ let GeneralColorChart = (arr) => {
     return obj;
 }
 
+// metodo para calcular la frecuencia y colores de sku vista general colores pie chart
+exports.colorGeneralChartMateriales = async (req, res) => {
+    let filtro = req.query;
+    
+    filtro = organizarQueryfilter1(filtro);
+    filtro.discontinued = false;
+
+    //mes actual
+    let date = new Date();
+    let month = date.getMonth(); 
+
+
+    let arr;
+    let obj;
+    let porcentajesCategoriaColors;
+    let coloresGeneral;
+
+    try {
+        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "origin":1, "color":1, "categoria":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
+        // console.log(arr.length);
+    } catch (error) {
+        console.log("no se obtuvo respuesta");
+        return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
+    }
+
+
+    porcentajesCategoriaColors = GeneralColorChart(arr);
+    
+    // respuesta para el frontend
+    obj = {  
+       porcentajesCategoriaColors
+    }
+
+
+    res.status(200).json({obj});
+}
 
 // metodos usados por el chart y info categoria
 let coloresFrecuentes = (arr) => {

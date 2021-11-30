@@ -883,7 +883,7 @@ exports.materialesScraping = [
   "camello",
   "cañamo",
   "cerámica",
-  "CIRCONITA",
+  "circonita",
   "cobre",
   "cristal",
   "cupro",

@@ -67,6 +67,7 @@ module.exports = (router) => {
     router.get('/m_infoCategoryKidsColors',colorsController.colorKidsCategory); 
     // para los barcharts de vista colores
     router.get('/m_infoGeneralColors',barchartsController.colorGeneralChart); 
+    router.get('/m_infoGeneralColorsMateriales',barchartsController.colorGeneralChartMateriales); 
 
 
 }
