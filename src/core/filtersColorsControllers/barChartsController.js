@@ -36,6 +36,7 @@ exports.colorGeneralChart = async (req, res) => {
     let filtro = req.query;
     
     filtro = organizarQueryfilter1(filtro);
+    filtro.discontinued = false;
 
     //mes actual
     let date = new Date();
