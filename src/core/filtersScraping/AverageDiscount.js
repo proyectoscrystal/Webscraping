@@ -44,7 +44,7 @@ exports.averageDiscountMonthGeneral = (arr) => {
       let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero
       let year = parseInt(fecha.split(" ")[3]);
 
-      if (year === currentYear && element.origin == 'Zara') {
+      if (year === currentYear && element.origin == 'Zara' && element.discontinued === false) {
         if (mes === 'Jan' && element.descuento !== null) {
           let { precio, descuento} = element;
           let discount = 0;
@@ -135,7 +135,7 @@ exports.averageDiscountMonthGeneral = (arr) => {
       }
       
 
-      if (year === lastYear && element.origin === 'Zara') {
+      if (year === lastYear && element.origin === 'Zara' && element.discontinued === false) {
         if(mes === 'Jan' && element.descuento !== null)  {
           let { precio, descuento} = element;
           let discount = 0;
@@ -295,7 +295,7 @@ exports.averageDiscountMonthGeneral = (arr) => {
       let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero
       let year = parseInt(fecha.split(" ")[3]);
 
-      if (year === currentYear && element.origin == 'Mango') {
+      if (year === currentYear && element.origin == 'Mango' && element.discontinued === false) {
         if (mes === 'Jan' && element.descuento !== null) {
           // estructura interna del if
           let { precio, descuento} = element;
@@ -374,7 +374,7 @@ exports.averageDiscountMonthGeneral = (arr) => {
         }
       }
 
-      if (year === lastYear && element.origin === 'Mango') {
+      if (year === lastYear && element.origin === 'Mango' && element.discontinued === false) {
         if(mes === 'Jan' && element.descuento !== null)  {
           let { precio, descuento} = element;
           let discount = 0;
@@ -529,7 +529,7 @@ exports.averageDiscount = arr => {
         let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero      
         let year = parseInt(fecha.split(" ")[3]);
   
-        if (year === currentYear) {
+        if (year === currentYear && element.discontinued === false) {
           if (mes === 'Jan' && element.descuento !== null) {
             // estructura interna del if
             let { precio, descuento} = element;
@@ -608,7 +608,7 @@ exports.averageDiscount = arr => {
           }
         }
   
-        if (year === lastYear) {
+        if (year === lastYear && element.discontinued === false) {
           if(mes === 'Jan' && element.descuento !== null)  {
             let { precio, descuento} = element;
             let discount = 0;
