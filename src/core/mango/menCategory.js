@@ -2,8 +2,26 @@ const puppeteer = require("puppeteer");
 const autoScroll = require("../autoScrollFunction");
 const getScraping = require("../mangoCtl");
 const Url = require("../linksUrls");
+const fs = require("fs");
 
 exports.menCategory = async () => {
+  var fecha = new Date();
+  var fechaObj = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "numeric",
+    second: "numeric",
+    timeZoneName: "long"
+  };
+  let horaInicioMango = fecha.toLocaleDateString("es", fechaObj);
+  fs.writeFile("horaInicioMango.txt", horaInicioMango, (err) => {
+    if (err) throw err;
+    console.log("Hora guardada!");
+  });
+
   const browser = await puppeteer.launch({ headless: true }); //headless true/false para visualizar el navegador
 
   const menCategory = Url.menCategoryLinkMango;
@@ -26,7 +44,7 @@ exports.menCategory = async () => {
       }
       return linkshombre;
     });
-    //console.log(enlaceshombre);
+    console.log(enlaceshombre);
 
     for (let enlacehombre of enlaceshombre) {
       try {
@@ -42,7 +60,7 @@ exports.menCategory = async () => {
       await autoScroll(page);
 
       const enlacesproductoshombre = await page.evaluate(() => {
-        const elements = document.querySelectorAll("._10aZC > a");
+        const elements = document.querySelectorAll(".yoqzg > a");
 
         const productoshombre = [];
         for (let element of elements) {
@@ -52,13 +70,14 @@ exports.menCategory = async () => {
       });
       //console.log(enlacesproductoshombre);
 
-      // let count = 5;
+      //let count = 5;
 
       for (let enlaceproductohombre of enlacesproductoshombre) {
         try {
           await page.goto(enlaceproductohombre);
+          await page.waitForTimeout(2000);
           await autoScroll(page);
-        
+
           const prendaHombre = await page.evaluate(() => {
             const currentURL = window.location.href;
             const http = 'https:';
@@ -94,26 +113,22 @@ exports.menCategory = async () => {
 
             return prenda;
           });
-          // count--;
+          //count--;
           prendasHombre.push(prendaHombre);
-          // if (count === 0) {
-          //   break;
-          // }
+          //if (count === 0) {
+          //break;
+          //}
         } catch (error) {
           //console.log(error.message);
         }
       }
-      // console.log(prendasHombre);
+      //console.log(prendasHombre);
       await getScraping.getscraping(prendasHombre);
-
-      // if (count === 0) {
-      //   break;
-      // }
     }
 
     //====================CATEGORIAS HOMBRE===========================
   } catch (err) {
-    //console.error(err.message);
+    console.error(`error en el link = ${menCategory} - error = ${err.message}`);
   } finally {
     await browser.close();
   }

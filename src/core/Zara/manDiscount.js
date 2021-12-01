@@ -30,11 +30,12 @@ exports.manDiscount = async () => {
     });
 
     const rebajasHombre = [];
-    // let count = 2;
+    //let count = 10;
 
     for (let enlaceRebajasH of enlacesRebajasH) {
       try {
         await page.goto(enlaceRebajasH, { waitUntil: "networkidle2" });
+        await page.waitForTimeout(2000);
         await autoScroll(page);
 
         const prendasRebajaHombre = await page.evaluate(() => {  
@@ -72,27 +73,27 @@ exports.manDiscount = async () => {
           prenda.tag = "descuento";
           prenda.talla = tallas;
           prenda.tallasAgotadas = tallaValidacion;
-          prenda.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;
+          prenda.color = document.querySelector('#main > article > .product-detail-view__main > .product-detail-view__side-bar > .product-detail-info > .product-detail-color-selector > p').textContent;
           prenda.color = prenda.color.split(' ')[1];
           prenda.color = prenda.color.toLowerCase();
           prenda.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div > div:nth-child(6) > span > span').textContent;         
 
           return prenda;
         });
-        // count--;
+        //count--;
         rebajasHombre.push(prendasRebajaHombre);
-        // if (count === 0) {
-        //   break;
-        // }
+        //if (count === 0) {
+          //break;
+        //}
       } catch (error) {
-        //console.log(error.message);
+        console.log(error.message);
       }
     }
     await getScraping.getscraping(rebajasHombre);
-    // console.log(rebajasHombre);
+    //console.log(rebajasHombre);
     //====================PRENDAS EN DESCUENTO - HOMBRE==========================
   } catch (err) {
-    //console.error(err.message);
+    console.error(`error en el link = ${manDiscount} - error = ${err.message}`);
   } finally {
     await browser.close();
   }

@@ -61,7 +61,7 @@ exports.girlNew = async () => {
                     prenda.tag = "nuevo";
                     prenda.talla = tallas;
                     prenda.tallasAgotadas = tallaValidacion;
-                    prenda.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;
+                    prenda.color = document.querySelector('#main > article > .product-detail-view__main > .product-detail-view__side-bar > .product-detail-info > .product-detail-color-selector > p').textContent;
                     prenda.color = prenda.color.split(' ')[1];
                     prenda.color = prenda.color.toLowerCase();
                     prenda.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div > div:nth-child(6) > span > span').textContent;
@@ -84,7 +84,7 @@ exports.girlNew = async () => {
         //====================PRENDAS NUEVAS - NIÑO | 6-14 AÑOS==========================
 
     } catch (err) {
-        console.error(err.message);
+        console.error(`error en el link = ${girlNew} - error = ${err.message}`);
     } finally {
         await browser.close();
     }

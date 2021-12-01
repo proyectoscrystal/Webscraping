@@ -13,7 +13,7 @@ exports.womanCategory = async () => {
 
     const prendasMujer = []; //Se crea un array para guardar los productos extraidos
 
-    // let count = 5;
+    //let count = 5;
 
     //====================CATEGORIAS MUJER===========================
     await page.goto(womanCategory, { waitUntil: "networkidle2" });
@@ -48,7 +48,7 @@ exports.womanCategory = async () => {
 
       //Se obtienen los enlaces de los productos
       const enlacesproductosmujer = await page.evaluate(() => {
-        const elements = document.querySelectorAll('#main > article > .product-groups > section > ul > li > ul > li:nth-child(1) > div > div > a');
+        const elements = document.querySelectorAll('li > ul > li > div > div > a');
 
         const productosmujer = [];
         for (let element of elements) {
@@ -64,6 +64,7 @@ exports.womanCategory = async () => {
       for (let enlaceproductomujer of enlacesproductosmujer) {
         try {
           await page.goto(enlaceproductomujer);
+          await page.waitForTimeout(2000);
           await autoScroll(page);
 
           //Se evalua cada enlace del cual se extrae el categoria, nombre, precio y caracteristicas
@@ -91,7 +92,7 @@ exports.womanCategory = async () => {
             prenda.tag = "";            
             prenda.talla = tallas;
             prenda.tallasAgotadas = tallaValidacion;
-            prenda.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;
+            prenda.color = document.querySelector('#main > article > .product-detail-view__main > .product-detail-view__side-bar > .product-detail-info > .product-detail-color-selector > p').textContent;
             prenda.color = prenda.color.split(' ')[1];
             prenda.color = prenda.color.toLowerCase();
             prenda.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div > div:nth-child(6) > span > span').textContent;              
@@ -99,11 +100,11 @@ exports.womanCategory = async () => {
             return prenda;
           });
 
-          // count--;
+          count--;
           prendasMujer.push(prendamujer); //Se guardan las prendas en la constante prendasMujer
-          // if(count === 0){                
-          //   break;
-          // }
+          if(count === 0){                
+            break;
+          }
 
         } catch (error) {
           //console.error(error.message);
@@ -123,7 +124,7 @@ exports.womanCategory = async () => {
     //====================CATEGORIAS MUJER===========================
 
   } catch (err) {
-    //console.error(err.message);
+    console.error(`error en el link = ${womanCategory} - error = ${err.message}`);
   } finally {
     await browser.close();
   }

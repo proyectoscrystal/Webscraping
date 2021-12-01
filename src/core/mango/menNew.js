@@ -18,7 +18,7 @@ exports.menNew = async () => {
         await autoScroll(page);
 
         const enlacesNuevo = await page.evaluate(() => {
-            const elements = document.querySelectorAll('._10aZC > a');
+            const elements = document.querySelectorAll('.yoqzg > a');
 
             const linksNuevo = [];
             for (let element of elements) {
@@ -32,6 +32,7 @@ exports.menNew = async () => {
 
         for (let enlaceNuevo of enlacesNuevo) {
             await page.goto(enlaceNuevo);
+            await page.waitForTimeout(2000);
             await autoScroll(page);
 
             try {
@@ -75,7 +76,7 @@ exports.menNew = async () => {
         //====================HOMBRE NUEVA COLECCIÓN===========================
 
     } catch (err) {
-        //console.error(err.message);
+        console.error(`error en el link = ${newMan} - error = ${err.message}`);
     } finally {
         await browser.close();
     }

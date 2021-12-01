@@ -2,18 +2,37 @@ const puppeteer = require("puppeteer");
 const autoScroll = require("../autoScrollFunction");
 const getScraping = require("../zaraCtl");
 const Url = require("../linksUrls");
+const fs = require("fs");
 
 exports.categoriaHombre = async () => {
+
+  var fecha = new Date();
+  var fechaObj = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "numeric",
+    second: "numeric",
+    timeZoneName: "long"
+  };
+  let horaInicioZara = fecha.toLocaleDateString("es", fechaObj);
+  fs.writeFile("horaInicioZara.txt", horaInicioZara, (err) => {
+    if (err) throw err;
+    console.log("Hora guardada!");
+  });
+
   const browser = await puppeteer.launch({ headless: true }); //headless true/false para visualizar el navegador
 
   const menCategory = Url.menCategoryLink;
-  
+
   try {
     const page = await browser.newPage();
 
     const prendasHombre = []; //Se crea un array para guardar los productos extraidos
 
-    // let count = 1;
+    //let count = 5;
 
     //====================CATEGORIAS HOMBRE==========================
     await page.goto(menCategory, { waitUntil: "networkidle2" });
@@ -48,7 +67,7 @@ exports.categoriaHombre = async () => {
 
       //Se obtienen los enlaces de los productos
       const enlacesproductoshombre = await page.evaluate(() => {
-        const elements = document.querySelectorAll("#main > article > div > section > ul > li > ul > li > div > div > div > a");
+        const elements = document.querySelectorAll("li > ul > li > div > div > a");
 
         const productoshombre = [];
         for (let element of elements) {
@@ -64,6 +83,7 @@ exports.categoriaHombre = async () => {
       for (let enlaceproductohombre of enlacesproductoshombre) {
         try {
           await page.goto(enlaceproductohombre);
+          await page.waitForTimeout(2000);
           await autoScroll(page);
 
           //Se evalua cada enlace del cual se extrae el categoria, nombre, precio y caracteristicas
@@ -71,8 +91,8 @@ exports.categoriaHombre = async () => {
             const currentURL = window.location.href;
 
             var tallas = Array.from(document.querySelectorAll('.product-detail-size-selector > div > ul > li > div > div > span'), xTallas => xTallas.textContent);
-            var tallaDisabled = Array.from(document.querySelectorAll('.product-detail-size-selector__size-list-item[disabled]'), TallasDisabled => TallasDisabled.textContent);
-            if(tallaDisabled !== null) {
+            var tallaDisabled = Array.from(document.querySelectorAll('.product-detail-size-selector__size-list-item--is-disabled'), TallasDisabled => TallasDisabled.textContent);
+            if (tallaDisabled !== null) {
               tallaDisabledVal = tallaDisabled;
             }
             var tallaValidacion = tallaDisabledVal;
@@ -91,35 +111,36 @@ exports.categoriaHombre = async () => {
             prenda.tag = "";
             prenda.talla = tallas;
             prenda.tallasAgotadas = tallaValidacion;
-            prenda.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;
+            prenda.color = document.querySelector('#main > article > .product-detail-view__main > .product-detail-view__side-bar > .product-detail-info > .product-detail-color-selector > p').textContent;
             prenda.color = prenda.color.split(' ')[1];
             prenda.color = prenda.color.toLowerCase();
-            prenda.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div > div:nth-child(6) > span > span').textContent;            
+            prenda.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div > div:nth-child(6) > span > span').textContent;
 
             return prenda;
           });
 
-          // count--;
+          //count--;
           prendasHombre.push(prendahombre); //Se guardan las prendas en la constante prendasHombre
-          // if (count === 0) {
-          //   break;
-          // }
+          //if (count === 0) {
+          //break;
+          //}
 
         } catch (error) {
-          //console.error(error.message);
+          //console.error(error);
         }
       }
 
-      prendasHombre.forEach((dato) => {dato.tipoPrenda = nombrecategoria});
+      prendasHombre.forEach((dato) => { dato.tipoPrenda = nombrecategoria });
 
-      // console.log(prendasHombre);
+      console.log(prendasHombre);
       await getScraping.getscraping(prendasHombre);
     }
 
     //====================CATEGORIAS HOMBRE==========================
 
   } catch (err) {
-    //console.error(err.message);
+    console.error(`error en el link = ${menCategory} - error = ${err.message}`);
+    //console.error(err);
   } finally {
     await browser.close();
   }

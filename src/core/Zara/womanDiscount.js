@@ -19,7 +19,7 @@ exports.descuentoMujer = async () => {
 
     const enlacesRebajasM = await page.evaluate(() => {
       const elements = document.querySelectorAll(
-        "#main > article > div > section > ul > li > ul > li > div > div > div > a"
+        "li > ul > li > div > div > a"
       );
 
       const links = [];
@@ -30,12 +30,13 @@ exports.descuentoMujer = async () => {
     });
 
     const rebajasMujer = [];
-    // let count = 5;
+    //let count = 5;
 
     for (let enlaceRebajasM of enlacesRebajasM) {
       try { // se usa el try, catch para 
           
         await page.goto(enlaceRebajasM, { waitUntil: "networkidle2" });
+        await page.waitForTimeout(2000);
         await autoScroll(page);
 
         const prendasRebajaMujer = await page.evaluate(() => {
@@ -74,28 +75,29 @@ exports.descuentoMujer = async () => {
           prenda.marca = 'Zara';
           prenda.talla = tallas;
           prenda.tallasAgotadas = tallaValidacion;
-          prenda.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;
+          prenda.color = document.querySelector('#main > article > .product-detail-view__main > .product-detail-view__side-bar > .product-detail-info > .product-detail-color-selector > p').textContent;
           prenda.color = prenda.color.split(' ')[1];
           prenda.color = prenda.color.toLowerCase();
           prenda.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div > div:nth-child(6) > span > span').textContent;          
 
           return prenda;
         });
-        // count--;
+        //count--;
         rebajasMujer.push(prendasRebajaMujer);
-        // if(count === 0){
-        //     break;
-        // }
+        //if(count === 0){
+          //break;
+        //}
       } catch (error) {
         //console.log(error.message);
       }
     } 
 
+    //console.log(rebajasMujer)
     await getscraping.getscraping(rebajasMujer);
 
     //====================PRENDAS EN DESCUENTO - MUJER==========================
   } catch (err) {
-    //console.error(err.message);
+    console.error(`error en el link = ${womanDiscount} - error = ${err.message}`);
   } finally {
     await browser.close();
   }

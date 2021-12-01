@@ -62,7 +62,7 @@ exports.babyGirlDiscount = async () => {
                     prendas.marca = 'Zara';
                     prenda.talla = tallas;
                     prenda.tallasAgotadas = tallaValidacion;
-                    prendas.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;
+                    prendas.color = document.querySelector('#main > article > .product-detail-view__main > .product-detail-view__side-bar > .product-detail-info > .product-detail-color-selector > p').textContent;
                     prendas.color = prendas.color.split(' ')[1];
                     prendas.color = prendas.color.toLowerCase();
                     prendas.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div > div:nth-child(6) > span > span').textContent;
@@ -85,7 +85,7 @@ exports.babyGirlDiscount = async () => {
         //====================PRENDAS DESCUENTO - BEBE NIÑA | 6 MESES - 5 AÑOS==========================
 
     } catch (err) {
-        console.error(err.message);
+        console.error(`error en el link = ${babyGirlDiscount} - error = ${err.message}`);
     } finally {
         await browser.close();
     }

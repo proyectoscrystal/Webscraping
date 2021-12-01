@@ -19,7 +19,7 @@ exports.womanDiscount = async () => {
         await autoScroll(page);
 
         const enlacesRebajas = await page.evaluate(() => {
-            const elements = document.querySelectorAll('._10aZC > a');
+            const elements = document.querySelectorAll('.yoqzg > a');
 
             const linksRebajas = [];
             for (let element of elements) {
@@ -31,6 +31,7 @@ exports.womanDiscount = async () => {
 
         for (let enlaceRebajas of enlacesRebajas) {
             await page.goto(enlaceRebajas);
+            await page.waitForTimeout(2000);
             await autoScroll(page);
 
             try {
@@ -74,7 +75,7 @@ exports.womanDiscount = async () => {
         //====================MUJER REBAJAS===========================
 
     } catch (err) {
-        //console.error(err.message);
+        console.error(`error en el link = ${womanDiscount} - error = ${err.message}`);
     } finally {
         await browser.close();
     }

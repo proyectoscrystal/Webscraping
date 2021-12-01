@@ -21,7 +21,7 @@ exports.babyGirlNew = async () => {
         //await page.waitForTimeout(5000);
 
         const enlaces = await page.evaluate(() => {
-            const elements = document.querySelectorAll('._10aZC > a');
+            const elements = document.querySelectorAll('.yoqzg > a');
 
             const links = [];
             for (let element of elements) {
@@ -77,7 +77,7 @@ exports.babyGirlNew = async () => {
         //====================MUJER NUEVA COLECCIÓN===========================
         
     } catch (err) {
-        console.error(err.message);
+        console.error(`error en el link = ${babyGirlNew} - error = ${err.message}`);
     } finally {
         await browser.close();
     }

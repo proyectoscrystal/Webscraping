@@ -1,6 +1,7 @@
 const mangoCtl = require("../core/mangoCtl");
 const scrapingCtl = require("../core/scrapingCtl");
 const colorsController = require("../core/filtersColorsControllers/colorsController");
+const barchartsController = require("../core/filtersColorsControllers/barChartsController");
 
 
 
@@ -64,6 +65,9 @@ module.exports = (router) => {
     router.get('/m_infoCategoryMujerColors',colorsController.colorMujerCategory); 
     router.get('/m_infoCategoryHombreColors',colorsController.colorHombreCategory); 
     router.get('/m_infoCategoryKidsColors',colorsController.colorKidsCategory); 
+    // para los barcharts de vista colores
+    router.get('/m_infoGeneralColors',barchartsController.colorGeneralChart); 
+    router.get('/m_infoGeneralColorsMateriales',barchartsController.colorGeneralChartMateriales); 
 
 
 }

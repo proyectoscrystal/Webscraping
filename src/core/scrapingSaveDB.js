@@ -173,29 +173,29 @@ exports.saveImagesDB = async (data) => {
           console.log('estado ha cambiado se guarda documento'); 
             await Business.create(imageData, (err) => {
               if (err && err.code === 11000) {
-                console.log("Imagen ya existe");
+                // console.log("Imagen ya existe");
               } else {
                 console.log("Imagen guardada en bd");
               }
             });
 
         } else if ( inBD !== null && !compareTwoArrays(imageData.talla,inBD.talla) ) {
-          console.log('tallas ha cambiado se guarda documento'); 
+          // console.log('tallas ha cambiado se guarda documento'); 
             await Business.create(imageData, (err) => {
               if (err && err.code === 11000) {
-                console.log("Imagen ya existe");
+                // console.log("Imagen ya existe");
               } else {
-                console.log("Imagen guardada en bd");
+                // console.log("Imagen guardada en bd");
               }
             });
 
           } else if (inBD === null){   // se almacena producto nuevo
-            console.log('producto almacenado'); 
+            // console.log('producto almacenado'); 
             await Business.create(imageData, (err) => {
               if (err && err.code === 11000) {
-                console.log("Imagen ya existe");
+                // console.log("Imagen ya existe");
               } else {
-                console.log("Imagen guardada en bd");
+                // console.log("Imagen guardada en bd");
               }
             });
           } 
@@ -207,7 +207,7 @@ exports.saveImagesDB = async (data) => {
 
 
     } catch (error) {
-      console.log(error);
+      console.error(`error guardando producto  - error = ${error.message}`);
     }
   };
 
@@ -260,11 +260,27 @@ exports.getState = (tag, descuento) => {
 exports.homologarTipoPrenda = (tipoPrenda) => {
   tipoPrenda = tipoPrenda.toLowerCase();
 
-  for (let i = 0; i < arrayTipoPrenda.tipoPrendaHomologada.length; i++) {
-    if(arrayTipoPrenda.tipoPrendaScraping[i] === tipoPrenda) {
-      tipoPrenda = arrayTipoPrenda.tipoPrendaHomologada[i];
-      return tipoPrenda;
+  // for (let i = 0; i < arrayTipoPrenda.tipoPrendaHomologada.length; i++) {
+    for (let j = 0; j < arrayTipoPrenda.tipoPrenda.length; j++) {
+      if(arrayTipoPrenda.tipoPrenda[j] === tipoPrenda) {
+        tipoPrenda = arrayTipoPrenda.tipoPrendaHomologada[j];
+        return tipoPrenda;
+      }      
     }
-  }
+  
   return tipoPrenda;    
+}
+
+exports.homologarMaterial = (material) => {
+  material = material.toLowerCase();
+
+  // for (let i = 0; i < arrayTipoPrenda.tipoPrendaHomologada.length; i++) {
+    for (let j = 0; j < arrayTipoPrenda.materialesScraping.length; j++) {
+      if(arrayTipoPrenda.materialesScraping[j] === material) {
+        material = arrayTipoPrenda.materialesScrapingHomologados[j];
+        return material;
+      }      
+    }
+  
+  return material;    
 }

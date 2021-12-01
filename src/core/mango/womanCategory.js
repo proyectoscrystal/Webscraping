@@ -44,7 +44,7 @@ exports.womanCategory = async () => {
       await autoScroll(page);
 
       const enlacesproductosmujer = await page.evaluate(() => {
-        const elements = document.querySelectorAll("._10aZC > a");
+        const elements = document.querySelectorAll(".yoqzg > a");
 
         const productosmujer = [];
         for (let element of elements) {
@@ -57,6 +57,7 @@ exports.womanCategory = async () => {
 
       for (let enlaceproductomujer of enlacesproductosmujer) {
         await page.goto(enlaceproductomujer);
+        await page.waitForTimeout(2000);
         await autoScroll(page);
 
         try {
@@ -113,7 +114,7 @@ exports.womanCategory = async () => {
     await getScraping.getscraping(prendasMujer);
     //====================CATEGORIAS MUJER===========================
   } catch (err) {
-    //console.error(err.message);
+    console.error(`error en el link = ${womanCategory} - error = ${err.message}`);
   } finally {
     await browser.close();
   }

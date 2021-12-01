@@ -21,6 +21,7 @@ const imageToBase64 = require("image-to-base64");
 const axios = require('axios');
 const https = require("https");
 const saveImage = require("./scrapingSaveDB");
+const Business = require("../domain/model/businessDao");
 
 // arreglo con las subcategorias
 const verificarSub = require("../utils/index");
@@ -38,6 +39,19 @@ exports.getScrapingMango = async (req, res) => {
   await womanCategory.womanCategory();
   await womanDiscounts.womanDiscount();
   await womanNew.womanNew();
+  await babyBoyCategory.babyBoyCategory();
+  await babyBoyDiscount.babyBoyDiscount();
+  await babyBoyNew.babyBoyNew();
+  await boyCategory.boyCategory();
+  await boyDiscount.boyDiscount();
+  await boyNew.boyNew();
+  await girlCategory.girlCategory();
+  await girlDiscount.girlDiscount();
+  await girlNew.girlNew();
+  await babyGirlCategory.babyGirlCategory();
+  await babyGirlNew.babyGirlNew();
+  await miniKids.miniKids();
+  await miniKidsNew.miniKidsNew();
 }
 
 exports.getMenCategory = (req, res) => {
@@ -140,6 +154,7 @@ exports.getMiniKidsNew = (req, res) => {
 // catching data from scraping
 
 exports.getscraping = async (arreglo) => {
+  console.log(arreglo.length);
   let arregloMaster = [];
   
     // se formatean los datos descuento, tallas y precio, para llevarlos a la db
@@ -169,37 +184,46 @@ exports.getscraping = async (arreglo) => {
         case 0: 
           porcentaje1 = materiales[j].split("  ")[0];
           material1 = materiales[j].split("  ")[1];
+          material1 = saveImage.homologarMaterial(material1);
           
           break;
         case 1: 
          porcentaje2 = materiales[j].split("  ")[0];
           material2 = materiales[j].split("  ")[1];
+          material2 = saveImage.homologarMaterial(material2);
          
           break;
         case 2: 
          porcentaje3 = materiales[j].split("  ")[0];
-          material3 = materiales[j].split("  ")[1];
-         
+         material3 = materiales[j].split("  ")[1];
+         material3 = saveImage.homologarMaterial(material3);
+
           break
         case 3: 
          porcentaje4 = materiales[j].split("  ")[0];
-          material4 = materiales[j].split("  ")[1];
+         material4 = materiales[j].split("  ")[1];
+         material4 = saveImage.homologarMaterial(material4);
          
           break
         case 4: 
          porcentaje5 = materiales[j].split("  ")[0];
-          material5 = materiales[j].split("  ")[1];
+         material5 = materiales[j].split("  ")[1];
+         material5 = saveImage.homologarMaterial(material5);
          
           break
         case 5: 
          porcentaje6 = materiales[j].split("  ")[0];
-          material6 = materiales[j].split("  ")[1];
+         material6 = materiales[j].split("  ")[1];
+         material6 = saveImage.homologarMaterial(material6);
          
           break
         case 6: 
          porcentaje7 = materiales[j].split("  ")[0];
-          material7 = materiales[j].split("  ")[1];
+         material7 = materiales[j].split("  ")[1];
+         material7 = saveImage.homologarMaterial(material7);
+
           break
+          
         default: 
           break
           
@@ -233,7 +257,8 @@ exports.getscraping = async (arreglo) => {
       
 
        // obtener el estado
-      let estado = saveImage.getState(tag, descuento);
+      let estado = '';
+      estado = saveImage.getState(tag, descuento);
       // console.log(estado);
 
       precio = parseInt(precio.substring(1).split(".").join(""), 10);
@@ -294,7 +319,7 @@ exports.getscraping = async (arreglo) => {
       arregloMaster.push(newObject);
 
 
-      saveImage.saveImagesDB(newObject);
+      await saveImage.saveImagesDB(newObject);
       
 
     }
@@ -338,7 +363,7 @@ exports.getscraping = async (arreglo) => {
   let setSubCategory = (tipoPrenda) => {
     for (let index = 0; index < verificarSub.subCategoria.length; index++) {
       // console.log(`sub: ${verificarSub.subCategoria[index]} - tipo: ${verificarSub.tipoPrenda[index]}`);
-      if (tipoPrenda === verificarSub.tipoPrenda[index]) {
+      if (tipoPrenda === verificarSub.tipoPrendaHomologada[index]) {
         return  verificarSub.subCategoria[index]
       }      
     }
@@ -421,6 +446,7 @@ exports.getscraping = async (arreglo) => {
       subCategoria: elementDB.subCategoria,
       color: elementDB.color,
       talla: elementDB.talla,
+      categoria: elementDB.categoria,
       tallasAgotadas: elementDB.tallasAgotadas,
       material1: elementDB.material1,
       material2: elementDB.material2,

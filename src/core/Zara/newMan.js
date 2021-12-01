@@ -19,7 +19,7 @@ exports.newMan = async () => {
 
     const enlacesNuevoH = await page.evaluate(() => {
       const elements = document.querySelectorAll(
-        "#main > article > div > section > ul > li > ul > li > div > div > div > a"
+        "li > ul > li > div > div > a"
       );
 
       const links = [];
@@ -35,6 +35,7 @@ exports.newMan = async () => {
     for (let enlaceNuevoH of enlacesNuevoH) {
       try {
         await page.goto(enlaceNuevoH);
+        await page.waitForTimeout(2000);
         await autoScroll(page); //Función que hace el scroll en la página
 
         const prendasNuevoHombre = await page.evaluate(() => {
@@ -70,7 +71,7 @@ exports.newMan = async () => {
           prenda.tag = "nuevo";
           prenda.talla = tallas;
           prenda.tallasAgotadas = tallaValidacion;
-          prenda.color = document.querySelector('#main > article > .product-detail-view__main > div > div > p').textContent;
+          prenda.color = document.querySelector('#main > article > .product-detail-view__main > .product-detail-view__side-bar > .product-detail-info > .product-detail-color-selector > p').textContent;
           prenda.color = prenda.color.split(' ')[1];
           prenda.color = prenda.color.toLowerCase();
           prenda.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div > div:nth-child(6) > span > span').textContent;
@@ -90,7 +91,7 @@ exports.newMan = async () => {
     await getScraping.getscraping(nuevoHombre);
     //====================PRENDAS NUEVAS - HOMBRE==========================
   } catch (err) {
-    //console.error(err.message);
+    console.error(`error en el link = ${newMan} - error = ${err.message}`);
   } finally {
     await browser.close();
   }
