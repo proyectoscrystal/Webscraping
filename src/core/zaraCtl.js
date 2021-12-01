@@ -36,23 +36,23 @@ const instance = axios.create({
 });
 
 exports.getScrapingZara = async (req, res) => {
-  await categoriaHombre.categoriaHombre();
-  await manDiscount.manDiscount();
   await NewMan.newMan();
-  await womanCategory.womanCategory();
+  await manDiscount.manDiscount();
+  await categoriaHombre.categoriaHombre();
   await newWoman.newWoman();
   await womanDiscount.descuentoMujer();
+  await womanCategory.womanCategory();
   await babyBoyNew.babyBoyNew();
-  await babyBoyCategory.babyBoyCategory();
   await babyBoyDiscount.babyBoyDiscount();
-  await babyGirlCategory.babyGirlCategory();
+  await babyBoyCategory.babyBoyCategory();
   await babyGirlDiscount.babyGirlDiscount();
-  await babyGirlNew.babyGirlNew();
-  await boyCategory.boyCategory();
-  await boyDiscount.boyDiscount();  
+  await babyGirlCategory.babyGirlCategory();
   await boyNew.boyNew();
-  await girlCategory.girlCategory();
+  await boyDiscount.boyDiscount();  
+  await boyCategory.boyCategory();
+  await babyGirlNew.babyGirlNew();
   await girlDiscount.girlDiscount();
+  await girlCategory.girlCategory();
   await girlNew.girlNew();
   await miniKidsNew.miniKidsNew(); 
   await miniKids.miniKids();

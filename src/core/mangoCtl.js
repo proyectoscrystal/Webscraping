@@ -33,23 +33,23 @@ const instance = axios.create({
 });
 
 exports.getScrapingMango = async (req, res) => {
-  await menCategory.menCategory();
-  await menDiscount.menDiscount();
   await menNew.menNew();
-  await womanCategory.womanCategory();
-  await womanDiscounts.womanDiscount();
+  await menDiscount.menDiscount();
+  await menCategory.menCategory();
   await womanNew.womanNew();
-  await babyBoyCategory.babyBoyCategory();
-  await babyBoyDiscount.babyBoyDiscount();
+  await womanDiscounts.womanDiscount();
+  await womanCategory.womanCategory();
   await babyBoyNew.babyBoyNew();
-  await boyCategory.boyCategory();
-  await boyDiscount.boyDiscount();
+  await babyBoyDiscount.babyBoyDiscount();
+  await babyBoyCategory.babyBoyCategory();
   await boyNew.boyNew();
-  await girlCategory.girlCategory();
-  await girlDiscount.girlDiscount();
+  await boyDiscount.boyDiscount();
+  await boyCategory.boyCategory();
   await girlNew.girlNew();
-  await babyGirlCategory.babyGirlCategory();
+  await girlDiscount.girlDiscount();
+  await girlCategory.girlCategory();
   await babyGirlNew.babyGirlNew();
+  await babyGirlCategory.babyGirlCategory();
   await miniKids.miniKids();
   await miniKidsNew.miniKidsNew();
 }

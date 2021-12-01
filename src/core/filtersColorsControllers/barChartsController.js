@@ -109,16 +109,14 @@ exports.colorGeneralChartMateriales = async (req, res) => {
 
     //mes actual
     let date = new Date();
-    let month = date.getMonth(); 
 
 
     let arr;
     let obj;
-    let porcentajesCategoriaColors;
-    let coloresGeneral;
+    let materialsData;
 
     try {
-        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "origin":1, "color":1, "categoria":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
+        arr = await Business.find(filtro,{ "origin":1, "color":1, "categoria":1, "subCategoria": 1, "material1":1, "createdAt":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
         // console.log(arr.length);
     } catch (error) {
         console.log("no se obtuvo respuesta");
@@ -126,15 +124,48 @@ exports.colorGeneralChartMateriales = async (req, res) => {
     }
 
 
-    porcentajesCategoriaColors = GeneralColorChart(arr);
+    materialsData = Data(arr);
     
     // respuesta para el frontend
     obj = {  
-       porcentajesCategoriaColors
+       materialsData
     }
 
 
     res.status(200).json({obj});
+}
+
+// metodo que retorna la informacion de materiales
+let Data = (arr) => {
+    // metodo para saber el color que mas se repite para subcategoria
+    let arrayMaterials = [];
+    let arrayCountsMaterials = [];
+    let obj = {};
+
+    // ser crea un arreglo con todos los colores
+    for (let i = 0; i < arr.length; i++) {
+            arrayMaterials.push(arr[i].material1);
+    }
+
+    // se eliminan los repetidos
+    arrayMaterials = [...new Set(arrayMaterials)];
+    //se inicializa el array count con la cantidad de colores existente
+    arrayMaterials.forEach((element, index) => {
+        arrayCountsMaterials[index] = 0;
+    })
+    // se llena el array countsMaterials con la cantidad de repeticiones por color
+    for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arrayMaterials.length; j++) {
+            if (arr[i].material1 === arrayMaterials[j]) {
+                arrayCountsMaterials[j] += 1;
+            }
+        }
+    }
+
+    obj.materials = arrayMaterials;
+    obj.countMaterials = arrayCountsMaterials;
+
+    return obj;
 }
 
 // metodos usados por el chart y info categoria
