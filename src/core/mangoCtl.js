@@ -33,9 +33,9 @@ const instance = axios.create({
 });
 
 exports.getScrapingMango = async (req, res) => {
+  await menCategory.menCategory();
   await menNew.menNew();
   await menDiscount.menDiscount();
-  await menCategory.menCategory();
   await womanNew.womanNew();
   await womanDiscounts.womanDiscount();
   await womanCategory.womanCategory();
@@ -55,13 +55,13 @@ exports.getScrapingMango = async (req, res) => {
 }
 
 exports.getMenCategory = (req, res) => {
-    res.json({mensaje: "conectando desde mangoMenCategory"});
-    menCategory.menCategory();
+  res.json({mensaje: "conectando desde mangoMenCategory"});
+  menCategory.menCategory();
 } 
 
 exports.getMenDiscount = (req, res) => {
-    res.json({mensaje: "conectando desde mangoMenDiscount"});
-    menDiscount.menDiscount();
+  res.json({mensaje: "conectando desde mangoMenDiscount"});
+  menDiscount.menDiscount();
 }
 
 exports.getMenNew = (req, res) => {

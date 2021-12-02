@@ -4,7 +4,7 @@ const getScraping = require("../mangoCtl");
 const Url = require("../linksUrls");
 
 exports.womanCategory = async () => {
-  const browser = await puppeteer.launch({ headless: true }); //headless true/false para visualizar el navegador
+  const browser = await puppeteer.launch({ headless: false }); //headless true/false para visualizar el navegador
 
   const womanCategory = Url.womanCategoryLinkMango;
   
@@ -18,6 +18,9 @@ exports.womanCategory = async () => {
     await page.setViewport({ width: 920, height: 1080 });
     await page.waitForTimeout(5000);
 
+    await page.hover('she');
+    await page.waitForTimeout(2000);
+
     const enlacesmujer = await page.evaluate(() => {
       const elements = document.querySelectorAll(
         "#header > .menu-component > .section-detail-container > div > ul:nth-child(2) > li > a"
@@ -28,7 +31,7 @@ exports.womanCategory = async () => {
       }
       return linksmujer;
     });
-    //console.log(enlacesmujer);
+    console.log(enlacesmujer);
 
     for (let enlacemujer of enlacesmujer) {
       try {
