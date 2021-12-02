@@ -1,4 +1,4 @@
-const Business = require("../../domain/model/businessDao");
+const Business = require("../../../domain/model/businessDao");
 
 
 
@@ -38,3 +38,5 @@ exports.rangoFechaSemanaCards = () => {
         }
     }
 }
+
+

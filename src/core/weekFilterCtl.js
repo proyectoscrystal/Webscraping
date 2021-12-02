@@ -1,6 +1,6 @@
 const Business = require("../domain/model/businessDao");
 const avgPrice = require("./filtersScraping/AveragePrice");
-const avgDiscount = require("./filtersScraping/AverageDiscount");
+const avgDiscountWeek = require("./filtersScraping/weekFilters/discountWeeks");
 const avgNews = require("./filtersScraping/newProducts")
 const discontinued = require("./filtersScraping/discontinued")
 const avgSKU = require("./filtersScraping/SKU");
@@ -263,6 +263,58 @@ exports.cardsInfoWeek = async (req, res) => {
         differenceNew,
         differenceSKU,
         differenceDiscontinued
+    }
+
+
+    res.status(200).json({obj});
+}
+
+// info charts week
+
+// descuentos chart por semana
+exports.averageDiscountWeek = async (req, res) => {
+    let filtro = req.query;
+    
+    filtro = organizarQuery(filtro);
+    filtro.descuento = {$ne: null};
+    filtro.discontinued = false;
+    // console.log(filtro);
+    
+    let arr;
+    let obj;
+    let values = [];
+    let origin = '';
+
+    try {
+        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1, "discontinued":1}).limit(5);
+    } catch (error) {
+        console.log("no se obtuvo respuesta");
+        return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
+    }
+
+    if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
+        values = avgDiscountWeek.averageDiscountWeekGeneral(arr);        
+        origin = 'general';
+        
+    } else if(req.query.origin === 'Zara'){
+        origin = 'Zara';
+        values = avgDiscount.averageDiscount(arr);
+
+    } else if(req.query.origin === 'Mango'){
+        origin = 'Mango';
+        values = avgDiscount.averageDiscount(arr);
+    }
+
+    let weeks = ['Ene 1-7','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+    
+
+    
+    // respuesta para el frontend
+    obj = {       
+        origin,
+        values,
+        weeks
     }
 
 

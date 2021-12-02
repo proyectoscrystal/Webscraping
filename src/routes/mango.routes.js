@@ -1,5 +1,6 @@
 const mangoCtl = require("../core/mangoCtl");
 const scrapingCtl = require("../core/scrapingCtl");
+const weekCtl = require("../core/weekFilterCtl");
 const colorsController = require("../core/filtersColorsControllers/colorsController");
 const barchartsController = require("../core/filtersColorsControllers/barChartsController");
 
@@ -68,6 +69,7 @@ module.exports = (router) => {
     // para los barcharts de vista colores
     router.get('/m_infoGeneralColors',barchartsController.colorGeneralChart); 
     router.get('/m_infoGeneralColorsMateriales',barchartsController.colorGeneralChartMateriales); 
+    router.get('/m_averageDiscountWeek',weekCtl.averageDiscountWeek); 
 
 
 }
