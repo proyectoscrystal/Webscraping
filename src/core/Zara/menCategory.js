@@ -23,7 +23,12 @@ exports.categoriaHombre = async () => {
     console.log("Hora guardada!");
   });
 
-  const browser = await puppeteer.launch({ headless: true }); //headless true/false para visualizar el navegador
+      const browser = await puppeteer.launch(
+        { 
+            headless: true,
+            args: ["--no-sandbox"]
+         }
+        ); //headless true/false para visualizar el navegador
 
   const menCategory = Url.menCategoryLink;
 

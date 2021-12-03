@@ -4,7 +4,12 @@ const getscraping = require("../zaraCtl");
 const Url = require("../linksUrls");
 
 exports.newWoman = async () => {
-  const browser = await puppeteer.launch({ headless: true }); //headless true/false para visualizar el navegador
+      const browser = await puppeteer.launch(
+        { 
+            headless: true,
+            args: ["--no-sandbox"]
+         }
+        ); //headless true/false para visualizar el navegador
 
   const newWoman = Url.newWomanLink;
 
