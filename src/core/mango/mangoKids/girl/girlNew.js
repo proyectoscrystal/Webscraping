@@ -16,8 +16,8 @@ exports.girlNew = async () => {
         //let count = 2;
 
         await page.goto(girlNew, { waitUntil: "networkidle2" });
+        await page.waitForTimeout(5000);
         await autoScroll(page);
-        //await page.waitForTimeout(5000);
 
         const enlaces = await page.evaluate(() => {
             const elements = document.querySelectorAll('.yoqzg > a');
@@ -32,8 +32,8 @@ exports.girlNew = async () => {
 
         for (let enlace of enlaces) {
             await page.goto(enlace);
+            await page.waitForTimeout(2000);
             await autoScroll(page);
-            //await page.waitForTimeout(2000);
 
             try {
                 const prendas = await page.evaluate(() => {

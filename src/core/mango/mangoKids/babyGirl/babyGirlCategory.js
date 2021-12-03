@@ -4,7 +4,7 @@ const getScraping = require("../../../mangoCtl");
 const Url = require("../../../linksUrls");
 
 exports.babyGirlCategory = async () => {
-    const browser = await puppeteer.launch({headless: true});
+    const browser = await puppeteer.launch({headless: false});
 
     const babyGirlCategory = Url.babyGirlCategoryLinkMango;
 
@@ -33,7 +33,7 @@ exports.babyGirlCategory = async () => {
             }
             return links;
         });
-        //console.log(enlaces);
+        console.log(enlaces);
 
         for (let enlacehombre of enlaces) {
             try {
@@ -46,7 +46,7 @@ exports.babyGirlCategory = async () => {
             console.log("Ingresando a: " + enlacehombre);
 
             await page.waitForTimeout(5000);
-            await autoScroll(page);
+            //await autoScroll(page);
 
             const enlaces = await page.evaluate(() => {
                 const elements = document.querySelectorAll(".yoqzg > a");
@@ -60,9 +60,9 @@ exports.babyGirlCategory = async () => {
 
             for (let enlace of enlaces) {
                 try {
-                    await page.goto(enlace);
+                    await page.goto(enlace);                    
+                    await page.waitForTimeout(2000);
                     await autoScroll(page);
-                    //await page.waitForTimeout(2000);
 
                     const prendas = await page.evaluate(() => {
                         const currentURL = window.location.href;
@@ -111,10 +111,9 @@ exports.babyGirlCategory = async () => {
             
             //console.log(rebajasBabyGirl);
             await getScraping.getscraping(rebajasBabyGirl);
-
-            if (count === 0) {
-                break;
-            }
+            //if (count === 0) {
+                //break;
+            //}
         }
 
         //====================CATEGORIAS HOMBRE===========================

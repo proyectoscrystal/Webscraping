@@ -13,12 +13,12 @@ exports.girlDiscount = async () => {
 
         //====================MUJER REBAJAS===========================
         const rebajasGirl = [];
-        let count = 2;
+        //let count = 2;
 
         await page.goto(girlDiscount, { waitUntil: "networkidle2" });
         await page.setViewport({width: 920, height: 1080});
+        await page.waitForTimeout(5000);
         await autoScroll(page);
-        //await page.waitForTimeout(5000);
 
         const enlaces = await page.evaluate(() => {
             const elements = document.querySelectorAll('.yoqzg > a');
@@ -33,8 +33,8 @@ exports.girlDiscount = async () => {
 
         for (let enlace of enlaces) {
             await page.goto(enlace);
+            await page.waitForTimeout(2000);
             await autoScroll(page);
-            //await page.waitForTimeout(2000);
 
             try {
                 const prendas = await page.evaluate(() => {

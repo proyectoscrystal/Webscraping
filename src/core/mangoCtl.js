@@ -14,6 +14,7 @@ const girlCategory = require('./mango/mangoKids/girl/girlCategory');
 const girlDiscount = require('./mango/mangoKids/girl/girlDiscount');
 const girlNew = require('./mango/mangoKids/girl/girlNew');
 const babyGirlCategory = require('./mango/mangoKids/babyGirl/babyGirlCategory');
+const babyGirlDiscount = require('./mango/mangoKids/babyGirl/babyGirlDiscount');
 const babyGirlNew = require('./mango/mangoKids/babyGirl/babyGirlNew');
 const miniKids = require('./mango/mangoKids/miniKids');
 const miniKidsNew = require('./mango/mangoKids/miniKidsNew');
@@ -33,9 +34,9 @@ const instance = axios.create({
 });
 
 exports.getScrapingMango = async (req, res) => {
+  await menCategory.menCategory();
   await menNew.menNew();
   await menDiscount.menDiscount();
-  await menCategory.menCategory();
   await womanNew.womanNew();
   await womanDiscounts.womanDiscount();
   await womanCategory.womanCategory();
@@ -49,19 +50,20 @@ exports.getScrapingMango = async (req, res) => {
   await girlDiscount.girlDiscount();
   await girlCategory.girlCategory();
   await babyGirlNew.babyGirlNew();
+  await babyGirlDiscount.babyGirlDiscount();
   await babyGirlCategory.babyGirlCategory();
   await miniKids.miniKids();
   await miniKidsNew.miniKidsNew();
 }
 
 exports.getMenCategory = (req, res) => {
-    res.json({mensaje: "conectando desde mangoMenCategory"});
-    menCategory.menCategory();
+  res.json({mensaje: "conectando desde mangoMenCategory"});
+  menCategory.menCategory();
 } 
 
 exports.getMenDiscount = (req, res) => {
-    res.json({mensaje: "conectando desde mangoMenDiscount"});
-    menDiscount.menDiscount();
+  res.json({mensaje: "conectando desde mangoMenDiscount"});
+  menDiscount.menDiscount();
 }
 
 exports.getMenNew = (req, res) => {
@@ -102,6 +104,11 @@ exports.getBabyBoyNew = (req, res) => {
 exports.getBabyGirlCategory = (req, res) => {
   res.json({mensaje: "conectado desde mango babyGirlcategory"});
   babyGirlCategory.babyGirlCategory();
+}
+
+exports.getBabyGirlDiscount = (req, res) => {
+  res.json({mensaje: "conectado desde mango babyGirl discount"});
+  babyGirlDiscount.babyGirlDiscount();
 }
 
 exports.getBabyGirlNew = (req, res) => {

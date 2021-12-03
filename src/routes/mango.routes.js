@@ -4,8 +4,6 @@ const weekCtl = require("../core/weekFilterCtl");
 const colorsController = require("../core/filtersColorsControllers/colorsController");
 const barchartsController = require("../core/filtersColorsControllers/barChartsController");
 
-
-
 module.exports = (router) => {
 
     // complete scraping from Mango
@@ -28,6 +26,7 @@ module.exports = (router) => {
 
     // babyGirls routes
     router.get('/m_babyGirlCategory',mangoCtl.getBabyGirlCategory);
+    router.get('/m_babyGirlDiscount', mangoCtl.getBabyGirlDiscount);
     router.get('/m_babyGirlNew',mangoCtl.getBabyGirlNew);
 
     // Boy routes

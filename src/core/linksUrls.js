@@ -42,7 +42,7 @@ const miniKidsNewLink = 'https://www.zara.com/co/es/ninos-recien-nacido-novedade
 //Hombre
 const menCategoryLinkMango = 'https://shop.mango.com/co/hombre';
 const manDiscountLinkMango = 'https://shop.mango.com/co/hombre/destacados/special-sale_d19494954';
-const newManLinkMango = 'https://shop.mango.com/co/hombre/destacados/coat-time_d10359389';
+const newManLinkMango = 'https://shop.mango.com/co/hombre/destacados/the-gift-guide_d18330454';
 
 //Mujer
 const womanCategoryLinkMango = 'https://shop.mango.com/co/mujer';
@@ -52,7 +52,7 @@ const newWomanLinkMango = 'https://shop.mango.com/co/mujer/destacados/nuevo_d187
 //Niño
 const boyCategoryLinkMango = 'https://shop.mango.com/co/ninos';
 const boyDiscountLinkMango = 'https://shop.mango.com/co/nino/destacados/special-sale_d15011353';
-const boyNewLinkMango = 'https://shop.mango.com/co/nino/destacados/nueva-coleccion_d58349706';
+const boyNewLinkMango = 'https://shop.mango.com/co/nino/destacados/nuevo_d11326854';
 
 //Niña
 const girlCategoryLinkMango = 'https://shop.mango.com/co/ninos';
@@ -62,11 +62,11 @@ const girlNewLinkMango = 'https://shop.mango.com/co/nina/destacados/nuevo_d15971
 //Bebe niño
 const babyBoyCategoryLinkMango = 'https://shop.mango.com/co/ninos';
 const babyBoyDiscountLinkMango = 'https://shop.mango.com/co/bebe-nino/destacados/special-sale_d19248612';
-const babyBoyNewLinkMango = 'https://shop.mango.com/co/bebe-nino/destacados/nueva-coleccion_d56528041';
+const babyBoyNewLinkMango = 'https://shop.mango.com/co/bebe-nino/destacados/the-gift-guide_d14124349';
 
 //Bebe niña
 const babyGirlCategoryLinkMango = 'https://shop.mango.com/co/ninos';
-const babyGirlDiscountLinkMango = '';
+const babyGirlDiscountLinkMango = 'https://shop.mango.com/co/bebe-nina/destacados/special-sale_d12229554';
 const babyGirlNewLinkMango = 'https://shop.mango.com/co/bebe-nina/destacados/descubre-la-coleccion-de-newborn_d55670692';
 
 //Mini kids

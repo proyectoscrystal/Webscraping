@@ -19,6 +19,9 @@ exports.girlCategory = async () => {
         await page.setViewport({width: 920, height: 1080});
         await page.waitForTimeout(5000);
 
+        await page.hover('#kids');
+        await page.waitForTimeout(2000);
+
         const enlaces = await page.evaluate(() => {
             const elements = document.querySelectorAll("ul.section-detail:nth-child(2) > li > a");
             const links = [];
@@ -27,7 +30,7 @@ exports.girlCategory = async () => {
             }
             return links;
         });
-        //console.log(enlaces);
+        console.log(enlaces);
 
         for (let enlacehombre of enlaces) {
             try {
@@ -40,7 +43,7 @@ exports.girlCategory = async () => {
             console.log("Ingresando a: " + enlacehombre);
 
             await page.waitForTimeout(5000);
-            await autoScroll(page);
+            //await autoScroll(page);
 
             const enlaces = await page.evaluate(() => {
                 const elements = document.querySelectorAll(".yoqzg > a");
@@ -55,8 +58,8 @@ exports.girlCategory = async () => {
             for (let enlace of enlaces) {
                 try {
                     await page.goto(enlace);
-                    //await autoScroll(page);
                     await page.waitForTimeout(2000);
+                    await autoScroll(page);
 
                     const prendas = await page.evaluate(() => {
                         const currentURL = window.location.href;
