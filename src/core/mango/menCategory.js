@@ -53,7 +53,7 @@ exports.menCategory = async () => {
 
     for (let enlacehombre of enlaceshombre) {
       try {
-
+ 
         await page.goto(enlacehombre);
 
       } catch (error) {
