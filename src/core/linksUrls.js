@@ -66,7 +66,7 @@ const babyBoyNewLinkMango = 'https://shop.mango.com/co/bebe-nino/destacados/the-
 
 //Bebe niña
 const babyGirlCategoryLinkMango = 'https://shop.mango.com/co/ninos';
-const babyGirlDiscountLinkMango = '';
+const babyGirlDiscountLinkMango = 'https://shop.mango.com/co/bebe-nina/destacados/special-sale_d12229554';
 const babyGirlNewLinkMango = 'https://shop.mango.com/co/bebe-nina/destacados/descubre-la-coleccion-de-newborn_d55670692';
 
 //Mini kids

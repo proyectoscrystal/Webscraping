@@ -33,7 +33,7 @@ exports.babyBoyCategory = async () => {
             }
             return links;
         });
-        //console.log(enlaces);
+        console.log(enlaces);
 
         for (let enlacehombre of enlaces) {
             try {
@@ -60,9 +60,9 @@ exports.babyBoyCategory = async () => {
 
             for (let enlace of enlaces) {
                 try {
-                    await page.goto(enlace);
+                    await page.goto(enlace);                    
+                    await page.waitForTimeout(2000);
                     await autoScroll(page);
-                    //await page.waitForTimeout(2000);
 
                     const prendas = await page.evaluate(() => {
                         const currentURL = window.location.href;
