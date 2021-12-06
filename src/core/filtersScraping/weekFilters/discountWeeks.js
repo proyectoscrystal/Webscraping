@@ -218,7 +218,6 @@ exports.averageDiscountWeekGeneral = (arr) => {
     let lmdic10_17 = [];
     let lmdic18_24 = [];
     let lmdic25_31 = [];
-  
     
     let date = new Date();
     // let count = 1;
@@ -2077,208 +2076,1047 @@ exports.averageDiscountWeekGeneral = (arr) => {
 
   
   // array de descuentos promedio por marca y dos años
-  exports.averageDiscount = arr => {
+  exports.averageDiscountWeeks = arr => {
+    let obj = {}; // objeto que contiene los arrays con los valores por semana
+    // arreglos para descuentos promedio zara año actual por semana
+    let ene1_7 = [];
+    let ene8_14 = [];
+    let ene15_21 = [];
+    let ene22_31 = [];
+    let feb1_11 = [];
+    let feb12_18 = [];
+    let feb19_25 = [];
+    let feb26_29 = [];
+    let mar1_11 = [];
+    let mar12_18 = [];
+    let mar19_25 = [];
+    let mar26_31 = [];
+    let abr1_8 = [];
+    let abr9_15 = [];
+    let abr16_22 = [];
+    let abr23_30 = [];
+    let may1_6 = [];
+    let may7_13 = [];
+    let may14_20 = [];
+    let may21_31 = [];
+    let jun1_10 = [];
+    let jun11_17 = [];
+    let jun18_24 = [];
+    let jun25_30 = [];
+    let jul1_8 = [];
+    let jul9_15 = [];
+    let jul16_22 = [];
+    let jul23_31 = [];
+    let ago1_5 = [];
+    let ago6_12 = [];
+    let ago13_19 = [];
+    let ago20_26 = [];
+    let ago27_31 = [];
+    let sep1_9 = [];
+    let sep10_16 = [];
+    let sep17_23 = [];
+    let sep24_30 = [];
+    let oct1_7 = [];
+    let oct8_14 = [];
+    let oct15_21 = [];
+    let oct22_31 = [];
+    let nov1_5 = [];
+    let nov6_11 = [];
+    let nov12_18 = [];
+    let nov19_25 = [];
+    let nov26_30 = [];
+    let dic1_9 = [];
+    let dic10_17 = [];
+    let dic18_24 = [];
+    let dic25_31 = [];
     
-      let weeksActual = [];
-      let weeksLastYear = [];
+  
+    let weeksActualYear = [];
+    let weeksLastYear = [];
+  
+    // arreglos para descuentos promedio zara por semana año anterior
+    let Zene1_7 = [];
+    let Zene8_14 = [];
+    let Zene15_21 = [];
+    let Zene22_31 = [];
+    let Zfeb1_11 = [];
+    let Zfeb12_18 = [];
+    let Zfeb19_25 = [];
+    let Zfeb26_29 = [];
+    let Zmar1_11 = [];
+    let Zmar12_18 = [];
+    let Zmar19_25 = [];
+    let Zmar26_31 = [];
+    let Zabr1_8 = [];
+    let Zabr9_15 = [];
+    let Zabr16_22 = [];
+    let Zabr23_30 = [];
+    let Zmay1_6 = [];
+    let Zmay7_13 = [];
+    let Zmay14_20 = [];
+    let Zmay21_31 = [];
+    let Zjun1_10 = [];
+    let Zjun11_17 = [];
+    let Zjun18_24 = [];
+    let Zjun25_30 = [];
+    let Zjul1_8 = [];
+    let Zjul9_15 = [];
+    let Zjul16_22 = [];
+    let Zjul23_31 = [];
+    let Zago1_5 = [];
+    let Zago6_12 = [];
+    let Zago13_19 = [];
+    let Zago20_26 = [];
+    let Zago27_31 = [];
+    let Zsep1_9 = [];
+    let Zsep10_16 = [];
+    let Zsep17_23 = [];
+    let Zsep24_30 = [];
+    let Zoct1_7 = [];
+    let Zoct8_14 = [];
+    let Zoct15_21 = [];
+    let Zoct22_31 = [];
+    let Znov1_5 = [];
+    let Znov6_11 = [];
+    let Znov12_18 = [];
+    let Znov19_25 = [];
+    let Znov26_30 = [];
+    let Zdic1_9 = [];
+    let Zdic10_17 = [];
+    let Zdic18_24 = [];
+    let Zdic25_31 = [];
     
       // let count = 1;
+      
+    let date = new Date();
     
       try {
         arr.forEach( element => {
-          let date = new Date();
-          let currentYear = date.getFullYear();
-          let currentMonth = date.getMonth() - 1;
-          let lastYear = date.getFullYear() - 1;
-          let fecha = element.createdAt + ''; // funcion para obtener la fecha
-          let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero      
-          let year = parseInt(fecha.split(" ")[3]);
+            let currentYear = date.getFullYear();
+            let year = (element.createdAt);
+            fechaDoc = (year.toISOString()).split("T")[0];
+            year = parseInt(((year.toISOString()).split("T")[0]).split("-")[0]);
+            let lastYear = currentYear - 1;
+            let fecha = (element.createdAt).getTime(); // funcion para obtener la fecha
     
           if (year === currentYear && element.discontinued === false) {
-            if (mes === 'Jan' && element.descuento !== null) {
-              // estructura interna del if
-              let { precio, descuento} = element;
-              let discount = 0;
-              discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-  
-              return eneZ.push(discount);
-            } 
-            if(mes === 'Feb' && element.descuento !== null)  {
-              let { precio, descuento} = element;
-              let discount = 0;
-              discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-  
-              febZ.push(discount);
-            } 
-            if(mes === 'Mar' && element.descuento !== null)  {
-              let { precio, descuento} = element;
-              let discount = 0;
-              discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-  
-              marZ.push(discount);
-            }
-            if(mes === 'Apr' && element.descuento !== null)  {
-              let { precio, descuento} = element;
-              let discount = 0;
-              discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-              abrZ.push(discount);
-            }
-            if(mes === 'May' && element.descuento !== null)  {
-              let { precio, descuento} = element;
-              let discount = 0;
-              discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-              mayZ.push(discount);
-            }
-            if(mes === 'Jun' && element.descuento !== null)  {
-              let { precio, descuento} = element;
-              let discount = 0;
-              discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-              junZ.push(discount);
-            }
-            if(mes === 'Jul' && element.descuento !== null)  {
-              let { precio, descuento} = element;
-              let discount = 0;
-              discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-              julZ.push(discount);
-            }
-            if(mes === 'Aug' && element.descuento !== null)  {
-              let { precio, descuento} = element;
-              let discount = 0;
-              discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-              agosZ.push(discount);
-            }
-            if(mes === 'Sep' && element.descuento !== null)  {
-              let { precio, descuento} = element;
-              let discount = 0;
-              discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-              sepZ.push(discount);
-            }
-            if(mes === 'Oct' && element.descuento !== null)  {
-              let { precio, descuento} = element;
-              let discount = 0;
-              discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-              octZ.push(discount);
-            }
-            if(mes === 'Nov' && element.descuento !== null)  {
-              let { precio, descuento} = element;
-              let discount = 0;
-              discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-              novZ.push(discount);
-            }
-            if(mes === 'Dec' && element.descuento !== null)  {
-              let { precio, descuento} = element;
-              let discount = 0;
-              discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-              dicZ.push(discount);
-            }
+            if (fecha >= new Date(currentYear,0,1).getTime() && fecha <= new Date(currentYear,0,7,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                ene1_7.push(discount);
+                return;
+              } 
+              if (fecha >= new Date(currentYear,0,08).getTime() && fecha <= new Date(currentYear,0,14,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                ene8_14.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,0,15).getTime() && fecha <= new Date(currentYear,0,21,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                ene15_21.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,0,22).getTime() && fecha <= new Date(currentYear,0,31,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                ene22_31.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,1,01).getTime() && fecha <= new Date(currentYear,1,11,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                feb1_11.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,1,12).getTime() && fecha <= new Date(currentYear,1,18,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                feb12_18.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,1,19).getTime() && fecha <= new Date(currentYear,1,25,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                feb19_25.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,1,26).getTime() && fecha <= new Date(currentYear,1,29,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                feb26_29.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,2,01).getTime() && fecha <= new Date(currentYear,2,11,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                mar1_11.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,2,12).getTime() && fecha <= new Date(currentYear,2,18,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                mar12_18.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,2,19).getTime() && fecha <= new Date(currentYear,2,25,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                mar19_25.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,2,26).getTime() && fecha <= new Date(currentYear,2,31,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                mar26_31.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,3,1).getTime() && fecha <= new Date(currentYear,3,08,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                abr1_8.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,3,09).getTime() && fecha <= new Date(currentYear,3,15,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                abr9_15.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,3,16).getTime() && fecha <= new Date(currentYear,3,22,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                abr16_22.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,3,23).getTime() && fecha <= new Date(currentYear,3,30,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                abr23_30.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,4,01).getTime() && fecha <= new Date(currentYear,4,6,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                may1_6.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,4,07).getTime() && fecha <= new Date(currentYear,4,13,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                may7_13.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,4,14).getTime() && fecha <= new Date(currentYear,4,20,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                may14_20.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,4,21).getTime() && fecha <= new Date(currentYear,4,31,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                may21_31.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,5,1).getTime() && fecha <= new Date(currentYear,5,10,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                jun1_10.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,5,11).getTime() && fecha <= new Date(currentYear,5,17,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                jun11_17.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,5,18).getTime() && fecha <= new Date(currentYear,5,24,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                jun18_24.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,5,25).getTime() && fecha <= new Date(currentYear,5,30,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                jun25_30.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,6,1).getTime() && fecha <= new Date(currentYear,6,8,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                jul1_8.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,6,9).getTime() && fecha <= new Date(currentYear,6,15,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                jul9_15.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,6,16).getTime() && fecha <= new Date(currentYear,6,22,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                jul16_22.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,6,23).getTime() && fecha <= new Date(currentYear,6,31,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                jul23_31.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,7,1).getTime() && fecha <= new Date(currentYear,7,5,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                ago1_5.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,7,6).getTime() && fecha <= new Date(currentYear,7,12,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                ago6_12.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,7,13).getTime() && fecha <= new Date(currentYear,7,19,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                ago13_19.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,7,20).getTime() && fecha <= new Date(currentYear,7,26,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                ago20_26.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,7,27).getTime() && fecha <= new Date(currentYear,7,31,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                ago27_31.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,8,1).getTime() && fecha <= new Date(currentYear,8,9,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                sep1_9.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,8,10).getTime() && fecha <= new Date(currentYear,8,16,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                sep10_16.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,8,17).getTime() && fecha <= new Date(currentYear,8,23,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                sep17_23.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,8,24).getTime() && fecha <= new Date(currentYear,8,30,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                sep24_30.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,9,1).getTime() && fecha <= new Date(currentYear,9,7,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                oct1_7.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,9,8).getTime() && fecha <= new Date(currentYear,9,14,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                oct8_14.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,9,15).getTime() && fecha <= new Date(currentYear,9,21,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                oct15_21.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,9,22).getTime() && fecha <= new Date(currentYear,9,31,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                oct22_31.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,10,1).getTime() && fecha <= new Date(currentYear,10,5,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                nov1_5.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,10,6).getTime() && fecha <= new Date(currentYear,10,11,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                nov6_11.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,10,12).getTime() && fecha <= new Date(currentYear,10,18,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                nov12_18.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,10,19).getTime() && fecha <= new Date(currentYear,10,25,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                nov19_25.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,10,26).getTime() && fecha <= new Date(currentYear,10,30,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                nov26_30.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,11,1).getTime() && fecha <= new Date(currentYear,11,9,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                dic1_9.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,11,10).getTime() && fecha <= new Date(currentYear,11,17,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                dic10_17.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,11,18).getTime() && fecha <= new Date(currentYear,11,24,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                dic18_24.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,11,25).getTime() && fecha <= new Date(currentYear,11,31,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                dic25_31.push(discount);
+                return;
+              }
           }
     
           if (year === lastYear && element.discontinued === false) {
-            if(mes === 'Jan' && element.descuento !== null)  {
-              let { precio, descuento} = element;
-              let discount = 0;
-              discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-              ene.push(discount);
-            }
-            if(mes === 'Feb' && element.descuento !== null)  {
-              let { precio, descuento} = element;
-              let discount = 0;
-              discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-              feb.push(discount);
-            }
-            if(mes === 'Mar' && element.descuento !== null)  {
-              let { precio, descuento} = element;
-              let discount = 0;
-              discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-              mar.push(discount);
-            }
-            if(mes === 'Apr' && element.descuento !== null)  {
-              let { precio, descuento} = element;
-              let discount = 0;
-              discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-              abr.push(discount);
-            }
-            if(mes === 'May' && element.descuento !== null)  {
-              let { precio, descuento} = element;
-              let discount = 0;
-              discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-              may.push(discount);
-            }
-            if (mes === 'Jun' && element.descuento !== null)  {
-              let { precio, descuento} = element;
-              let discount = 0;
-              discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-              jun.push(discount);
-            }
-            if (mes === 'Jul' && element.descuento !== null)  {
-              let { precio, descuento} = element;
-              let discount = 0;
-              discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-              jul.push(discount);
-            }
-            if (mes === 'Aug' && element.descuento !== null)  {
-              let { precio, descuento} = element;
-              let discount = 0;
-              discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-              agos.push(discount);
-            }
-            if (mes === 'Sep' && element.descuento !== null)  {
-              let { precio, descuento} = element;
-              let discount = 0;
-              discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-              sep.push(discount);
-            }
-            if (mes === 'Oct' && element.descuento !== null)  {
-              let { precio, descuento} = element;
-              let discount = 0;
-              discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-              oct.push(discount);
-            }
-            if (mes === 'Nov' && element.descuento !== null)  {
-              let { precio, descuento} = element;
-              let discount = 0;
-              discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-              nov.push(discount);
-            }
-            if (mes === 'Dec' && element.descuento !== null)  {
-              let { precio, descuento} = element;
-              let discount = 0;
-              discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-              dic.push(discount);
-            }
+            if (fecha >= new Date(currentYear,0,1).getTime() && fecha <= new Date(currentYear,0,7,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zene1_7.push(discount);
+                return;
+              } 
+              if (fecha >= new Date(currentYear,0,08).getTime() && fecha <= new Date(currentYear,0,14,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zene8_14.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,0,15).getTime() && fecha <= new Date(currentYear,0,21,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zene15_21.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,0,22).getTime() && fecha <= new Date(currentYear,0,31,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zene22_31.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,1,01).getTime() && fecha <= new Date(currentYear,1,11,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zfeb1_11.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,1,12).getTime() && fecha <= new Date(currentYear,1,18,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zfeb12_18.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,1,19).getTime() && fecha <= new Date(currentYear,1,25,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zfeb19_25.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,1,26).getTime() && fecha <= new Date(currentYear,1,29,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zfeb26_29.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,2,01).getTime() && fecha <= new Date(currentYear,2,11,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zmar1_11.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,2,12).getTime() && fecha <= new Date(currentYear,2,18,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zmar12_18.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,2,19).getTime() && fecha <= new Date(currentYear,2,25,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zmar19_25.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,2,26).getTime() && fecha <= new Date(currentYear,2,31,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zmar26_31.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,3,1).getTime() && fecha <= new Date(currentYear,3,08,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zabr1_8.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,3,09).getTime() && fecha <= new Date(currentYear,3,15,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zabr9_15.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,3,16).getTime() && fecha <= new Date(currentYear,3,22,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zabr16_22.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,3,23).getTime() && fecha <= new Date(currentYear,3,30,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zabr23_30.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,4,01).getTime() && fecha <= new Date(currentYear,4,6,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zmay1_6.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,4,07).getTime() && fecha <= new Date(currentYear,4,13,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zmay7_13.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,4,14).getTime() && fecha <= new Date(currentYear,4,20,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zmay14_20.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,4,21).getTime() && fecha <= new Date(currentYear,4,31,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zmay21_31.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,5,1).getTime() && fecha <= new Date(currentYear,5,10,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zjun1_10.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,5,11).getTime() && fecha <= new Date(currentYear,5,17,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zjun11_17.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,5,18).getTime() && fecha <= new Date(currentYear,5,24,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zjun18_24.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,5,25).getTime() && fecha <= new Date(currentYear,5,30,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zjun25_30.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,6,1).getTime() && fecha <= new Date(currentYear,6,8,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zjul1_8.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,6,9).getTime() && fecha <= new Date(currentYear,6,15,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zjul9_15.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,6,16).getTime() && fecha <= new Date(currentYear,6,22,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zjul16_22.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,6,23).getTime() && fecha <= new Date(currentYear,6,31,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zjul23_31.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,7,1).getTime() && fecha <= new Date(currentYear,7,5,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zago1_5.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,7,6).getTime() && fecha <= new Date(currentYear,7,12,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zago6_12.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,7,13).getTime() && fecha <= new Date(currentYear,7,19,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zago13_19.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,7,20).getTime() && fecha <= new Date(currentYear,7,26,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zago20_26.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,7,27).getTime() && fecha <= new Date(currentYear,7,31,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zago27_31.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,8,1).getTime() && fecha <= new Date(currentYear,8,9,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zsep1_9.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,8,10).getTime() && fecha <= new Date(currentYear,8,16,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zsep10_16.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,8,17).getTime() && fecha <= new Date(currentYear,8,23,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zsep17_23.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,8,24).getTime() && fecha <= new Date(currentYear,8,30,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zsep24_30.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,9,1).getTime() && fecha <= new Date(currentYear,9,7,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zoct1_7.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,9,8).getTime() && fecha <= new Date(currentYear,9,14,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zoct8_14.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,9,15).getTime() && fecha <= new Date(currentYear,9,21,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zoct15_21.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,9,22).getTime() && fecha <= new Date(currentYear,9,31,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zoct22_31.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,10,1).getTime() && fecha <= new Date(currentYear,10,5,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Znov1_5.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,10,6).getTime() && fecha <= new Date(currentYear,10,11,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Znov6_11.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,10,12).getTime() && fecha <= new Date(currentYear,10,18,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Znov12_18.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,10,19).getTime() && fecha <= new Date(currentYear,10,25,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Znov19_25.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,10,26).getTime() && fecha <= new Date(currentYear,10,30,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Znov26_30.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,11,1).getTime() && fecha <= new Date(currentYear,11,9,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zdic1_9.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,11,10).getTime() && fecha <= new Date(currentYear,11,17,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zdic10_17.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,11,18).getTime() && fecha <= new Date(currentYear,11,24,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zdic18_24.push(discount);
+                return;
+              }
+              if (fecha >= new Date(currentYear,11,25).getTime() && fecha <= new Date(currentYear,11,31,23).getTime()  && element.descuento !== null) {
+                let { precio, descuento} = element;
+                let discount = 0;
+                discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+      
+                Zdic25_31.push(discount);
+                return;
+              }
           }
         }); // fin del ciclo que guarda los precios de cada mes
       } catch (error) {
         console.log(error);
       }
     
-      valuesZ[0] = setAverageDiscount(eneZ);
-      valuesZ[1] = setAverageDiscount(febZ);
-      valuesZ[2] = setAverageDiscount(marZ);
-      valuesZ[3] = setAverageDiscount(abrZ);
-      valuesZ[4] = setAverageDiscount(mayZ);
-      valuesZ[5] = setAverageDiscount(junZ);
-      valuesZ[6] = setAverageDiscount(julZ);
-      valuesZ[7] = setAverageDiscount(agosZ);
-      valuesZ[8] = setAverageDiscount(sepZ);
-      valuesZ[9] = setAverageDiscount(octZ);
-      valuesZ[10] = setAverageDiscount(novZ);
-      valuesZ[11] = setAverageDiscount(dicZ);
+    weeksActualYear[0] = setAverageDiscount(ene1_7);
+    weeksActualYear[1] = setAverageDiscount(ene8_14);
+    weeksActualYear[2] = setAverageDiscount(ene15_21);
+    weeksActualYear[3] = setAverageDiscount(ene22_31);
+    weeksActualYear[4] = setAverageDiscount(feb1_11);
+    weeksActualYear[5] = setAverageDiscount(feb12_18);
+    weeksActualYear[6] = setAverageDiscount(feb19_25);
+    weeksActualYear[7] = setAverageDiscount(feb26_29);
+    weeksActualYear[8] = setAverageDiscount(mar1_11);
+    weeksActualYear[9] = setAverageDiscount(mar12_18);
+    weeksActualYear[10] = setAverageDiscount(mar19_25);
+    weeksActualYear[11] = setAverageDiscount(mar26_31);
+    weeksActualYear[12] = setAverageDiscount(abr1_8);
+    weeksActualYear[13] = setAverageDiscount(abr9_15);
+    weeksActualYear[14] = setAverageDiscount(abr16_22);
+    weeksActualYear[15] = setAverageDiscount(abr23_30);
+    weeksActualYear[16] = setAverageDiscount(may1_6);
+    weeksActualYear[17] = setAverageDiscount(may7_13);
+    weeksActualYear[18] = setAverageDiscount(may14_20);
+    weeksActualYear[19] = setAverageDiscount(may21_31);
+    weeksActualYear[20] = setAverageDiscount(jun1_10);
+    weeksActualYear[21] = setAverageDiscount(jun11_17);
+    weeksActualYear[22] = setAverageDiscount(jun18_24);
+    weeksActualYear[23] = setAverageDiscount(jun25_30);
+    weeksActualYear[24] = setAverageDiscount(jul1_8);
+    weeksActualYear[25] = setAverageDiscount(jul9_15);
+    weeksActualYear[26] = setAverageDiscount(jul16_22);
+    weeksActualYear[27] = setAverageDiscount(jul23_31);
+    weeksActualYear[28] = setAverageDiscount(ago1_5);
+    weeksActualYear[29] = setAverageDiscount(ago6_12);
+    weeksActualYear[30] = setAverageDiscount(ago13_19);
+    weeksActualYear[31] = setAverageDiscount(ago20_26);
+    weeksActualYear[32] = setAverageDiscount(ago27_31);
+    weeksActualYear[33] = setAverageDiscount(sep1_9);
+    weeksActualYear[34] = setAverageDiscount(sep10_16);
+    weeksActualYear[35] = setAverageDiscount(sep17_23);
+    weeksActualYear[36] = setAverageDiscount(sep24_30);
+    weeksActualYear[37] = setAverageDiscount(oct1_7);
+    weeksActualYear[38] = setAverageDiscount(oct8_14);
+    weeksActualYear[39] = setAverageDiscount(oct15_21);
+    weeksActualYear[40] = setAverageDiscount(oct22_31);
+    weeksActualYear[41] = setAverageDiscount(nov1_5);
+    weeksActualYear[42] = setAverageDiscount(nov6_11);
+    weeksActualYear[43] = setAverageDiscount(nov12_18);
+    weeksActualYear[44] = setAverageDiscount(nov19_25);
+    weeksActualYear[45] = setAverageDiscount(nov26_30);
+    weeksActualYear[46] = setAverageDiscount(dic1_9);
+    weeksActualYear[47] = setAverageDiscount(dic10_17);
+    weeksActualYear[48] = setAverageDiscount(dic18_24);
+    weeksActualYear[49] = setAverageDiscount(dic25_31);
+  
+    // // descuento año anterior 
+    weeksLastYear[0] = setAverageDiscount(Zene1_7);
+    weeksLastYear[1] = setAverageDiscount(Zene8_14);
+    weeksLastYear[2] = setAverageDiscount(Zene15_21);
+    weeksLastYear[3] = setAverageDiscount(Zene22_31);
+    weeksLastYear[4] = setAverageDiscount(Zfeb1_11);
+    weeksLastYear[5] = setAverageDiscount(Zfeb12_18);
+    weeksLastYear[6] = setAverageDiscount(Zfeb19_25);
+    weeksLastYear[7] = setAverageDiscount(Zfeb26_29);
+    weeksLastYear[8] = setAverageDiscount(Zmar1_11);
+    weeksLastYear[9] = setAverageDiscount(Zmar12_18);
+    weeksLastYear[10] = setAverageDiscount(Zmar19_25);
+    weeksLastYear[11] = setAverageDiscount(Zmar26_31);
+    weeksLastYear[12] = setAverageDiscount(Zabr1_8);
+    weeksLastYear[13] = setAverageDiscount(Zabr9_15);
+    weeksLastYear[14] = setAverageDiscount(Zabr16_22);
+    weeksLastYear[15] = setAverageDiscount(Zabr23_30);
+    weeksLastYear[16] = setAverageDiscount(Zmay1_6);
+    weeksLastYear[17] = setAverageDiscount(Zmay7_13);
+    weeksLastYear[18] = setAverageDiscount(Zmay14_20);
+    weeksLastYear[19] = setAverageDiscount(Zmay21_31);
+    weeksLastYear[20] = setAverageDiscount(Zjun1_10);
+    weeksLastYear[21] = setAverageDiscount(Zjun11_17);
+    weeksLastYear[22] = setAverageDiscount(Zjun18_24);
+    weeksLastYear[23] = setAverageDiscount(Zjun25_30);
+    weeksLastYear[24] = setAverageDiscount(Zjul1_8);
+    weeksLastYear[25] = setAverageDiscount(Zjul9_15);
+    weeksLastYear[26] = setAverageDiscount(Zjul16_22);
+    weeksLastYear[27] = setAverageDiscount(Zjul23_31);
+    weeksLastYear[28] = setAverageDiscount(Zago1_5);
+    weeksLastYear[29] = setAverageDiscount(Zago6_12);
+    weeksLastYear[30] = setAverageDiscount(Zago13_19);
+    weeksLastYear[31] = setAverageDiscount(Zago20_26);
+    weeksLastYear[32] = setAverageDiscount(Zago27_31);
+    weeksLastYear[33] = setAverageDiscount(Zsep1_9);
+    weeksLastYear[34] = setAverageDiscount(Zsep10_16);
+    weeksLastYear[35] = setAverageDiscount(Zsep17_23);
+    weeksLastYear[36] = setAverageDiscount(Zsep24_30);
+    weeksLastYear[37] = setAverageDiscount(Zoct1_7);
+    weeksLastYear[38] = setAverageDiscount(Zoct8_14);
+    weeksLastYear[39] = setAverageDiscount(Zoct15_21);
+    weeksLastYear[40] = setAverageDiscount(Zoct22_31);
+    weeksLastYear[41] = setAverageDiscount(Znov1_5);
+    weeksLastYear[42] = setAverageDiscount(Znov6_11);
+    weeksLastYear[43] = setAverageDiscount(Znov12_18);
+    weeksLastYear[44] = setAverageDiscount(Znov19_25);
+    weeksLastYear[45] = setAverageDiscount(Znov26_30);
+    weeksLastYear[46] = setAverageDiscount(Zdic1_9);
+    weeksLastYear[47] = setAverageDiscount(Zdic10_17);
+    weeksLastYear[48] = setAverageDiscount(Zdic18_24);
+    weeksLastYear[49] = setAverageDiscount(Zdic25_31);
     
-      valuesZ[12] = setAverageDiscount(ene);
-      valuesZ[13] = setAverageDiscount(feb);
-      valuesZ[14] = setAverageDiscount(mar);
-      valuesZ[15] = setAverageDiscount(abr);
-      valuesZ[16] = setAverageDiscount(may);
-      valuesZ[17] = setAverageDiscount(jun);
-      valuesZ[18] = setAverageDiscount(jul);
-      valuesZ[19] = setAverageDiscount(agos);
-      valuesZ[20] = setAverageDiscount(sep);
-      valuesZ[21] = setAverageDiscount(oct);
-      valuesZ[22] = setAverageDiscount(nov);
-      valuesZ[23] = setAverageDiscount(dic);
-    
-      return valuesZ;
+    obj.weeksActualYear = weeksActualYear;
+    obj.weeksLastYear = weeksLastYear;
+
+
+      return obj;
     };
     
     // metodo para sacar el promedio
