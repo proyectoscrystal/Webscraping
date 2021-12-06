@@ -3132,29 +3132,3 @@ exports.averageDiscountWeekGeneral = (arr) => {
           return parseFloat((descuentoPromedio / arr.length).toFixed(2));
       }
     };
-  
-    
-  
-    // metodo para setear el descuento total mango y zara sin filtro
-    exports.averageDiscountQuery = (arr) => {
-      let descuentoPromedio = 0;
-      let totalProductosDescuento = 0;
-      arr.forEach((element) => {
-        let { precio, descuento } = element;
-        if (descuento !== null) {
-          totalProductosDescuento++;
-          descuentoPromedio += parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
-          // console.log(descuentoPromedio);
-        } 
-  
-      });
-  
-      if (descuentoPromedio === 0) {
-          return descuentoPromedio
-      } else {
-          // console.log(parseInt((descuentoPromedio / arr.length).toFixed()));
-          return parseFloat((descuentoPromedio / totalProductosDescuento).toFixed(2));
-      }
-  
-    };
-  

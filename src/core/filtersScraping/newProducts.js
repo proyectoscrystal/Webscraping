@@ -40,7 +40,7 @@ exports.averageNewsMonthOrigin = (arr) => {
         let year = parseInt(fecha.split(" ")[3]);
         // console.log(year);
   
-        if (year === currentYear && element.discontinued === false) {
+        if (year === currentYear) {
           if (mes === "Jan" && element.tag === "nuevo") return eneZ++; 
           if (mes === "Feb" && element.tag === "nuevo") return febZ++;
           if (mes === "Mar" && element.tag === "nuevo") return marZ++;
@@ -55,7 +55,7 @@ exports.averageNewsMonthOrigin = (arr) => {
           if (mes === "Dec" && element.tag === "nuevo") return dicZ++;
         }
   
-        if (year === lastYear && element.discontinued === false) {
+        if (year === lastYear) {
           if (mes === "Jan" && element.tag === "nuevo") return ene++;
           if (mes === "Feb" && element.tag === "nuevo") return feb++;
           if (mes === "Mar" && element.tag === "nuevo") return mar++;
@@ -147,7 +147,7 @@ exports.averageNewsMonthGeneral = (arr) => {
         let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero
         let year = parseInt(fecha.split(" ")[3]);
   
-        if (year === currentYear && element.origin == 'Zara' && element.discontinued === false) {
+        if (year === currentYear && element.origin == 'Zara') {
           if (mes === "Jan" && element.tag === "nuevo") return eneZ++;
           if (mes === "Feb" && element.tag === "nuevo") return febZ++;
           if (mes === "Mar" && element.tag === "nuevo") return marZ++;
@@ -162,7 +162,7 @@ exports.averageNewsMonthGeneral = (arr) => {
           if (mes === "Dec" && element.tag === "nuevo") return dicZ++;
         }
   
-        if (year === lastYear  && element.origin == 'Zara' && element.discontinued === false) {
+        if (year === lastYear  && element.origin == 'Zara') {
           if (mes === "Jan" && element.tag === "nuevo") return ene++;
           if (mes === "Feb" && element.tag === "nuevo") return feb++;
           if (mes === "Mar" && element.tag === "nuevo") return mar++;
@@ -247,7 +247,7 @@ exports.averageNewsMonthGeneral = (arr) => {
         let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero
         let year = parseInt(fecha.split(" ")[3]);
   
-        if (year === currentYear && element.origin == 'Mango' && element.discontinued === false) {
+        if (year === currentYear && element.origin == 'Mango') {
           if (mes === "Jan" && element.tag === "nuevo") return enem++;
           if (mes === "Feb" && element.tag === "nuevo") return febm++;
           if (mes === "Mar" && element.tag === "nuevo") return marm++;
@@ -262,7 +262,7 @@ exports.averageNewsMonthGeneral = (arr) => {
           if (mes === "Dec" && element.tag === "nuevo") return dicm++;
         }
   
-        if (year === lastYear  && element.origin == 'Mango' && element.discontinued === false) {
+        if (year === lastYear  && element.origin == 'Mango') {
           if (mes === "Jan" && element.tag === "nuevo") return ene2++;
           if (mes === "Feb" && element.tag === "nuevo") return feb2++;
           if (mes === "Mar" && element.tag === "nuevo") return mar2++;
