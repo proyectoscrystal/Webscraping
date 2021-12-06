@@ -4,7 +4,7 @@ const getScraping = require("../../../mangoCtl");
 const Url = require("../../../linksUrls");
 
 exports.babyGirlDiscount = async () => {
-    const browser = await puppeteer.launch({ headless: true }); //headless true/false para visualizar el navegador
+    const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] }); //headless true/false para visualizar el navegador
     
     const babyGirlDiscounts = Url.babyGirlDiscountLinkMango;
 

@@ -4,7 +4,7 @@ const getScraping = require("../../../mangoCtl");
 const Url = require("../../../linksUrls");
 
 exports.babyBoyCategory = async () => {
-    const browser = await puppeteer.launch({headless: true});
+    const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox']});
 
     const babyBoyCategory = Url.babyBoyCategoryLinkMango;
 
@@ -105,7 +105,7 @@ exports.babyBoyCategory = async () => {
                         //break;
                     //}
                 } catch (error) {
-                    console.log(`No se ha encontrado el producto ${enlace}`);
+                    //console.log(`No se ha encontrado el producto ${enlace}`);
                 }
             }
             

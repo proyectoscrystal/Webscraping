@@ -4,7 +4,7 @@ const getScraping = require("../../../mangoCtl");
 const Url = require("../../../linksUrls");
 
 exports.girlCategory = async () => {
-    const browser = await puppeteer.launch({headless: true});
+    const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox']});
 
     const girlCategory = Url.girlCategoryLinkMango;
 
@@ -109,9 +109,9 @@ exports.girlCategory = async () => {
             //console.log(prendasGirl);
             await getScraping.getscraping(prendasGirl);
 
-            if (count === 0) {
-                break;
-            }
+            //if (count === 0) {
+                //break;
+            //}
         }
 
         //====================CATEGORIAS HOMBRE===========================
