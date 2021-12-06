@@ -68,7 +68,11 @@ module.exports = (router) => {
     // para los barcharts de vista colores
     router.get('/m_infoGeneralColors',barchartsController.colorGeneralChart); 
     router.get('/m_infoGeneralColorsMateriales',barchartsController.colorGeneralChartMateriales); 
+    // rutas para los filtros por semana en los charts
     router.get('/m_averageDiscountWeek',weekCtl.averageDiscountWeek); 
+    router.get('/m_averageNewWeek',weekCtl.averageNewWeek); 
+    router.get('/m_averageDiscontinuedWeek',weekCtl.averageDiscontinuedWeek); 
+    router.get('/m_averagePriceWeek',weekCtl.averagePriceWeek); 
 
 
 }
