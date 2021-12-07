@@ -577,1077 +577,1083 @@ exports.averagePriceWeekGeneral = (arr) => {
             return;
           }
           if (fecha >= new Date(currentYear,11,25).getTime() && fecha <= new Date(currentYear,11,31,23).getTime()  && element.descuento === null) {
-            
-            
-  
             dic25_31.push(element.precio);
+            return;
+          } else if (fecha >= new Date(currentYear,11,25).getTime() && fecha <= new Date(currentYear,11,31,23).getTime()  && element.descuento !== null) {
+            dic25_31.push(element.descuento);
             return;
           }
 
         }
         
   
-        if (year === lastYear && element.origin === 'Zara' && element.discontinued === false) {
+        if (year === lastYear && element.origin == 'Zara') {
             if (fecha >= new Date(currentYear,0,1).getTime() && fecha <= new Date(currentYear,0,7,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zene1_7.push(element.precio);
-                return;
-              } 
-              if (fecha >= new Date(currentYear,0,08).getTime() && fecha <= new Date(currentYear,0,14,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zene8_14.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,0,15).getTime() && fecha <= new Date(currentYear,0,21,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zene15_21.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,0,22).getTime() && fecha <= new Date(currentYear,0,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zene22_31.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,1,01).getTime() && fecha <= new Date(currentYear,1,11,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zfeb1_11.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,1,12).getTime() && fecha <= new Date(currentYear,1,18,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zfeb12_18.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,1,19).getTime() && fecha <= new Date(currentYear,1,25,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zfeb19_25.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,1,26).getTime() && fecha <= new Date(currentYear,1,29,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zfeb26_29.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,2,01).getTime() && fecha <= new Date(currentYear,2,11,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zmar1_11.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,2,12).getTime() && fecha <= new Date(currentYear,2,18,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zmar12_18.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,2,19).getTime() && fecha <= new Date(currentYear,2,25,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zmar19_25.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,2,26).getTime() && fecha <= new Date(currentYear,2,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zmar26_31.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,3,1).getTime() && fecha <= new Date(currentYear,3,08,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zabr1_8.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,3,09).getTime() && fecha <= new Date(currentYear,3,15,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zabr9_15.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,3,16).getTime() && fecha <= new Date(currentYear,3,22,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zabr16_22.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,3,23).getTime() && fecha <= new Date(currentYear,3,30,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zabr23_30.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,4,01).getTime() && fecha <= new Date(currentYear,4,6,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zmay1_6.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,4,07).getTime() && fecha <= new Date(currentYear,4,13,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zmay7_13.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,4,14).getTime() && fecha <= new Date(currentYear,4,20,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zmay14_20.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,4,21).getTime() && fecha <= new Date(currentYear,4,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zmay21_31.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,5,1).getTime() && fecha <= new Date(currentYear,5,10,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zjun1_10.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,5,11).getTime() && fecha <= new Date(currentYear,5,17,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zjun11_17.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,5,18).getTime() && fecha <= new Date(currentYear,5,24,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zjun18_24.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,5,25).getTime() && fecha <= new Date(currentYear,5,30,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zjun25_30.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,6,1).getTime() && fecha <= new Date(currentYear,6,8,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zjul1_8.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,6,9).getTime() && fecha <= new Date(currentYear,6,15,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zjul9_15.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,6,16).getTime() && fecha <= new Date(currentYear,6,22,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zjul16_22.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,6,23).getTime() && fecha <= new Date(currentYear,6,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zjul23_31.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,7,1).getTime() && fecha <= new Date(currentYear,7,5,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zago1_5.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,7,6).getTime() && fecha <= new Date(currentYear,7,12,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zago6_12.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,7,13).getTime() && fecha <= new Date(currentYear,7,19,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zago13_19.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,7,20).getTime() && fecha <= new Date(currentYear,7,26,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zago20_26.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,7,27).getTime() && fecha <= new Date(currentYear,7,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zago27_31.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,8,1).getTime() && fecha <= new Date(currentYear,8,9,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zsep1_9.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,8,10).getTime() && fecha <= new Date(currentYear,8,16,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zsep10_16.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,8,17).getTime() && fecha <= new Date(currentYear,8,23,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zsep17_23.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,8,24).getTime() && fecha <= new Date(currentYear,8,30,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zsep24_30.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,9,1).getTime() && fecha <= new Date(currentYear,9,7,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zoct1_7.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,9,8).getTime() && fecha <= new Date(currentYear,9,14,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zoct8_14.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,9,15).getTime() && fecha <= new Date(currentYear,9,21,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zoct15_21.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,9,22).getTime() && fecha <= new Date(currentYear,9,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zoct22_31.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,10,1).getTime() && fecha <= new Date(currentYear,10,5,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Znov1_5.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,10,6).getTime() && fecha <= new Date(currentYear,10,11,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Znov6_11.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,10,12).getTime() && fecha <= new Date(currentYear,10,18,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Znov12_18.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,10,19).getTime() && fecha <= new Date(currentYear,10,25,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Znov19_25.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,10,26).getTime() && fecha <= new Date(currentYear,10,30,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Znov26_30.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,11,1).getTime() && fecha <= new Date(currentYear,11,9,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zdic1_9.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,11,10).getTime() && fecha <= new Date(currentYear,11,17,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zdic10_17.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,11,18).getTime() && fecha <= new Date(currentYear,11,24,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zdic18_24.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,11,25).getTime() && fecha <= new Date(currentYear,11,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                Zdic25_31.push(element.precio);
-                return;
-              }
-        }
+              Zene1_7.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,0,1).getTime() && fecha <= new Date(currentYear,0,7,23).getTime()  && element.descuento !== null) {
+              Zene1_7.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,0,08).getTime() && fecha <= new Date(currentYear,0,14,23).getTime()  && element.descuento === null) {
+              Zene8_14.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,0,8).getTime() && fecha <= new Date(currentYear,0,14,23).getTime()  && element.descuento !== null) {
+              Zene8_14.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,0,15).getTime() && fecha <= new Date(currentYear,0,21,23).getTime()  && element.descuento === null) {
+              Zene15_21.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,0,15).getTime() && fecha <= new Date(currentYear,0,21,23).getTime()  && element.descuento !== null) {
+              Zene15_21.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,0,22).getTime() && fecha <= new Date(currentYear,0,31,23).getTime()  && element.descuento === null) {
+              Zene22_31.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,0,22).getTime() && fecha <= new Date(currentYear,0,31,23).getTime()  && element.descuento !== null) {
+              Zene22_31.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,1,1).getTime() && fecha <= new Date(currentYear,1,11,23).getTime()  && element.descuento === null) {
+              Zfeb1_11.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,1,1).getTime() && fecha <= new Date(currentYear,1,11,23).getTime()  && element.descuento !== null) {
+              Zfeb1_11.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,1,12).getTime() && fecha <= new Date(currentYear,1,18,23).getTime()  && element.descuento === null) {
+              Zfeb12_18.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,1,12).getTime() && fecha <= new Date(currentYear,1,18,23).getTime()  && element.descuento !== null) {
+              Zfeb12_18.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,1,19).getTime() && fecha <= new Date(currentYear,1,25,23).getTime()  && element.descuento === null) {
+              Zfeb19_25.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,1,19).getTime() && fecha <= new Date(currentYear,1,25,23).getTime()  && element.descuento !== null) {
+              Zfeb19_25.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,1,26).getTime() && fecha <= new Date(currentYear,1,29,23).getTime()  && element.descuento === null) {
+              Zfeb26_29.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,1,26).getTime() && fecha <= new Date(currentYear,1,29,23).getTime()  && element.descuento !== null) {
+              Zfeb26_29.push(element.descuento);
+              return;
+            }
+  
+            if (fecha >= new Date(currentYear,2,1).getTime() && fecha <= new Date(currentYear,2,11,23).getTime()  && element.descuento === null) {
+              Zmar1_11.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,2,1).getTime() && fecha <= new Date(currentYear,2,11,23).getTime()  && element.descuento !== null) {
+              Zmar1_11.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,2,12).getTime() && fecha <= new Date(currentYear,2,18,23).getTime()  && element.descuento === null) {
+              Zmar12_18.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,2,12).getTime() && fecha <= new Date(currentYear,2,18,23).getTime()  && element.descuento !== null) {
+              Zmar12_18.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,2,19).getTime() && fecha <= new Date(currentYear,2,25,23).getTime()  && element.descuento === null) {
+              Zmar19_25.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,2,19).getTime() && fecha <= new Date(currentYear,2,25,23).getTime()  && element.descuento !== null) {
+              Zmar19_25.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,2,26).getTime() && fecha <= new Date(currentYear,2,31,23).getTime()  && element.descuento === null) {
+              Zmar26_31.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,2,26).getTime() && fecha <= new Date(currentYear,2,31,23).getTime()  && element.descuento !== null) {
+              Zmar26_31.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,3,1).getTime() && fecha <= new Date(currentYear,3,08,23).getTime()  && element.descuento === null) {
+              Zabr1_8.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,3,1).getTime() && fecha <= new Date(currentYear,3,8,23).getTime()  && element.descuento !== null) {
+              Zabr1_8.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,3,09).getTime() && fecha <= new Date(currentYear,3,15,23).getTime()  && element.descuento === null) {
+              Zabr9_15.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,3,9).getTime() && fecha <= new Date(currentYear,3,15,23).getTime()  && element.descuento !== null) {
+              Zabr9_15.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,3,16).getTime() && fecha <= new Date(currentYear,3,22,23).getTime()  && element.descuento === null) {
+              Zabr16_22.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,3,16).getTime() && fecha <= new Date(currentYear,3,22,23).getTime()  && element.descuento !== null) {
+              Zabr16_22.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,3,23).getTime() && fecha <= new Date(currentYear,3,30,23).getTime()  && element.descuento === null) {
+              Zabr23_30.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,3,23).getTime() && fecha <= new Date(currentYear,3,30,23).getTime()  && element.descuento !== null) {
+              Zabr23_30.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,4,1).getTime() && fecha <= new Date(currentYear,4,6,23).getTime()  && element.descuento === null) {
+              Zmay1_6.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,4,1).getTime() && fecha <= new Date(currentYear,4,6,23).getTime()  && element.descuento !== null) {
+              Zmay1_6.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,4,7).getTime() && fecha <= new Date(currentYear,4,13,23).getTime()  && element.descuento === null) {
+              Zmay7_13.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,4,7).getTime() && fecha <= new Date(currentYear,4,13,23).getTime()  && element.descuento !== null) {
+              Zmay7_13.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,4,14).getTime() && fecha <= new Date(currentYear,4,20,23).getTime()  && element.descuento === null) {
+              Zmay14_20.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,4,14).getTime() && fecha <= new Date(currentYear,4,20,23).getTime()  && element.descuento !== null) {
+              Zmay14_20.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,4,21).getTime() && fecha <= new Date(currentYear,4,31,23).getTime()  && element.descuento === null) {
+              Zmay21_31.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,4,21).getTime() && fecha <= new Date(currentYear,4,31,23).getTime()  && element.descuento !== null) {
+              Zmay21_31.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,5,1).getTime() && fecha <= new Date(currentYear,5,10,23).getTime()  && element.descuento === null) {
+              Zjun1_10.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,5,1).getTime() && fecha <= new Date(currentYear,5,10,23).getTime()  && element.descuento !== null) {
+              Zjun1_10.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,5,11).getTime() && fecha <= new Date(currentYear,5,17,23).getTime()  && element.descuento === null) {
+              Zjun11_17.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,5,11).getTime() && fecha <= new Date(currentYear,5,17,23).getTime()  && element.descuento !== null) {
+              Zjun11_17.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,5,18).getTime() && fecha <= new Date(currentYear,5,24,23).getTime()  && element.descuento === null) {
+              Zjun18_24.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,5,18).getTime() && fecha <= new Date(currentYear,5,24,23).getTime()  && element.descuento !== null) {
+              Zjun18_24.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,5,25).getTime() && fecha <= new Date(currentYear,5,30,23).getTime()  && element.descuento === null) {
+              Zjun25_30.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,5,25).getTime() && fecha <= new Date(currentYear,5,30,23).getTime()  && element.descuento !== null) {
+              Zjun25_30.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,6,1).getTime() && fecha <= new Date(currentYear,6,8,23).getTime()  && element.descuento === null) {
+              Zjul1_8.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,6,1).getTime() && fecha <= new Date(currentYear,6,8,23).getTime()  && element.descuento !== null) {
+              Zene1_7.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,6,9).getTime() && fecha <= new Date(currentYear,6,15,23).getTime()  && element.descuento === null) {
+              Zjul9_15.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,6,9).getTime() && fecha <= new Date(currentYear,6,15,23).getTime()  && element.descuento !== null) {
+              Zjul9_15.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,6,16).getTime() && fecha <= new Date(currentYear,6,22,23).getTime()  && element.descuento === null) {
+              Zjul16_22.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,6,16).getTime() && fecha <= new Date(currentYear,6,22,23).getTime()  && element.descuento !== null) {
+              Zjul16_22.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,6,23).getTime() && fecha <= new Date(currentYear,6,31,23).getTime()  && element.descuento === null) {
+              Zjul23_31.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,6,23).getTime() && fecha <= new Date(currentYear,6,31,23).getTime()  && element.descuento !== null) {
+              Zjul23_31.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,7,1).getTime() && fecha <= new Date(currentYear,7,5,23).getTime()  && element.descuento === null) {
+              Zago1_5.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,7,1).getTime() && fecha <= new Date(currentYear,7,5,23).getTime()  && element.descuento !== null) {
+              Zago1_5.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,7,6).getTime() && fecha <= new Date(currentYear,7,12,23).getTime()  && element.descuento === null) {
+              Zago6_12.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,7,6).getTime() && fecha <= new Date(currentYear,7,12,23).getTime()  && element.descuento !== null) {
+              Zago6_12.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,7,13).getTime() && fecha <= new Date(currentYear,7,19,23).getTime()  && element.descuento === null) {
+              Zago13_19.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,7,13).getTime() && fecha <= new Date(currentYear,7,19,23).getTime()  && element.descuento !== null) {
+              Zago13_19.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,7,20).getTime() && fecha <= new Date(currentYear,7,26,23).getTime()  && element.descuento === null) {
+              Zago20_26.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,7,20).getTime() && fecha <= new Date(currentYear,7,26,23).getTime()  && element.descuento !== null) {
+              Zago20_26.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,7,27).getTime() && fecha <= new Date(currentYear,7,31,23).getTime()  && element.descuento === null) {
+              Zago27_31.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,7,27).getTime() && fecha <= new Date(currentYear,7,31,23).getTime()  && element.descuento !== null) {
+              Zago27_31.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,8,1).getTime() && fecha <= new Date(currentYear,8,9,23).getTime()  && element.descuento === null) {
+              Zsep1_9.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,8,1).getTime() && fecha <= new Date(currentYear,8,9,23).getTime()  && element.descuento !== null) {
+              Zsep1_9.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,8,10).getTime() && fecha <= new Date(currentYear,8,16,23).getTime()  && element.descuento === null) {
+              Zsep10_16.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,8,10).getTime() && fecha <= new Date(currentYear,8,16,23).getTime()  && element.descuento !== null) {
+              Zsep10_16.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,8,17).getTime() && fecha <= new Date(currentYear,8,23,23).getTime()  && element.descuento === null) {
+              Zsep17_23.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,8,17).getTime() && fecha <= new Date(currentYear,8,23,23).getTime()  && element.descuento !== null) {
+              Zsep17_23.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,8,24).getTime() && fecha <= new Date(currentYear,8,30,23).getTime()  && element.descuento === null) {
+              Zsep24_30.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,8,24).getTime() && fecha <= new Date(currentYear,8,30,23).getTime()  && element.descuento !== null) {
+              Zsep24_30.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,9,1).getTime() && fecha <= new Date(currentYear,9,7,23).getTime()  && element.descuento === null) {
+              Zoct1_7.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,9,1).getTime() && fecha <= new Date(currentYear,9,7,23).getTime()  && element.descuento !== null) {
+              Zoct1_7.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,9,8).getTime() && fecha <= new Date(currentYear,9,14,23).getTime()  && element.descuento === null) {
+              Zoct8_14.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,9,8).getTime() && fecha <= new Date(currentYear,9,14,23).getTime()  && element.descuento !== null) {
+              Zoct8_14.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,9,15).getTime() && fecha <= new Date(currentYear,9,21,23).getTime()  && element.descuento === null) {
+              Zoct15_21.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,9,15).getTime() && fecha <= new Date(currentYear,9,21,23).getTime()  && element.descuento !== null) {
+              Zoct15_21.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,9,22).getTime() && fecha <= new Date(currentYear,9,31,23).getTime()  && element.descuento === null) {
+              Zoct22_31.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,9,22).getTime() && fecha <= new Date(currentYear,9,31,23).getTime()  && element.descuento !== null) {
+              Zoct22_31.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,10,1).getTime() && fecha <= new Date(currentYear,10,5,23).getTime()  && element.descuento === null) {
+              Znov1_5.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,10,1).getTime() && fecha <= new Date(currentYear,10,5,23).getTime()  && element.descuento !== null) {
+              Znov1_5.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,10,6).getTime() && fecha <= new Date(currentYear,10,11,23).getTime()  && element.descuento === null) {
+              Znov6_11.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,10,6).getTime() && fecha <= new Date(currentYear,10,11,23).getTime()  && element.descuento !== null) {
+              Znov6_11.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,10,12).getTime() && fecha <= new Date(currentYear,10,18,23).getTime()  && element.descuento === null) {
+              Znov12_18.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,10,12).getTime() && fecha <= new Date(currentYear,10,18,23).getTime()  && element.descuento !== null) {
+              Znov12_18.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,10,19).getTime() && fecha <= new Date(currentYear,10,25,23).getTime()  && element.descuento === null) {
+              Znov19_25.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,10,19).getTime() && fecha <= new Date(currentYear,10,25,23).getTime()  && element.descuento !== null) {
+              Znov19_25.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,10,26).getTime() && fecha <= new Date(currentYear,10,30,23).getTime()  && element.descuento === null) {
+              Znov26_30.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,10,26).getTime() && fecha <= new Date(currentYear,10,30,23).getTime()  && element.descuento !== null) {
+              Znov26_30.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,11,1).getTime() && fecha <= new Date(currentYear,11,9,23).getTime()  && element.descuento === null) {
+              Zdic1_9.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,11,1).getTime() && fecha <= new Date(currentYear,11,9,23).getTime()  && element.descuento !== null) {
+              Zdic1_9.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,11,10).getTime() && fecha <= new Date(currentYear,11,17,23).getTime()  && element.descuento === null) {
+              Zdic10_17.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,11,10).getTime() && fecha <= new Date(currentYear,11,17,23).getTime()  && element.descuento !== null) {
+              Zdic10_17.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,11,18).getTime() && fecha <= new Date(currentYear,11,24,23).getTime()  && element.descuento === null) {
+              Zdic18_24.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,11,18).getTime() && fecha <= new Date(currentYear,11,24,23).getTime()  && element.descuento !== null) {
+              Zdic18_24.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,11,25).getTime() && fecha <= new Date(currentYear,11,31,23).getTime()  && element.descuento === null) {
+              Zdic25_31.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,11,25).getTime() && fecha <= new Date(currentYear,11,31,23).getTime()  && element.descuento !== null) {
+              Zdic25_31.push(element.descuento);
+              return;
+            }
+  
+          }
         // termina zara semanas
         // empieza mango semanas
 
-        if (year === currentYear && element.origin == 'Mango' && element.discontinued === false) {
+        if (year === currentYear && element.origin == 'Mango') {
             if (fecha >= new Date(currentYear,0,1).getTime() && fecha <= new Date(currentYear,0,7,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mene1_7.push(element.precio);
-                return;
-              } 
-              if (fecha >= new Date(currentYear,0,08).getTime() && fecha <= new Date(currentYear,0,14,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mene8_14.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,0,15).getTime() && fecha <= new Date(currentYear,0,21,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mene15_21.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,0,22).getTime() && fecha <= new Date(currentYear,0,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mene22_31.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,1,01).getTime() && fecha <= new Date(currentYear,1,11,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mfeb1_11.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,1,12).getTime() && fecha <= new Date(currentYear,1,18,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mfeb12_18.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,1,19).getTime() && fecha <= new Date(currentYear,1,25,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mfeb19_25.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,1,26).getTime() && fecha <= new Date(currentYear,1,29,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mfeb26_29.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,2,01).getTime() && fecha <= new Date(currentYear,2,11,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mmar1_11.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,2,12).getTime() && fecha <= new Date(currentYear,2,18,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mmar12_18.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,2,19).getTime() && fecha <= new Date(currentYear,2,25,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mmar19_25.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,2,26).getTime() && fecha <= new Date(currentYear,2,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mmar26_31.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,3,1).getTime() && fecha <= new Date(currentYear,3,08,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mabr1_8.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,3,09).getTime() && fecha <= new Date(currentYear,3,15,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mabr9_15.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,3,16).getTime() && fecha <= new Date(currentYear,3,22,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mabr16_22.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,3,23).getTime() && fecha <= new Date(currentYear,3,30,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mabr23_30.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,4,01).getTime() && fecha <= new Date(currentYear,4,6,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mmay1_6.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,4,07).getTime() && fecha <= new Date(currentYear,4,13,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mmay7_13.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,4,14).getTime() && fecha <= new Date(currentYear,4,20,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mmay14_20.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,4,21).getTime() && fecha <= new Date(currentYear,4,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mmay21_31.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,5,1).getTime() && fecha <= new Date(currentYear,5,10,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mjun1_10.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,5,11).getTime() && fecha <= new Date(currentYear,5,17,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mjun11_17.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,5,18).getTime() && fecha <= new Date(currentYear,5,24,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mjun18_24.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,5,25).getTime() && fecha <= new Date(currentYear,5,30,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mjun25_30.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,6,1).getTime() && fecha <= new Date(currentYear,6,8,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mjul1_8.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,6,9).getTime() && fecha <= new Date(currentYear,6,15,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mjul9_15.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,6,16).getTime() && fecha <= new Date(currentYear,6,22,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mjul16_22.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,6,23).getTime() && fecha <= new Date(currentYear,6,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mjul23_31.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,7,1).getTime() && fecha <= new Date(currentYear,7,5,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mago1_5.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,7,6).getTime() && fecha <= new Date(currentYear,7,12,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mago6_12.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,7,13).getTime() && fecha <= new Date(currentYear,7,19,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mago13_19.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,7,20).getTime() && fecha <= new Date(currentYear,7,26,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mago20_26.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,7,27).getTime() && fecha <= new Date(currentYear,7,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mago27_31.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,8,1).getTime() && fecha <= new Date(currentYear,8,9,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                msep1_9.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,8,10).getTime() && fecha <= new Date(currentYear,8,16,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                msep10_16.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,8,17).getTime() && fecha <= new Date(currentYear,8,23,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                msep17_23.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,8,24).getTime() && fecha <= new Date(currentYear,8,30,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                msep24_30.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,9,1).getTime() && fecha <= new Date(currentYear,9,7,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                moct1_7.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,9,8).getTime() && fecha <= new Date(currentYear,9,14,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                moct8_14.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,9,15).getTime() && fecha <= new Date(currentYear,9,21,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                moct15_21.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,9,22).getTime() && fecha <= new Date(currentYear,9,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                moct22_31.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,10,1).getTime() && fecha <= new Date(currentYear,10,5,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mnov1_5.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,10,6).getTime() && fecha <= new Date(currentYear,10,11,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mnov6_11.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,10,12).getTime() && fecha <= new Date(currentYear,10,18,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mnov12_18.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,10,19).getTime() && fecha <= new Date(currentYear,10,25,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mnov19_25.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,10,26).getTime() && fecha <= new Date(currentYear,10,30,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mnov26_30.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,11,1).getTime() && fecha <= new Date(currentYear,11,9,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mdic1_9.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,11,10).getTime() && fecha <= new Date(currentYear,11,17,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mdic10_17.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,11,18).getTime() && fecha <= new Date(currentYear,11,24,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mdic18_24.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,11,25).getTime() && fecha <= new Date(currentYear,11,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mdic25_31.push(element.precio);
-                return;
-              }
+              mene1_7.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,0,1).getTime() && fecha <= new Date(currentYear,0,7,23).getTime()  && element.descuento !== null) {
+              mene1_7.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,0,08).getTime() && fecha <= new Date(currentYear,0,14,23).getTime()  && element.descuento === null) {
+              mene8_14.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,0,8).getTime() && fecha <= new Date(currentYear,0,14,23).getTime()  && element.descuento !== null) {
+              mene8_14.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,0,15).getTime() && fecha <= new Date(currentYear,0,21,23).getTime()  && element.descuento === null) {
+              mene15_21.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,0,15).getTime() && fecha <= new Date(currentYear,0,21,23).getTime()  && element.descuento !== null) {
+              mene15_21.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,0,22).getTime() && fecha <= new Date(currentYear,0,31,23).getTime()  && element.descuento === null) {
+              mene22_31.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,0,22).getTime() && fecha <= new Date(currentYear,0,31,23).getTime()  && element.descuento !== null) {
+              mene22_31.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,1,1).getTime() && fecha <= new Date(currentYear,1,11,23).getTime()  && element.descuento === null) {
+              mfeb1_11.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,1,1).getTime() && fecha <= new Date(currentYear,1,11,23).getTime()  && element.descuento !== null) {
+              mfeb1_11.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,1,12).getTime() && fecha <= new Date(currentYear,1,18,23).getTime()  && element.descuento === null) {
+              mfeb12_18.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,1,12).getTime() && fecha <= new Date(currentYear,1,18,23).getTime()  && element.descuento !== null) {
+              mfeb12_18.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,1,19).getTime() && fecha <= new Date(currentYear,1,25,23).getTime()  && element.descuento === null) {
+              mfeb19_25.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,1,19).getTime() && fecha <= new Date(currentYear,1,25,23).getTime()  && element.descuento !== null) {
+              mfeb19_25.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,1,26).getTime() && fecha <= new Date(currentYear,1,29,23).getTime()  && element.descuento === null) {
+              mfeb26_29.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,1,26).getTime() && fecha <= new Date(currentYear,1,29,23).getTime()  && element.descuento !== null) {
+              mfeb26_29.push(element.descuento);
+              return;
+            }
+  
+            if (fecha >= new Date(currentYear,2,1).getTime() && fecha <= new Date(currentYear,2,11,23).getTime()  && element.descuento === null) {
+              mmar1_11.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,2,1).getTime() && fecha <= new Date(currentYear,2,11,23).getTime()  && element.descuento !== null) {
+              mmar1_11.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,2,12).getTime() && fecha <= new Date(currentYear,2,18,23).getTime()  && element.descuento === null) {
+              mmar12_18.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,2,12).getTime() && fecha <= new Date(currentYear,2,18,23).getTime()  && element.descuento !== null) {
+              mmar12_18.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,2,19).getTime() && fecha <= new Date(currentYear,2,25,23).getTime()  && element.descuento === null) {
+              mmar19_25.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,2,19).getTime() && fecha <= new Date(currentYear,2,25,23).getTime()  && element.descuento !== null) {
+              mmar19_25.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,2,26).getTime() && fecha <= new Date(currentYear,2,31,23).getTime()  && element.descuento === null) {
+              mmar26_31.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,2,26).getTime() && fecha <= new Date(currentYear,2,31,23).getTime()  && element.descuento !== null) {
+              mmar26_31.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,3,1).getTime() && fecha <= new Date(currentYear,3,08,23).getTime()  && element.descuento === null) {
+              mabr1_8.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,3,1).getTime() && fecha <= new Date(currentYear,3,8,23).getTime()  && element.descuento !== null) {
+              mabr1_8.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,3,09).getTime() && fecha <= new Date(currentYear,3,15,23).getTime()  && element.descuento === null) {
+              mabr9_15.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,3,9).getTime() && fecha <= new Date(currentYear,3,15,23).getTime()  && element.descuento !== null) {
+              mabr9_15.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,3,16).getTime() && fecha <= new Date(currentYear,3,22,23).getTime()  && element.descuento === null) {
+              mabr16_22.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,3,16).getTime() && fecha <= new Date(currentYear,3,22,23).getTime()  && element.descuento !== null) {
+              mabr16_22.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,3,23).getTime() && fecha <= new Date(currentYear,3,30,23).getTime()  && element.descuento === null) {
+              mabr23_30.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,3,23).getTime() && fecha <= new Date(currentYear,3,30,23).getTime()  && element.descuento !== null) {
+              mabr23_30.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,4,1).getTime() && fecha <= new Date(currentYear,4,6,23).getTime()  && element.descuento === null) {
+              mmay1_6.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,4,1).getTime() && fecha <= new Date(currentYear,4,6,23).getTime()  && element.descuento !== null) {
+              mmay1_6.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,4,7).getTime() && fecha <= new Date(currentYear,4,13,23).getTime()  && element.descuento === null) {
+              mmay7_13.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,4,7).getTime() && fecha <= new Date(currentYear,4,13,23).getTime()  && element.descuento !== null) {
+              mmay7_13.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,4,14).getTime() && fecha <= new Date(currentYear,4,20,23).getTime()  && element.descuento === null) {
+              mmay14_20.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,4,14).getTime() && fecha <= new Date(currentYear,4,20,23).getTime()  && element.descuento !== null) {
+              mmay14_20.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,4,21).getTime() && fecha <= new Date(currentYear,4,31,23).getTime()  && element.descuento === null) {
+              mmay21_31.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,4,21).getTime() && fecha <= new Date(currentYear,4,31,23).getTime()  && element.descuento !== null) {
+              mmay21_31.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,5,1).getTime() && fecha <= new Date(currentYear,5,10,23).getTime()  && element.descuento === null) {
+              mjun1_10.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,5,1).getTime() && fecha <= new Date(currentYear,5,10,23).getTime()  && element.descuento !== null) {
+              mjun1_10.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,5,11).getTime() && fecha <= new Date(currentYear,5,17,23).getTime()  && element.descuento === null) {
+              mjun11_17.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,5,11).getTime() && fecha <= new Date(currentYear,5,17,23).getTime()  && element.descuento !== null) {
+              mjun11_17.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,5,18).getTime() && fecha <= new Date(currentYear,5,24,23).getTime()  && element.descuento === null) {
+              mjun18_24.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,5,18).getTime() && fecha <= new Date(currentYear,5,24,23).getTime()  && element.descuento !== null) {
+              mjun18_24.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,5,25).getTime() && fecha <= new Date(currentYear,5,30,23).getTime()  && element.descuento === null) {
+              mjun25_30.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,5,25).getTime() && fecha <= new Date(currentYear,5,30,23).getTime()  && element.descuento !== null) {
+              mjun25_30.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,6,1).getTime() && fecha <= new Date(currentYear,6,8,23).getTime()  && element.descuento === null) {
+              mjul1_8.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,6,1).getTime() && fecha <= new Date(currentYear,6,8,23).getTime()  && element.descuento !== null) {
+              mene1_7.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,6,9).getTime() && fecha <= new Date(currentYear,6,15,23).getTime()  && element.descuento === null) {
+              mjul9_15.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,6,9).getTime() && fecha <= new Date(currentYear,6,15,23).getTime()  && element.descuento !== null) {
+              mjul9_15.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,6,16).getTime() && fecha <= new Date(currentYear,6,22,23).getTime()  && element.descuento === null) {
+              mjul16_22.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,6,16).getTime() && fecha <= new Date(currentYear,6,22,23).getTime()  && element.descuento !== null) {
+              mjul16_22.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,6,23).getTime() && fecha <= new Date(currentYear,6,31,23).getTime()  && element.descuento === null) {
+              mjul23_31.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,6,23).getTime() && fecha <= new Date(currentYear,6,31,23).getTime()  && element.descuento !== null) {
+              mjul23_31.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,7,1).getTime() && fecha <= new Date(currentYear,7,5,23).getTime()  && element.descuento === null) {
+              mago1_5.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,7,1).getTime() && fecha <= new Date(currentYear,7,5,23).getTime()  && element.descuento !== null) {
+              mago1_5.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,7,6).getTime() && fecha <= new Date(currentYear,7,12,23).getTime()  && element.descuento === null) {
+              mago6_12.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,7,6).getTime() && fecha <= new Date(currentYear,7,12,23).getTime()  && element.descuento !== null) {
+              mago6_12.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,7,13).getTime() && fecha <= new Date(currentYear,7,19,23).getTime()  && element.descuento === null) {
+              mago13_19.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,7,13).getTime() && fecha <= new Date(currentYear,7,19,23).getTime()  && element.descuento !== null) {
+              mago13_19.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,7,20).getTime() && fecha <= new Date(currentYear,7,26,23).getTime()  && element.descuento === null) {
+              mago20_26.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,7,20).getTime() && fecha <= new Date(currentYear,7,26,23).getTime()  && element.descuento !== null) {
+              mago20_26.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,7,27).getTime() && fecha <= new Date(currentYear,7,31,23).getTime()  && element.descuento === null) {
+              mago27_31.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,7,27).getTime() && fecha <= new Date(currentYear,7,31,23).getTime()  && element.descuento !== null) {
+              mago27_31.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,8,1).getTime() && fecha <= new Date(currentYear,8,9,23).getTime()  && element.descuento === null) {
+              msep1_9.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,8,1).getTime() && fecha <= new Date(currentYear,8,9,23).getTime()  && element.descuento !== null) {
+              msep1_9.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,8,10).getTime() && fecha <= new Date(currentYear,8,16,23).getTime()  && element.descuento === null) {
+              msep10_16.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,8,10).getTime() && fecha <= new Date(currentYear,8,16,23).getTime()  && element.descuento !== null) {
+              msep10_16.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,8,17).getTime() && fecha <= new Date(currentYear,8,23,23).getTime()  && element.descuento === null) {
+              msep17_23.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,8,17).getTime() && fecha <= new Date(currentYear,8,23,23).getTime()  && element.descuento !== null) {
+              msep17_23.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,8,24).getTime() && fecha <= new Date(currentYear,8,30,23).getTime()  && element.descuento === null) {
+              msep24_30.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,8,24).getTime() && fecha <= new Date(currentYear,8,30,23).getTime()  && element.descuento !== null) {
+              msep24_30.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,9,1).getTime() && fecha <= new Date(currentYear,9,7,23).getTime()  && element.descuento === null) {
+              moct1_7.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,9,1).getTime() && fecha <= new Date(currentYear,9,7,23).getTime()  && element.descuento !== null) {
+              moct1_7.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,9,8).getTime() && fecha <= new Date(currentYear,9,14,23).getTime()  && element.descuento === null) {
+              moct8_14.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,9,8).getTime() && fecha <= new Date(currentYear,9,14,23).getTime()  && element.descuento !== null) {
+              moct8_14.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,9,15).getTime() && fecha <= new Date(currentYear,9,21,23).getTime()  && element.descuento === null) {
+              moct15_21.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,9,15).getTime() && fecha <= new Date(currentYear,9,21,23).getTime()  && element.descuento !== null) {
+              moct15_21.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,9,22).getTime() && fecha <= new Date(currentYear,9,31,23).getTime()  && element.descuento === null) {
+              moct22_31.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,9,22).getTime() && fecha <= new Date(currentYear,9,31,23).getTime()  && element.descuento !== null) {
+              moct22_31.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,10,1).getTime() && fecha <= new Date(currentYear,10,5,23).getTime()  && element.descuento === null) {
+              mnov1_5.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,10,1).getTime() && fecha <= new Date(currentYear,10,5,23).getTime()  && element.descuento !== null) {
+              mnov1_5.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,10,6).getTime() && fecha <= new Date(currentYear,10,11,23).getTime()  && element.descuento === null) {
+              mnov6_11.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,10,6).getTime() && fecha <= new Date(currentYear,10,11,23).getTime()  && element.descuento !== null) {
+              mnov6_11.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,10,12).getTime() && fecha <= new Date(currentYear,10,18,23).getTime()  && element.descuento === null) {
+              mnov12_18.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,10,12).getTime() && fecha <= new Date(currentYear,10,18,23).getTime()  && element.descuento !== null) {
+              mnov12_18.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,10,19).getTime() && fecha <= new Date(currentYear,10,25,23).getTime()  && element.descuento === null) {
+              mnov19_25.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,10,19).getTime() && fecha <= new Date(currentYear,10,25,23).getTime()  && element.descuento !== null) {
+              mnov19_25.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,10,26).getTime() && fecha <= new Date(currentYear,10,30,23).getTime()  && element.descuento === null) {
+              mnov26_30.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,10,26).getTime() && fecha <= new Date(currentYear,10,30,23).getTime()  && element.descuento !== null) {
+              mnov26_30.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,11,1).getTime() && fecha <= new Date(currentYear,11,9,23).getTime()  && element.descuento === null) {
+              mdic1_9.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,11,1).getTime() && fecha <= new Date(currentYear,11,9,23).getTime()  && element.descuento !== null) {
+              mdic1_9.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,11,10).getTime() && fecha <= new Date(currentYear,11,17,23).getTime()  && element.descuento === null) {
+              mdic10_17.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,11,10).getTime() && fecha <= new Date(currentYear,11,17,23).getTime()  && element.descuento !== null) {
+              mdic10_17.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,11,18).getTime() && fecha <= new Date(currentYear,11,24,23).getTime()  && element.descuento === null) {
+              mdic18_24.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,11,18).getTime() && fecha <= new Date(currentYear,11,24,23).getTime()  && element.descuento !== null) {
+              mdic18_24.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,11,25).getTime() && fecha <= new Date(currentYear,11,31,23).getTime()  && element.descuento === null) {
+              mdic25_31.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,11,25).getTime() && fecha <= new Date(currentYear,11,31,23).getTime()  && element.descuento !== null) {
+              mdic25_31.push(element.descuento);
+              return;
+            }
+  
           }
 
           // mango semanas año anterior
     
-          if (year === lastYear && element.origin === 'Mango' && element.discontinued === false) {
+          if (year === lastYear && element.origin == 'Mango') {
             if (fecha >= new Date(currentYear,0,1).getTime() && fecha <= new Date(currentYear,0,7,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmene1_7.push(element.precio);
-                return;
-              } 
-              if (fecha >= new Date(currentYear,0,08).getTime() && fecha <= new Date(currentYear,0,14,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmene8_14.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,0,15).getTime() && fecha <= new Date(currentYear,0,21,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmene15_21.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,0,22).getTime() && fecha <= new Date(currentYear,0,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmene22_31.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,1,01).getTime() && fecha <= new Date(currentYear,1,11,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmfeb1_11.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,1,12).getTime() && fecha <= new Date(currentYear,1,18,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmfeb12_18.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,1,19).getTime() && fecha <= new Date(currentYear,1,25,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmfeb19_25.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,1,26).getTime() && fecha <= new Date(currentYear,1,29,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmfeb26_29.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,2,01).getTime() && fecha <= new Date(currentYear,2,11,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmmar1_11.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,2,12).getTime() && fecha <= new Date(currentYear,2,18,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmmar12_18.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,2,19).getTime() && fecha <= new Date(currentYear,2,25,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmmar19_25.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,2,26).getTime() && fecha <= new Date(currentYear,2,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmmar26_31.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,3,1).getTime() && fecha <= new Date(currentYear,3,08,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmabr1_8.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,3,09).getTime() && fecha <= new Date(currentYear,3,15,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmabr9_15.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,3,16).getTime() && fecha <= new Date(currentYear,3,22,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmabr16_22.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,3,23).getTime() && fecha <= new Date(currentYear,3,30,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmabr23_30.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,4,01).getTime() && fecha <= new Date(currentYear,4,6,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmmay1_6.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,4,07).getTime() && fecha <= new Date(currentYear,4,13,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmmay7_13.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,4,14).getTime() && fecha <= new Date(currentYear,4,20,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmmay14_20.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,4,21).getTime() && fecha <= new Date(currentYear,4,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmmay21_31.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,5,1).getTime() && fecha <= new Date(currentYear,5,10,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmjun1_10.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,5,11).getTime() && fecha <= new Date(currentYear,5,17,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmjun11_17.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,5,18).getTime() && fecha <= new Date(currentYear,5,24,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmjun18_24.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,5,25).getTime() && fecha <= new Date(currentYear,5,30,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmjun25_30.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,6,1).getTime() && fecha <= new Date(currentYear,6,8,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmjul1_8.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,6,9).getTime() && fecha <= new Date(currentYear,6,15,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmjul9_15.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,6,16).getTime() && fecha <= new Date(currentYear,6,22,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmjul16_22.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,6,23).getTime() && fecha <= new Date(currentYear,6,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmjul23_31.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,7,1).getTime() && fecha <= new Date(currentYear,7,5,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmago1_5.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,7,6).getTime() && fecha <= new Date(currentYear,7,12,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmago6_12.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,7,13).getTime() && fecha <= new Date(currentYear,7,19,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmago13_19.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,7,20).getTime() && fecha <= new Date(currentYear,7,26,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmago20_26.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,7,27).getTime() && fecha <= new Date(currentYear,7,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmago27_31.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,8,1).getTime() && fecha <= new Date(currentYear,8,9,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmsep1_9.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,8,10).getTime() && fecha <= new Date(currentYear,8,16,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmsep10_16.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,8,17).getTime() && fecha <= new Date(currentYear,8,23,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmsep17_23.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,8,24).getTime() && fecha <= new Date(currentYear,8,30,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmsep24_30.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,9,1).getTime() && fecha <= new Date(currentYear,9,7,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmoct1_7.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,9,8).getTime() && fecha <= new Date(currentYear,9,14,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmoct8_14.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,9,15).getTime() && fecha <= new Date(currentYear,9,21,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmoct15_21.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,9,22).getTime() && fecha <= new Date(currentYear,9,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmoct22_31.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,10,1).getTime() && fecha <= new Date(currentYear,10,5,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmnov1_5.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,10,6).getTime() && fecha <= new Date(currentYear,10,11,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmnov6_11.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,10,12).getTime() && fecha <= new Date(currentYear,10,18,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmnov12_18.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,10,19).getTime() && fecha <= new Date(currentYear,10,25,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmnov19_25.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,10,26).getTime() && fecha <= new Date(currentYear,10,30,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmnov26_30.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,11,1).getTime() && fecha <= new Date(currentYear,11,9,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmdic1_9.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,11,10).getTime() && fecha <= new Date(currentYear,11,17,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmdic10_17.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,11,18).getTime() && fecha <= new Date(currentYear,11,24,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmdic18_24.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,11,25).getTime() && fecha <= new Date(currentYear,11,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                lmdic25_31.push(element.precio);
-                return;
-              }
+              lmene1_7.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,0,1).getTime() && fecha <= new Date(currentYear,0,7,23).getTime()  && element.descuento !== null) {
+              lmene1_7.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,0,08).getTime() && fecha <= new Date(currentYear,0,14,23).getTime()  && element.descuento === null) {
+              lmene8_14.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,0,8).getTime() && fecha <= new Date(currentYear,0,14,23).getTime()  && element.descuento !== null) {
+              lmene8_14.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,0,15).getTime() && fecha <= new Date(currentYear,0,21,23).getTime()  && element.descuento === null) {
+              lmene15_21.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,0,15).getTime() && fecha <= new Date(currentYear,0,21,23).getTime()  && element.descuento !== null) {
+              lmene15_21.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,0,22).getTime() && fecha <= new Date(currentYear,0,31,23).getTime()  && element.descuento === null) {
+              lmene22_31.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,0,22).getTime() && fecha <= new Date(currentYear,0,31,23).getTime()  && element.descuento !== null) {
+              lmene22_31.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,1,1).getTime() && fecha <= new Date(currentYear,1,11,23).getTime()  && element.descuento === null) {
+              lmfeb1_11.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,1,1).getTime() && fecha <= new Date(currentYear,1,11,23).getTime()  && element.descuento !== null) {
+              lmfeb1_11.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,1,12).getTime() && fecha <= new Date(currentYear,1,18,23).getTime()  && element.descuento === null) {
+              lmfeb12_18.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,1,12).getTime() && fecha <= new Date(currentYear,1,18,23).getTime()  && element.descuento !== null) {
+              lmfeb12_18.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,1,19).getTime() && fecha <= new Date(currentYear,1,25,23).getTime()  && element.descuento === null) {
+              lmfeb19_25.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,1,19).getTime() && fecha <= new Date(currentYear,1,25,23).getTime()  && element.descuento !== null) {
+              lmfeb19_25.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,1,26).getTime() && fecha <= new Date(currentYear,1,29,23).getTime()  && element.descuento === null) {
+              lmfeb26_29.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,1,26).getTime() && fecha <= new Date(currentYear,1,29,23).getTime()  && element.descuento !== null) {
+              lmfeb26_29.push(element.descuento);
+              return;
+            }
+  
+            if (fecha >= new Date(currentYear,2,1).getTime() && fecha <= new Date(currentYear,2,11,23).getTime()  && element.descuento === null) {
+              lmmar1_11.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,2,1).getTime() && fecha <= new Date(currentYear,2,11,23).getTime()  && element.descuento !== null) {
+              lmmar1_11.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,2,12).getTime() && fecha <= new Date(currentYear,2,18,23).getTime()  && element.descuento === null) {
+              lmmar12_18.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,2,12).getTime() && fecha <= new Date(currentYear,2,18,23).getTime()  && element.descuento !== null) {
+              lmmar12_18.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,2,19).getTime() && fecha <= new Date(currentYear,2,25,23).getTime()  && element.descuento === null) {
+              lmmar19_25.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,2,19).getTime() && fecha <= new Date(currentYear,2,25,23).getTime()  && element.descuento !== null) {
+              lmmar19_25.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,2,26).getTime() && fecha <= new Date(currentYear,2,31,23).getTime()  && element.descuento === null) {
+              lmmar26_31.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,2,26).getTime() && fecha <= new Date(currentYear,2,31,23).getTime()  && element.descuento !== null) {
+              lmmar26_31.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,3,1).getTime() && fecha <= new Date(currentYear,3,08,23).getTime()  && element.descuento === null) {
+              lmabr1_8.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,3,1).getTime() && fecha <= new Date(currentYear,3,8,23).getTime()  && element.descuento !== null) {
+              lmabr1_8.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,3,09).getTime() && fecha <= new Date(currentYear,3,15,23).getTime()  && element.descuento === null) {
+              lmabr9_15.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,3,9).getTime() && fecha <= new Date(currentYear,3,15,23).getTime()  && element.descuento !== null) {
+              lmabr9_15.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,3,16).getTime() && fecha <= new Date(currentYear,3,22,23).getTime()  && element.descuento === null) {
+              lmabr16_22.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,3,16).getTime() && fecha <= new Date(currentYear,3,22,23).getTime()  && element.descuento !== null) {
+              lmabr16_22.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,3,23).getTime() && fecha <= new Date(currentYear,3,30,23).getTime()  && element.descuento === null) {
+              lmabr23_30.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,3,23).getTime() && fecha <= new Date(currentYear,3,30,23).getTime()  && element.descuento !== null) {
+              lmabr23_30.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,4,1).getTime() && fecha <= new Date(currentYear,4,6,23).getTime()  && element.descuento === null) {
+              lmmay1_6.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,4,1).getTime() && fecha <= new Date(currentYear,4,6,23).getTime()  && element.descuento !== null) {
+              lmmay1_6.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,4,7).getTime() && fecha <= new Date(currentYear,4,13,23).getTime()  && element.descuento === null) {
+              lmmay7_13.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,4,7).getTime() && fecha <= new Date(currentYear,4,13,23).getTime()  && element.descuento !== null) {
+              lmmay7_13.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,4,14).getTime() && fecha <= new Date(currentYear,4,20,23).getTime()  && element.descuento === null) {
+              lmmay14_20.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,4,14).getTime() && fecha <= new Date(currentYear,4,20,23).getTime()  && element.descuento !== null) {
+              lmmay14_20.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,4,21).getTime() && fecha <= new Date(currentYear,4,31,23).getTime()  && element.descuento === null) {
+              lmmay21_31.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,4,21).getTime() && fecha <= new Date(currentYear,4,31,23).getTime()  && element.descuento !== null) {
+              lmmay21_31.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,5,1).getTime() && fecha <= new Date(currentYear,5,10,23).getTime()  && element.descuento === null) {
+              lmjun1_10.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,5,1).getTime() && fecha <= new Date(currentYear,5,10,23).getTime()  && element.descuento !== null) {
+              lmjun1_10.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,5,11).getTime() && fecha <= new Date(currentYear,5,17,23).getTime()  && element.descuento === null) {
+              lmjun11_17.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,5,11).getTime() && fecha <= new Date(currentYear,5,17,23).getTime()  && element.descuento !== null) {
+              lmjun11_17.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,5,18).getTime() && fecha <= new Date(currentYear,5,24,23).getTime()  && element.descuento === null) {
+              lmjun18_24.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,5,18).getTime() && fecha <= new Date(currentYear,5,24,23).getTime()  && element.descuento !== null) {
+              lmjun18_24.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,5,25).getTime() && fecha <= new Date(currentYear,5,30,23).getTime()  && element.descuento === null) {
+              lmjun25_30.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,5,25).getTime() && fecha <= new Date(currentYear,5,30,23).getTime()  && element.descuento !== null) {
+              lmjun25_30.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,6,1).getTime() && fecha <= new Date(currentYear,6,8,23).getTime()  && element.descuento === null) {
+              lmjul1_8.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,6,1).getTime() && fecha <= new Date(currentYear,6,8,23).getTime()  && element.descuento !== null) {
+              lmene1_7.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,6,9).getTime() && fecha <= new Date(currentYear,6,15,23).getTime()  && element.descuento === null) {
+              lmjul9_15.push(element.precio);
+              return;
+            }else if (fecha >= new Date(currentYear,6,9).getTime() && fecha <= new Date(currentYear,6,15,23).getTime()  && element.descuento !== null) {
+              lmjul9_15.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,6,16).getTime() && fecha <= new Date(currentYear,6,22,23).getTime()  && element.descuento === null) {
+              lmjul16_22.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,6,16).getTime() && fecha <= new Date(currentYear,6,22,23).getTime()  && element.descuento !== null) {
+              lmjul16_22.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,6,23).getTime() && fecha <= new Date(currentYear,6,31,23).getTime()  && element.descuento === null) {
+              lmjul23_31.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,6,23).getTime() && fecha <= new Date(currentYear,6,31,23).getTime()  && element.descuento !== null) {
+              lmjul23_31.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,7,1).getTime() && fecha <= new Date(currentYear,7,5,23).getTime()  && element.descuento === null) {
+              lmago1_5.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,7,1).getTime() && fecha <= new Date(currentYear,7,5,23).getTime()  && element.descuento !== null) {
+              lmago1_5.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,7,6).getTime() && fecha <= new Date(currentYear,7,12,23).getTime()  && element.descuento === null) {
+              lmago6_12.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,7,6).getTime() && fecha <= new Date(currentYear,7,12,23).getTime()  && element.descuento !== null) {
+              lmago6_12.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,7,13).getTime() && fecha <= new Date(currentYear,7,19,23).getTime()  && element.descuento === null) {
+              lmago13_19.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,7,13).getTime() && fecha <= new Date(currentYear,7,19,23).getTime()  && element.descuento !== null) {
+              lmago13_19.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,7,20).getTime() && fecha <= new Date(currentYear,7,26,23).getTime()  && element.descuento === null) {
+              lmago20_26.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,7,20).getTime() && fecha <= new Date(currentYear,7,26,23).getTime()  && element.descuento !== null) {
+              lmago20_26.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,7,27).getTime() && fecha <= new Date(currentYear,7,31,23).getTime()  && element.descuento === null) {
+              lmago27_31.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,7,27).getTime() && fecha <= new Date(currentYear,7,31,23).getTime()  && element.descuento !== null) {
+              lmago27_31.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,8,1).getTime() && fecha <= new Date(currentYear,8,9,23).getTime()  && element.descuento === null) {
+              lmsep1_9.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,8,1).getTime() && fecha <= new Date(currentYear,8,9,23).getTime()  && element.descuento !== null) {
+              lmsep1_9.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,8,10).getTime() && fecha <= new Date(currentYear,8,16,23).getTime()  && element.descuento === null) {
+              lmsep10_16.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,8,10).getTime() && fecha <= new Date(currentYear,8,16,23).getTime()  && element.descuento !== null) {
+              lmsep10_16.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,8,17).getTime() && fecha <= new Date(currentYear,8,23,23).getTime()  && element.descuento === null) {
+              lmsep17_23.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,8,17).getTime() && fecha <= new Date(currentYear,8,23,23).getTime()  && element.descuento !== null) {
+              lmsep17_23.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,8,24).getTime() && fecha <= new Date(currentYear,8,30,23).getTime()  && element.descuento === null) {
+              lmsep24_30.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,8,24).getTime() && fecha <= new Date(currentYear,8,30,23).getTime()  && element.descuento !== null) {
+              lmsep24_30.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,9,1).getTime() && fecha <= new Date(currentYear,9,7,23).getTime()  && element.descuento === null) {
+              lmoct1_7.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,9,1).getTime() && fecha <= new Date(currentYear,9,7,23).getTime()  && element.descuento !== null) {
+              lmoct1_7.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,9,8).getTime() && fecha <= new Date(currentYear,9,14,23).getTime()  && element.descuento === null) {
+              lmoct8_14.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,9,8).getTime() && fecha <= new Date(currentYear,9,14,23).getTime()  && element.descuento !== null) {
+              lmoct8_14.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,9,15).getTime() && fecha <= new Date(currentYear,9,21,23).getTime()  && element.descuento === null) {
+              lmoct15_21.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,9,15).getTime() && fecha <= new Date(currentYear,9,21,23).getTime()  && element.descuento !== null) {
+              lmoct15_21.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,9,22).getTime() && fecha <= new Date(currentYear,9,31,23).getTime()  && element.descuento === null) {
+              lmoct22_31.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,9,22).getTime() && fecha <= new Date(currentYear,9,31,23).getTime()  && element.descuento !== null) {
+              lmoct22_31.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,10,1).getTime() && fecha <= new Date(currentYear,10,5,23).getTime()  && element.descuento === null) {
+              lmnov1_5.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,10,1).getTime() && fecha <= new Date(currentYear,10,5,23).getTime()  && element.descuento !== null) {
+              lmnov1_5.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,10,6).getTime() && fecha <= new Date(currentYear,10,11,23).getTime()  && element.descuento === null) {
+              lmnov6_11.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,10,6).getTime() && fecha <= new Date(currentYear,10,11,23).getTime()  && element.descuento !== null) {
+              lmnov6_11.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,10,12).getTime() && fecha <= new Date(currentYear,10,18,23).getTime()  && element.descuento === null) {
+              lmnov12_18.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,10,12).getTime() && fecha <= new Date(currentYear,10,18,23).getTime()  && element.descuento !== null) {
+              lmnov12_18.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,10,19).getTime() && fecha <= new Date(currentYear,10,25,23).getTime()  && element.descuento === null) {
+              lmnov19_25.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,10,19).getTime() && fecha <= new Date(currentYear,10,25,23).getTime()  && element.descuento !== null) {
+              lmnov19_25.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,10,26).getTime() && fecha <= new Date(currentYear,10,30,23).getTime()  && element.descuento === null) {
+              lmnov26_30.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,10,26).getTime() && fecha <= new Date(currentYear,10,30,23).getTime()  && element.descuento !== null) {
+              lmnov26_30.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,11,1).getTime() && fecha <= new Date(currentYear,11,9,23).getTime()  && element.descuento === null) {
+              lmdic1_9.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,11,1).getTime() && fecha <= new Date(currentYear,11,9,23).getTime()  && element.descuento !== null) {
+              lmdic1_9.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,11,10).getTime() && fecha <= new Date(currentYear,11,17,23).getTime()  && element.descuento === null) {
+              lmdic10_17.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,11,10).getTime() && fecha <= new Date(currentYear,11,17,23).getTime()  && element.descuento !== null) {
+              lmdic10_17.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,11,18).getTime() && fecha <= new Date(currentYear,11,24,23).getTime()  && element.descuento === null) {
+              lmdic18_24.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,11,18).getTime() && fecha <= new Date(currentYear,11,24,23).getTime()  && element.descuento !== null) {
+              lmdic18_24.push(element.descuento);
+              return;
+            }
+            if (fecha >= new Date(currentYear,11,25).getTime() && fecha <= new Date(currentYear,11,31,23).getTime()  && element.descuento === null) {
+              lmdic25_31.push(element.precio);
+              return;
+            } else if (fecha >= new Date(currentYear,11,25).getTime() && fecha <= new Date(currentYear,11,31,23).getTime()  && element.descuento !== null) {
+              lmdic25_31.push(element.descuento);
+              return;
+            }
+  
           }
 
 
@@ -1658,212 +1664,212 @@ exports.averagePriceWeekGeneral = (arr) => {
     }
   
     // // descuento año actual zara
-    weeksActualYearZara[0] = setAverageDiscount(ene1_7);
-    weeksActualYearZara[1] = setAverageDiscount(ene8_14);
-    weeksActualYearZara[2] = setAverageDiscount(ene15_21);
-    weeksActualYearZara[3] = setAverageDiscount(ene22_31);
-    weeksActualYearZara[4] = setAverageDiscount(feb1_11);
-    weeksActualYearZara[5] = setAverageDiscount(feb12_18);
-    weeksActualYearZara[6] = setAverageDiscount(feb19_25);
-    weeksActualYearZara[7] = setAverageDiscount(feb26_29);
-    weeksActualYearZara[8] = setAverageDiscount(mar1_11);
-    weeksActualYearZara[9] = setAverageDiscount(mar12_18);
-    weeksActualYearZara[10] = setAverageDiscount(mar19_25);
-    weeksActualYearZara[11] = setAverageDiscount(mar26_31);
-    weeksActualYearZara[12] = setAverageDiscount(abr1_8);
-    weeksActualYearZara[13] = setAverageDiscount(abr9_15);
-    weeksActualYearZara[14] = setAverageDiscount(abr16_22);
-    weeksActualYearZara[15] = setAverageDiscount(abr23_30);
-    weeksActualYearZara[16] = setAverageDiscount(may1_6);
-    weeksActualYearZara[17] = setAverageDiscount(may7_13);
-    weeksActualYearZara[18] = setAverageDiscount(may14_20);
-    weeksActualYearZara[19] = setAverageDiscount(may21_31);
-    weeksActualYearZara[20] = setAverageDiscount(jun1_10);
-    weeksActualYearZara[21] = setAverageDiscount(jun11_17);
-    weeksActualYearZara[22] = setAverageDiscount(jun18_24);
-    weeksActualYearZara[23] = setAverageDiscount(jun25_30);
-    weeksActualYearZara[24] = setAverageDiscount(jul1_8);
-    weeksActualYearZara[25] = setAverageDiscount(jul9_15);
-    weeksActualYearZara[26] = setAverageDiscount(jul16_22);
-    weeksActualYearZara[27] = setAverageDiscount(jul23_31);
-    weeksActualYearZara[28] = setAverageDiscount(ago1_5);
-    weeksActualYearZara[29] = setAverageDiscount(ago6_12);
-    weeksActualYearZara[30] = setAverageDiscount(ago13_19);
-    weeksActualYearZara[31] = setAverageDiscount(ago20_26);
-    weeksActualYearZara[32] = setAverageDiscount(ago27_31);
-    weeksActualYearZara[33] = setAverageDiscount(sep1_9);
-    weeksActualYearZara[34] = setAverageDiscount(sep10_16);
-    weeksActualYearZara[35] = setAverageDiscount(sep17_23);
-    weeksActualYearZara[36] = setAverageDiscount(sep24_30);
-    weeksActualYearZara[37] = setAverageDiscount(oct1_7);
-    weeksActualYearZara[38] = setAverageDiscount(oct8_14);
-    weeksActualYearZara[39] = setAverageDiscount(oct15_21);
-    weeksActualYearZara[40] = setAverageDiscount(oct22_31);
-    weeksActualYearZara[41] = setAverageDiscount(nov1_5);
-    weeksActualYearZara[42] = setAverageDiscount(nov6_11);
-    weeksActualYearZara[43] = setAverageDiscount(nov12_18);
-    weeksActualYearZara[44] = setAverageDiscount(nov19_25);
-    weeksActualYearZara[45] = setAverageDiscount(nov26_30);
-    weeksActualYearZara[46] = setAverageDiscount(dic1_9);
-    weeksActualYearZara[47] = setAverageDiscount(dic10_17);
-    weeksActualYearZara[48] = setAverageDiscount(dic18_24);
-    weeksActualYearZara[49] = setAverageDiscount(dic25_31);
+    weeksActualYearZara[0] = setAveragePriceMonth(ene1_7);
+    weeksActualYearZara[1] = setAveragePriceMonth(ene8_14);
+    weeksActualYearZara[2] = setAveragePriceMonth(ene15_21);
+    weeksActualYearZara[3] = setAveragePriceMonth(ene22_31);
+    weeksActualYearZara[4] = setAveragePriceMonth(feb1_11);
+    weeksActualYearZara[5] = setAveragePriceMonth(feb12_18);
+    weeksActualYearZara[6] = setAveragePriceMonth(feb19_25);
+    weeksActualYearZara[7] = setAveragePriceMonth(feb26_29);
+    weeksActualYearZara[8] = setAveragePriceMonth(mar1_11);
+    weeksActualYearZara[9] = setAveragePriceMonth(mar12_18);
+    weeksActualYearZara[10] = setAveragePriceMonth(mar19_25);
+    weeksActualYearZara[11] = setAveragePriceMonth(mar26_31);
+    weeksActualYearZara[12] = setAveragePriceMonth(abr1_8);
+    weeksActualYearZara[13] = setAveragePriceMonth(abr9_15);
+    weeksActualYearZara[14] = setAveragePriceMonth(abr16_22);
+    weeksActualYearZara[15] = setAveragePriceMonth(abr23_30);
+    weeksActualYearZara[16] = setAveragePriceMonth(may1_6);
+    weeksActualYearZara[17] = setAveragePriceMonth(may7_13);
+    weeksActualYearZara[18] = setAveragePriceMonth(may14_20);
+    weeksActualYearZara[19] = setAveragePriceMonth(may21_31);
+    weeksActualYearZara[20] = setAveragePriceMonth(jun1_10);
+    weeksActualYearZara[21] = setAveragePriceMonth(jun11_17);
+    weeksActualYearZara[22] = setAveragePriceMonth(jun18_24);
+    weeksActualYearZara[23] = setAveragePriceMonth(jun25_30);
+    weeksActualYearZara[24] = setAveragePriceMonth(jul1_8);
+    weeksActualYearZara[25] = setAveragePriceMonth(jul9_15);
+    weeksActualYearZara[26] = setAveragePriceMonth(jul16_22);
+    weeksActualYearZara[27] = setAveragePriceMonth(jul23_31);
+    weeksActualYearZara[28] = setAveragePriceMonth(ago1_5);
+    weeksActualYearZara[29] = setAveragePriceMonth(ago6_12);
+    weeksActualYearZara[30] = setAveragePriceMonth(ago13_19);
+    weeksActualYearZara[31] = setAveragePriceMonth(ago20_26);
+    weeksActualYearZara[32] = setAveragePriceMonth(ago27_31);
+    weeksActualYearZara[33] = setAveragePriceMonth(sep1_9);
+    weeksActualYearZara[34] = setAveragePriceMonth(sep10_16);
+    weeksActualYearZara[35] = setAveragePriceMonth(sep17_23);
+    weeksActualYearZara[36] = setAveragePriceMonth(sep24_30);
+    weeksActualYearZara[37] = setAveragePriceMonth(oct1_7);
+    weeksActualYearZara[38] = setAveragePriceMonth(oct8_14);
+    weeksActualYearZara[39] = setAveragePriceMonth(oct15_21);
+    weeksActualYearZara[40] = setAveragePriceMonth(oct22_31);
+    weeksActualYearZara[41] = setAveragePriceMonth(nov1_5);
+    weeksActualYearZara[42] = setAveragePriceMonth(nov6_11);
+    weeksActualYearZara[43] = setAveragePriceMonth(nov12_18);
+    weeksActualYearZara[44] = setAveragePriceMonth(nov19_25);
+    weeksActualYearZara[45] = setAveragePriceMonth(nov26_30);
+    weeksActualYearZara[46] = setAveragePriceMonth(dic1_9);
+    weeksActualYearZara[47] = setAveragePriceMonth(dic10_17);
+    weeksActualYearZara[48] = setAveragePriceMonth(dic18_24);
+    weeksActualYearZara[49] = setAveragePriceMonth(dic25_31);
   
     // // descuento año anterior zara
-    weeksLastYearZara[0] = setAverageDiscount(Zene1_7);
-    weeksLastYearZara[1] = setAverageDiscount(Zene8_14);
-    weeksLastYearZara[2] = setAverageDiscount(Zene15_21);
-    weeksLastYearZara[3] = setAverageDiscount(Zene22_31);
-    weeksLastYearZara[4] = setAverageDiscount(Zfeb1_11);
-    weeksLastYearZara[5] = setAverageDiscount(Zfeb12_18);
-    weeksLastYearZara[6] = setAverageDiscount(Zfeb19_25);
-    weeksLastYearZara[7] = setAverageDiscount(Zfeb26_29);
-    weeksLastYearZara[8] = setAverageDiscount(Zmar1_11);
-    weeksLastYearZara[9] = setAverageDiscount(Zmar12_18);
-    weeksLastYearZara[10] = setAverageDiscount(Zmar19_25);
-    weeksLastYearZara[11] = setAverageDiscount(Zmar26_31);
-    weeksLastYearZara[12] = setAverageDiscount(Zabr1_8);
-    weeksLastYearZara[13] = setAverageDiscount(Zabr9_15);
-    weeksLastYearZara[14] = setAverageDiscount(Zabr16_22);
-    weeksLastYearZara[15] = setAverageDiscount(Zabr23_30);
-    weeksLastYearZara[16] = setAverageDiscount(Zmay1_6);
-    weeksLastYearZara[17] = setAverageDiscount(Zmay7_13);
-    weeksLastYearZara[18] = setAverageDiscount(Zmay14_20);
-    weeksLastYearZara[19] = setAverageDiscount(Zmay21_31);
-    weeksLastYearZara[20] = setAverageDiscount(Zjun1_10);
-    weeksLastYearZara[21] = setAverageDiscount(Zjun11_17);
-    weeksLastYearZara[22] = setAverageDiscount(Zjun18_24);
-    weeksLastYearZara[23] = setAverageDiscount(Zjun25_30);
-    weeksLastYearZara[24] = setAverageDiscount(Zjul1_8);
-    weeksLastYearZara[25] = setAverageDiscount(Zjul9_15);
-    weeksLastYearZara[26] = setAverageDiscount(Zjul16_22);
-    weeksLastYearZara[27] = setAverageDiscount(Zjul23_31);
-    weeksLastYearZara[28] = setAverageDiscount(Zago1_5);
-    weeksLastYearZara[29] = setAverageDiscount(Zago6_12);
-    weeksLastYearZara[30] = setAverageDiscount(Zago13_19);
-    weeksLastYearZara[31] = setAverageDiscount(Zago20_26);
-    weeksLastYearZara[32] = setAverageDiscount(Zago27_31);
-    weeksLastYearZara[33] = setAverageDiscount(Zsep1_9);
-    weeksLastYearZara[34] = setAverageDiscount(Zsep10_16);
-    weeksLastYearZara[35] = setAverageDiscount(Zsep17_23);
-    weeksLastYearZara[36] = setAverageDiscount(Zsep24_30);
-    weeksLastYearZara[37] = setAverageDiscount(Zoct1_7);
-    weeksLastYearZara[38] = setAverageDiscount(Zoct8_14);
-    weeksLastYearZara[39] = setAverageDiscount(Zoct15_21);
-    weeksLastYearZara[40] = setAverageDiscount(Zoct22_31);
-    weeksLastYearZara[41] = setAverageDiscount(Znov1_5);
-    weeksLastYearZara[42] = setAverageDiscount(Znov6_11);
-    weeksLastYearZara[43] = setAverageDiscount(Znov12_18);
-    weeksLastYearZara[44] = setAverageDiscount(Znov19_25);
-    weeksLastYearZara[45] = setAverageDiscount(Znov26_30);
-    weeksLastYearZara[46] = setAverageDiscount(Zdic1_9);
-    weeksLastYearZara[47] = setAverageDiscount(Zdic10_17);
-    weeksLastYearZara[48] = setAverageDiscount(Zdic18_24);
-    weeksLastYearZara[49] = setAverageDiscount(Zdic25_31);
+    weeksLastYearZara[0] = setAveragePriceMonth(Zene1_7);
+    weeksLastYearZara[1] = setAveragePriceMonth(Zene8_14);
+    weeksLastYearZara[2] = setAveragePriceMonth(Zene15_21);
+    weeksLastYearZara[3] = setAveragePriceMonth(Zene22_31);
+    weeksLastYearZara[4] = setAveragePriceMonth(Zfeb1_11);
+    weeksLastYearZara[5] = setAveragePriceMonth(Zfeb12_18);
+    weeksLastYearZara[6] = setAveragePriceMonth(Zfeb19_25);
+    weeksLastYearZara[7] = setAveragePriceMonth(Zfeb26_29);
+    weeksLastYearZara[8] = setAveragePriceMonth(Zmar1_11);
+    weeksLastYearZara[9] = setAveragePriceMonth(Zmar12_18);
+    weeksLastYearZara[10] = setAveragePriceMonth(Zmar19_25);
+    weeksLastYearZara[11] = setAveragePriceMonth(Zmar26_31);
+    weeksLastYearZara[12] = setAveragePriceMonth(Zabr1_8);
+    weeksLastYearZara[13] = setAveragePriceMonth(Zabr9_15);
+    weeksLastYearZara[14] = setAveragePriceMonth(Zabr16_22);
+    weeksLastYearZara[15] = setAveragePriceMonth(Zabr23_30);
+    weeksLastYearZara[16] = setAveragePriceMonth(Zmay1_6);
+    weeksLastYearZara[17] = setAveragePriceMonth(Zmay7_13);
+    weeksLastYearZara[18] = setAveragePriceMonth(Zmay14_20);
+    weeksLastYearZara[19] = setAveragePriceMonth(Zmay21_31);
+    weeksLastYearZara[20] = setAveragePriceMonth(Zjun1_10);
+    weeksLastYearZara[21] = setAveragePriceMonth(Zjun11_17);
+    weeksLastYearZara[22] = setAveragePriceMonth(Zjun18_24);
+    weeksLastYearZara[23] = setAveragePriceMonth(Zjun25_30);
+    weeksLastYearZara[24] = setAveragePriceMonth(Zjul1_8);
+    weeksLastYearZara[25] = setAveragePriceMonth(Zjul9_15);
+    weeksLastYearZara[26] = setAveragePriceMonth(Zjul16_22);
+    weeksLastYearZara[27] = setAveragePriceMonth(Zjul23_31);
+    weeksLastYearZara[28] = setAveragePriceMonth(Zago1_5);
+    weeksLastYearZara[29] = setAveragePriceMonth(Zago6_12);
+    weeksLastYearZara[30] = setAveragePriceMonth(Zago13_19);
+    weeksLastYearZara[31] = setAveragePriceMonth(Zago20_26);
+    weeksLastYearZara[32] = setAveragePriceMonth(Zago27_31);
+    weeksLastYearZara[33] = setAveragePriceMonth(Zsep1_9);
+    weeksLastYearZara[34] = setAveragePriceMonth(Zsep10_16);
+    weeksLastYearZara[35] = setAveragePriceMonth(Zsep17_23);
+    weeksLastYearZara[36] = setAveragePriceMonth(Zsep24_30);
+    weeksLastYearZara[37] = setAveragePriceMonth(Zoct1_7);
+    weeksLastYearZara[38] = setAveragePriceMonth(Zoct8_14);
+    weeksLastYearZara[39] = setAveragePriceMonth(Zoct15_21);
+    weeksLastYearZara[40] = setAveragePriceMonth(Zoct22_31);
+    weeksLastYearZara[41] = setAveragePriceMonth(Znov1_5);
+    weeksLastYearZara[42] = setAveragePriceMonth(Znov6_11);
+    weeksLastYearZara[43] = setAveragePriceMonth(Znov12_18);
+    weeksLastYearZara[44] = setAveragePriceMonth(Znov19_25);
+    weeksLastYearZara[45] = setAveragePriceMonth(Znov26_30);
+    weeksLastYearZara[46] = setAveragePriceMonth(Zdic1_9);
+    weeksLastYearZara[47] = setAveragePriceMonth(Zdic10_17);
+    weeksLastYearZara[48] = setAveragePriceMonth(Zdic18_24);
+    weeksLastYearZara[49] = setAveragePriceMonth(Zdic25_31);
 
     //  descuento año actual mango
-    weeksActualYearMango[0] = setAverageDiscount(mene1_7);
-    weeksActualYearMango[1] = setAverageDiscount(mene8_14);
-    weeksActualYearMango[2] = setAverageDiscount(mene15_21);
-    weeksActualYearMango[3] = setAverageDiscount(mene22_31);
-    weeksActualYearMango[4] = setAverageDiscount(mfeb1_11);
-    weeksActualYearMango[5] = setAverageDiscount(mfeb12_18);
-    weeksActualYearMango[6] = setAverageDiscount(mfeb19_25);
-    weeksActualYearMango[7] = setAverageDiscount(mfeb26_29);
-    weeksActualYearMango[8] = setAverageDiscount(mmar1_11);
-    weeksActualYearMango[9] = setAverageDiscount(mmar12_18);
-    weeksActualYearMango[10] = setAverageDiscount(mmar19_25);
-    weeksActualYearMango[11] = setAverageDiscount(mmar26_31);
-    weeksActualYearMango[12] = setAverageDiscount(mabr1_8);
-    weeksActualYearMango[13] = setAverageDiscount(mabr9_15);
-    weeksActualYearMango[14] = setAverageDiscount(mabr16_22);
-    weeksActualYearMango[15] = setAverageDiscount(mabr23_30);
-    weeksActualYearMango[16] = setAverageDiscount(mmay1_6);
-    weeksActualYearMango[17] = setAverageDiscount(mmay7_13);
-    weeksActualYearMango[18] = setAverageDiscount(mmay14_20);
-    weeksActualYearMango[19] = setAverageDiscount(mmay21_31);
-    weeksActualYearMango[20] = setAverageDiscount(mjun1_10);
-    weeksActualYearMango[21] = setAverageDiscount(mjun11_17);
-    weeksActualYearMango[22] = setAverageDiscount(mjun18_24);
-    weeksActualYearMango[23] = setAverageDiscount(mjun25_30);
-    weeksActualYearMango[24] = setAverageDiscount(mjul1_8);
-    weeksActualYearMango[25] = setAverageDiscount(mjul9_15);
-    weeksActualYearMango[26] = setAverageDiscount(mjul16_22);
-    weeksActualYearMango[27] = setAverageDiscount(mjul23_31);
-    weeksActualYearMango[28] = setAverageDiscount(mago1_5);
-    weeksActualYearMango[29] = setAverageDiscount(mago6_12);
-    weeksActualYearMango[30] = setAverageDiscount(mago13_19);
-    weeksActualYearMango[31] = setAverageDiscount(mago20_26);
-    weeksActualYearMango[32] = setAverageDiscount(mago27_31);
-    weeksActualYearMango[33] = setAverageDiscount(msep1_9);
-    weeksActualYearMango[34] = setAverageDiscount(msep10_16);
-    weeksActualYearMango[35] = setAverageDiscount(msep17_23);
-    weeksActualYearMango[36] = setAverageDiscount(msep24_30);
-    weeksActualYearMango[37] = setAverageDiscount(moct1_7);
-    weeksActualYearMango[38] = setAverageDiscount(moct8_14);
-    weeksActualYearMango[39] = setAverageDiscount(moct15_21);
-    weeksActualYearMango[40] = setAverageDiscount(moct22_31);
-    weeksActualYearMango[41] = setAverageDiscount(mnov1_5);
-    weeksActualYearMango[42] = setAverageDiscount(mnov6_11);
-    weeksActualYearMango[43] = setAverageDiscount(mnov12_18);
-    weeksActualYearMango[44] = setAverageDiscount(mnov19_25);
-    weeksActualYearMango[45] = setAverageDiscount(mnov26_30);
-    weeksActualYearMango[46] = setAverageDiscount(mdic1_9);
-    weeksActualYearMango[47] = setAverageDiscount(mdic10_17);
-    weeksActualYearMango[48] = setAverageDiscount(mdic18_24);
-    weeksActualYearMango[49] = setAverageDiscount(mdic25_31);
+    weeksActualYearMango[0] = setAveragePriceMonth(mene1_7);
+    weeksActualYearMango[1] = setAveragePriceMonth(mene8_14);
+    weeksActualYearMango[2] = setAveragePriceMonth(mene15_21);
+    weeksActualYearMango[3] = setAveragePriceMonth(mene22_31);
+    weeksActualYearMango[4] = setAveragePriceMonth(mfeb1_11);
+    weeksActualYearMango[5] = setAveragePriceMonth(mfeb12_18);
+    weeksActualYearMango[6] = setAveragePriceMonth(mfeb19_25);
+    weeksActualYearMango[7] = setAveragePriceMonth(mfeb26_29);
+    weeksActualYearMango[8] = setAveragePriceMonth(mmar1_11);
+    weeksActualYearMango[9] = setAveragePriceMonth(mmar12_18);
+    weeksActualYearMango[10] = setAveragePriceMonth(mmar19_25);
+    weeksActualYearMango[11] = setAveragePriceMonth(mmar26_31);
+    weeksActualYearMango[12] = setAveragePriceMonth(mabr1_8);
+    weeksActualYearMango[13] = setAveragePriceMonth(mabr9_15);
+    weeksActualYearMango[14] = setAveragePriceMonth(mabr16_22);
+    weeksActualYearMango[15] = setAveragePriceMonth(mabr23_30);
+    weeksActualYearMango[16] = setAveragePriceMonth(mmay1_6);
+    weeksActualYearMango[17] = setAveragePriceMonth(mmay7_13);
+    weeksActualYearMango[18] = setAveragePriceMonth(mmay14_20);
+    weeksActualYearMango[19] = setAveragePriceMonth(mmay21_31);
+    weeksActualYearMango[20] = setAveragePriceMonth(mjun1_10);
+    weeksActualYearMango[21] = setAveragePriceMonth(mjun11_17);
+    weeksActualYearMango[22] = setAveragePriceMonth(mjun18_24);
+    weeksActualYearMango[23] = setAveragePriceMonth(mjun25_30);
+    weeksActualYearMango[24] = setAveragePriceMonth(mjul1_8);
+    weeksActualYearMango[25] = setAveragePriceMonth(mjul9_15);
+    weeksActualYearMango[26] = setAveragePriceMonth(mjul16_22);
+    weeksActualYearMango[27] = setAveragePriceMonth(mjul23_31);
+    weeksActualYearMango[28] = setAveragePriceMonth(mago1_5);
+    weeksActualYearMango[29] = setAveragePriceMonth(mago6_12);
+    weeksActualYearMango[30] = setAveragePriceMonth(mago13_19);
+    weeksActualYearMango[31] = setAveragePriceMonth(mago20_26);
+    weeksActualYearMango[32] = setAveragePriceMonth(mago27_31);
+    weeksActualYearMango[33] = setAveragePriceMonth(msep1_9);
+    weeksActualYearMango[34] = setAveragePriceMonth(msep10_16);
+    weeksActualYearMango[35] = setAveragePriceMonth(msep17_23);
+    weeksActualYearMango[36] = setAveragePriceMonth(msep24_30);
+    weeksActualYearMango[37] = setAveragePriceMonth(moct1_7);
+    weeksActualYearMango[38] = setAveragePriceMonth(moct8_14);
+    weeksActualYearMango[39] = setAveragePriceMonth(moct15_21);
+    weeksActualYearMango[40] = setAveragePriceMonth(moct22_31);
+    weeksActualYearMango[41] = setAveragePriceMonth(mnov1_5);
+    weeksActualYearMango[42] = setAveragePriceMonth(mnov6_11);
+    weeksActualYearMango[43] = setAveragePriceMonth(mnov12_18);
+    weeksActualYearMango[44] = setAveragePriceMonth(mnov19_25);
+    weeksActualYearMango[45] = setAveragePriceMonth(mnov26_30);
+    weeksActualYearMango[46] = setAveragePriceMonth(mdic1_9);
+    weeksActualYearMango[47] = setAveragePriceMonth(mdic10_17);
+    weeksActualYearMango[48] = setAveragePriceMonth(mdic18_24);
+    weeksActualYearMango[49] = setAveragePriceMonth(mdic25_31);
 
     //  descuento semana año anterior mango
-    weeksLastYearMango[0] = setAverageDiscount(lmene1_7);
-    weeksLastYearMango[1] = setAverageDiscount(lmene8_14);
-    weeksLastYearMango[2] = setAverageDiscount(lmene15_21);
-    weeksLastYearMango[3] = setAverageDiscount(lmene22_31);
-    weeksLastYearMango[4] = setAverageDiscount(lmfeb1_11);
-    weeksLastYearMango[5] = setAverageDiscount(lmfeb12_18);
-    weeksLastYearMango[6] = setAverageDiscount(lmfeb19_25);
-    weeksLastYearMango[7] = setAverageDiscount(lmfeb26_29);
-    weeksLastYearMango[8] = setAverageDiscount(lmmar1_11);
-    weeksLastYearMango[9] = setAverageDiscount(lmmar12_18);
-    weeksLastYearMango[10] = setAverageDiscount(lmmar19_25);
-    weeksLastYearMango[11] = setAverageDiscount(lmmar26_31);
-    weeksLastYearMango[12] = setAverageDiscount(lmabr1_8);
-    weeksLastYearMango[13] = setAverageDiscount(lmabr9_15);
-    weeksLastYearMango[14] = setAverageDiscount(lmabr16_22);
-    weeksLastYearMango[15] = setAverageDiscount(lmabr23_30);
-    weeksLastYearMango[16] = setAverageDiscount(lmmay1_6);
-    weeksLastYearMango[17] = setAverageDiscount(lmmay7_13);
-    weeksLastYearMango[18] = setAverageDiscount(lmmay14_20);
-    weeksLastYearMango[19] = setAverageDiscount(lmmay21_31);
-    weeksLastYearMango[20] = setAverageDiscount(lmjun1_10);
-    weeksLastYearMango[21] = setAverageDiscount(lmjun11_17);
-    weeksLastYearMango[22] = setAverageDiscount(lmjun18_24);
-    weeksLastYearMango[23] = setAverageDiscount(lmjun25_30);
-    weeksLastYearMango[24] = setAverageDiscount(lmjul1_8);
-    weeksLastYearMango[25] = setAverageDiscount(lmjul9_15);
-    weeksLastYearMango[26] = setAverageDiscount(lmjul16_22);
-    weeksLastYearMango[27] = setAverageDiscount(lmjul23_31);
-    weeksLastYearMango[28] = setAverageDiscount(lmago1_5);
-    weeksLastYearMango[29] = setAverageDiscount(lmago6_12);
-    weeksLastYearMango[30] = setAverageDiscount(lmago13_19);
-    weeksLastYearMango[31] = setAverageDiscount(lmago20_26);
-    weeksLastYearMango[32] = setAverageDiscount(lmago27_31);
-    weeksLastYearMango[33] = setAverageDiscount(lmsep1_9);
-    weeksLastYearMango[34] = setAverageDiscount(lmsep10_16);
-    weeksLastYearMango[35] = setAverageDiscount(lmsep17_23);
-    weeksLastYearMango[36] = setAverageDiscount(lmsep24_30);
-    weeksLastYearMango[37] = setAverageDiscount(lmoct1_7);
-    weeksLastYearMango[38] = setAverageDiscount(lmoct8_14);
-    weeksLastYearMango[39] = setAverageDiscount(lmoct15_21);
-    weeksLastYearMango[40] = setAverageDiscount(lmoct22_31);
-    weeksLastYearMango[41] = setAverageDiscount(lmnov1_5);
-    weeksLastYearMango[42] = setAverageDiscount(lmnov6_11);
-    weeksLastYearMango[43] = setAverageDiscount(lmnov12_18);
-    weeksLastYearMango[44] = setAverageDiscount(lmnov19_25);
-    weeksLastYearMango[45] = setAverageDiscount(lmnov26_30);
-    weeksLastYearMango[46] = setAverageDiscount(lmdic1_9);
-    weeksLastYearMango[47] = setAverageDiscount(lmdic10_17);
-    weeksLastYearMango[48] = setAverageDiscount(lmdic18_24);
-    weeksLastYearMango[49] = setAverageDiscount(lmdic25_31);  
+    weeksLastYearMango[0] = setAveragePriceMonth(lmene1_7);
+    weeksLastYearMango[1] = setAveragePriceMonth(lmene8_14);
+    weeksLastYearMango[2] = setAveragePriceMonth(lmene15_21);
+    weeksLastYearMango[3] = setAveragePriceMonth(lmene22_31);
+    weeksLastYearMango[4] = setAveragePriceMonth(lmfeb1_11);
+    weeksLastYearMango[5] = setAveragePriceMonth(lmfeb12_18);
+    weeksLastYearMango[6] = setAveragePriceMonth(lmfeb19_25);
+    weeksLastYearMango[7] = setAveragePriceMonth(lmfeb26_29);
+    weeksLastYearMango[8] = setAveragePriceMonth(lmmar1_11);
+    weeksLastYearMango[9] = setAveragePriceMonth(lmmar12_18);
+    weeksLastYearMango[10] = setAveragePriceMonth(lmmar19_25);
+    weeksLastYearMango[11] = setAveragePriceMonth(lmmar26_31);
+    weeksLastYearMango[12] = setAveragePriceMonth(lmabr1_8);
+    weeksLastYearMango[13] = setAveragePriceMonth(lmabr9_15);
+    weeksLastYearMango[14] = setAveragePriceMonth(lmabr16_22);
+    weeksLastYearMango[15] = setAveragePriceMonth(lmabr23_30);
+    weeksLastYearMango[16] = setAveragePriceMonth(lmmay1_6);
+    weeksLastYearMango[17] = setAveragePriceMonth(lmmay7_13);
+    weeksLastYearMango[18] = setAveragePriceMonth(lmmay14_20);
+    weeksLastYearMango[19] = setAveragePriceMonth(lmmay21_31);
+    weeksLastYearMango[20] = setAveragePriceMonth(lmjun1_10);
+    weeksLastYearMango[21] = setAveragePriceMonth(lmjun11_17);
+    weeksLastYearMango[22] = setAveragePriceMonth(lmjun18_24);
+    weeksLastYearMango[23] = setAveragePriceMonth(lmjun25_30);
+    weeksLastYearMango[24] = setAveragePriceMonth(lmjul1_8);
+    weeksLastYearMango[25] = setAveragePriceMonth(lmjul9_15);
+    weeksLastYearMango[26] = setAveragePriceMonth(lmjul16_22);
+    weeksLastYearMango[27] = setAveragePriceMonth(lmjul23_31);
+    weeksLastYearMango[28] = setAveragePriceMonth(lmago1_5);
+    weeksLastYearMango[29] = setAveragePriceMonth(lmago6_12);
+    weeksLastYearMango[30] = setAveragePriceMonth(lmago13_19);
+    weeksLastYearMango[31] = setAveragePriceMonth(lmago20_26);
+    weeksLastYearMango[32] = setAveragePriceMonth(lmago27_31);
+    weeksLastYearMango[33] = setAveragePriceMonth(lmsep1_9);
+    weeksLastYearMango[34] = setAveragePriceMonth(lmsep10_16);
+    weeksLastYearMango[35] = setAveragePriceMonth(lmsep17_23);
+    weeksLastYearMango[36] = setAveragePriceMonth(lmsep24_30);
+    weeksLastYearMango[37] = setAveragePriceMonth(lmoct1_7);
+    weeksLastYearMango[38] = setAveragePriceMonth(lmoct8_14);
+    weeksLastYearMango[39] = setAveragePriceMonth(lmoct15_21);
+    weeksLastYearMango[40] = setAveragePriceMonth(lmoct22_31);
+    weeksLastYearMango[41] = setAveragePriceMonth(lmnov1_5);
+    weeksLastYearMango[42] = setAveragePriceMonth(lmnov6_11);
+    weeksLastYearMango[43] = setAveragePriceMonth(lmnov12_18);
+    weeksLastYearMango[44] = setAveragePriceMonth(lmnov19_25);
+    weeksLastYearMango[45] = setAveragePriceMonth(lmnov26_30);
+    weeksLastYearMango[46] = setAveragePriceMonth(lmdic1_9);
+    weeksLastYearMango[47] = setAveragePriceMonth(lmdic10_17);
+    weeksLastYearMango[48] = setAveragePriceMonth(lmdic18_24);
+    weeksLastYearMango[49] = setAveragePriceMonth(lmdic25_31);  
 
     obj.weeksZaraActual = weeksActualYearZara;
     obj.weeksZaraBefore = weeksLastYearZara;
@@ -2000,818 +2006,823 @@ exports.averagePriceWeekGeneral = (arr) => {
             let lastYear = currentYear - 1;
             let fecha = (element.createdAt).getTime(); // funcion para obtener la fecha
     
-          if (year === currentYear && element.discontinued === false) {
-            if (fecha >= new Date(currentYear,0,1).getTime() && fecha <= new Date(currentYear,0,7,23).getTime()  && element.descuento === null) {
-                
-                    
+            if (year === currentYear) {
+                if (fecha >= new Date(currentYear,0,1).getTime() && fecha <= new Date(currentYear,0,7,23).getTime()  && element.descuento === null) {
+                  ene1_7.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,0,1).getTime() && fecha <= new Date(currentYear,0,7,23).getTime()  && element.descuento !== null) {
+                  ene1_7.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,0,08).getTime() && fecha <= new Date(currentYear,0,14,23).getTime()  && element.descuento === null) {
+                  ene8_14.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,0,8).getTime() && fecha <= new Date(currentYear,0,14,23).getTime()  && element.descuento !== null) {
+                  ene8_14.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,0,15).getTime() && fecha <= new Date(currentYear,0,21,23).getTime()  && element.descuento === null) {
+                  ene15_21.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,0,15).getTime() && fecha <= new Date(currentYear,0,21,23).getTime()  && element.descuento !== null) {
+                  ene15_21.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,0,22).getTime() && fecha <= new Date(currentYear,0,31,23).getTime()  && element.descuento === null) {
+                  ene22_31.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,0,22).getTime() && fecha <= new Date(currentYear,0,31,23).getTime()  && element.descuento !== null) {
+                  ene22_31.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,1,1).getTime() && fecha <= new Date(currentYear,1,11,23).getTime()  && element.descuento === null) {
+                  feb1_11.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,1,1).getTime() && fecha <= new Date(currentYear,1,11,23).getTime()  && element.descuento !== null) {
+                  feb1_11.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,1,12).getTime() && fecha <= new Date(currentYear,1,18,23).getTime()  && element.descuento === null) {
+                  feb12_18.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,1,12).getTime() && fecha <= new Date(currentYear,1,18,23).getTime()  && element.descuento !== null) {
+                  feb12_18.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,1,19).getTime() && fecha <= new Date(currentYear,1,25,23).getTime()  && element.descuento === null) {
+                  feb19_25.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,1,19).getTime() && fecha <= new Date(currentYear,1,25,23).getTime()  && element.descuento !== null) {
+                  feb19_25.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,1,26).getTime() && fecha <= new Date(currentYear,1,29,23).getTime()  && element.descuento === null) {
+                  feb26_29.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,1,26).getTime() && fecha <= new Date(currentYear,1,29,23).getTime()  && element.descuento !== null) {
+                  feb26_29.push(element.descuento);
+                  return;
+                }
       
-                ene1_7.push(element.precio);
-                return;
-              } 
-              if (fecha >= new Date(currentYear,0,08).getTime() && fecha <= new Date(currentYear,0,14,23).getTime()  && element.descuento === null) {
-                
-                    
+                if (fecha >= new Date(currentYear,2,1).getTime() && fecha <= new Date(currentYear,2,11,23).getTime()  && element.descuento === null) {
+                  mar1_11.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,2,1).getTime() && fecha <= new Date(currentYear,2,11,23).getTime()  && element.descuento !== null) {
+                  mar1_11.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,2,12).getTime() && fecha <= new Date(currentYear,2,18,23).getTime()  && element.descuento === null) {
+                  mar12_18.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,2,12).getTime() && fecha <= new Date(currentYear,2,18,23).getTime()  && element.descuento !== null) {
+                  mar12_18.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,2,19).getTime() && fecha <= new Date(currentYear,2,25,23).getTime()  && element.descuento === null) {
+                  mar19_25.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,2,19).getTime() && fecha <= new Date(currentYear,2,25,23).getTime()  && element.descuento !== null) {
+                  mar19_25.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,2,26).getTime() && fecha <= new Date(currentYear,2,31,23).getTime()  && element.descuento === null) {
+                  mar26_31.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,2,26).getTime() && fecha <= new Date(currentYear,2,31,23).getTime()  && element.descuento !== null) {
+                  mar26_31.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,3,1).getTime() && fecha <= new Date(currentYear,3,08,23).getTime()  && element.descuento === null) {
+                  abr1_8.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,3,1).getTime() && fecha <= new Date(currentYear,3,8,23).getTime()  && element.descuento !== null) {
+                  abr1_8.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,3,09).getTime() && fecha <= new Date(currentYear,3,15,23).getTime()  && element.descuento === null) {
+                  abr9_15.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,3,9).getTime() && fecha <= new Date(currentYear,3,15,23).getTime()  && element.descuento !== null) {
+                  abr9_15.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,3,16).getTime() && fecha <= new Date(currentYear,3,22,23).getTime()  && element.descuento === null) {
+                  abr16_22.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,3,16).getTime() && fecha <= new Date(currentYear,3,22,23).getTime()  && element.descuento !== null) {
+                  abr16_22.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,3,23).getTime() && fecha <= new Date(currentYear,3,30,23).getTime()  && element.descuento === null) {
+                  abr23_30.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,3,23).getTime() && fecha <= new Date(currentYear,3,30,23).getTime()  && element.descuento !== null) {
+                  abr23_30.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,4,1).getTime() && fecha <= new Date(currentYear,4,6,23).getTime()  && element.descuento === null) {
+                  may1_6.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,4,1).getTime() && fecha <= new Date(currentYear,4,6,23).getTime()  && element.descuento !== null) {
+                  may1_6.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,4,7).getTime() && fecha <= new Date(currentYear,4,13,23).getTime()  && element.descuento === null) {
+                  may7_13.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,4,7).getTime() && fecha <= new Date(currentYear,4,13,23).getTime()  && element.descuento !== null) {
+                  may7_13.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,4,14).getTime() && fecha <= new Date(currentYear,4,20,23).getTime()  && element.descuento === null) {
+                  may14_20.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,4,14).getTime() && fecha <= new Date(currentYear,4,20,23).getTime()  && element.descuento !== null) {
+                  may14_20.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,4,21).getTime() && fecha <= new Date(currentYear,4,31,23).getTime()  && element.descuento === null) {
+                  may21_31.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,4,21).getTime() && fecha <= new Date(currentYear,4,31,23).getTime()  && element.descuento !== null) {
+                  may21_31.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,5,1).getTime() && fecha <= new Date(currentYear,5,10,23).getTime()  && element.descuento === null) {
+                  jun1_10.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,5,1).getTime() && fecha <= new Date(currentYear,5,10,23).getTime()  && element.descuento !== null) {
+                  jun1_10.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,5,11).getTime() && fecha <= new Date(currentYear,5,17,23).getTime()  && element.descuento === null) {
+                  jun11_17.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,5,11).getTime() && fecha <= new Date(currentYear,5,17,23).getTime()  && element.descuento !== null) {
+                  jun11_17.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,5,18).getTime() && fecha <= new Date(currentYear,5,24,23).getTime()  && element.descuento === null) {
+                  jun18_24.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,5,18).getTime() && fecha <= new Date(currentYear,5,24,23).getTime()  && element.descuento !== null) {
+                  jun18_24.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,5,25).getTime() && fecha <= new Date(currentYear,5,30,23).getTime()  && element.descuento === null) {
+                  jun25_30.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,5,25).getTime() && fecha <= new Date(currentYear,5,30,23).getTime()  && element.descuento !== null) {
+                  jun25_30.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,6,1).getTime() && fecha <= new Date(currentYear,6,8,23).getTime()  && element.descuento === null) {
+                  jul1_8.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,6,1).getTime() && fecha <= new Date(currentYear,6,8,23).getTime()  && element.descuento !== null) {
+                  ene1_7.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,6,9).getTime() && fecha <= new Date(currentYear,6,15,23).getTime()  && element.descuento === null) {
+                  jul9_15.push(element.precio);
+                  return;
+                }else if (fecha >= new Date(currentYear,6,9).getTime() && fecha <= new Date(currentYear,6,15,23).getTime()  && element.descuento !== null) {
+                  jul9_15.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,6,16).getTime() && fecha <= new Date(currentYear,6,22,23).getTime()  && element.descuento === null) {
+                  jul16_22.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,6,16).getTime() && fecha <= new Date(currentYear,6,22,23).getTime()  && element.descuento !== null) {
+                  jul16_22.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,6,23).getTime() && fecha <= new Date(currentYear,6,31,23).getTime()  && element.descuento === null) {
+                  jul23_31.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,6,23).getTime() && fecha <= new Date(currentYear,6,31,23).getTime()  && element.descuento !== null) {
+                  jul23_31.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,7,1).getTime() && fecha <= new Date(currentYear,7,5,23).getTime()  && element.descuento === null) {
+                  ago1_5.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,7,1).getTime() && fecha <= new Date(currentYear,7,5,23).getTime()  && element.descuento !== null) {
+                  ago1_5.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,7,6).getTime() && fecha <= new Date(currentYear,7,12,23).getTime()  && element.descuento === null) {
+                  ago6_12.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,7,6).getTime() && fecha <= new Date(currentYear,7,12,23).getTime()  && element.descuento !== null) {
+                  ago6_12.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,7,13).getTime() && fecha <= new Date(currentYear,7,19,23).getTime()  && element.descuento === null) {
+                  ago13_19.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,7,13).getTime() && fecha <= new Date(currentYear,7,19,23).getTime()  && element.descuento !== null) {
+                  ago13_19.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,7,20).getTime() && fecha <= new Date(currentYear,7,26,23).getTime()  && element.descuento === null) {
+                  ago20_26.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,7,20).getTime() && fecha <= new Date(currentYear,7,26,23).getTime()  && element.descuento !== null) {
+                  ago20_26.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,7,27).getTime() && fecha <= new Date(currentYear,7,31,23).getTime()  && element.descuento === null) {
+                  ago27_31.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,7,27).getTime() && fecha <= new Date(currentYear,7,31,23).getTime()  && element.descuento !== null) {
+                  ago27_31.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,8,1).getTime() && fecha <= new Date(currentYear,8,9,23).getTime()  && element.descuento === null) {
+                  sep1_9.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,8,1).getTime() && fecha <= new Date(currentYear,8,9,23).getTime()  && element.descuento !== null) {
+                  sep1_9.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,8,10).getTime() && fecha <= new Date(currentYear,8,16,23).getTime()  && element.descuento === null) {
+                  sep10_16.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,8,10).getTime() && fecha <= new Date(currentYear,8,16,23).getTime()  && element.descuento !== null) {
+                  sep10_16.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,8,17).getTime() && fecha <= new Date(currentYear,8,23,23).getTime()  && element.descuento === null) {
+                  sep17_23.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,8,17).getTime() && fecha <= new Date(currentYear,8,23,23).getTime()  && element.descuento !== null) {
+                  sep17_23.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,8,24).getTime() && fecha <= new Date(currentYear,8,30,23).getTime()  && element.descuento === null) {
+                  sep24_30.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,8,24).getTime() && fecha <= new Date(currentYear,8,30,23).getTime()  && element.descuento !== null) {
+                  sep24_30.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,9,1).getTime() && fecha <= new Date(currentYear,9,7,23).getTime()  && element.descuento === null) {
+                  oct1_7.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,9,1).getTime() && fecha <= new Date(currentYear,9,7,23).getTime()  && element.descuento !== null) {
+                  oct1_7.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,9,8).getTime() && fecha <= new Date(currentYear,9,14,23).getTime()  && element.descuento === null) {
+                  oct8_14.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,9,8).getTime() && fecha <= new Date(currentYear,9,14,23).getTime()  && element.descuento !== null) {
+                  oct8_14.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,9,15).getTime() && fecha <= new Date(currentYear,9,21,23).getTime()  && element.descuento === null) {
+                  oct15_21.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,9,15).getTime() && fecha <= new Date(currentYear,9,21,23).getTime()  && element.descuento !== null) {
+                  oct15_21.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,9,22).getTime() && fecha <= new Date(currentYear,9,31,23).getTime()  && element.descuento === null) {
+                  oct22_31.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,9,22).getTime() && fecha <= new Date(currentYear,9,31,23).getTime()  && element.descuento !== null) {
+                  oct22_31.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,10,1).getTime() && fecha <= new Date(currentYear,10,5,23).getTime()  && element.descuento === null) {
+                  nov1_5.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,10,1).getTime() && fecha <= new Date(currentYear,10,5,23).getTime()  && element.descuento !== null) {
+                  nov1_5.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,10,6).getTime() && fecha <= new Date(currentYear,10,11,23).getTime()  && element.descuento === null) {
+                  nov6_11.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,10,6).getTime() && fecha <= new Date(currentYear,10,11,23).getTime()  && element.descuento !== null) {
+                  nov6_11.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,10,12).getTime() && fecha <= new Date(currentYear,10,18,23).getTime()  && element.descuento === null) {
+                  nov12_18.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,10,12).getTime() && fecha <= new Date(currentYear,10,18,23).getTime()  && element.descuento !== null) {
+                  nov12_18.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,10,19).getTime() && fecha <= new Date(currentYear,10,25,23).getTime()  && element.descuento === null) {
+                  nov19_25.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,10,19).getTime() && fecha <= new Date(currentYear,10,25,23).getTime()  && element.descuento !== null) {
+                  nov19_25.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,10,26).getTime() && fecha <= new Date(currentYear,10,30,23).getTime()  && element.descuento === null) {
+                  nov26_30.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,10,26).getTime() && fecha <= new Date(currentYear,10,30,23).getTime()  && element.descuento !== null) {
+                  nov26_30.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,11,1).getTime() && fecha <= new Date(currentYear,11,9,23).getTime()  && element.descuento === null) {
+                  dic1_9.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,11,1).getTime() && fecha <= new Date(currentYear,11,9,23).getTime()  && element.descuento !== null) {
+                  dic1_9.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,11,10).getTime() && fecha <= new Date(currentYear,11,17,23).getTime()  && element.descuento === null) {
+                  dic10_17.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,11,10).getTime() && fecha <= new Date(currentYear,11,17,23).getTime()  && element.descuento !== null) {
+                  dic10_17.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,11,18).getTime() && fecha <= new Date(currentYear,11,24,23).getTime()  && element.descuento === null) {
+                  dic18_24.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,11,18).getTime() && fecha <= new Date(currentYear,11,24,23).getTime()  && element.descuento !== null) {
+                  dic18_24.push(element.descuento);
+                  return;
+                }
+                if (fecha >= new Date(currentYear,11,25).getTime() && fecha <= new Date(currentYear,11,31,23).getTime()  && element.descuento === null) {
+                  dic25_31.push(element.precio);
+                  return;
+                } else if (fecha >= new Date(currentYear,11,25).getTime() && fecha <= new Date(currentYear,11,31,23).getTime()  && element.descuento !== null) {
+                  dic25_31.push(element.descuento);
+                  return;
+                }
       
-                ene8_14.push(element.precio);
-                return;
               }
-              if (fecha >= new Date(currentYear,0,15).getTime() && fecha <= new Date(currentYear,0,21,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                ene15_21.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,0,22).getTime() && fecha <= new Date(currentYear,0,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                ene22_31.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,1,01).getTime() && fecha <= new Date(currentYear,1,11,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                feb1_11.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,1,12).getTime() && fecha <= new Date(currentYear,1,18,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                feb12_18.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,1,19).getTime() && fecha <= new Date(currentYear,1,25,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                feb19_25.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,1,26).getTime() && fecha <= new Date(currentYear,1,29,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                feb26_29.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,2,01).getTime() && fecha <= new Date(currentYear,2,11,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mar1_11.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,2,12).getTime() && fecha <= new Date(currentYear,2,18,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mar12_18.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,2,19).getTime() && fecha <= new Date(currentYear,2,25,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mar19_25.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,2,26).getTime() && fecha <= new Date(currentYear,2,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                mar26_31.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,3,1).getTime() && fecha <= new Date(currentYear,3,08,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                abr1_8.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,3,09).getTime() && fecha <= new Date(currentYear,3,15,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                abr9_15.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,3,16).getTime() && fecha <= new Date(currentYear,3,22,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                abr16_22.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,3,23).getTime() && fecha <= new Date(currentYear,3,30,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                abr23_30.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,4,01).getTime() && fecha <= new Date(currentYear,4,6,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                may1_6.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,4,07).getTime() && fecha <= new Date(currentYear,4,13,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                may7_13.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,4,14).getTime() && fecha <= new Date(currentYear,4,20,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                may14_20.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,4,21).getTime() && fecha <= new Date(currentYear,4,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                may21_31.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,5,1).getTime() && fecha <= new Date(currentYear,5,10,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                jun1_10.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,5,11).getTime() && fecha <= new Date(currentYear,5,17,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                jun11_17.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,5,18).getTime() && fecha <= new Date(currentYear,5,24,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                jun18_24.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,5,25).getTime() && fecha <= new Date(currentYear,5,30,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                jun25_30.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,6,1).getTime() && fecha <= new Date(currentYear,6,8,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                jul1_8.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,6,9).getTime() && fecha <= new Date(currentYear,6,15,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                jul9_15.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,6,16).getTime() && fecha <= new Date(currentYear,6,22,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                jul16_22.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,6,23).getTime() && fecha <= new Date(currentYear,6,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                jul23_31.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,7,1).getTime() && fecha <= new Date(currentYear,7,5,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                ago1_5.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,7,6).getTime() && fecha <= new Date(currentYear,7,12,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                ago6_12.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,7,13).getTime() && fecha <= new Date(currentYear,7,19,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                ago13_19.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,7,20).getTime() && fecha <= new Date(currentYear,7,26,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                ago20_26.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,7,27).getTime() && fecha <= new Date(currentYear,7,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                ago27_31.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,8,1).getTime() && fecha <= new Date(currentYear,8,9,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                sep1_9.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,8,10).getTime() && fecha <= new Date(currentYear,8,16,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                sep10_16.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,8,17).getTime() && fecha <= new Date(currentYear,8,23,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                sep17_23.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,8,24).getTime() && fecha <= new Date(currentYear,8,30,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                sep24_30.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,9,1).getTime() && fecha <= new Date(currentYear,9,7,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                oct1_7.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,9,8).getTime() && fecha <= new Date(currentYear,9,14,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                oct8_14.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,9,15).getTime() && fecha <= new Date(currentYear,9,21,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                oct15_21.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,9,22).getTime() && fecha <= new Date(currentYear,9,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                oct22_31.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,10,1).getTime() && fecha <= new Date(currentYear,10,5,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                nov1_5.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,10,6).getTime() && fecha <= new Date(currentYear,10,11,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                nov6_11.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,10,12).getTime() && fecha <= new Date(currentYear,10,18,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                nov12_18.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,10,19).getTime() && fecha <= new Date(currentYear,10,25,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                nov19_25.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,10,26).getTime() && fecha <= new Date(currentYear,10,30,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                nov26_30.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,11,1).getTime() && fecha <= new Date(currentYear,11,9,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                dic1_9.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,11,10).getTime() && fecha <= new Date(currentYear,11,17,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                dic10_17.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,11,18).getTime() && fecha <= new Date(currentYear,11,24,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                dic18_24.push(element.precio);
-                return;
-              }
-              if (fecha >= new Date(currentYear,11,25).getTime() && fecha <= new Date(currentYear,11,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
-                dic25_31.push(element.precio);
-                return;
-              }
-          }
     
-          if (year === lastYear && element.discontinued === false) {
+            if (year === lastYear) {
             if (fecha >= new Date(currentYear,0,1).getTime() && fecha <= new Date(currentYear,0,7,23).getTime()  && element.descuento === null) {
-                
-                    
-      
                 Zene1_7.push(element.precio);
                 return;
-              } 
-              if (fecha >= new Date(currentYear,0,08).getTime() && fecha <= new Date(currentYear,0,14,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            } else if (fecha >= new Date(currentYear,0,1).getTime() && fecha <= new Date(currentYear,0,7,23).getTime()  && element.descuento !== null) {
+                Zene1_7.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,0,08).getTime() && fecha <= new Date(currentYear,0,14,23).getTime()  && element.descuento === null) {
                 Zene8_14.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,0,15).getTime() && fecha <= new Date(currentYear,0,21,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,0,8).getTime() && fecha <= new Date(currentYear,0,14,23).getTime()  && element.descuento !== null) {
+                Zene8_14.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,0,15).getTime() && fecha <= new Date(currentYear,0,21,23).getTime()  && element.descuento === null) {
                 Zene15_21.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,0,22).getTime() && fecha <= new Date(currentYear,0,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,0,15).getTime() && fecha <= new Date(currentYear,0,21,23).getTime()  && element.descuento !== null) {
+                Zene15_21.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,0,22).getTime() && fecha <= new Date(currentYear,0,31,23).getTime()  && element.descuento === null) {
                 Zene22_31.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,1,01).getTime() && fecha <= new Date(currentYear,1,11,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,0,22).getTime() && fecha <= new Date(currentYear,0,31,23).getTime()  && element.descuento !== null) {
+                Zene22_31.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,1,1).getTime() && fecha <= new Date(currentYear,1,11,23).getTime()  && element.descuento === null) {
                 Zfeb1_11.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,1,12).getTime() && fecha <= new Date(currentYear,1,18,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,1,1).getTime() && fecha <= new Date(currentYear,1,11,23).getTime()  && element.descuento !== null) {
+                Zfeb1_11.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,1,12).getTime() && fecha <= new Date(currentYear,1,18,23).getTime()  && element.descuento === null) {
                 Zfeb12_18.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,1,19).getTime() && fecha <= new Date(currentYear,1,25,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,1,12).getTime() && fecha <= new Date(currentYear,1,18,23).getTime()  && element.descuento !== null) {
+                Zfeb12_18.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,1,19).getTime() && fecha <= new Date(currentYear,1,25,23).getTime()  && element.descuento === null) {
                 Zfeb19_25.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,1,26).getTime() && fecha <= new Date(currentYear,1,29,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,1,19).getTime() && fecha <= new Date(currentYear,1,25,23).getTime()  && element.descuento !== null) {
+                Zfeb19_25.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,1,26).getTime() && fecha <= new Date(currentYear,1,29,23).getTime()  && element.descuento === null) {
                 Zfeb26_29.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,2,01).getTime() && fecha <= new Date(currentYear,2,11,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,1,26).getTime() && fecha <= new Date(currentYear,1,29,23).getTime()  && element.descuento !== null) {
+                Zfeb26_29.push(element.descuento);
+                return;
+            }
+    
+            if (fecha >= new Date(currentYear,2,1).getTime() && fecha <= new Date(currentYear,2,11,23).getTime()  && element.descuento === null) {
                 Zmar1_11.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,2,12).getTime() && fecha <= new Date(currentYear,2,18,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,2,1).getTime() && fecha <= new Date(currentYear,2,11,23).getTime()  && element.descuento !== null) {
+                Zmar1_11.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,2,12).getTime() && fecha <= new Date(currentYear,2,18,23).getTime()  && element.descuento === null) {
                 Zmar12_18.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,2,19).getTime() && fecha <= new Date(currentYear,2,25,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,2,12).getTime() && fecha <= new Date(currentYear,2,18,23).getTime()  && element.descuento !== null) {
+                Zmar12_18.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,2,19).getTime() && fecha <= new Date(currentYear,2,25,23).getTime()  && element.descuento === null) {
                 Zmar19_25.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,2,26).getTime() && fecha <= new Date(currentYear,2,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,2,19).getTime() && fecha <= new Date(currentYear,2,25,23).getTime()  && element.descuento !== null) {
+                Zmar19_25.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,2,26).getTime() && fecha <= new Date(currentYear,2,31,23).getTime()  && element.descuento === null) {
                 Zmar26_31.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,3,1).getTime() && fecha <= new Date(currentYear,3,08,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,2,26).getTime() && fecha <= new Date(currentYear,2,31,23).getTime()  && element.descuento !== null) {
+                Zmar26_31.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,3,1).getTime() && fecha <= new Date(currentYear,3,08,23).getTime()  && element.descuento === null) {
                 Zabr1_8.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,3,09).getTime() && fecha <= new Date(currentYear,3,15,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,3,1).getTime() && fecha <= new Date(currentYear,3,8,23).getTime()  && element.descuento !== null) {
+                Zabr1_8.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,3,09).getTime() && fecha <= new Date(currentYear,3,15,23).getTime()  && element.descuento === null) {
                 Zabr9_15.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,3,16).getTime() && fecha <= new Date(currentYear,3,22,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,3,9).getTime() && fecha <= new Date(currentYear,3,15,23).getTime()  && element.descuento !== null) {
+                Zabr9_15.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,3,16).getTime() && fecha <= new Date(currentYear,3,22,23).getTime()  && element.descuento === null) {
                 Zabr16_22.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,3,23).getTime() && fecha <= new Date(currentYear,3,30,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,3,16).getTime() && fecha <= new Date(currentYear,3,22,23).getTime()  && element.descuento !== null) {
+                Zabr16_22.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,3,23).getTime() && fecha <= new Date(currentYear,3,30,23).getTime()  && element.descuento === null) {
                 Zabr23_30.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,4,01).getTime() && fecha <= new Date(currentYear,4,6,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,3,23).getTime() && fecha <= new Date(currentYear,3,30,23).getTime()  && element.descuento !== null) {
+                Zabr23_30.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,4,1).getTime() && fecha <= new Date(currentYear,4,6,23).getTime()  && element.descuento === null) {
                 Zmay1_6.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,4,07).getTime() && fecha <= new Date(currentYear,4,13,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,4,1).getTime() && fecha <= new Date(currentYear,4,6,23).getTime()  && element.descuento !== null) {
+                Zmay1_6.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,4,7).getTime() && fecha <= new Date(currentYear,4,13,23).getTime()  && element.descuento === null) {
                 Zmay7_13.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,4,14).getTime() && fecha <= new Date(currentYear,4,20,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,4,7).getTime() && fecha <= new Date(currentYear,4,13,23).getTime()  && element.descuento !== null) {
+                Zmay7_13.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,4,14).getTime() && fecha <= new Date(currentYear,4,20,23).getTime()  && element.descuento === null) {
                 Zmay14_20.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,4,21).getTime() && fecha <= new Date(currentYear,4,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,4,14).getTime() && fecha <= new Date(currentYear,4,20,23).getTime()  && element.descuento !== null) {
+                Zmay14_20.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,4,21).getTime() && fecha <= new Date(currentYear,4,31,23).getTime()  && element.descuento === null) {
                 Zmay21_31.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,5,1).getTime() && fecha <= new Date(currentYear,5,10,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,4,21).getTime() && fecha <= new Date(currentYear,4,31,23).getTime()  && element.descuento !== null) {
+                Zmay21_31.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,5,1).getTime() && fecha <= new Date(currentYear,5,10,23).getTime()  && element.descuento === null) {
                 Zjun1_10.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,5,11).getTime() && fecha <= new Date(currentYear,5,17,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,5,1).getTime() && fecha <= new Date(currentYear,5,10,23).getTime()  && element.descuento !== null) {
+                Zjun1_10.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,5,11).getTime() && fecha <= new Date(currentYear,5,17,23).getTime()  && element.descuento === null) {
                 Zjun11_17.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,5,18).getTime() && fecha <= new Date(currentYear,5,24,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,5,11).getTime() && fecha <= new Date(currentYear,5,17,23).getTime()  && element.descuento !== null) {
+                Zjun11_17.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,5,18).getTime() && fecha <= new Date(currentYear,5,24,23).getTime()  && element.descuento === null) {
                 Zjun18_24.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,5,25).getTime() && fecha <= new Date(currentYear,5,30,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,5,18).getTime() && fecha <= new Date(currentYear,5,24,23).getTime()  && element.descuento !== null) {
+                Zjun18_24.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,5,25).getTime() && fecha <= new Date(currentYear,5,30,23).getTime()  && element.descuento === null) {
                 Zjun25_30.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,6,1).getTime() && fecha <= new Date(currentYear,6,8,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,5,25).getTime() && fecha <= new Date(currentYear,5,30,23).getTime()  && element.descuento !== null) {
+                Zjun25_30.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,6,1).getTime() && fecha <= new Date(currentYear,6,8,23).getTime()  && element.descuento === null) {
                 Zjul1_8.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,6,9).getTime() && fecha <= new Date(currentYear,6,15,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,6,1).getTime() && fecha <= new Date(currentYear,6,8,23).getTime()  && element.descuento !== null) {
+                Zene1_7.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,6,9).getTime() && fecha <= new Date(currentYear,6,15,23).getTime()  && element.descuento === null) {
                 Zjul9_15.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,6,16).getTime() && fecha <= new Date(currentYear,6,22,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            }else if (fecha >= new Date(currentYear,6,9).getTime() && fecha <= new Date(currentYear,6,15,23).getTime()  && element.descuento !== null) {
+                Zjul9_15.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,6,16).getTime() && fecha <= new Date(currentYear,6,22,23).getTime()  && element.descuento === null) {
                 Zjul16_22.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,6,23).getTime() && fecha <= new Date(currentYear,6,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            } else if (fecha >= new Date(currentYear,6,16).getTime() && fecha <= new Date(currentYear,6,22,23).getTime()  && element.descuento !== null) {
+                Zjul16_22.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,6,23).getTime() && fecha <= new Date(currentYear,6,31,23).getTime()  && element.descuento === null) {
                 Zjul23_31.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,7,1).getTime() && fecha <= new Date(currentYear,7,5,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            } else if (fecha >= new Date(currentYear,6,23).getTime() && fecha <= new Date(currentYear,6,31,23).getTime()  && element.descuento !== null) {
+                Zjul23_31.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,7,1).getTime() && fecha <= new Date(currentYear,7,5,23).getTime()  && element.descuento === null) {
                 Zago1_5.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,7,6).getTime() && fecha <= new Date(currentYear,7,12,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            } else if (fecha >= new Date(currentYear,7,1).getTime() && fecha <= new Date(currentYear,7,5,23).getTime()  && element.descuento !== null) {
+                Zago1_5.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,7,6).getTime() && fecha <= new Date(currentYear,7,12,23).getTime()  && element.descuento === null) {
                 Zago6_12.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,7,13).getTime() && fecha <= new Date(currentYear,7,19,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            } else if (fecha >= new Date(currentYear,7,6).getTime() && fecha <= new Date(currentYear,7,12,23).getTime()  && element.descuento !== null) {
+                Zago6_12.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,7,13).getTime() && fecha <= new Date(currentYear,7,19,23).getTime()  && element.descuento === null) {
                 Zago13_19.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,7,20).getTime() && fecha <= new Date(currentYear,7,26,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            } else if (fecha >= new Date(currentYear,7,13).getTime() && fecha <= new Date(currentYear,7,19,23).getTime()  && element.descuento !== null) {
+                Zago13_19.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,7,20).getTime() && fecha <= new Date(currentYear,7,26,23).getTime()  && element.descuento === null) {
                 Zago20_26.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,7,27).getTime() && fecha <= new Date(currentYear,7,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            } else if (fecha >= new Date(currentYear,7,20).getTime() && fecha <= new Date(currentYear,7,26,23).getTime()  && element.descuento !== null) {
+                Zago20_26.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,7,27).getTime() && fecha <= new Date(currentYear,7,31,23).getTime()  && element.descuento === null) {
                 Zago27_31.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,8,1).getTime() && fecha <= new Date(currentYear,8,9,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            } else if (fecha >= new Date(currentYear,7,27).getTime() && fecha <= new Date(currentYear,7,31,23).getTime()  && element.descuento !== null) {
+                Zago27_31.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,8,1).getTime() && fecha <= new Date(currentYear,8,9,23).getTime()  && element.descuento === null) {
                 Zsep1_9.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,8,10).getTime() && fecha <= new Date(currentYear,8,16,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            } else if (fecha >= new Date(currentYear,8,1).getTime() && fecha <= new Date(currentYear,8,9,23).getTime()  && element.descuento !== null) {
+                Zsep1_9.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,8,10).getTime() && fecha <= new Date(currentYear,8,16,23).getTime()  && element.descuento === null) {
                 Zsep10_16.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,8,17).getTime() && fecha <= new Date(currentYear,8,23,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            } else if (fecha >= new Date(currentYear,8,10).getTime() && fecha <= new Date(currentYear,8,16,23).getTime()  && element.descuento !== null) {
+                Zsep10_16.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,8,17).getTime() && fecha <= new Date(currentYear,8,23,23).getTime()  && element.descuento === null) {
                 Zsep17_23.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,8,24).getTime() && fecha <= new Date(currentYear,8,30,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            } else if (fecha >= new Date(currentYear,8,17).getTime() && fecha <= new Date(currentYear,8,23,23).getTime()  && element.descuento !== null) {
+                Zsep17_23.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,8,24).getTime() && fecha <= new Date(currentYear,8,30,23).getTime()  && element.descuento === null) {
                 Zsep24_30.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,9,1).getTime() && fecha <= new Date(currentYear,9,7,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            } else if (fecha >= new Date(currentYear,8,24).getTime() && fecha <= new Date(currentYear,8,30,23).getTime()  && element.descuento !== null) {
+                Zsep24_30.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,9,1).getTime() && fecha <= new Date(currentYear,9,7,23).getTime()  && element.descuento === null) {
                 Zoct1_7.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,9,8).getTime() && fecha <= new Date(currentYear,9,14,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            } else if (fecha >= new Date(currentYear,9,1).getTime() && fecha <= new Date(currentYear,9,7,23).getTime()  && element.descuento !== null) {
+                Zoct1_7.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,9,8).getTime() && fecha <= new Date(currentYear,9,14,23).getTime()  && element.descuento === null) {
                 Zoct8_14.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,9,15).getTime() && fecha <= new Date(currentYear,9,21,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            } else if (fecha >= new Date(currentYear,9,8).getTime() && fecha <= new Date(currentYear,9,14,23).getTime()  && element.descuento !== null) {
+                Zoct8_14.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,9,15).getTime() && fecha <= new Date(currentYear,9,21,23).getTime()  && element.descuento === null) {
                 Zoct15_21.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,9,22).getTime() && fecha <= new Date(currentYear,9,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            } else if (fecha >= new Date(currentYear,9,15).getTime() && fecha <= new Date(currentYear,9,21,23).getTime()  && element.descuento !== null) {
+                Zoct15_21.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,9,22).getTime() && fecha <= new Date(currentYear,9,31,23).getTime()  && element.descuento === null) {
                 Zoct22_31.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,10,1).getTime() && fecha <= new Date(currentYear,10,5,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            } else if (fecha >= new Date(currentYear,9,22).getTime() && fecha <= new Date(currentYear,9,31,23).getTime()  && element.descuento !== null) {
+                Zoct22_31.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,10,1).getTime() && fecha <= new Date(currentYear,10,5,23).getTime()  && element.descuento === null) {
                 Znov1_5.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,10,6).getTime() && fecha <= new Date(currentYear,10,11,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            } else if (fecha >= new Date(currentYear,10,1).getTime() && fecha <= new Date(currentYear,10,5,23).getTime()  && element.descuento !== null) {
+                Znov1_5.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,10,6).getTime() && fecha <= new Date(currentYear,10,11,23).getTime()  && element.descuento === null) {
                 Znov6_11.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,10,12).getTime() && fecha <= new Date(currentYear,10,18,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            } else if (fecha >= new Date(currentYear,10,6).getTime() && fecha <= new Date(currentYear,10,11,23).getTime()  && element.descuento !== null) {
+                Znov6_11.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,10,12).getTime() && fecha <= new Date(currentYear,10,18,23).getTime()  && element.descuento === null) {
                 Znov12_18.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,10,19).getTime() && fecha <= new Date(currentYear,10,25,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            } else if (fecha >= new Date(currentYear,10,12).getTime() && fecha <= new Date(currentYear,10,18,23).getTime()  && element.descuento !== null) {
+                Znov12_18.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,10,19).getTime() && fecha <= new Date(currentYear,10,25,23).getTime()  && element.descuento === null) {
                 Znov19_25.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,10,26).getTime() && fecha <= new Date(currentYear,10,30,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            } else if (fecha >= new Date(currentYear,10,19).getTime() && fecha <= new Date(currentYear,10,25,23).getTime()  && element.descuento !== null) {
+                Znov19_25.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,10,26).getTime() && fecha <= new Date(currentYear,10,30,23).getTime()  && element.descuento === null) {
                 Znov26_30.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,11,1).getTime() && fecha <= new Date(currentYear,11,9,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            } else if (fecha >= new Date(currentYear,10,26).getTime() && fecha <= new Date(currentYear,10,30,23).getTime()  && element.descuento !== null) {
+                Znov26_30.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,11,1).getTime() && fecha <= new Date(currentYear,11,9,23).getTime()  && element.descuento === null) {
                 Zdic1_9.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,11,10).getTime() && fecha <= new Date(currentYear,11,17,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            } else if (fecha >= new Date(currentYear,11,1).getTime() && fecha <= new Date(currentYear,11,9,23).getTime()  && element.descuento !== null) {
+                Zdic1_9.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,11,10).getTime() && fecha <= new Date(currentYear,11,17,23).getTime()  && element.descuento === null) {
                 Zdic10_17.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,11,18).getTime() && fecha <= new Date(currentYear,11,24,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            } else if (fecha >= new Date(currentYear,11,10).getTime() && fecha <= new Date(currentYear,11,17,23).getTime()  && element.descuento !== null) {
+                Zdic10_17.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,11,18).getTime() && fecha <= new Date(currentYear,11,24,23).getTime()  && element.descuento === null) {
                 Zdic18_24.push(element.precio);
                 return;
-              }
-              if (fecha >= new Date(currentYear,11,25).getTime() && fecha <= new Date(currentYear,11,31,23).getTime()  && element.descuento === null) {
-                
-                    
-      
+            } else if (fecha >= new Date(currentYear,11,18).getTime() && fecha <= new Date(currentYear,11,24,23).getTime()  && element.descuento !== null) {
+                Zdic18_24.push(element.descuento);
+                return;
+            }
+            if (fecha >= new Date(currentYear,11,25).getTime() && fecha <= new Date(currentYear,11,31,23).getTime()  && element.descuento === null) {
                 Zdic25_31.push(element.precio);
                 return;
-              }
-          }
+            } else if (fecha >= new Date(currentYear,11,25).getTime() && fecha <= new Date(currentYear,11,31,23).getTime()  && element.descuento !== null) {
+                Zdic25_31.push(element.descuento);
+                return;
+            }
+    
+            }
+
         }); // fin del ciclo que guarda los precios de cada mes
       } catch (error) {
         console.log(error);
       }
     
-    weeksActualYear[0] = setAverageDiscount(ene1_7);
-    weeksActualYear[1] = setAverageDiscount(ene8_14);
-    weeksActualYear[2] = setAverageDiscount(ene15_21);
-    weeksActualYear[3] = setAverageDiscount(ene22_31);
-    weeksActualYear[4] = setAverageDiscount(feb1_11);
-    weeksActualYear[5] = setAverageDiscount(feb12_18);
-    weeksActualYear[6] = setAverageDiscount(feb19_25);
-    weeksActualYear[7] = setAverageDiscount(feb26_29);
-    weeksActualYear[8] = setAverageDiscount(mar1_11);
-    weeksActualYear[9] = setAverageDiscount(mar12_18);
-    weeksActualYear[10] = setAverageDiscount(mar19_25);
-    weeksActualYear[11] = setAverageDiscount(mar26_31);
-    weeksActualYear[12] = setAverageDiscount(abr1_8);
-    weeksActualYear[13] = setAverageDiscount(abr9_15);
-    weeksActualYear[14] = setAverageDiscount(abr16_22);
-    weeksActualYear[15] = setAverageDiscount(abr23_30);
-    weeksActualYear[16] = setAverageDiscount(may1_6);
-    weeksActualYear[17] = setAverageDiscount(may7_13);
-    weeksActualYear[18] = setAverageDiscount(may14_20);
-    weeksActualYear[19] = setAverageDiscount(may21_31);
-    weeksActualYear[20] = setAverageDiscount(jun1_10);
-    weeksActualYear[21] = setAverageDiscount(jun11_17);
-    weeksActualYear[22] = setAverageDiscount(jun18_24);
-    weeksActualYear[23] = setAverageDiscount(jun25_30);
-    weeksActualYear[24] = setAverageDiscount(jul1_8);
-    weeksActualYear[25] = setAverageDiscount(jul9_15);
-    weeksActualYear[26] = setAverageDiscount(jul16_22);
-    weeksActualYear[27] = setAverageDiscount(jul23_31);
-    weeksActualYear[28] = setAverageDiscount(ago1_5);
-    weeksActualYear[29] = setAverageDiscount(ago6_12);
-    weeksActualYear[30] = setAverageDiscount(ago13_19);
-    weeksActualYear[31] = setAverageDiscount(ago20_26);
-    weeksActualYear[32] = setAverageDiscount(ago27_31);
-    weeksActualYear[33] = setAverageDiscount(sep1_9);
-    weeksActualYear[34] = setAverageDiscount(sep10_16);
-    weeksActualYear[35] = setAverageDiscount(sep17_23);
-    weeksActualYear[36] = setAverageDiscount(sep24_30);
-    weeksActualYear[37] = setAverageDiscount(oct1_7);
-    weeksActualYear[38] = setAverageDiscount(oct8_14);
-    weeksActualYear[39] = setAverageDiscount(oct15_21);
-    weeksActualYear[40] = setAverageDiscount(oct22_31);
-    weeksActualYear[41] = setAverageDiscount(nov1_5);
-    weeksActualYear[42] = setAverageDiscount(nov6_11);
-    weeksActualYear[43] = setAverageDiscount(nov12_18);
-    weeksActualYear[44] = setAverageDiscount(nov19_25);
-    weeksActualYear[45] = setAverageDiscount(nov26_30);
-    weeksActualYear[46] = setAverageDiscount(dic1_9);
-    weeksActualYear[47] = setAverageDiscount(dic10_17);
-    weeksActualYear[48] = setAverageDiscount(dic18_24);
-    weeksActualYear[49] = setAverageDiscount(dic25_31);
+    weeksActualYear[0] = setAveragePriceMonth(ene1_7);
+    weeksActualYear[1] = setAveragePriceMonth(ene8_14);
+    weeksActualYear[2] = setAveragePriceMonth(ene15_21);
+    weeksActualYear[3] = setAveragePriceMonth(ene22_31);
+    weeksActualYear[4] = setAveragePriceMonth(feb1_11);
+    weeksActualYear[5] = setAveragePriceMonth(feb12_18);
+    weeksActualYear[6] = setAveragePriceMonth(feb19_25);
+    weeksActualYear[7] = setAveragePriceMonth(feb26_29);
+    weeksActualYear[8] = setAveragePriceMonth(mar1_11);
+    weeksActualYear[9] = setAveragePriceMonth(mar12_18);
+    weeksActualYear[10] = setAveragePriceMonth(mar19_25);
+    weeksActualYear[11] = setAveragePriceMonth(mar26_31);
+    weeksActualYear[12] = setAveragePriceMonth(abr1_8);
+    weeksActualYear[13] = setAveragePriceMonth(abr9_15);
+    weeksActualYear[14] = setAveragePriceMonth(abr16_22);
+    weeksActualYear[15] = setAveragePriceMonth(abr23_30);
+    weeksActualYear[16] = setAveragePriceMonth(may1_6);
+    weeksActualYear[17] = setAveragePriceMonth(may7_13);
+    weeksActualYear[18] = setAveragePriceMonth(may14_20);
+    weeksActualYear[19] = setAveragePriceMonth(may21_31);
+    weeksActualYear[20] = setAveragePriceMonth(jun1_10);
+    weeksActualYear[21] = setAveragePriceMonth(jun11_17);
+    weeksActualYear[22] = setAveragePriceMonth(jun18_24);
+    weeksActualYear[23] = setAveragePriceMonth(jun25_30);
+    weeksActualYear[24] = setAveragePriceMonth(jul1_8);
+    weeksActualYear[25] = setAveragePriceMonth(jul9_15);
+    weeksActualYear[26] = setAveragePriceMonth(jul16_22);
+    weeksActualYear[27] = setAveragePriceMonth(jul23_31);
+    weeksActualYear[28] = setAveragePriceMonth(ago1_5);
+    weeksActualYear[29] = setAveragePriceMonth(ago6_12);
+    weeksActualYear[30] = setAveragePriceMonth(ago13_19);
+    weeksActualYear[31] = setAveragePriceMonth(ago20_26);
+    weeksActualYear[32] = setAveragePriceMonth(ago27_31);
+    weeksActualYear[33] = setAveragePriceMonth(sep1_9);
+    weeksActualYear[34] = setAveragePriceMonth(sep10_16);
+    weeksActualYear[35] = setAveragePriceMonth(sep17_23);
+    weeksActualYear[36] = setAveragePriceMonth(sep24_30);
+    weeksActualYear[37] = setAveragePriceMonth(oct1_7);
+    weeksActualYear[38] = setAveragePriceMonth(oct8_14);
+    weeksActualYear[39] = setAveragePriceMonth(oct15_21);
+    weeksActualYear[40] = setAveragePriceMonth(oct22_31);
+    weeksActualYear[41] = setAveragePriceMonth(nov1_5);
+    weeksActualYear[42] = setAveragePriceMonth(nov6_11);
+    weeksActualYear[43] = setAveragePriceMonth(nov12_18);
+    weeksActualYear[44] = setAveragePriceMonth(nov19_25);
+    weeksActualYear[45] = setAveragePriceMonth(nov26_30);
+    weeksActualYear[46] = setAveragePriceMonth(dic1_9);
+    weeksActualYear[47] = setAveragePriceMonth(dic10_17);
+    weeksActualYear[48] = setAveragePriceMonth(dic18_24);
+    weeksActualYear[49] = setAveragePriceMonth(dic25_31);
   
     // // descuento año anterior 
-    weeksLastYear[0] = setAverageDiscount(Zene1_7);
-    weeksLastYear[1] = setAverageDiscount(Zene8_14);
-    weeksLastYear[2] = setAverageDiscount(Zene15_21);
-    weeksLastYear[3] = setAverageDiscount(Zene22_31);
-    weeksLastYear[4] = setAverageDiscount(Zfeb1_11);
-    weeksLastYear[5] = setAverageDiscount(Zfeb12_18);
-    weeksLastYear[6] = setAverageDiscount(Zfeb19_25);
-    weeksLastYear[7] = setAverageDiscount(Zfeb26_29);
-    weeksLastYear[8] = setAverageDiscount(Zmar1_11);
-    weeksLastYear[9] = setAverageDiscount(Zmar12_18);
-    weeksLastYear[10] = setAverageDiscount(Zmar19_25);
-    weeksLastYear[11] = setAverageDiscount(Zmar26_31);
-    weeksLastYear[12] = setAverageDiscount(Zabr1_8);
-    weeksLastYear[13] = setAverageDiscount(Zabr9_15);
-    weeksLastYear[14] = setAverageDiscount(Zabr16_22);
-    weeksLastYear[15] = setAverageDiscount(Zabr23_30);
-    weeksLastYear[16] = setAverageDiscount(Zmay1_6);
-    weeksLastYear[17] = setAverageDiscount(Zmay7_13);
-    weeksLastYear[18] = setAverageDiscount(Zmay14_20);
-    weeksLastYear[19] = setAverageDiscount(Zmay21_31);
-    weeksLastYear[20] = setAverageDiscount(Zjun1_10);
-    weeksLastYear[21] = setAverageDiscount(Zjun11_17);
-    weeksLastYear[22] = setAverageDiscount(Zjun18_24);
-    weeksLastYear[23] = setAverageDiscount(Zjun25_30);
-    weeksLastYear[24] = setAverageDiscount(Zjul1_8);
-    weeksLastYear[25] = setAverageDiscount(Zjul9_15);
-    weeksLastYear[26] = setAverageDiscount(Zjul16_22);
-    weeksLastYear[27] = setAverageDiscount(Zjul23_31);
-    weeksLastYear[28] = setAverageDiscount(Zago1_5);
-    weeksLastYear[29] = setAverageDiscount(Zago6_12);
-    weeksLastYear[30] = setAverageDiscount(Zago13_19);
-    weeksLastYear[31] = setAverageDiscount(Zago20_26);
-    weeksLastYear[32] = setAverageDiscount(Zago27_31);
-    weeksLastYear[33] = setAverageDiscount(Zsep1_9);
-    weeksLastYear[34] = setAverageDiscount(Zsep10_16);
-    weeksLastYear[35] = setAverageDiscount(Zsep17_23);
-    weeksLastYear[36] = setAverageDiscount(Zsep24_30);
-    weeksLastYear[37] = setAverageDiscount(Zoct1_7);
-    weeksLastYear[38] = setAverageDiscount(Zoct8_14);
-    weeksLastYear[39] = setAverageDiscount(Zoct15_21);
-    weeksLastYear[40] = setAverageDiscount(Zoct22_31);
-    weeksLastYear[41] = setAverageDiscount(Znov1_5);
-    weeksLastYear[42] = setAverageDiscount(Znov6_11);
-    weeksLastYear[43] = setAverageDiscount(Znov12_18);
-    weeksLastYear[44] = setAverageDiscount(Znov19_25);
-    weeksLastYear[45] = setAverageDiscount(Znov26_30);
-    weeksLastYear[46] = setAverageDiscount(Zdic1_9);
-    weeksLastYear[47] = setAverageDiscount(Zdic10_17);
-    weeksLastYear[48] = setAverageDiscount(Zdic18_24);
-    weeksLastYear[49] = setAverageDiscount(Zdic25_31);
+    weeksLastYear[0] = setAveragePriceMonth(Zene1_7);
+    weeksLastYear[1] = setAveragePriceMonth(Zene8_14);
+    weeksLastYear[2] = setAveragePriceMonth(Zene15_21);
+    weeksLastYear[3] = setAveragePriceMonth(Zene22_31);
+    weeksLastYear[4] = setAveragePriceMonth(Zfeb1_11);
+    weeksLastYear[5] = setAveragePriceMonth(Zfeb12_18);
+    weeksLastYear[6] = setAveragePriceMonth(Zfeb19_25);
+    weeksLastYear[7] = setAveragePriceMonth(Zfeb26_29);
+    weeksLastYear[8] = setAveragePriceMonth(Zmar1_11);
+    weeksLastYear[9] = setAveragePriceMonth(Zmar12_18);
+    weeksLastYear[10] = setAveragePriceMonth(Zmar19_25);
+    weeksLastYear[11] = setAveragePriceMonth(Zmar26_31);
+    weeksLastYear[12] = setAveragePriceMonth(Zabr1_8);
+    weeksLastYear[13] = setAveragePriceMonth(Zabr9_15);
+    weeksLastYear[14] = setAveragePriceMonth(Zabr16_22);
+    weeksLastYear[15] = setAveragePriceMonth(Zabr23_30);
+    weeksLastYear[16] = setAveragePriceMonth(Zmay1_6);
+    weeksLastYear[17] = setAveragePriceMonth(Zmay7_13);
+    weeksLastYear[18] = setAveragePriceMonth(Zmay14_20);
+    weeksLastYear[19] = setAveragePriceMonth(Zmay21_31);
+    weeksLastYear[20] = setAveragePriceMonth(Zjun1_10);
+    weeksLastYear[21] = setAveragePriceMonth(Zjun11_17);
+    weeksLastYear[22] = setAveragePriceMonth(Zjun18_24);
+    weeksLastYear[23] = setAveragePriceMonth(Zjun25_30);
+    weeksLastYear[24] = setAveragePriceMonth(Zjul1_8);
+    weeksLastYear[25] = setAveragePriceMonth(Zjul9_15);
+    weeksLastYear[26] = setAveragePriceMonth(Zjul16_22);
+    weeksLastYear[27] = setAveragePriceMonth(Zjul23_31);
+    weeksLastYear[28] = setAveragePriceMonth(Zago1_5);
+    weeksLastYear[29] = setAveragePriceMonth(Zago6_12);
+    weeksLastYear[30] = setAveragePriceMonth(Zago13_19);
+    weeksLastYear[31] = setAveragePriceMonth(Zago20_26);
+    weeksLastYear[32] = setAveragePriceMonth(Zago27_31);
+    weeksLastYear[33] = setAveragePriceMonth(Zsep1_9);
+    weeksLastYear[34] = setAveragePriceMonth(Zsep10_16);
+    weeksLastYear[35] = setAveragePriceMonth(Zsep17_23);
+    weeksLastYear[36] = setAveragePriceMonth(Zsep24_30);
+    weeksLastYear[37] = setAveragePriceMonth(Zoct1_7);
+    weeksLastYear[38] = setAveragePriceMonth(Zoct8_14);
+    weeksLastYear[39] = setAveragePriceMonth(Zoct15_21);
+    weeksLastYear[40] = setAveragePriceMonth(Zoct22_31);
+    weeksLastYear[41] = setAveragePriceMonth(Znov1_5);
+    weeksLastYear[42] = setAveragePriceMonth(Znov6_11);
+    weeksLastYear[43] = setAveragePriceMonth(Znov12_18);
+    weeksLastYear[44] = setAveragePriceMonth(Znov19_25);
+    weeksLastYear[45] = setAveragePriceMonth(Znov26_30);
+    weeksLastYear[46] = setAveragePriceMonth(Zdic1_9);
+    weeksLastYear[47] = setAveragePriceMonth(Zdic10_17);
+    weeksLastYear[48] = setAveragePriceMonth(Zdic18_24);
+    weeksLastYear[49] = setAveragePriceMonth(Zdic25_31);
     
     obj.weeksActualYear = weeksActualYear;
     obj.weeksLastYear = weeksLastYear;
@@ -2821,15 +2832,13 @@ exports.averagePriceWeekGeneral = (arr) => {
     };
     
     // metodo para sacar el promedio
-    let setAverageDiscount = (arr) => {
-      let descuentoPromedio = 0;
-      arr.forEach((element) => {
-          descuentoPromedio += element
-          // console.log(descuentoPromedio);
-      });
-      if (descuentoPromedio === 0) {
-          return descuentoPromedio
-      } else {
-          return parseFloat((descuentoPromedio / arr.length).toFixed(2));
-      }
-    };
+let setAveragePriceMonth = (month) => {
+    let value = 0;
+    if (month.length === 0) {
+      return value;
+    }
+    month.forEach((element) => {
+      value += element;
+    });
+    return (value = parseFloat((value / month.length).toFixed(2)));
+  };

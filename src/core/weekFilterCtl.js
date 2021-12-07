@@ -299,10 +299,10 @@ exports.averagePriceWeek = async (req, res) => {
 
     } else if(req.query.origin === 'Mango'){
         origin = 'Mango';
-        values = avgPrice.averagePriceWeeksOrigin(arr);
+        values = avgPrice.averagePriceWeekOrigin(arr);
     }
 
-    months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    let weeks = ['Ene 1-7','Ene 8-14','Ene 15-21','Ene 22-31','Feb 1-11','Feb 12-18','Feb 19-25','Feb 26-29','Mar 1-11','Mar 12-18','Mar 19-25','Mar 26-31','Abr 1-8','Abr 9-15','Abr 16-22','Abr 26-31','May 1-6','May 7-13','May 14-20','May 21-31','Jun 1-10','Jun 11-17','Jun 18-24','Jun 25-30','Jul 1-8','Jul 9-15','Jul 16-22','Jul 23-31','Ago 1-5','Ago 6-12','Ago 13-19','Ago 20-26','Ago 27-31','Sep 1-9','Sep 10-16','Sep 17-23','Sep 24-30','Oct 1-7','Oct 8-14','Oct 15-21','Oct 22-31','Nov 1-5','Nov 6-11','Nov 12-18','Nov 19-25','Nov 26-30','Dic 1-9','Dic 10-17','Dic 18-24','Dic 25-31'];
 
     
     
@@ -310,7 +310,7 @@ exports.averagePriceWeek = async (req, res) => {
     obj = {  
         origin,
         values,
-        months,
+        weeks,
     }
 
 
