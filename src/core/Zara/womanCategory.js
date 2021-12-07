@@ -16,7 +16,7 @@ exports.womanCategory = async () => {
     //let count = 5;
 
     //====================CATEGORIAS MUJER===========================
-    await page.goto(womanCategory, { waitUntil: "networkidle2" });
+    await page.goto(womanCategory, { waitUntil: "networkidle2", args: ['--no-sandbox'] });
     await page.setViewport({ width: 920, height: 1080 }); //Tamaño de la página
     await page.waitForTimeout(5000); //Tiempo para cargar la página completa
 

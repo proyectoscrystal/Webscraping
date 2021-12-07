@@ -4,7 +4,7 @@ const getScraping = require("../zaraCtl");
 const Url = require("../linksUrls");
 
 exports.manDiscount = async () => {
-  const browser = await puppeteer.launch({ headless: true }); //headless true/false para visualizar el navegador
+  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] }); //headless true/false para visualizar el navegador
 
   const manDiscount = Url.manDiscountLink;
 
@@ -86,7 +86,7 @@ exports.manDiscount = async () => {
           //break;
         //}
       } catch (error) {
-        console.log(error.message);
+        //console.log(error.message);
       }
     }
     await getScraping.getscraping(rebajasHombre);

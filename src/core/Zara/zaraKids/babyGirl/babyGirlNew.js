@@ -4,7 +4,7 @@ const getScraping = require("../../../zaraCtl");
 const Url = require("../../../linksUrls");
 
 exports.babyGirlNew = async () => {
-    const browser = await puppeteer.launch({headless: true});
+    const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox']});
 
     const babyGirlNew = Url.babyGirlNewLink;
 

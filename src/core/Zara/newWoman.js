@@ -4,7 +4,7 @@ const getscraping = require("../zaraCtl");
 const Url = require("../linksUrls");
 
 exports.newWoman = async () => {
-  const browser = await puppeteer.launch({ headless: true }); //headless true/false para visualizar el navegador
+  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] }); //headless true/false para visualizar el navegador
 
   const newWoman = Url.newWomanLink;
 
@@ -85,10 +85,10 @@ exports.newWoman = async () => {
           //break;
         //}
       } catch (error) {
-        console.log(error.message);;
+        //console.log(error.message);;
       }
     }
-    console.log(nuevoMujer);
+    //console.log(nuevoMujer);
     await getscraping.getscraping(nuevoMujer);
     //====================PRENDAS NUEVAS - MUJER==========================
   } catch (err) {

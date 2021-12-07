@@ -12,7 +12,7 @@ exports.descuentoMujer = async () => {
     const page = await browser.newPage();
 
     //====================PRENDAS EN DESCUENTO - MUJER==========================
-    await page.goto(womanDiscount, { waitUntil: "networkidle2" });
+    await page.goto(womanDiscount, { waitUntil: "networkidle2", args: ['--no-sandbox'] });
     await page.setViewport({ width: 920, height: 1080 });
     await page.waitForTimeout(5000);
     await autoScroll(page);
