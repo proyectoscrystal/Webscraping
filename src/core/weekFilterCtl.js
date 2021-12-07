@@ -3,7 +3,7 @@ const avgPrice = require("./filtersScraping/weekFilters/priceWeeks");
 const avgDiscountWeek = require("./filtersScraping/weekFilters/discountWeeks");
 const avgNewsWeek = require("./filtersScraping/weekFilters/newsWeeks");
 const discontinued = require("./filtersScraping/weekFilters/discontinuedWeeks")
-const avgSKU = require("./filtersScraping/SKU");
+const avgSKU = require("./filtersScraping/weekFilters/skuWeeks");
 
 organizarQueryTest = (query) => {
     let obj = {};
@@ -457,6 +457,50 @@ exports.averageDiscontinuedWeek = async (req, res) => {
     
     // respuesta para el frontend
     obj = {       
+        origin,
+        values,
+        weeks
+    }
+
+
+    res.status(200).json({obj});
+}
+
+// average SKU chart
+exports.averageSKUWeek = async (req, res) => {
+    let filtro = req.query;
+    
+    filtro = organizarQuery(filtro);
+    filtro.discontinued = false;
+    let arr;
+    let obj;
+    let values = [];
+    let origin = '';
+
+    try {
+        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1, "discontinued": 1});
+    } catch (error) {
+        console.log("no se obtuvo respuesta");
+        return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
+    }
+
+    if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
+        values = avgSKU.averageSKUWeekGeneral(arr);        
+        origin = 'general';
+        
+    } else if(req.query.origin === 'Zara'){
+        origin = 'Zara';
+        values = avgSKU.averageSKUWeeks(arr);
+
+    } else if(req.query.origin === 'Mango'){
+        origin = 'Mango';
+        values = avgSKU.averageSKUWeeks(arr);
+    }
+
+    let weeks = ['Ene 1-7','Ene 8-14','Ene 15-21','Ene 22-31','Feb 1-11','Feb 12-18','Feb 19-25','Feb 26-29','Mar 1-11','Mar 12-18','Mar 19-25','Mar 26-31','Abr 1-8','Abr 9-15','Abr 16-22','Abr 26-31','May 1-6','May 7-13','May 14-20','May 21-31','Jun 1-10','Jun 11-17','Jun 18-24','Jun 25-30','Jul 1-8','Jul 9-15','Jul 16-22','Jul 23-31','Ago 1-5','Ago 6-12','Ago 13-19','Ago 20-26','Ago 27-31','Sep 1-9','Sep 10-16','Sep 17-23','Sep 24-30','Oct 1-7','Oct 8-14','Oct 15-21','Oct 22-31','Nov 1-5','Nov 6-11','Nov 12-18','Nov 19-25','Nov 26-30','Dic 1-9','Dic 10-17','Dic 18-24','Dic 25-31'];
+    
+    // respuesta para el frontend
+    obj = {  
         origin,
         values,
         weeks
