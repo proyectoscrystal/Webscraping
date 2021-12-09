@@ -348,7 +348,9 @@ exports.getscraping = async (arreglo) => {
     // sendImgsModel(newObject);
   }
 
-  await descontinuados(arregloMaster);
+  if(arregloMaster.length !== 0) {
+    await descontinuados(arregloMaster);
+  }
 
 
   

@@ -36,12 +36,12 @@ let Scraping = async (req, res) => {
 };
 
 // job para ejecutar el scraping de manera automatico
-// cron.schedule("00 17 * * *", async function () {
-//   console.log("running a scraping every day to 5 pm");
-//   let data = new Date().toUTCString();
-//   console.log(data);
-//   await Scraping();
-// });
+cron.schedule("00 17 * * *", async function () {
+  console.log("running a scraping every day to 5 pm");
+  let data = new Date().toUTCString();
+  console.log(data);
+  await Scraping();
+});
 
 exports.webScraping = async (req, res) => {
   //  uso de fs

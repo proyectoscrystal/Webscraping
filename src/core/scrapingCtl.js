@@ -189,7 +189,8 @@ exports.cardsInfo = async (req, res) => {
             differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
         } else {
             discount = ((discounts[month] + discounts[month + 24])/2).toFixed(2);
-            differencePorcentage =  percentageDifferencesDiscount(dzm[1]/2, dzm[0]/2);
+            // let actual = (dzm[1])
+            differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
         }
 
 
@@ -1230,6 +1231,8 @@ percentageDifferencesDiscontinued = (current, before) => {
 
 percentageDifferencesDiscount = (current, before) => {
     // 1 positive 0 negative
+    console.log("actual: " + current);
+    console.log("anterior: " + before);
     let difference = [];
     if (current >= before && current !== 0) {
         difference[0] = 1;

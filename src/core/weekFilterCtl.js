@@ -191,8 +191,6 @@ exports.cardsInfoWeek = async (req, res) => {
     // semana actual nuevos
     arrNews = cardsInfo.copyArray(array);
     arrNews2 = cardsInfo.copyArray(array2)
-    console.log(arrNews.length);
-    console.log(arrNews2.length);
 
     arrNews = arrNews.filter((element) => {
         return element.estado === "nuevo";

@@ -331,7 +331,9 @@ exports.getscraping = async (arreglo) => {
 
     }
 
-    await descontinuados(arregloMaster);
+    if(arregloMaster.length !== 0) {
+      await descontinuados(arregloMaster);
+    }
   };
   // end catching data from scraping
 
