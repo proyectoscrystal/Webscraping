@@ -149,8 +149,6 @@ exports.cardsInfoWeek = async (req, res) => {
 
     arr = cardsInfo.copyArray(array);
     arr2 = cardsInfo.copyArray(array2);
-    console.log(arr.length);
-    console.log(arr2.length);
 
     // semana actual descuento
     arr = arr.filter((element) => {
