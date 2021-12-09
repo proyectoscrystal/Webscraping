@@ -74,6 +74,8 @@ module.exports = (router) => {
     router.get('/m_averageDiscontinuedWeek',weekCtl.averageDiscontinuedWeek); 
     router.get('/m_averagePriceWeek',weekCtl.averagePriceWeek); 
     router.get('/m_averageSKUWeek',weekCtl.averageSKUWeek); 
+    // ruta para las cards por semana
+    router.get('/m_infoCardsWeek',weekCtl.cardsInfoWeek); 
 
 
 }

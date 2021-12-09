@@ -1,42 +1,83 @@
 const Business = require("../../../domain/model/businessDao");
+const moment = require("moment");
+
 
 
 
 exports.rangoFechaSemanaCards = () => {
     let obj = {};
-    var date = new Date();
-    let day = parseInt(date.getDay()); // 0-6 dia de la semana
-    let dayTemp = day;
-    var fecha = date.toISOString(); // fecha en format 2021-11-29T17:39:30.482Z
-    let fechaFormat = fecha.split("T")[0]; // fecha format aaaa-mm-dd 
-    let actualYear = parseInt(fechaFormat.split("-")[0]); // valor del mes actual
-    let mesActual = parseInt(fechaFormat.split("-")[1]); // valor del mes actual
-    let mesDia = parseInt(fechaFormat.split("-")[2]); // valor del dia del mes
-
-
-        obj.actualWeekFinal = `${actualYear}-${mesActual}-${mesDia}`; // fecha final o actual de la semana en curso
-    let prueba = 1;
-
-    if(day === 0) {
-    obj.actualWeekInicio = `${actualYear}-${mesActual}-${mesDia}`;
-    
-    } else if(day !== 0){
-        for(let i = dayTemp; i >= 0; i--){
-    
-        mesDia--;
-        day--;
+    let startdate = moment().format("YYYY-MM-DD");
+    let startActualWeek = moment();
+    let lastWeekDay = moment();
+    startActualWeek = startActualWeek.subtract(7, "days"); // fecha 7 dias antes
+    startActualWeek = startActualWeek.format("YYYY-MM-DD");
+    lastWeekDay = lastWeekDay.subtract(15, "days"); // fecha 15 dias antes
+    lastWeekDay = lastWeekDay.format("YYYY-MM-DD");    
         
-        if(mesDia === 0){
-        mesDia = 28;
-        mesActual--;
-        }
-        
-        if(dayTemp === 0){
-            
-        }
-        
-        }
-    }
+    obj.fechaActual = startdate;
+    obj.fechaInicio = startActualWeek;
+    obj.fechaAnterior = lastWeekDay;
+
+    return obj;
+
 }
 
 
+exports.averageDiscountWeek = arr => {
+    totalDiscount = 0;
+    arr.forEach(element => {
+        let { precio, descuento} = element;
+        totalDiscount += parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+    });
+
+    if(totalDiscount !== 0){
+        return (totalDiscount/arr.length);
+    } 
+    return 0;
+}
+
+exports.averagePriceWeek = arr => {
+    totalPrice = 0;
+    arr.forEach(element => {
+        if (element.descuento === null) {
+        totalPrice += element.precio;
+        } else if (element.descuento !== null) {
+        totalPrice += element.descuento;
+        }
+    });
+
+    if(totalPrice !== 0){
+        return (totalPrice/arr.length);
+    } 
+    return 0;
+}
+
+exports.averageSKUWeek = arr => {
+    totalSKU = 0;
+    arr.forEach(element => {
+        totalSKU += element.numeroTallas;
+    });
+    return totalSKU;
+}
+
+exports.copyArray = array => {
+    let copy = [];
+    for ( var i = 0; i < array.length; i++ ) {
+        if (array[i].estado === "descontinuado") {
+            continue
+        }else {
+            copy[ i ] = array[ i ];
+        }
+     }
+
+     return copy;
+}
+
+exports.copyArrayDiscontinued = array => {
+    let copy = [];
+    for ( var i = 0; i < array.length; i++ ) {
+        copy[ i ] = array[ i ];
+     }
+
+     return copy;
+}

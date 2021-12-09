@@ -6,7 +6,7 @@ const discontinued = require("./filtersScraping/discontinued")
 const avgSKU = require("./filtersScraping/SKU");
 const prendasInfo = require("./filtersScraping/prendasInfo");
 
-organizarQueryTest = (query) => {
+let organizarQueryTest = (query) => {
     let obj = {};
 
 
@@ -28,12 +28,11 @@ organizarQueryTest = (query) => {
     if(query.fechaInicio !== '' && query.fechaFin === '') {
         let inicio = query.fechaInicio + "T00:00:00.000Z";
         let fin = query.fechaInicio + "T23:59:59.999Z";
-        console.log(query.fechaInicio);
         obj.fecha_consulta = {$gte: inicio, $lte: fin}
-    }
-    if(query.fechaInicio !== '' && query.fechaFin !== '') {
+    } else if(query.fechaInicio !== "" && query.fechaFin !== "") {
         obj.fecha_consulta = {$gte: query.fechaInicio, $lte: query.fechaFin}
     }
+    
 
 
     if(query.composicion !== undefined && (typeof query.composicion === 'string')) {
@@ -201,8 +200,10 @@ exports.cardsInfo = async (req, res) => {
         zm[1] += values[month + 24]; // valor actual de mango
         if(values[month] === 0 || values[month + 24] === 0){
             precioPromedio = ((values[month] + values[month + 24])).toFixed();
+            differencePrice =  percentageDifferencePrice(zm[1], zm[0]);
         } else {
             precioPromedio = ((values[month] + values[month + 24])/2).toFixed();
+            differencePrice =  percentageDifferencePrice(zm[1]/2, zm[0]/2);
         }
 
 
@@ -271,7 +272,7 @@ exports.cardsInfo = async (req, res) => {
         zm[0] = values[lastMonth];
         zm[1] =  values[month]; // valor actual 
 
-        differencePrice =  percentageDifferencePrice(zm[1], zm[0]);
+        
         differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
         differenceNew = percentageDifferencesnews(nzm[1], nzm[0]);
         differenceSKU = percentageDifferencesSku(skuzm[1], skuzm[0]);

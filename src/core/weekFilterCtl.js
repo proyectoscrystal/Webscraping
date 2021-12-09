@@ -4,8 +4,9 @@ const avgDiscountWeek = require("./filtersScraping/weekFilters/discountWeeks");
 const avgNewsWeek = require("./filtersScraping/weekFilters/newsWeeks");
 const discontinued = require("./filtersScraping/weekFilters/discontinuedWeeks")
 const avgSKU = require("./filtersScraping/weekFilters/skuWeeks");
+const cardsInfo = require("./filtersScraping/weekFilters/weekFilter");
 
-organizarQueryTest = (query) => {
+organizarQueryTest = (query,fechaI,fechaF) => {
     let obj = {};
 
 
@@ -24,17 +25,6 @@ organizarQueryTest = (query) => {
     if(query.color !== undefined){
         obj.color = {$in: query.color};
     }
-    if(query.fechaInicio !== '' && query.fechaFin === '') {
-        let inicio = query.fechaInicio + "T00:00:00.000Z";
-        let fin = query.fechaInicio + "T23:59:59.999Z";
-        console.log(query.fechaInicio);
-        obj.fecha_consulta = {$gte: inicio, $lte: fin}
-    }
-    if(query.fechaInicio !== '' && query.fechaFin !== '') {
-        obj.fecha_consulta = {$gte: query.fechaInicio, $lte: query.fechaFin}
-    }
-
-
     if(query.composicion !== undefined && (typeof query.composicion === 'string')) {
             obj.material1 = query.composicion;
 
@@ -43,6 +33,41 @@ organizarQueryTest = (query) => {
         
     }
 
+    obj.fecha_consulta = {$gte: fechaI, $lt: fechaF}
+
+
+    return obj;
+}
+
+organizarQueryTest2 = (query,fechaI,fechaF) => {
+    let obj = {};
+
+
+    if(query.origin !== undefined) {
+        obj.origin = {$in: query.origin};
+    }
+    if(query.categoria !== undefined){
+        obj.categoria = {$in: query.categoria};
+    }
+    if(query.subCategoria !== undefined){
+        obj.subCategoria = {$in: query.subCategoria};
+    }
+    if(query.tipoPrenda !== undefined){
+        obj.tipoPrenda = {$in: query.tipoPrenda};
+    }
+    if(query.color !== undefined){
+        obj.color = {$in: query.color};
+    }
+    if(query.composicion !== undefined && (typeof query.composicion === 'string')) {
+            obj.material1 = query.composicion;
+
+    } else if (query.composicion !== undefined && query.composicion.length > 1) {
+        obj.material1 = {$in: query.composicion};
+        
+    }
+
+    obj.fecha_consulta = {$gte: fechaI, $lte: fechaF}
+
 
     return obj;
 }
@@ -50,15 +75,15 @@ organizarQueryTest = (query) => {
 // info cards response
 exports.cardsInfoWeek = async (req, res) => {
     let filtro = req.query;
+    let filtro2 = req.query;
 
+    const {fechaActual, fechaInicio, fechaAnterior} = cardsInfo.rangoFechaSemanaCards();
     // implementar funcion para sacar el rango de fechas
+    filtro = organizarQueryTest2(filtro,fechaInicio,fechaActual); 
+    
+    filtro2 = organizarQueryTest(filtro2,fechaAnterior,fechaInicio);
     
 
-    filtro = organizarQueryTest(filtro);
-
-    //mes actual
-    let date = new Date();
-    let month = date.getMonth(); 
 
     // arreglo de mango y zara para los precios 
     let zm = [];
@@ -70,14 +95,28 @@ exports.cardsInfoWeek = async (req, res) => {
     let ddzm = [];
     // arreglo de mango y zara para los SKU
     let skuzm = [];
+    let array;
+    let array2;
 
     let arr;
+    let arr2;
+    let arrNews;
+    let arrNews2;
+    let arrSKU;
+    let arrSKU2;
+    let arrPrice;
+    let arrPrice2;
     let obj;
-    let values = [];
-    let discounts = [];
+    let values = 0;
+    let values2 = 0;
+    let discounts = 0;
+    let discounts2 = 0;
     let newsCounts = 0;
+    let newsCounts2 = 0;
     let discontinuedCounts = 0;
+    let discontinuedCounts2 = 0;
     let skuCounts = 0;
+    let skuCounts2 = 0;
     // variables para la diferencia entre mes actual y anterior
     let differencePrice = [];
     let differencePorcentage = [];
@@ -86,163 +125,129 @@ exports.cardsInfoWeek = async (req, res) => {
     let differenceSKU = [];
     let origin = '';
     let precioPromedio = 0;
-    let discountinueds = '';
+    let discontinueds = 0;
     let discount = 0;
     let nuevos = 0;
 
     
 
     try {
-        arr = await Business.find(filtro,{"precio":1, "descuento": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1}, { allowDiskUse: true});
-        // console.log("Total: ", arr.length);
+        array = await Business.find(filtro,{"precio":1, "descuento": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1}, { allowDiskUse: true});
+        // console.log("Total actual: ", array.length);
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
-
-    if (req.query.origin === undefined || Array.isArray(req.query.origin) ) {
-
-        discounts = avgDiscount.averageDiscountMonthGeneral(arr); // calcula los promedios por mes x 2 años una marca
-        dzm[0] = discounts[month - 1];
-        dzm[1] = discounts[month];
-        dzm[0] += discounts[month + 23];
-        dzm[1] += discounts[month + 24];
-        // descuento promedio mes actualizado
-        
-
-        if(discounts[month] === 0 || discounts[month + 24] === 0){
-            discount = ((discounts[month] + discounts[month + 24])).toFixed(2);
-            differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
-        } else {
-            discount = ((discounts[month] + discounts[month + 24])/2).toFixed(2);
-            differencePorcentage =  percentageDifferencesDiscount(dzm[1]/2, dzm[0]/2);
-        }
-
-
-        values = avgPrice.averagePriceMonthGeneral(arr); // calcula el precio promedio por mes dos marcas 2 años
-        zm[0] = values[month - 1];
-        zm[1] =  values[month]; // valor actual de zara 
-        zm[0] += values[month + 23];
-        zm[1] += values[month + 24]; // valor actual de mango
-        if(values[month] === 0 || values[month + 24] === 0){
-            precioPromedio = ((values[month] + values[month + 24])).toFixed();
-        } else {
-            precioPromedio = ((values[month] + values[month + 24])/2).toFixed();
-        }
-
-
-        newsCounts = avgNews.averageNewsMonthGeneral(arr); // calcula el precio promedio por mes dos marcas 2 años
-        nzm[0] = newsCounts[month - 1];
-        nzm[1] =  newsCounts[month]; // valor actual de zara 
-        nzm[0] += newsCounts[month + 23];
-        nzm[1] += newsCounts[month + 24]; // valor actual de mango
-        nuevos = ((newsCounts[month] + newsCounts[month + 24]));
-
-        discontinuedCounts = discontinued.averageDiscontinuedMonthGeneral(arr); // calcula el precio promedio por mes dos marcas 2 años
-        ddzm[0] = discontinuedCounts[month - 1];
-        ddzm[1] =  discontinuedCounts[month]; // valor actual de zara 
-        ddzm[0] += discontinuedCounts[month + 23];
-        ddzm[1] += discontinuedCounts[month + 24]; // valor actual de mango
-        discontinueds = (discontinuedCounts[month] + discontinuedCounts[month + 24]);
-
-
-        skuCounts = avgSKU.averageSKUMonthGeneral(arr); // calcula el precio promedio por mes dos marcas 2 años
-        skuzm[0] = skuCounts[month - 1];
-        skuzm[1] =  skuCounts[month]; // valor actual de zara 
-        skuzm[0] += skuCounts[month + 23];
-        skuzm[1] += skuCounts[month + 24]; // valor actual de mango
-        sku = (skuCounts[month] + skuCounts[month + 24]) ;
-
-
-        origin = 'general';        
-
-        // array de dos valores para setear la diferencia entre mes actual y anterior
-        differencePrice =  percentageDifferencePrice(zm[1], zm[0]);        
-        differenceNew = percentageDifferencesnews(nzm[1], nzm[0]);
-        differenceDiscontinued = percentageDifferencesDiscontinued(ddzm[1], ddzm[0]);
-        differenceSKU = percentageDifferencesSku(skuzm[1], skuzm[0]);
-        
-
-    } else if(req.query.origin === 'Zara'){
-        // console.log("entro a zara");
-        origin = 'Zara';
-        discounts = avgDiscount.averageDiscount(arr); // calcula los promedios por mes una marca 2 años
-        values = avgPrice.averagePriceMonthOrigin(arr); // promedio precio de la marca seleccionada por mes 2 años
-        precioPromedio = (values[month]).toFixed();
-        newsCounts = avgNews.averageNewsMonthOrigin(arr); // promedio precio de la marca seleccionada por mes 2 años
-        nuevos = (newsCounts[month]).toFixed();
-        discontinuedCounts = discontinued.averageDiscontinuedMonthOrigin(arr); // discontinued
-        discontinueds = (discontinuedCounts[month]).toFixed();
-        skuCounts = avgSKU.averageSKUMonthOrigin(arr); // calcula el precio promedio por mes dos marcas 2 años
-        sku = skuCounts[month];
-        discount = discounts[month];
-        
-        // valores de diferencia de porcentajes
-        dzm[0] = discounts[month - 1];
-        dzm[1] = discounts[month];
-        
-        // valores de diferencia de nuevos
-        ddzm[0] = discontinuedCounts[month - 1];
-        ddzm[1] = discontinuedCounts[month];
-        
-        // valores de diferencia de nuevos
-        nzm[0] = newsCounts[month - 1];
-        nzm[1] = newsCounts[month];
-        
-        // valores de diferencia de sku
-        skuzm[0] = skuCounts[month - 1];
-        skuzm[1] = skuCounts[month];
-
-        zm[0] = values[month - 1];
-        zm[1] =  values[month]; // valor actual 
-
-        differencePrice =  percentageDifferencePrice(zm[1], zm[0]);
-        differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
-        differenceNew = percentageDifferencesnews(nzm[1], nzm[0]);
-        differenceSKU = percentageDifferencesSku(skuzm[1], skuzm[0]);
-        differenceDiscontinued = percentageDifferencesDiscontinued(ddzm[1], ddzm[0]);
-
-    // } else if(filtro.origin === 'Mango'){
-    } else if(req.query.origin === 'Mango'){
-        origin = 'Mango';
-        discounts = avgDiscount.averageDiscount(arr); // calcula los promedios por mes
-        values = avgPrice.averagePriceMonthOrigin(arr); // precio promedio por mes dos años una marca
-        precioPromedio = (values[month]).toFixed();
-        newsCounts = avgNews.averageNewsMonthOrigin(arr); // nuevos de la marca seleccionada por mes 2 años
-        nuevos = newsCounts[month];
-        discontinuedCounts = discontinued.averageDiscontinuedMonthOrigin(arr); // discontinued
-        discontinueds = discontinuedCounts[month];
-        discount = discounts[month];
-        skuCounts = avgSKU.averageSKUMonthOrigin(arr); // calcula el precio promedio por mes dos marcas 2 años
-        sku = skuCounts[month];
-        
-
-        // valores de diferencia de porcentajes
-        dzm[0] = discounts[month - 1];
-        dzm[1] = discounts[month];
-
-        // valores de diferencia de nuevos
-        nzm[0] = newsCounts[month - 1];
-        nzm[1] = newsCounts[month];
-
-        // valores de diferencia de nuevos
-        ddzm[0] = discontinuedCounts[month - 1];
-        ddzm[1] = discontinuedCounts[month];
-
-        // valores de diferencia de nuevos
-        skuzm[0] = skuCounts[month - 1];
-        skuzm[1] = skuCounts[month];
-
-        zm[0] = values[month - 1];
-        zm[1] =  values[month]; // valor actual de zara 
-
-        differencePrice =  percentageDifferencePrice(zm[1], zm[0]);
-        differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
-        differenceNew = percentageDifferencesnews(nzm[1], nzm[0]);
-        differenceSKU = percentageDifferencesSku(skuzm[1], skuzm[0]);
-        differenceDiscontinued = percentageDifferencesDiscontinued(ddzm[1], ddzm[0]);
+    try {
+        array2 = await Business.find(filtro2,{"precio":1, "descuento": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1}, { allowDiskUse: true});
+        // console.log("Total: ", array2.length);
+    } catch (error) {
+        console.log("no se obtuvo respuesta");
+        return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
+
+    arr = cardsInfo.copyArray(array);
+    arr2 = cardsInfo.copyArray(array2);
+    console.log(arr.length);
+    console.log(arr2.length);
+
+    // semana actual descuento
+    arr = arr.filter((element) => {
+        return element.descuento !== null;
+    })
+    // semana anterior descuento
+    arr2 = arr2.filter((element) => {
+        return element.descuento !== null;
+    })
+    discounts = cardsInfo.averageDiscountWeek(arr); // descuento semana actual y anterior
+    discounts2 = cardsInfo.averageDiscountWeek(arr2); // descuento semana actual y anterior
+    dzm[0] = discounts2;
+    dzm[1] = discounts;
+
+    // descuento promedio semana
+    if(discounts === 0 || discounts2 === 0){
+        discount = ((discounts + discounts2)).toFixed(2);
+        differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
+    } else {
+        discount = ((discounts + discounts2)/2).toFixed(2);
+        differencePorcentage =  percentageDifferencesDiscount(dzm[1]/2, dzm[0]/2);
+    }
+
+    // precios cards
+    arrPrice = cardsInfo.copyArray(array);
+    arrPrice2 = cardsInfo.copyArray(array2);
+
+    values = cardsInfo.averagePriceWeek(arrPrice); 
+    values2 = cardsInfo.averagePriceWeek(arrPrice2); 
+    zm[0] = values2;
+    zm[1] =  values; 
+    if(values === 0 || values2 === 0){
+        precioPromedio = ((values + values2)).toFixed();
+        differencePrice =  percentageDifferencePrice(zm[1], zm[0]); 
+    } else {
+        precioPromedio = ((values + values2)/2).toFixed();
+        differencePrice =  percentageDifferencePrice(zm[1]/2, zm[0]/2); 
+    }
+
+    // semana actual nuevos
+    arrNews = cardsInfo.copyArray(array);
+    arrNews2 = cardsInfo.copyArray(array2)
+    console.log(arrNews.length);
+    console.log(arrNews2.length);
+
+    arrNews = arrNews.filter((element) => {
+        return element.estado === "nuevo";
+    })
+    // semana anterior nuevos
+    arrNews2 = arrNews2.filter((element) => {
+        return element.estado === "nuevo";
+    })
+
+    nzm[0] = arrNews2.length;
+    nzm[1] =  arrNews.length; 
+
+    nuevos = ((arrNews.length + arrNews2.length));
+    differenceNew = percentageDifferencesnews(nzm[1], nzm[0]);
+
+    // descontinuedos
+    let arrDiscontinued = cardsInfo.copyArrayDiscontinued(array);
+    let arrDiscontinued2 = cardsInfo.copyArrayDiscontinued(array2)
+    
+
+    // semana actual descontinuados
+    arrDiscontinued = arrDiscontinued.filter((element) => {
+        return element.estado === "descontinuado";
+    })
+    // semana anterior descontinuados
+    arrDiscontinued2 = arrDiscontinued2.filter((element) => {
+        return element.estado === "descontinuado";
+    })
+
+    
+    ddzm[0] = arrDiscontinued2.length;
+    ddzm[1] =  arrDiscontinued.length;
+    discontinueds = (arrDiscontinued.length + arrDiscontinued2.length);
+    differenceDiscontinued = percentageDifferencesDiscontinued(ddzm[1], ddzm[0]);
+
+    // metodo para los sku por semana
+
+    arrSKU = cardsInfo.copyArray(array);
+    arrSKU2 = cardsInfo.copyArray(array2)
+
+
+    skuCounts = cardsInfo.averageSKUWeek(arrSKU); 
+    skuCounts2 = cardsInfo.averageSKUWeek(arrSKU2); 
+    skuzm[0] = skuCounts2;
+    skuzm[1] =  skuCounts;
+    sku = (skuCounts + skuCounts2) ;
+    differenceSKU = percentageDifferencesSku(skuzm[1], skuzm[0]);
+
+
+    origin = 'general';
+        
+
+    
 
     
     // respuesta para el frontend
@@ -252,10 +257,6 @@ exports.cardsInfoWeek = async (req, res) => {
         nuevos,
         origin,
         discount,
-        discounts, // guarda el descuento
-        values, // precio promedio 
-        newsCounts, // nuevos 
-        skuCounts,
         discontinueds,
         differencePrice, // porcentaje de diferencia
         differencePorcentage,
@@ -508,4 +509,100 @@ exports.averageSKUWeek = async (req, res) => {
 
 
     res.status(200).json({obj});
+}
+
+// se calcula el porcentaje de diferencia entre mes actual y anterior
+let percentageDifferencePrice = (current, before) => {
+    // 1 positive 0 negative
+    let difference = [];
+    if (current >= before  && current !== 0) {
+        difference[0] = 1;
+        difference[1] =  parseFloat(Math.abs( (((before*100)/current)-100) ).toFixed(2));
+        return difference;
+    } else if (current < before) {
+        difference[0] = 0;
+        difference[1] =  parseFloat(Math.abs( ((current*100)/before)-100 ).toFixed(2));
+        return difference;
+    } else {
+        difference[0] = 0;
+        difference[1] = 0;
+        return difference;
+    }
+
+}
+
+let percentageDifferencesnews = (current, before) => {
+    // 1 positive 0 negative
+    let difference = [];
+    if (current >= before && current !== 0) {
+        difference[0] = 1;
+        difference[1] =  parseInt((current-before));
+        return difference;
+    } else if (current < before) {
+        difference[0] = 0;
+        difference[1] =  parseInt((before-current));
+        return difference;
+    } else {
+        difference[0] = 0;
+        difference[1] = 0;
+        return difference;
+    }
+
+}
+
+let percentageDifferencesDiscontinued = (current, before) => {
+    // 1 positive 0 negative
+    let difference = [];
+    if (current >= before && current !== 0) {
+        difference[0] = 1;
+        difference[1] =  parseInt((current-before));
+        return difference;
+    } else if (current < before) {
+        difference[0] = 0;
+        difference[1] =  parseInt((before-current));
+        return difference;
+    } else {
+        difference[0] = 0;
+        difference[1] = 0;
+        return difference;
+    }
+
+}
+
+let percentageDifferencesDiscount = (current, before) => {
+    // 1 positive 0 negative
+    let difference = [];
+    if (current >= before && current !== 0) {
+        difference[0] = 1;
+        difference[1] =  parseFloat((current-before).toFixed(2));
+        return difference;
+    } else if (current < before) {
+        difference[0] = 0;
+        difference[1] =  parseFloat((before-current).toFixed(2));
+        return difference;
+    } else {
+        difference[0] = 0;
+        difference[1] = 0;
+        return difference;
+    }
+
+}
+
+let percentageDifferencesSku = (current, before) => {
+    // 1 positive 0 negative
+    let difference = [];
+    if (current >= before && current !== 0) {
+        difference[0] = 1;
+        difference[1] =  parseInt((current-before));
+        return difference;
+    } else if (current < before) {
+        difference[0] = 0;
+        difference[1] =  parseInt((before-current));
+        return difference;
+    } else {
+        difference[0] = 0;
+        difference[1] = 0;
+        return difference;
+    }
+
 }
