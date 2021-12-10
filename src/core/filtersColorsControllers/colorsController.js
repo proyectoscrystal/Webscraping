@@ -6,8 +6,7 @@ const barChartsController = require("./barChartsController");
 
 let organizarQueryfilter1 = (query) => {
     let obj = {};
-    let inn = [];
-    console.log(query);
+    // console.log(query);
 
     if(query.origin !== undefined) {
         obj.origin = {$in: query.origin};
@@ -24,7 +23,7 @@ let organizarQueryfilter1 = (query) => {
     if(query.fechaInicio !== '' && query.fechaFin === '') {
         let inicio = query.fechaInicio + "T00:00:00.000Z";
         let fin = query.fechaInicio + "T23:59:59.999Z";
-        console.log(query.fechaInicio);
+        // console.log(query.fechaInicio);
         obj.fecha_consulta = {$gte: inicio, $lte: fin}
     }
     if(query.fechaInicio !== '' && query.fechaFin !== '') {
@@ -222,6 +221,7 @@ exports.colorMujerCategory = async (req, res) => {
     
     filtro = organizarQueryfilter1(filtro);
     filtro.discontinued = false;
+    filtro.categoria = "Mujer";
 
     //mes actual
     let date = new Date();
@@ -404,6 +404,7 @@ exports.colorHombreCategory = async (req, res) => {
     
     filtro = organizarQueryfilter1(filtro);
     filtro.discontinued = false;
+    filtro.categoria = "Hombre";
 
     //mes actual
     let date = new Date();
@@ -586,7 +587,7 @@ exports.colorKidsCategory = async (req, res) => {
     
     filtro = organizarQueryfilter1(filtro);
     filtro.discontinued = false;
-    // filtro.categoria = "{$in: ['Niño','Niña']}"
+    filtro.categoria = {$in: ['Niño','Niña']}
 
     //mes actual
     let date = new Date();
