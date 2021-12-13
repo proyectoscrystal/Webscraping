@@ -6,7 +6,7 @@ const Url = require("../../../linksUrls");
 exports.babyGirlDiscount = async () => {
     const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox']});
 
-    const babyGirlDiscount = Url.babyGirlDiscountLink;
+    const babyGirlDiscounts = Url.babyGirlDiscountLink;
 
     try {
         const page = await browser.newPage();
@@ -15,7 +15,7 @@ exports.babyGirlDiscount = async () => {
         const rebajasBabyGirl = [];
         //let count = 2;
 
-        await page.goto(babyGirlDiscount, { waitUntil: "networkidle2" });
+        await page.goto(babyGirlDiscounts, { waitUntil: "networkidle2" });
         await page.setViewport({width: 920,height: 1080});
         await page.waitForTimeout(5000);
         await autoScroll(page);

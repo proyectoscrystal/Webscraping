@@ -6,7 +6,7 @@ const Url = require("../linksUrls");
 exports.newMan = async () => {
   const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] }); //headless true/false para visualizar el navegador
 
-  const newMan = Url.menCategoryLink;
+  const newMan = Url.newManLink;
 
   try {
     const page = await browser.newPage();
@@ -28,9 +28,10 @@ exports.newMan = async () => {
       }
       return links;
     });
+    console.log(enlacesNuevoH);
 
     const nuevoHombre = [];
-    // let count = 5;
+    //let count = 5;
 
     for (let enlaceNuevoH of enlacesNuevoH) {
       try {
@@ -71,18 +72,18 @@ exports.newMan = async () => {
           prenda.tag = "nuevo";
           prenda.talla = tallas;
           prenda.tallasAgotadas = tallaValidacion;
-          prenda.color = document.querySelector('#main > article > .product-detail-view__main > .product-detail-view__side-bar > .product-detail-info > .product-detail-color-selector > p').textContent;
+          prenda.color = document.querySelector('#main > article > .product-detail-view__main > .product-detail-view__side-bar > .product-detail-info > p').textContent;
           prenda.color = prenda.color.split(' ')[1];
           prenda.color = prenda.color.toLowerCase();
-          prenda.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div > div:nth-child(6) > span > span').textContent;
+          prenda.materiales = document.querySelector('#main > article > .product-detail-view__main > .product-detail-view__main-content > div > div > div > div > div > div:nth-child(2) > div:nth-child(6) > span > span').textContent;
 
           return prenda;
         });
-        // count--;
+        //count--;
         nuevoHombre.push(prendasNuevoHombre);
-        // if (count === 0) {
-        //   break;
-        // }
+        //if (count === 0) {
+          //break;
+        //}
       } catch (error) {
         //console.log(error.message);
       }

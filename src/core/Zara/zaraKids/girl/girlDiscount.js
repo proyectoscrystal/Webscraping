@@ -4,21 +4,21 @@ const getScraping = require("../../../zaraCtl");
 const Url = require("../../../linksUrls");
 
 exports.girlDiscount = async () => {
-    const browser = await puppeteer.launch( {headless: true, args: ['--no-sandbox']} );
+    const browser = await puppeteer.launch( {headless: false, args: ['--no-sandbox']} );
 
-    const girlDiscount = Url.girlDiscountLink;
+    const girlDiscounts = Url.girlDiscountLink;
 
     try {
         const page = await browser.newPage();
 
         //====================PRENDAS EN DESCUENTO - NIÑOS | 6-14 AÑOS==========================
         const rebajasBoy = [];
-        //let count = 2;
+        let count = 5;
 
-        await page.goto(girlDiscount, { waitUntil: "networkidle2" });
+        await page.goto(girlDiscounts, { waitUntil: "networkidle2" });
         await page.setViewport({width: 920,height: 1080});
+        await page.waitForTimeout(5000);        
         await autoScroll(page);
-        //await page.waitForTimeout(5000);
 
         const enlaces = await page.evaluate(() => {
             const elements = document.querySelectorAll("#main > article > div > section > ul > li > ul > li > div > div > div > a");
@@ -34,6 +34,7 @@ exports.girlDiscount = async () => {
             try { 
 
                 await page.goto(enlace);
+                await page.waitForTimeout(2000);
                 await autoScroll(page);
 
                 const prendas = await page.evaluate(() => {

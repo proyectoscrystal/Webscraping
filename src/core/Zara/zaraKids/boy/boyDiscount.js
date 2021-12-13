@@ -13,12 +13,12 @@ exports.boyDiscount = async () => {
 
         //====================PRENDAS EN DESCUENTO - NIÑOS | 6-14 AÑOS==========================
         const rebajasBoy = [];
-        //let count = 2;
+        //let count = 5;
 
         await page.goto(boyDiscount, { waitUntil: "networkidle2" });
         await page.setViewport({width: 920,height: 1080});
+        await page.waitForTimeout(5000);
         await autoScroll(page);
-        //await page.waitForTimeout(5000);
 
         const enlaces = await page.evaluate(() => {
             const elements = document.querySelectorAll("#main > article > div > section > ul > li > ul > li > div > div > div > a");
@@ -34,6 +34,7 @@ exports.boyDiscount = async () => {
             try { 
 
                 await page.goto(enlace);
+                await page.waitForTimeout(2000)
                 await autoScroll(page);
 
                 const prendas = await page.evaluate(() => {
@@ -78,7 +79,7 @@ exports.boyDiscount = async () => {
             }
         }
 
-        //console.log(rebajasBoy);
+        console.log(rebajasBoy);
         await getScraping.getscraping(rebajasBoy);
         //====================PRENDAS EN DESCUENTO - NIÑOS | 6-14 AÑOS==========================
 
