@@ -77,7 +77,7 @@ organizarQuery = (query) => {
     return obj;
 }
 
-organizarQueryPrenda = (query) => {
+let organizarQueryPrenda = (query) => {
     let obj = {};
 
 
@@ -97,13 +97,12 @@ organizarQueryPrenda = (query) => {
         obj.color = {$in: query.color};
     }
 
-    if(query.fechaInicio !== 'undefined' && query.fechaFin === 'undefined') {
+    if(query.fechaInicio !== "" && query.fechaFin === "") {
         let inicio = query.fechaInicio + "T00:00:00.000Z";
         let fin = query.fechaInicio + "T23:59:59.999Z";
         obj.fecha_consulta = {$gte: inicio, $lte: fin}
-    }else if(query.fechaInicio !== 'undefined' && query.fechaFin !== 'undefined') {
+    }else if(query.fechaInicio !== '' && query.fechaFin !== "") {
         obj.fecha_consulta = {$gte: query.fechaInicio, $lte: query.fechaFin}
-        console.log(query.fechaInicio);
     }
 
     if(query.composicion !== undefined && (typeof query.composicion === 'string')) {
@@ -639,11 +638,13 @@ exports.tableCategoryInfo = async (req, res) => {
     res.status(200).json({obj});
 }
 
-
+// respuesta para la table 2 prendas
 exports.tablePriceInfo = async (req, res) => {
     let filtro = req.query;
     
     filtro = organizarQuery(filtro);
+    filtro.discontinued = false;
+
     let arr;
     let obj;
     let values = [];
@@ -667,7 +668,7 @@ exports.tablePriceInfo = async (req, res) => {
     try {
         arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "tallasAgotadas":1, "tipoPrenda": 1, "tag": 1});
     } catch (error) {
-        console.log("no se obtuvo respuesta");
+        console.log("no se obtuvo respuesta table 2");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
@@ -1113,12 +1114,13 @@ exports.tableSKUInfo = async (req, res) => {
     res.status(200).json({obj});
 }
 
+// cards prendas 
 exports.prendasInfo = async (req, res) => {
     let filtro = req.query;
     
     // TODO: organizar desde el .ts para enviar fecha y cambiar a organizarQueryTest
     filtro = organizarQueryPrenda(filtro);
-    filtro.discontinued = false;
+    console.log(filtro);
 
     //mes actual
     let date = new Date();
@@ -1231,8 +1233,6 @@ percentageDifferencesDiscontinued = (current, before) => {
 
 percentageDifferencesDiscount = (current, before) => {
     // 1 positive 0 negative
-    console.log("actual: " + current);
-    console.log("anterior: " + before);
     let difference = [];
     if (current >= before && current !== 0) {
         difference[0] = 1;
