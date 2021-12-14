@@ -63,10 +63,8 @@ exports.averageSKUWeek = arr => {
 exports.copyArray = array => {
     let copy = [];
     for ( var i = 0; i < array.length; i++ ) {
-        if (array[i].estado === "descontinuado") {
-            continue
-        }else {
-            copy[ i ] = array[ i ];
+        if (array[i].estado !== "descontinuado") {
+            copy.push(array[ i ]);
         }
      }
 

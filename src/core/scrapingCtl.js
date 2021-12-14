@@ -5,6 +5,7 @@ const avgNews = require("./filtersScraping/newProducts")
 const discontinued = require("./filtersScraping/discontinued")
 const avgSKU = require("./filtersScraping/SKU");
 const prendasInfo = require("./filtersScraping/prendasInfo");
+const { copyArrayDiscontinued } = require("./filtersScraping/weekFilters/weekFilter");
 
 let organizarQueryTest = (query) => {
     let obj = {};
@@ -144,6 +145,7 @@ exports.cardsInfo = async (req, res) => {
     let skuzm = [];
 
     let arr;
+    let arr2;
     let obj;
     let values = [];
     let discounts = [];
@@ -172,10 +174,14 @@ exports.cardsInfo = async (req, res) => {
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
+    // arreglo sin los descontinuados
+    arr2 = copyArray(arr);
+
+
 
     if (req.query.origin === undefined || Array.isArray(req.query.origin) ) {
 
-        discounts = avgDiscount.averageDiscountMonthGeneral(arr); // calcula los promedios por mes x 2 años una marca
+        discounts = avgDiscount.averageDiscountMonthGeneral(arr2); // calcula los promedios por mes x 2 años una marca
         dzm[0] = discounts[lastMonth];
         dzm[1] = discounts[month];
         dzm[0] += discounts[month + 23];
@@ -193,7 +199,7 @@ exports.cardsInfo = async (req, res) => {
         }
 
 
-        values = avgPrice.averagePriceMonthGeneral(arr); // calcula el precio promedio por mes dos marcas 2 años
+        values = avgPrice.averagePriceMonthGeneral(arr2); // calcula el precio promedio por mes dos marcas 2 años
         zm[0] = values[lastMonth];
         zm[1] =  values[month]; // valor actual de zara 
         zm[0] += values[month + 23];
@@ -207,7 +213,7 @@ exports.cardsInfo = async (req, res) => {
         }
 
 
-        newsCounts = avgNews.averageNewsMonthGeneral(arr); // calcula el precio promedio por mes dos marcas 2 años
+        newsCounts = avgNews.averageNewsMonthGeneral(arr2); // calcula el precio promedio por mes dos marcas 2 años
         nzm[0] = newsCounts[lastMonth];
         nzm[1] =  newsCounts[month]; // valor actual de zara 
         nzm[0] += newsCounts[month + 23];
@@ -222,7 +228,7 @@ exports.cardsInfo = async (req, res) => {
         discontinueds = (discontinuedCounts[month] + discontinuedCounts[month + 24]);
 
 
-        skuCounts = avgSKU.averageSKUMonthGeneral(arr); // calcula el precio promedio por mes dos marcas 2 años
+        skuCounts = avgSKU.averageSKUMonthGeneral(arr2); // calcula el precio promedio por mes dos marcas 2 años
         skuzm[0] = skuCounts[lastMonth];
         skuzm[1] =  skuCounts[month]; // valor actual de zara 
         skuzm[0] += skuCounts[month + 23];
@@ -1270,3 +1276,13 @@ percentageDifferencesSku = (current, before) => {
 }
 
 
+let copyArray = array => {
+    let copy = [];
+    for ( var i = 0; i < array.length; i++ ) {
+        if (array[i].estado !== "descontinuado") {
+            copy.push(array[ i ]);
+        }
+     }
+
+     return copy;
+}
