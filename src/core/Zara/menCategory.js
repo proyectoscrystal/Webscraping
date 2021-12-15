@@ -6,23 +6,6 @@ const fs = require("fs");
 
 exports.categoriaHombre = async () => {
 
-  var fecha = new Date();
-  var fechaObj = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "numeric",
-    second: "numeric",
-    timeZoneName: "long"
-  };
-  let horaInicioZara = fecha.toLocaleDateString("es", fechaObj);
-  fs.writeFile("horaInicioZara.txt", horaInicioZara, (err) => {
-    if (err) throw err;
-    console.log("Hora guardada!");
-  });
-
   const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox'] }); //headless true/false para visualizar el navegador
 
   const menCategory = Url.menCategoryLink;
@@ -111,7 +94,7 @@ exports.categoriaHombre = async () => {
             prenda.tag = "";
             prenda.talla = tallas;
             prenda.tallasAgotadas = tallaValidacion;
-            prenda.color = document.querySelector('#main > article > .product-detail-view__main > .product-detail-view__side-bar > .product-detail-info > .product-detail-color-selector > p').textContent;
+            prenda.color = document.querySelector('#main > article > div.product-detail-view__main > div > div.product-detail-info > p').textContent;
             prenda.color = prenda.color.split(' ')[1];
             prenda.color = prenda.color.toLowerCase();
             prenda.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div:nth-child(2) > div:nth-child(10) > span > span').textContent;

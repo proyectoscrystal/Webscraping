@@ -31,7 +31,7 @@ const babyGirlDiscountLink = 'https://www.zara.com/co/es/ninos-bebe-nina-precios
 const babyGirlNewLink = 'https://www.zara.com/co/es/ninos-bebe-nina-novedades-l127.html?v1=1888736';
 
 //Mini kids
-const miniKidsLink = 'https://www.zara.com/co/es/ninos-recien-nacido-join-life-l494.html?v1=1889586';
+const miniKidsLink = 'https://www.zara.com/co/es/ninos-recien-nacido-prendas-exterior-l507.html?v1=1889368';
 const miniKidsNewLink = 'https://www.zara.com/co/es/ninos-recien-nacido-novedades-l504.html?v1=1889626';
 
 //================= Links Zara =================

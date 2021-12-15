@@ -2,6 +2,7 @@ const puppeteer = require('puppeteer');
 const autoScroll = require("../../autoScrollFunction");
 const getScraping = require("../../zaraCtl");
 const Url = require("../../linksUrls");
+const fs = require('fs');
 
 exports.miniKids = async () => {
     const browser = await puppeteer.launch( {headless: true, args: ['--no-sandbox'] } );
@@ -28,7 +29,7 @@ exports.miniKids = async () => {
             }
             return links;
         });
-        //console.log(enlaces);
+        console.log(enlaces);
 
         for (let enlace of enlaces) {
             try {
@@ -40,9 +41,8 @@ exports.miniKids = async () => {
             }
             console.log("Ingresando a: " + enlace);
 
-            await page.waitForTimeout(5000);
+            await page.waitForTimeout(2000);
             await autoScroll(page); 
-            //await page.waitForTimeout(2000);
 
             const enlacesproductos = await page.evaluate(() => {
                 const elements = document.querySelectorAll("li > ul > li > div > div > a");
@@ -60,8 +60,8 @@ exports.miniKids = async () => {
             for (let enlaceproducto of enlacesproductos) {
                 try {
                     await page.goto(enlaceproducto);
+                    await page.waitForTimeout(2000);
                     await autoScroll(page);
-                    //await page.waitForTimeout(2000);
 
                     const prendas = await page.evaluate(() => {
                         const currentURL = window.location.href;
@@ -87,7 +87,7 @@ exports.miniKids = async () => {
                         prenda.tag = "";
                         prenda.talla = tallas;
                         prenda.tallasAgotadas = tallaValidacion;
-                        prenda.color = document.querySelector('#main > article > .product-detail-view__main > .product-detail-view__side-bar > .product-detail-info > .product-detail-color-selector > p').textContent;
+                        prenda.color = document.querySelector('#main > article > div.product-detail-view__main > div > div.product-detail-info > p').textContent;
                         prenda.color = prenda.color.split(' ')[1];
                         prenda.color = prenda.color.toLowerCase();
                         prenda.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div > div:nth-child(6) > span > span').textContent;
@@ -102,15 +102,34 @@ exports.miniKids = async () => {
                     //}
 
                 } catch (error) {
-                    //console.error(error.message);
+                    console.error(error.message);
                 }
             }
 
             prendasMiniKids.forEach((dato) => {dato.tipoPrenda = nombrecategoria});
 
             //console.log(prendasMiniKids);
+
+            var fecha = new Date();
+            var fechaObj = {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "2-digit",
+              hour: "2-digit",
+              minute: "numeric",
+              second: "numeric",
+              timeZoneName: "long"
+            };
+            let horaFinalZara = fecha.toLocaleDateString("es", fechaObj);
+            fs.writeFile("horaFinalZara.txt", horaFinalZara, (err) => {
+              if (err) throw err;
+              console.log("Hora final Scraping Zara guardada!");
+            });
+
             await getScraping.getscraping(prendasMiniKids);
         }
+
         //====================CATEGORIAS BEBE NIÑA | 6 MESES - 5 AÑOS===========================
 
     } catch (err) {

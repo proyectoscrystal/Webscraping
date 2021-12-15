@@ -72,6 +72,24 @@ exports.miniKidsNew = async () => {
             }
         }        
         //console.log(nuevoBoy);
+
+        var fecha = new Date();
+        var fechaObj = {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "numeric",
+          second: "numeric",
+          timeZoneName: "long"
+        };
+        let horaFinalMango = fecha.toLocaleDateString("es", fechaObj);
+        fs.writeFile("horaFinalMango.txt", horaFinalMango, (err) => {
+          if (err) throw err;
+          console.log("Hora final Scraping Zara guardada!");
+        });
+
         await getScraping.getscraping(nuevoBoy);        
         //====================MUJER NUEVA COLECCIÓN===========================
         

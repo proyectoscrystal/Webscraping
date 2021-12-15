@@ -92,7 +92,7 @@ exports.womanCategory = async () => {
             prenda.tag = "";            
             prenda.talla = tallas;
             prenda.tallasAgotadas = tallaValidacion;
-            prenda.color = document.querySelector('#main > article > .product-detail-view__main > .product-detail-view__side-bar > .product-detail-info > .product-detail-color-selector > p').textContent;
+            prenda.color = document.querySelector('#main > article > div.product-detail-view__main > div > div.product-detail-info > p').textContent;
             prenda.color = prenda.color.split(' ')[1];
             prenda.color = prenda.color.toLowerCase();
             prenda.materiales = document.querySelector('#main > article > div.product-detail-view__main > div.product-detail-view__main-content > div > div > div > div > div > div > div:nth-child(6) > span > span').textContent;              
