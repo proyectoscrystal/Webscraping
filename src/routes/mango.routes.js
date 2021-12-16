@@ -1,4 +1,3 @@
-const mangoCtl = require("../core/mangoCtl");
 const scrapingCtl = require("../core/scrapingCtl");
 const weekCtl = require("../core/weekFilterCtl");
 const colorsController = require("../core/filtersColorsControllers/colorsController");

@@ -34,7 +34,6 @@ const routes = require('./routes/routes');
 
 // Rutas
 const businessRouter = require('./routes/routes');
-const zaraRouter = require('./routes/zara.routes');
 const mangoRouter = require('./routes/mango.routes');
 
 const router = express.Router();
@@ -42,7 +41,6 @@ const router = express.Router();
 app.use('/', router);
 mangoRouter(router);
 businessRouter(router);
-zaraRouter(router);
 
 // Ruta de prueba
 router.get('/', (req, res) => {

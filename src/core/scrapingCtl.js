@@ -167,7 +167,7 @@ exports.cardsInfo = async (req, res) => {
     
 
     try {
-        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1, "discontinued":1}, { allowDiskUse: true});
+        arr = await Business.find(filtro,{"precio":1, "descuento": 1,  "origin":1, "categoria":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1, "discontinued":1}, { allowDiskUse: true});
         // console.log("Total: ", arr.length);
     } catch (error) {
         console.log("no se obtuvo respuesta");
@@ -278,7 +278,7 @@ exports.cardsInfo = async (req, res) => {
         zm[0] = values[lastMonth];
         zm[1] =  values[month]; // valor actual 
 
-        
+        differencePrice =  percentageDifferencePrice(zm[1], zm[0]);
         differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
         differenceNew = percentageDifferencesnews(nzm[1], nzm[0]);
         differenceSKU = percentageDifferencesSku(skuzm[1], skuzm[0]);
