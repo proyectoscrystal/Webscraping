@@ -33,7 +33,7 @@ organizarQueryTest = (query,fechaI,fechaF) => {
         
     }
 
-    obj.fecha_consulta = {$gte: fechaI, $lt: fechaF}
+    obj.fecha_consulta = {$gte: fechaI, $lte: fechaF}
 
 
     return obj;
