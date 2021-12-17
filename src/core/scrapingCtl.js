@@ -5,8 +5,9 @@ const avgNews = require("./filtersScraping/newProducts")
 const discontinued = require("./filtersScraping/discontinued")
 const avgSKU = require("./filtersScraping/SKU");
 const prendasInfo = require("./filtersScraping/prendasInfo");
+const { copyArrayDiscontinued } = require("./filtersScraping/weekFilters/weekFilter");
 
-organizarQueryTest = (query) => {
+let organizarQueryTest = (query) => {
     let obj = {};
 
 
@@ -28,12 +29,11 @@ organizarQueryTest = (query) => {
     if(query.fechaInicio !== '' && query.fechaFin === '') {
         let inicio = query.fechaInicio + "T00:00:00.000Z";
         let fin = query.fechaInicio + "T23:59:59.999Z";
-        console.log(query.fechaInicio);
         obj.fecha_consulta = {$gte: inicio, $lte: fin}
-    }
-    if(query.fechaInicio !== '' && query.fechaFin !== '') {
+    } else if(query.fechaInicio !== "" && query.fechaFin !== "") {
         obj.fecha_consulta = {$gte: query.fechaInicio, $lte: query.fechaFin}
     }
+    
 
 
     if(query.composicion !== undefined && (typeof query.composicion === 'string')) {
@@ -78,7 +78,7 @@ organizarQuery = (query) => {
     return obj;
 }
 
-organizarQueryPrenda = (query) => {
+let organizarQueryPrenda = (query) => {
     let obj = {};
 
 
@@ -98,13 +98,12 @@ organizarQueryPrenda = (query) => {
         obj.color = {$in: query.color};
     }
 
-    if(query.fechaInicio !== 'undefined' && query.fechaFin === 'undefined') {
+    if(query.fechaInicio !== "" && query.fechaFin === "") {
         let inicio = query.fechaInicio + "T00:00:00.000Z";
         let fin = query.fechaInicio + "T23:59:59.999Z";
         obj.fecha_consulta = {$gte: inicio, $lte: fin}
-    }else if(query.fechaInicio !== 'undefined' && query.fechaFin !== 'undefined') {
+    }else if(query.fechaInicio !== '' && query.fechaFin !== "") {
         obj.fecha_consulta = {$gte: query.fechaInicio, $lte: query.fechaFin}
-        console.log(query.fechaInicio);
     }
 
     if(query.composicion !== undefined && (typeof query.composicion === 'string')) {
@@ -146,6 +145,7 @@ exports.cardsInfo = async (req, res) => {
     let skuzm = [];
 
     let arr;
+    let arr2;
     let obj;
     let values = [];
     let discounts = [];
@@ -167,17 +167,21 @@ exports.cardsInfo = async (req, res) => {
     
 
     try {
-        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1, "discontinued":1}, { allowDiskUse: true});
+        arr = await Business.find(filtro,{"precio":1, "descuento": 1,  "origin":1, "categoria":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1, "discontinued":1}, { allowDiskUse: true});
         // console.log("Total: ", arr.length);
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
+    // arreglo sin los descontinuados
+    arr2 = copyArray(arr);
+
+
 
     if (req.query.origin === undefined || Array.isArray(req.query.origin) ) {
 
-        discounts = avgDiscount.averageDiscountMonthGeneral(arr); // calcula los promedios por mes x 2 años una marca
+        discounts = avgDiscount.averageDiscountMonthGeneral(arr2); // calcula los promedios por mes x 2 años una marca
         dzm[0] = discounts[lastMonth];
         dzm[1] = discounts[month];
         dzm[0] += discounts[month + 23];
@@ -190,23 +194,26 @@ exports.cardsInfo = async (req, res) => {
             differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
         } else {
             discount = ((discounts[month] + discounts[month + 24])/2).toFixed(2);
-            differencePorcentage =  percentageDifferencesDiscount(dzm[1]/2, dzm[0]/2);
+            // let actual = (dzm[1])
+            differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
         }
 
 
-        values = avgPrice.averagePriceMonthGeneral(arr); // calcula el precio promedio por mes dos marcas 2 años
+        values = avgPrice.averagePriceMonthGeneral(arr2); // calcula el precio promedio por mes dos marcas 2 años
         zm[0] = values[lastMonth];
         zm[1] =  values[month]; // valor actual de zara 
         zm[0] += values[month + 23];
         zm[1] += values[month + 24]; // valor actual de mango
         if(values[month] === 0 || values[month + 24] === 0){
             precioPromedio = ((values[month] + values[month + 24])).toFixed();
+            differencePrice =  percentageDifferencePrice(zm[1], zm[0]);
         } else {
             precioPromedio = ((values[month] + values[month + 24])/2).toFixed();
+            differencePrice =  percentageDifferencePrice(zm[1]/2, zm[0]/2);
         }
 
 
-        newsCounts = avgNews.averageNewsMonthGeneral(arr); // calcula el precio promedio por mes dos marcas 2 años
+        newsCounts = avgNews.averageNewsMonthGeneral(arr2); // calcula el precio promedio por mes dos marcas 2 años
         nzm[0] = newsCounts[lastMonth];
         nzm[1] =  newsCounts[month]; // valor actual de zara 
         nzm[0] += newsCounts[month + 23];
@@ -221,7 +228,7 @@ exports.cardsInfo = async (req, res) => {
         discontinueds = (discontinuedCounts[month] + discontinuedCounts[month + 24]);
 
 
-        skuCounts = avgSKU.averageSKUMonthGeneral(arr); // calcula el precio promedio por mes dos marcas 2 años
+        skuCounts = avgSKU.averageSKUMonthGeneral(arr2); // calcula el precio promedio por mes dos marcas 2 años
         skuzm[0] = skuCounts[lastMonth];
         skuzm[1] =  skuCounts[month]; // valor actual de zara 
         skuzm[0] += skuCounts[month + 23];
@@ -637,11 +644,13 @@ exports.tableCategoryInfo = async (req, res) => {
     res.status(200).json({obj});
 }
 
-
+// respuesta para la table 2 prendas
 exports.tablePriceInfo = async (req, res) => {
     let filtro = req.query;
     
     filtro = organizarQuery(filtro);
+    filtro.discontinued = false;
+
     let arr;
     let obj;
     let values = [];
@@ -665,7 +674,7 @@ exports.tablePriceInfo = async (req, res) => {
     try {
         arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "tallasAgotadas":1, "tipoPrenda": 1, "tag": 1});
     } catch (error) {
-        console.log("no se obtuvo respuesta");
+        console.log("no se obtuvo respuesta table 2");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
@@ -1111,12 +1120,13 @@ exports.tableSKUInfo = async (req, res) => {
     res.status(200).json({obj});
 }
 
+// cards prendas 
 exports.prendasInfo = async (req, res) => {
     let filtro = req.query;
     
     // TODO: organizar desde el .ts para enviar fecha y cambiar a organizarQueryTest
     filtro = organizarQueryPrenda(filtro);
-    filtro.discontinued = false;
+    console.log(filtro);
 
     //mes actual
     let date = new Date();
@@ -1266,3 +1276,13 @@ percentageDifferencesSku = (current, before) => {
 }
 
 
+let copyArray = array => {
+    let copy = [];
+    for ( var i = 0; i < array.length; i++ ) {
+        if (array[i].estado !== "descontinuado") {
+            copy.push(array[ i ]);
+        }
+     }
+
+     return copy;
+}

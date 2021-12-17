@@ -168,7 +168,7 @@ let Data = (arr) => {
     return obj;
 }
 
-// metodos usados por el chart y info categoria
+// metodos usados por el chart e info categoria
 let coloresFrecuentes = (arr) => {
     // metodo para saber el color que mas se repite para subcategoria
     let arrayColoresSub = [];
