@@ -54,3 +54,6 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_3E0265A53DF141A38A52D31201DC1B52 }}
           package: .
+
+- name: Purge artifacts
+  uses: kolpav/purge-artifacts-action@v1
