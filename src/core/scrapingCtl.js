@@ -167,7 +167,7 @@ exports.cardsInfo = async (req, res) => {
     
 
     try {
-        arr = await Business.find(filtro,{"precio":1, "descuento": 1,  "origin":1, "categoria":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1, "discontinued":1}, { allowDiskUse: true});
+        arr = await Business.find(filtro,{"precio":1, "descuento": 1,  "origin":1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tag": 1, "discontinued":1}, { allowDiskUse: true});
         // console.log("Total: ", arr.length);
     } catch (error) {
         console.log("no se obtuvo respuesta");
@@ -186,6 +186,8 @@ exports.cardsInfo = async (req, res) => {
         dzm[1] = discounts[month];
         dzm[0] += discounts[month + 23];
         dzm[1] += discounts[month + 24];
+        dzm[1] = (dzm[1]/2);
+        dzm[0] = (dzm[0]/2);
         // descuento promedio mes actualizado
         
 
@@ -193,7 +195,7 @@ exports.cardsInfo = async (req, res) => {
             discount = ((discounts[month] + discounts[month + 24])).toFixed(2);
             differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
         } else {
-            discount = ((discounts[month] + discounts[month + 24])/2).toFixed(2);
+            discount = ((discounts[month] + discounts[month + 24])).toFixed(2);
             // let actual = (dzm[1])
             differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
         }
@@ -363,7 +365,7 @@ exports.averagePrice = async (req, res) => {
     let origin = '';
 
     try {
-        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
+        arr = await Business.find(filtro,{"precio":1, "descuento": 1, "origin":1, "createdAt":1});
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
@@ -672,7 +674,7 @@ exports.tablePriceInfo = async (req, res) => {
     }
 
     try {
-        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "tallasAgotadas":1, "tipoPrenda": 1, "tag": 1});
+        arr = await Business.find(filtro,{"precio":1, "descuento": 1, "origin":1, "categoria":1, "subCategoria": 1,"estado":1, "createdAt":1, "tipoPrenda": 1});
     } catch (error) {
         console.log("no se obtuvo respuesta table 2");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
@@ -845,6 +847,7 @@ exports.tableDiscountInfo = async (req, res) => {
     let descuentoPromedio = 0;
     let descuentoPromedioAnterior = 0;
     let differences = [];
+    let flag = false;
 
     //mes actual
     let date = new Date();
@@ -857,7 +860,7 @@ exports.tableDiscountInfo = async (req, res) => {
     }
 
     try {
-        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1, "discontinued":1});
+        arr = await Business.find(filtro,{"precio":1, "descuento": 1, "origin":1,  "categoria":1, "subCategoria": 1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1, "discontinued":1});
         // console.log(arr.length);
     } catch (error) {
         console.log("no se obtuvo respuesta");
@@ -873,11 +876,11 @@ exports.tableDiscountInfo = async (req, res) => {
             descuentoPromedio = ((values[month] + values[month + 24])).toFixed(2);
             descuentoPromedioAnterior = ((values[lastMonth] + values[month + 23])).toFixed(2);
         } else {
-            descuentoPromedio = ((values[month] + values[month + 24])/2).toFixed(2);
-            descuentoPromedioAnterior = ((values[lastMonth] + values[month + 23])/2).toFixed(2);
+            descuentoPromedio = ((values[month] + values[month + 24])).toFixed(2);
+            descuentoPromedioAnterior = ((values[lastMonth] + values[month + 23])).toFixed(2);
         }
         
-        // determinar la diferencia porcentual en los precios
+        // determinar la diferencia porcentual en los descuentos
         differences = percentageDifferencesDiscount(descuentoPromedio, descuentoPromedioAnterior);
 
 
@@ -1237,7 +1240,7 @@ percentageDifferencesDiscontinued = (current, before) => {
 
 }
 
-percentageDifferencesDiscount = (current, before) => {
+let percentageDifferencesDiscount = (current, before) => {
     // 1 positive 0 negative
     let difference = [];
     if (current >= before && current !== 0) {
@@ -1279,7 +1282,7 @@ percentageDifferencesSku = (current, before) => {
 let copyArray = array => {
     let copy = [];
     for ( var i = 0; i < array.length; i++ ) {
-        if (array[i].estado !== "descontinuado") {
+        if (array[i].discontinued === false) {
             copy.push(array[ i ]);
         }
      }
