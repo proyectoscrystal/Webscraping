@@ -121,6 +121,10 @@ exports.subCategoria = [
   'ropa exterior',
   'ropa exterior',
   'ropa exterior',
+  'ropa exterior',
+  'ropa exterior',
+  'ropa exterior',
+  'ropa exterior',
   'ropa interior',
   'ropa interior',
   'ropa interior',
@@ -243,6 +247,10 @@ exports.subCategoria = [
 ]
 
 exports.tipoPrendaHomologada = [
+  'chaquetas',
+  'chaquetas',
+  'chaquetas',
+  'camisetas',
   'camisa',
   'camisetas',
   'polo',
@@ -377,7 +385,10 @@ exports.tipoPrendaHomologada = [
 ]
 
 exports.tipoPrenda = [
+  'cárdigans y jerséis',
+  'chaquetas y americanas',
   'vestidos y monos',
+  'camisetas y tops',
   'camisas',
   'camisetas',
   'polos' ,

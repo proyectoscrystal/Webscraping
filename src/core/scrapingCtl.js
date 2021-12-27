@@ -195,8 +195,7 @@ exports.cardsInfo = async (req, res) => {
             discount = ((discounts[month] + discounts[month + 24])).toFixed(2);
             differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
         } else {
-            discount = ((discounts[month] + discounts[month + 24])).toFixed(2);
-            // let actual = (dzm[1])
+            discount = ((discounts[month] + discounts[month + 24])/2).toFixed(2);
             differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
         }
 
@@ -414,7 +413,7 @@ exports.averageDiscount = async (req, res) => {
     let origin = '';
 
     try {
-        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1, "discontinued":1});
+        arr = await Business.find(filtro,{"precio":1, "descuento": 1, "origin":1,"estado":1, "createdAt":1, "discontinued":1});
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
@@ -463,7 +462,7 @@ exports.averageDiscountinued = async (req, res) => {
     let origin = '';
 
     try {
-        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
+        arr = await Business.find(filtro,{"origin":1,"estado":1, "createdAt":1});
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
@@ -774,7 +773,7 @@ exports.tableDiscountinuedInfo = async (req, res) => {
     }
 
     try {
-        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
+        arr = await Business.find(filtro,{"origin":1,"estado":1, "createdAt":1, "tipoPrenda": 1, "categoria":1, "subCategoria":1});
         // console.log(arr.length);
     } catch (error) {
         console.log("no se obtuvo respuesta");
