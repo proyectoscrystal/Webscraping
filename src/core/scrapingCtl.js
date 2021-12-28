@@ -673,7 +673,7 @@ exports.tablePriceInfo = async (req, res) => {
     }
 
     try {
-        arr = await Business.find(filtro,{"precio":1, "descuento": 1, "origin":1, "categoria":1, "subCategoria": 1,"estado":1, "createdAt":1, "tipoPrenda": 1});
+        arr = await Business.find(filtro,{"precio":1, "descuento": 1, "origin":1, "categoria":1, "subCategoria": 1,"estado":1, "createdAt":1, "tipoPrenda": 1, "base64": 1, "color":1, "talla":1, "tallasAgotadas":1});
     } catch (error) {
         console.log("no se obtuvo respuesta table 2");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
@@ -692,9 +692,6 @@ exports.tablePriceInfo = async (req, res) => {
         }
 
         valuesDiscount = avgDiscount.averageDiscountMonthGeneral(arr);
-        // console.log(values);
-        // obtener precios promedio mes actual y anterior 
-        // descuentoPromedio = ((valuesDiscount[month] + valuesDiscount[month + 24])/2);
 
         if(valuesDiscount[month] === 0 || valuesDiscount[month + 24] === 0){
             descuentoPromedio = ((valuesDiscount[month] + valuesDiscount[month + 24])).toFixed(2);

@@ -48,7 +48,7 @@ exports.colorGeneralCategory = async (req, res) => {
 
 
     try {
-        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "origin":1, "color":1, "categoria":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
+        arr = await Business.find(filtro,{"descuento": 1, "origin":1, "color":1, "categoria":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
         // console.log(arr.length);
     } catch (error) {
         console.log("no se obtuvo respuesta");
