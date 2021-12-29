@@ -104,6 +104,7 @@ exports.cardsInfoWeek = async (req, res) => {
     let arrNews2;
     let arrSKU;
     let arrSKU2;
+    let sku = 0;
     let arrPrice;
     let arrPrice2;
     let obj;
@@ -111,10 +112,6 @@ exports.cardsInfoWeek = async (req, res) => {
     let values2 = 0;
     let discounts = 0;
     let discounts2 = 0;
-    let newsCounts = 0;
-    let newsCounts2 = 0;
-    let discontinuedCounts = 0;
-    let discontinuedCounts2 = 0;
     let skuCounts = 0;
     let skuCounts2 = 0;
     // variables para la diferencia entre mes actual y anterior
@@ -158,6 +155,7 @@ exports.cardsInfoWeek = async (req, res) => {
     arr2 = arr2.filter((element) => {
         return element.descuento !== null;
     })
+    console.log(arr.length);
     discounts = cardsInfo.averageDiscountWeek(arr); // descuento semana actual y anterior
     discounts2 = cardsInfo.averageDiscountWeek(arr2); // descuento semana actual y anterior
     dzm[0] = discounts2;

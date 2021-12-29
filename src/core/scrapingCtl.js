@@ -182,12 +182,17 @@ exports.cardsInfo = async (req, res) => {
     if (req.query.origin === undefined || Array.isArray(req.query.origin) ) {
 
         discounts = avgDiscount.averageDiscountMonthGeneral(arr2); // calcula los promedios por mes x 2 años una marca
+        let flag = false;
         dzm[0] = discounts[lastMonth];
         dzm[1] = discounts[month];
+        if(dzm[1] === 0) flag = true;
         dzm[0] += discounts[month + 23];
         dzm[1] += discounts[month + 24];
-        dzm[1] = (dzm[1]/2);
-        dzm[0] = (dzm[0]/2);
+        if(discounts[month + 24] === 0) flag = true;
+        if(!flag === true) {
+            dzm[1] = (dzm[1]/2);
+            dzm[0] = (dzm[0]/2);
+        } 
         // descuento promedio mes actualizado
         
 
@@ -691,6 +696,9 @@ exports.tablePriceInfo = async (req, res) => {
             precioPromedioAnterior = ((values[lastMonth] + values[month + 23])/2);
         }
 
+        // determinar la diferencia porcentual en los precios
+        differences = percentageDifferencePrice(precioPromedio, precioPromedioAnterior);
+
         valuesDiscount = avgDiscount.averageDiscountMonthGeneral(arr);
 
         if(valuesDiscount[month] === 0 || valuesDiscount[month + 24] === 0){
@@ -698,9 +706,6 @@ exports.tablePriceInfo = async (req, res) => {
         } else {
             descuentoPromedio = ((valuesDiscount[month] + valuesDiscount[month + 24])/2).toFixed(2);
         }
-        
-        // determinar la diferencia porcentual en los precios
-        differences = percentageDifferencePrice(precioPromedio, precioPromedioAnterior);
 
         
     } else if(req.query.origin === 'Zara'){
@@ -866,13 +871,15 @@ exports.tableDiscountInfo = async (req, res) => {
     if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
         values = avgDiscount.averageDiscountMonthGeneral(arr);
         // console.log(values);
+        
         // obtener precios promedio mes actual y anterior 
+
 
         if(values[month] === 0 || values[month + 24] === 0){
             descuentoPromedio = ((values[month] + values[month + 24])).toFixed(2);
             descuentoPromedioAnterior = ((values[lastMonth] + values[month + 23])).toFixed(2);
         } else {
-            descuentoPromedio = ((values[month] + values[month + 24])).toFixed(2);
+            descuentoPromedio = ((values[month] + values[month + 24])/2).toFixed(2);
             descuentoPromedioAnterior = ((values[lastMonth] + values[month + 23])).toFixed(2);
         }
         
