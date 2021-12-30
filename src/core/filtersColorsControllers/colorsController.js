@@ -49,7 +49,7 @@ exports.colorGeneralCategory = async (req, res) => {
 
     try {
         arr = await Business.find(filtro,{"descuento": 1, "origin":1, "color":1, "categoria":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
-        // console.log(arr.length);
+        console.log(arr.length);
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
@@ -856,6 +856,7 @@ let getDataTopTen = (arr) => {
         totalSKU += arr[i].numeroTallas;
         arrayTipoPrendasData.push(arr[i].tipoPrenda);
     }
+    console.log(totalSKU);
     // se eliminan los repetidos de tipo de prenda
     arrayTipoPrendasData = [...new Set(arrayTipoPrendasData)];
 

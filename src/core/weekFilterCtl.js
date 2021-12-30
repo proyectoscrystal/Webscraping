@@ -87,8 +87,6 @@ exports.cardsInfoWeek = async (req, res) => {
 
     // arreglo de mango y zara para los precios 
     let zm = [];
-    // arreglo de mango y zara para los descuentos
-    let dzm = [];
     // arreglo de mango y zara para los nuevos
     let nzm = [];
     // arreglo de mango y zara para los descontinuados
@@ -129,7 +127,7 @@ exports.cardsInfoWeek = async (req, res) => {
     
 
     try {
-        array = await Business.find(filtro,{"precio":1, "descuento": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1}, { allowDiskUse: true});
+        array = await Business.find(filtro,{"precio":1, "descuento": 1,  "origin":1, "use":1,"estado":1, "createdAt":1, "numeroTallas":1, "tag": 1, "discontinued":1}, { allowDiskUse: true});
         // console.log("Total actual: ", array.length);
     } catch (error) {
         console.log("no se obtuvo respuesta");
@@ -137,37 +135,28 @@ exports.cardsInfoWeek = async (req, res) => {
     }
 
     try {
-        array2 = await Business.find(filtro2,{"precio":1, "descuento": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1}, { allowDiskUse: true});
+        array2 = await Business.find(filtro2,{"precio":1, "descuento": 1,  "origin":1, "use":1,"estado":1, "createdAt":1, "numeroTallas":1, "tag": 1, "discontinued":1}, { allowDiskUse: true});
         // console.log("Total: ", array2.length);
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
-    arr = cardsInfo.copyArray(array);
-    arr2 = cardsInfo.copyArray(array2);
+    arr = cardsInfo.copyArrayPromocion(array);
+    arr2 = cardsInfo.copyArrayPromocion(array2);
 
-    // semana actual descuento
-    arr = arr.filter((element) => {
-        return element.descuento !== null;
-    })
-    // semana anterior descuento
-    arr2 = arr2.filter((element) => {
-        return element.descuento !== null;
-    })
-    console.log(arr.length);
+    // console.log(arr);
+    
     discounts = cardsInfo.averageDiscountWeek(arr); // descuento semana actual y anterior
     discounts2 = cardsInfo.averageDiscountWeek(arr2); // descuento semana actual y anterior
-    dzm[0] = discounts2;
-    dzm[1] = discounts;
 
     // descuento promedio semana
     if(discounts === 0 || discounts2 === 0){
         discount = ((discounts + discounts2)).toFixed(2);
-        differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
+        differencePorcentage =  percentageDifferencesDiscount(discounts, discounts2);
     } else {
         discount = ((discounts + discounts2)/2).toFixed(2);
-        differencePorcentage =  percentageDifferencesDiscount(dzm[1]/2, dzm[0]/2);
+        differencePorcentage =  percentageDifferencesDiscount(discounts, discounts2);
     }
 
     // precios cards
@@ -175,28 +164,19 @@ exports.cardsInfoWeek = async (req, res) => {
     arrPrice2 = cardsInfo.copyArray(array2);
 
     values = cardsInfo.averagePriceWeek(arrPrice); 
-    values2 = cardsInfo.averagePriceWeek(arrPrice2); 
-    zm[0] = values2;
-    zm[1] =  values; 
+    values2 = cardsInfo.averagePriceWeek(arrPrice2);
+
     if(values === 0 || values2 === 0){
         precioPromedio = ((values + values2)).toFixed();
-        differencePrice =  percentageDifferencePrice(zm[1], zm[0]); 
+        differencePrice =  percentageDifferencePrice(values, values2); 
     } else {
         precioPromedio = ((values + values2)/2).toFixed();
-        differencePrice =  percentageDifferencePrice(zm[1]/2, zm[0]/2); 
+        differencePrice =  percentageDifferencePrice(values, values2); 
     }
 
-    // semana actual nuevos
-    arrNews = cardsInfo.copyArray(array);
-    arrNews2 = cardsInfo.copyArray(array2)
-
-    arrNews = arrNews.filter((element) => {
-        return element.estado === "nuevo";
-    })
-    // semana anterior nuevos
-    arrNews2 = arrNews2.filter((element) => {
-        return element.estado === "nuevo";
-    })
+    // semana actual nuevos = cardsInfo.copyArray(array);
+    arrNews = cardsInfo.copyArrayNew(array)
+    arrNews2 = cardsInfo.copyArrayNew(array2)
 
     nzm[0] = arrNews2.length;
     nzm[1] =  arrNews.length; 
@@ -226,8 +206,8 @@ exports.cardsInfoWeek = async (req, res) => {
 
     // metodo para los sku por semana
 
-    arrSKU = cardsInfo.copyArray(array);
-    arrSKU2 = cardsInfo.copyArray(array2)
+    arrSKU = cardsInfo.copyArraySKU(array);
+    arrSKU2 = cardsInfo.copyArraySKU(array2);
 
 
     skuCounts = cardsInfo.averageSKUWeek(arrSKU); 

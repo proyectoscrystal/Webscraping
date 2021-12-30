@@ -6,7 +6,8 @@ const moment = require("moment");
 
 exports.rangoFechaSemanaCards = () => {
     let obj = {};
-    let startdate = moment().format("YYYY-MM-DD");
+    let startdate = moment().add(1, 'days');
+    startdate = startdate.format("YYYY-MM-DD");
     let startActualWeek = moment();
     let lastWeekDay = moment();
     startActualWeek = startActualWeek.subtract(7, "days"); // fecha 7 dias antes
@@ -27,7 +28,7 @@ exports.averageDiscountWeek = arr => {
     totalDiscount = 0;
     arr.forEach(element => {
         let { precio, descuento} = element;
-        totalDiscount += parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
+        totalDiscount += parseFloat(Math.abs( ((descuento*100)/precio)-100 ));
     });
 
     if(totalDiscount !== 0){
@@ -37,17 +38,18 @@ exports.averageDiscountWeek = arr => {
 }
 
 exports.averagePriceWeek = arr => {
-    totalPrice = 0;
+    let priceTotal = 0;
     arr.forEach(element => {
-        if (element.descuento === null) {
-        totalPrice += element.precio;
-        } else if (element.descuento !== null) {
-        totalPrice += element.descuento;
+        if(element.descuento == null){
+            priceTotal += element.precio;   
+        } else if (element.descuento != null){
+            priceTotal += element.descuento;
         }
     });
+    
 
-    if(totalPrice !== 0){
-        return (totalPrice/arr.length);
+    if(priceTotal !== 0){
+        return (priceTotal/arr.length);
     } 
     return 0;
 }
@@ -55,7 +57,8 @@ exports.averagePriceWeek = arr => {
 exports.averageSKUWeek = arr => {
     totalSKU = 0;
     arr.forEach(element => {
-        totalSKU += element.numeroTallas;
+        let { numeroTallas } = element;
+        totalSKU += numeroTallas;
     });
     return totalSKU;
 }
@@ -63,7 +66,40 @@ exports.averageSKUWeek = arr => {
 exports.copyArray = array => {
     let copy = [];
     for ( var i = 0; i < array.length; i++ ) {
-        if (array[i].estado !== "descontinuado") {
+        if (array[i].discontinued === true) {
+            copy.push(array[i]);
+        }
+     }
+
+     return copy;
+}
+
+exports.copyArraySKU = array => {
+    let copy = [];
+    for ( var i = 0; i < array.length; i++ ) {
+        if (array[i].discontinued === false) {
+            copy.push(array[i]);
+        }
+     }
+
+     return copy;
+}
+
+exports.copyArrayNew = array => {
+    let copy = [];
+    for ( var i = 0; i < array.length; i++ ) {
+        if (array[i].estado === "nuevo") {
+            copy.push(array[i]);
+        }
+     }
+
+     return copy;
+}
+
+exports.copyArrayPromocion = array => {
+    let copy = [];
+    for ( var i = 0; i < array.length; i++ ) {
+        if (array[i].estado === "promocion") {
             copy.push(array[ i ]);
         }
      }
