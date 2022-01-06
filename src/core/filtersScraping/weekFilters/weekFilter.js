@@ -40,9 +40,10 @@ exports.averageDiscountWeek = arr => {
 exports.averagePriceWeek = arr => {
     let priceTotal = 0;
     arr.forEach(element => {
-        if(element.descuento == null){
-            priceTotal += element.precio;   
-        } else if (element.descuento != null){
+        if(element.descuento === null && (element.origin === "Zara" || element.origin === "Mango")){
+            priceTotal += element.precio; 
+              
+        } else if (element.descuento !== null && (element.origin === "Zara" || element.origin === "Mango")){
             priceTotal += element.descuento;
         }
     });
@@ -66,7 +67,7 @@ exports.averageSKUWeek = arr => {
 exports.copyArray = array => {
     let copy = [];
     for ( var i = 0; i < array.length; i++ ) {
-        if (array[i].discontinued === true) {
+        if (array[i].discontinued === false && array[i].discontinued !== undefined) {
             copy.push(array[i]);
         }
      }
@@ -77,7 +78,7 @@ exports.copyArray = array => {
 exports.copyArraySKU = array => {
     let copy = [];
     for ( var i = 0; i < array.length; i++ ) {
-        if (array[i].discontinued === false) {
+        if (array[i].discontinued === false && (array[i].origin === "Zara" || array[i].origin === "Mango") ) {
             copy.push(array[i]);
         }
      }
@@ -108,9 +109,11 @@ exports.copyArrayPromocion = array => {
 }
 
 exports.copyArrayDiscontinued = array => {
-    let copy = [];
+    let copy = 0;
     for ( var i = 0; i < array.length; i++ ) {
-        copy[ i ] = array[ i ];
+        if (array[i].estado === "descontinuado" && array[i].discontinued !== undefined) {
+            copy++;
+        }
      }
 
      return copy;

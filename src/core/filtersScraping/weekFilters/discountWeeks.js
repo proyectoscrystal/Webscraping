@@ -231,7 +231,7 @@ exports.averageDiscountWeekGeneral = (arr) => {
         let lastYear = currentYear - 1;
         let fecha = (element.createdAt).getTime(); // funcion para obtener la fecha
   
-        if (year === currentYear && element.origin == 'Zara') {
+        if (year === currentYear && element.origin === 'Zara') {
           if (fecha >= new Date(currentYear,0,1).getTime() && fecha <= new Date(currentYear,0,7,23).getTime()  && element.descuento !== null) {
             let { precio, descuento} = element;
             let discount = 0;

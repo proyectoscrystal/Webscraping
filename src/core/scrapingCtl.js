@@ -117,10 +117,61 @@ let organizarQueryPrenda = (query) => {
     return obj;
 }
 
+let queryGroupBy = (query) => {
+    let obj = {};
+
+    if(query.origin !== undefined && Array.isArray(query.origin)) {
+        obj.origin = {$in: query.origin};
+    } else if(query.origin !== undefined) {
+        obj.origin = query.origin;
+    }
+    if(query.categoria !== undefined && Array.isArray(query.categoria)){
+        obj.categoria = {$in: query.categoria};
+    } else if(query.categoria !== undefined) {
+        obj.categoria = query.categoria;
+    }
+    if(query.subCategoria !== undefined && Array.isArray(query.subCategoria)){
+        obj.subCategoria = {$in: query.subCategoria};
+    } else if(query.subCategoria !== undefined) {
+        obj.subCategoria = query.subCategoria;
+    }
+    if(query.tipoPrenda !== undefined && Array.isArray(query.tipoPrenda)){
+        obj.tipoPrenda = {$in: query.tipoPrenda};
+    } else if(query.tipoPrenda !== undefined) {
+        obj.tipoPrenda = query.tipoPrenda;
+    }
+    if(query.color !== undefined && Array.isArray(query.color)){
+        obj.color = {$in: query.color};
+    } else if(query.color !== undefined) {
+        obj.color = query.color;
+    }
+
+    // if(query.fechaInicio !== "" && query.fechaFin === "") {
+    //     let inicio = query.fechaInicio + "T00:00:00.000Z";
+    //     let fin = query.fechaInicio + "T23:59:59.999Z";
+    //     obj.fecha_consulta = {$gte: inicio, $lte: fin}
+    // }else if(query.fechaInicio !== '' && query.fechaFin !== "") {
+    //     obj.fecha_consulta = {$gte: query.fechaInicio, $lte: query.fechaFin}
+    // }
+
+    if(query.composicion !== undefined && (typeof query.composicion === 'string')) {
+        obj.material1 = query.composicion;
+    } else if (query.composicion !== undefined && query.composicion.length > 1) {
+        obj.material1 = {$in: query.composicion};
+        
+    }
+
+
+    return obj;
+}
+
 // info cards response
 exports.cardsInfo = async (req, res) => {
     let filtro = req.query;
     filtro = organizarQueryTest(filtro);
+
+    
+
     
 
     //mes actual
@@ -146,6 +197,7 @@ exports.cardsInfo = async (req, res) => {
 
     let arr;
     let arr2;
+    let arr3;
     let obj;
     let values = [];
     let discounts = [];
@@ -168,9 +220,10 @@ exports.cardsInfo = async (req, res) => {
 
     try {
         arr = await Business.find(filtro,{"precio":1, "descuento": 1,  "origin":1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tag": 1, "discontinued":1}, { allowDiskUse: true});
+        // probando nuevo filtro
         // console.log("Total: ", arr.length);
     } catch (error) {
-        console.log("no se obtuvo respuesta");
+        console.log(error);
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
@@ -650,14 +703,64 @@ exports.tableCategoryInfo = async (req, res) => {
     res.status(200).json({obj});
 }
 
-// respuesta para la table 2 prendas
+// respuesta para la table precios promedio
 exports.tablePriceInfo = async (req, res) => {
+    let filtro4 = req.query;
+    let filtro2 = queryGroupBy(filtro4);
+
+    filtro2.discontinued = false;
+
+    let arr3 = [];
+    let obj;
+
+    try {
+
+        arr3 = await Business.aggregate([
+            {
+                '$match': 
+                    filtro2
+            }, {
+                '$group': {
+                    '_id': {'categoria':'$categoria','subCategoria':'$subCategoria', 'tipoPrenda':'$tipoPrenda'},
+                    'precioPromedio': {
+                    $avg: '$precio'
+                    }
+                }
+            }, {
+                $sort:{"precioPromedio":-1}
+            }
+            ]);
+    } catch (error) {
+        console.log(error);
+        return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
+    }
+
+    arr3 = arr3.map(element => {
+        if(element.precioPromedio !== null) element.precioPromedio = element.precioPromedio.toFixed();
+
+        return element;
+    });
+
+
+
+    // respuesta para el frontend
+    obj = { 
+        arr3
+    }
+
+
+    res.status(200).json({obj});
+}
+
+// respuesta para la table 2 prendas
+exports.tablePrendasInfo = async (req, res) => {
     let filtro = req.query;
     
     filtro = organizarQuery(filtro);
     filtro.discontinued = false;
 
     let arr;
+    let arr3 = [];
     let obj;
     let values = [];
     let origin = '';
@@ -679,8 +782,9 @@ exports.tablePriceInfo = async (req, res) => {
 
     try {
         arr = await Business.find(filtro,{"precio":1, "descuento": 1, "origin":1, "categoria":1, "subCategoria": 1,"estado":1, "createdAt":1, "tipoPrenda": 1, "base64": 1, "color":1, "talla":1, "tallasAgotadas":1});
+
     } catch (error) {
-        console.log("no se obtuvo respuesta table 2");
+        console.log(error);
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
@@ -737,7 +841,7 @@ exports.tablePriceInfo = async (req, res) => {
 
 
     // respuesta para el frontend
-    obj = { 
+    obj = {
         arr,
         precioPromedio,
         differences,

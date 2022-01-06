@@ -144,8 +144,6 @@ exports.cardsInfoWeek = async (req, res) => {
 
     arr = cardsInfo.copyArrayPromocion(array);
     arr2 = cardsInfo.copyArrayPromocion(array2);
-
-    // console.log(arr);
     
     discounts = cardsInfo.averageDiscountWeek(arr); // descuento semana actual y anterior
     discounts2 = cardsInfo.averageDiscountWeek(arr2); // descuento semana actual y anterior
@@ -163,7 +161,7 @@ exports.cardsInfoWeek = async (req, res) => {
     arrPrice = cardsInfo.copyArray(array);
     arrPrice2 = cardsInfo.copyArray(array2);
 
-    values = cardsInfo.averagePriceWeek(arrPrice); 
+    values = cardsInfo.averagePriceWeek(arrPrice);    
     values2 = cardsInfo.averagePriceWeek(arrPrice2);
 
     if(values === 0 || values2 === 0){
@@ -185,23 +183,15 @@ exports.cardsInfoWeek = async (req, res) => {
     differenceNew = percentageDifferencesnews(nzm[1], nzm[0]);
 
     // descontinuedos
+    
     let arrDiscontinued = cardsInfo.copyArrayDiscontinued(array);
-    let arrDiscontinued2 = cardsInfo.copyArrayDiscontinued(array2)
-    
-
-    // semana actual descontinuados
-    arrDiscontinued = arrDiscontinued.filter((element) => {
-        return element.estado === "descontinuado";
-    })
-    // semana anterior descontinuados
-    arrDiscontinued2 = arrDiscontinued2.filter((element) => {
-        return element.estado === "descontinuado";
-    })
+    let arrDiscontinued2 = cardsInfo.copyArrayDiscontinued(array2);
+    // console.log(arrDiscontinued2);
 
     
-    ddzm[0] = arrDiscontinued2.length;
-    ddzm[1] =  arrDiscontinued.length;
-    discontinueds = (arrDiscontinued.length + arrDiscontinued2.length);
+    ddzm[0] = arrDiscontinued2;
+    ddzm[1] =  arrDiscontinued;
+    discontinueds = (arrDiscontinued + arrDiscontinued2);
     differenceDiscontinued = percentageDifferencesDiscontinued(ddzm[1], ddzm[0]);
 
     // metodo para los sku por semana
@@ -258,7 +248,7 @@ exports.averagePriceWeek = async (req, res) => {
     let origin = '';
 
     try {
-        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
+        arr = await Business.find(filtro,{"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
@@ -314,7 +304,7 @@ exports.averageDiscountWeek = async (req, res) => {
     }
 
     if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
-        values = avgDiscountWeek.averageDiscountWeekGeneral(arr);        
+        values = avgDiscountWeek.averageDiscountWeekGeneral(arr);      
         origin = 'general';
         
     } else if(req.query.origin === 'Zara'){

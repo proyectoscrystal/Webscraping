@@ -49,7 +49,6 @@ exports.colorGeneralCategory = async (req, res) => {
 
     try {
         arr = await Business.find(filtro,{"descuento": 1, "origin":1, "color":1, "categoria":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
-        console.log(arr.length);
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
@@ -834,14 +833,6 @@ let topTenTipoPrenda = arr => {
 
 // metodos usados por el chart y info categoria
 let getDataTopTen = (arr) => {
-    // let arr = arrAux.filter((e,i) => {
-    //     if (e[i].categoria === 'Niño' || e[i].categoria === 'Niña') return e[i];
-    // });
-    // let arr = [];
-
-    // for (let i = 0; i < arrAux.length; i++) {
-    //     if (arrAux[i].categoria === 'Niño' || arrAux[i].categoria === 'Niña') return arr.push(arrAux[i]);        
-    // }
     
     // metodo para saber el color que mas se repite para subcategoria
     let arrayTipoPrendasData = []; // los tipo de prenda sin repetir
@@ -853,10 +844,11 @@ let getDataTopTen = (arr) => {
      // ser crea un arreglo con todos los tipos de prenda y se estrae el total sku
      let totalSKU = 0;
      for (let i = 0; i < arr.length; i++) {
-        totalSKU += arr[i].numeroTallas;
-        arrayTipoPrendasData.push(arr[i].tipoPrenda);
+        if(arr[i].numeroTallas !== undefined){
+            totalSKU += arr[i].numeroTallas;
+            arrayTipoPrendasData.push(arr[i].tipoPrenda);
+        }  
     }
-    console.log(totalSKU);
     // se eliminan los repetidos de tipo de prenda
     arrayTipoPrendasData = [...new Set(arrayTipoPrendasData)];
 
@@ -925,7 +917,6 @@ let getDataTopTen = (arr) => {
             let obj = {};
             obj.color = arrayColores[index];
             obj.cantidad = arrayColoresCount[index];
-            // console.log(`color ${arrayarrayTipoPrendasData[index]} - cantidad ${arrayCountsSKU[index]}`);
             return obj;
         });
 
@@ -937,7 +928,6 @@ let getDataTopTen = (arr) => {
     })
     // arreglo con los colores en letra
     arrayColoresData = arrayColoresData.map((element) => {
-        // console.log(element[0].color)
         return element.color;
     });
 
