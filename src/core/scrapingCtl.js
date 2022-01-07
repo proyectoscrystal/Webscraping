@@ -170,9 +170,6 @@ exports.cardsInfo = async (req, res) => {
     let filtro = req.query;
     filtro = organizarQueryTest(filtro);
 
-    
-
-    
 
     //mes actual
     let date = new Date();
@@ -284,7 +281,7 @@ exports.cardsInfo = async (req, res) => {
         ddzm[1] =  discontinuedCounts[month]; // valor actual de zara 
         ddzm[0] += discontinuedCounts[month + 23];
         ddzm[1] += discontinuedCounts[month + 24]; // valor actual de mango
-        discontinueds = (discontinuedCounts[month] + discontinuedCounts[month + 24]);
+        discontinueds = (ddzm[1] + ddzm[0]);
 
 
         skuCounts = avgSKU.averageSKUMonthGeneral(arr2); // calcula el precio promedio por mes dos marcas 2 años
@@ -657,7 +654,7 @@ exports.averageSKU = async (req, res) => {
 
 // fin charts
 
-// para las tablas de la vista categoria prenda
+// para las tablas de la vista productos prendas
 exports.tableCategoryInfo = async (req, res) => {
     let filtro = req.query;
     
@@ -752,7 +749,7 @@ exports.tablePriceInfo = async (req, res) => {
     res.status(200).json({obj});
 }
 
-// respuesta para la table 2 prendas
+// respuesta para la table 2 productos prendas
 exports.tablePrendasInfo = async (req, res) => {
     let filtro = req.query;
     
@@ -852,107 +849,128 @@ exports.tablePrendasInfo = async (req, res) => {
     res.status(200).json({obj});
 }
 
-// table info
+// table info descontinuados
 exports.tableDiscountinuedInfo = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQuery(filtro);
+    filtro = queryGroupBy(filtro);
     filtro.estado = {$eq: "descontinuado"};
 
-    let arr;
+    // let arr;
+    let arr2;
     let obj;
-    let values = [];
-    let origin = '';
-    let descontinuados = 0;
-    let descuentoPromedioAnterior = 0;
-    let differences = [];
-    let ddzm = []; 
+    // let values = [];
+    // let origin = '';
+    // let descontinuados = 0;
+    // let descuentoPromedioAnterior = 0;
+    // let differences = [];
+    // let ddzm = []; 
 
     //mes actual
-    let date = new Date();
-    let month = date.getMonth(); 
-    let lastMonth;
-    if(month === 0){
-        lastMonth = 11;
-    } else {
-        lastMonth = month - 1;
-    }
+    // let date = new Date();
+    // let month = date.getMonth(); 
+    // let lastMonth;
+    // if(month === 0){
+    //     lastMonth = 11;
+    // } else {
+    //     lastMonth = month - 1;
+    // }
 
     try {
-        arr = await Business.find(filtro,{"origin":1,"estado":1, "createdAt":1, "tipoPrenda": 1, "categoria":1, "subCategoria":1});
+        // arr = await Business.find(filtro,{"origin":1,"estado":1, "createdAt":1, "tipoPrenda": 1, "categoria":1, "subCategoria":1});
+
+        arr2 = await Business.aggregate([
+            {
+                '$match': 
+                    filtro
+            }, {
+                '$group': {
+                    '_id': {'categoria':'$categoria','subCategoria':'$subCategoria', 'tipoPrenda':'$tipoPrenda'},
+                    'descontinuados': {
+                    $sum: 1
+                    }
+                }
+            }, {
+                $sort:{"descontinuados":-1}
+            }
+            ]);
         // console.log(arr.length);
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
-    if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
-        discontinuedCounts = discontinued.averageDiscontinuedMonthGeneral(arr);
 
-        ddzm[0] = discontinuedCounts[lastMonth];
-        ddzm[1] =  discontinuedCounts[month]; // valor actual de zara 
-        ddzm[0] += discontinuedCounts[month + 23];
-        ddzm[1] += discontinuedCounts[month + 24]; // valor actual de mango
+    // if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
+    //     discontinuedCounts = discontinued.averageDiscontinuedMonthGeneral(arr);
 
-        descontinuados = discontinuedCounts[month] + discontinuedCounts[month + 24];        
-        origin = 'general';
+    //     ddzm[0] = discontinuedCounts[lastMonth];
+    //     ddzm[1] =  discontinuedCounts[month]; // valor actual de zara 
+    //     ddzm[0] += discontinuedCounts[month + 23];
+    //     ddzm[1] += discontinuedCounts[month + 24]; // valor actual de mango
+
+    //     descontinuados = discontinuedCounts[month] + discontinuedCounts[month + 24];        
+    //     origin = 'general';
         
-        // determinar la diferencia porcentual en los precios
-        differences = percentageDifferencesDiscount(ddzm[1], ddzm[0]);
+    //     // determinar la diferencia porcentual en los precios
+    //     differences = percentageDifferencesDiscount(ddzm[1], ddzm[0]);
 
 
         
-    } else if(req.query.origin === 'Zara'){
-        origin = 'Zara';
-        discontinuedCounts = discontinued.averageDiscontinuedMonthOrigin(arr);
-        descontinuados = discontinuedCounts[month];
+    // } else if(req.query.origin === 'Zara'){
+    //     origin = 'Zara';
+    //     discontinuedCounts = discontinued.averageDiscontinuedMonthOrigin(arr);
+    //     descontinuados = discontinuedCounts[month];
 
-        // valores de diferencia de descontinuados
-        ddzm[0] = discontinuedCounts[lastMonth];
-        ddzm[1] = discontinuedCounts[month];
+    //     // valores de diferencia de descontinuados
+    //     ddzm[0] = discontinuedCounts[lastMonth];
+    //     ddzm[1] = discontinuedCounts[month];
 
-        // determinar la diferencia porcentual en los descuentos
-        differences = percentageDifferencesDiscontinued(ddzm[1], ddzm[0]);
+    //     // determinar la diferencia porcentual en los descuentos
+    //     differences = percentageDifferencesDiscontinued(ddzm[1], ddzm[0]);
 
-    } else if(req.query.origin === 'Mango'){
-        discontinuedCounts = avgDiscount.averageDiscount(arr);
+    // } else if(req.query.origin === 'Mango'){
+    //     discontinuedCounts = avgDiscount.averageDiscount(arr);
         
-        descontinuados = discontinuedCounts[month];
-        // obtener descuentos promedio mes actual y anterior 
-        ddzm[0] = discontinuedCounts[lastMonth];
-        ddzm[1] = discontinuedCounts[month];;
-        // determinar la diferencia porcentual en los descuentos
-        differences = percentageDifferencesDiscontinued(ddzm[1], ddzm[0]);
-    }
+    //     descontinuados = discontinuedCounts[month];
+    //     // obtener descuentos promedio mes actual y anterior 
+    //     ddzm[0] = discontinuedCounts[lastMonth];
+    //     ddzm[1] = discontinuedCounts[month];;
+    //     // determinar la diferencia porcentual en los descuentos
+    //     differences = percentageDifferencesDiscontinued(ddzm[1], ddzm[0]);
+    // }
 
     // respuesta para el frontend
     obj = { 
-        arr,
-        descontinuados,
-        differences
+        arr2
+        // arr,
+        // descontinuados,
+        // differences
     }
 
 
     res.status(200).json({obj});
 }
 
-// table info
+// table info descuentos
 exports.tableDiscountInfo = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQuery(filtro);
-    filtro.descuento = {$ne: null};
+    filtro = queryGroupBy(filtro);
+    filtro.estado = "promocion";
     filtro.discontinued = false;
+    filtro.porcentajeDescuento = {$ne: undefined};
     
 
-    let arr;
+    // let arr;
+    let arr2;
     let obj;
-    let values = [];
-    let origin = '';
-    let descuentoPromedio = 0;
-    let descuentoPromedioAnterior = 0;
-    let differences = [];
-    let flag = false;
+    // let values = [];
+    // let origin = '';
+    // let descuentoPromedio = 0;
+    // let descuentoPromedioAnterior = 0;
+    // let differences = [];
+    // let flag = false;
 
     //mes actual
     let date = new Date();
@@ -965,57 +983,81 @@ exports.tableDiscountInfo = async (req, res) => {
     }
 
     try {
-        arr = await Business.find(filtro,{"precio":1, "descuento": 1, "origin":1,  "categoria":1, "subCategoria": 1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1, "discontinued":1});
-        // console.log(arr.length);
+        // arr = await Business.find(filtro,{"precio":1, "descuento": 1, "origin":1,  "categoria":1, "subCategoria": 1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1, "discontinued":1});
+
+        arr2 = await Business.aggregate([
+            {
+                '$match': 
+                    filtro
+            }, {
+                '$group': {
+                    '_id': {'categoria':'$categoria','subCategoria':'$subCategoria', 'tipoPrenda':'$tipoPrenda'},
+                    'porcentajeDescuento': {
+                    $avg: '$porcentajeDescuento'
+                    }
+                }
+            }, {
+                $sort:{"porcentajeDescuento":-1}
+            }
+            ]);
+
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
-    if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
-        values = avgDiscount.averageDiscountMonthGeneral(arr);
-        // console.log(values);
+    arr2 = arr2.map(element => {
+        if(element.porcentajeDescuento !== null) element.porcentajeDescuento = element.porcentajeDescuento.toFixed(2);
+
+
+        return element;
+    });
+
+    // if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
+    //     values = avgDiscount.averageDiscountMonthGeneral(arr);
+    //     // console.log(values);
         
-        // obtener precios promedio mes actual y anterior 
+    //     // obtener precios promedio mes actual y anterior 
 
 
-        if(values[month] === 0 || values[month + 24] === 0){
-            descuentoPromedio = ((values[month] + values[month + 24])).toFixed(2);
-            descuentoPromedioAnterior = ((values[lastMonth] + values[month + 23])).toFixed(2);
-        } else {
-            descuentoPromedio = ((values[month] + values[month + 24])/2).toFixed(2);
-            descuentoPromedioAnterior = ((values[lastMonth] + values[month + 23])).toFixed(2);
-        }
+    //     if(values[month] === 0 || values[month + 24] === 0){
+    //         descuentoPromedio = ((values[month] + values[month + 24])).toFixed(2);
+    //         descuentoPromedioAnterior = ((values[lastMonth] + values[month + 23])).toFixed(2);
+    //     } else {
+    //         descuentoPromedio = ((values[month] + values[month + 24])/2).toFixed(2);
+    //         descuentoPromedioAnterior = ((values[lastMonth] + values[month + 23])).toFixed(2);
+    //     }
         
-        // determinar la diferencia porcentual en los descuentos
-        differences = percentageDifferencesDiscount(descuentoPromedio, descuentoPromedioAnterior);
+    //     // determinar la diferencia porcentual en los descuentos
+    //     differences = percentageDifferencesDiscount(descuentoPromedio, descuentoPromedioAnterior);
 
 
         
-    } else if(req.query.origin === 'Zara'){
-        values = avgDiscount.averageDiscount(arr);
-        // obtener precios promedio mes actual y anterior 
-        descuentoPromedio = values[month];
-        descuentoPromedioAnterior = values[lastMonth];
-        // determinar la diferencia porcentual en los descuentos
-        differences = percentageDifferencesDiscount(descuentoPromedio, descuentoPromedioAnterior);
+    // } else if(req.query.origin === 'Zara'){
+    //     values = avgDiscount.averageDiscount(arr);
+    //     // obtener precios promedio mes actual y anterior 
+    //     descuentoPromedio = values[month];
+    //     descuentoPromedioAnterior = values[lastMonth];
+    //     // determinar la diferencia porcentual en los descuentos
+    //     differences = percentageDifferencesDiscount(descuentoPromedio, descuentoPromedioAnterior);
 
-    } else if(req.query.origin === 'Mango'){
-        values = avgDiscount.averageDiscount(arr);
-        // console.log(values);
-        // obtener descuentos promedio mes actual y anterior 
-        descuentoPromedio = values[month];
-        descuentoPromedioAnterior = values[lastMonth];
-        // determinar la diferencia porcentual en los descuentos
-        differences = percentageDifferencesDiscount(descuentoPromedio, descuentoPromedioAnterior);
-    }
+    // } else if(req.query.origin === 'Mango'){
+    //     values = avgDiscount.averageDiscount(arr);
+    //     // console.log(values);
+    //     // obtener descuentos promedio mes actual y anterior 
+    //     descuentoPromedio = values[month];
+    //     descuentoPromedioAnterior = values[lastMonth];
+    //     // determinar la diferencia porcentual en los descuentos
+    //     differences = percentageDifferencesDiscount(descuentoPromedio, descuentoPromedioAnterior);
+    // }
 
 
     // respuesta para el frontend
     obj = { 
-        arr,
-        descuentoPromedio,
-        differences
+        arr2
+        // arr,
+        // descuentoPromedio,
+        // differences
     }
 
 
@@ -1025,68 +1067,85 @@ exports.tableDiscountInfo = async (req, res) => {
 exports.tableNewsInfo = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQuery(filtro);
-    filtro.estado = {$eq: "nuevo"};
+    // filtro = organizarQuery(filtro);
+    filtro = queryGroupBy(filtro);
+    filtro.estado = "nuevo";
     filtro.discontinued = false;
     
     let arr;
+    let arr2;
     let obj;
-    let values = [];
-    let origin = '';
-    let nuevosPromedio = 0;
-    let nuevosPromedioAnterior = 0;
-    let differences = [];
+    // let values = [];
+    // let origin = '';
+    // let nuevosPromedio = 0;
+    // let nuevosPromedioAnterior = 0;
+    // let differences = [];
 
     //mes actual
-    let date = new Date();
-    let month = date.getMonth(); 
-    let lastMonth;
-    if(month === 0){
-        lastMonth = 11;
-    } else {
-        lastMonth = month - 1;
-    }
+    // let date = new Date();
+    // let month = date.getMonth(); 
+    // let lastMonth;
+    // if(month === 0){
+    //     lastMonth = 11;
+    // } else {
+    //     lastMonth = month - 1;
+    // }
 
     try {
-        arr = await Business.find(filtro,{"precio":1,"origin":1, "descuento": 1,"categoria":1,"subCategoria": 1,"createdAt":1, "tipoPrenda": 1, "tag": 1, "discontinued":1});
+        arr2 = await Business.aggregate([
+            {
+                '$match': 
+                    filtro
+            }, {
+                '$group': {
+                    '_id': {'categoria':'$categoria','subCategoria':'$subCategoria', 'tipoPrenda':'$tipoPrenda'},
+                    'nuevos': {
+                    $sum: 1
+                    }
+                }
+            }, {
+                $sort:{"nuevos":-1}
+            }
+            ]);
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
-    if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
-        values = avgNews.averageNewsMonthGeneral(arr);
-        // obtener precios promedio mes actual y anterior 
-        nuevosPromedio = (values[month] + values[month + 24]);
-        nuevosPromedioAnterior = (values[lastMonth] + values[month + 23]);
-        // determinar la diferencia porcentual en los precios
-        differences = percentageDifferencesnews(nuevosPromedio, nuevosPromedioAnterior);
+    // if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
+    //     values = avgNews.averageNewsMonthGeneral(arr);
+    //     // obtener precios promedio mes actual y anterior 
+    //     nuevosPromedio = (values[month] + values[month + 24]);
+    //     nuevosPromedioAnterior = (values[lastMonth] + values[month + 23]);
+    //     // determinar la diferencia porcentual en los precios
+    //     differences = percentageDifferencesnews(nuevosPromedio, nuevosPromedioAnterior);
 
 
         
-    } else if(req.query.origin === 'Zara'){
-        values = avgNews.averageNewsMonthOrigin(arr);
-        // obtener precios promedio mes actual y anterior 
-        nuevosPromedio = values[month];
-        nuevosPromedioAnterior = values[lastMonth];
-        // determinar la diferencia porcentual en los nuevoss
-        differences = percentageDifferencesnews(nuevosPromedio, nuevosPromedioAnterior);
+    // } else if(req.query.origin === 'Zara'){
+    //     values = avgNews.averageNewsMonthOrigin(arr);
+    //     // obtener precios promedio mes actual y anterior 
+    //     nuevosPromedio = values[month];
+    //     nuevosPromedioAnterior = values[lastMonth];
+    //     // determinar la diferencia porcentual en los nuevoss
+    //     differences = percentageDifferencesnews(nuevosPromedio, nuevosPromedioAnterior);
 
-    } else if(req.query.origin === 'Mango'){
-        values = avgNews.averageNewsMonthOrigin(arr);
-        // obtener descuentos promedio mes actual y anterior 
-        nuevosPromedio = values[month];
-        nuevosPromedioAnterior = values[lastMonth];
-        // determinar la diferencia porcentual en los nuevoss
-        differences = percentageDifferencesnews(nuevosPromedio, nuevosPromedioAnterior);
-    }
+    // } else if(req.query.origin === 'Mango'){
+    //     values = avgNews.averageNewsMonthOrigin(arr);
+    //     // obtener descuentos promedio mes actual y anterior 
+    //     nuevosPromedio = values[month];
+    //     nuevosPromedioAnterior = values[lastMonth];
+    //     // determinar la diferencia porcentual en los nuevoss
+    //     differences = percentageDifferencesnews(nuevosPromedio, nuevosPromedioAnterior);
+    // }
 
 
     // respuesta para el frontend
     obj = { 
-        arr,
-        nuevosPromedio,
-        differences
+        arr2
+        // arr,
+        // nuevosPromedio,
+        // differences
     }
 
 
