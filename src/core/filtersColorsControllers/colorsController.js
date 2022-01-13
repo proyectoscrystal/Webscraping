@@ -433,7 +433,7 @@ let SKUMujerCategory = (arr) => {
 exports.colorHombreCategory = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQueryfilter2(filtro);
+    filtro = organizarQueryfilter1(filtro);
     filtro.discontinued = false;
     filtro.categoria = "Hombre";
 
@@ -616,7 +616,7 @@ let SKUHombreCategory = (arr) => {
 exports.colorKidsCategory = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQueryfilter2(filtro);
+    filtro = organizarQueryfilter1(filtro);
     filtro.discontinued = false;
     filtro.categoria = {$in: ['Niño','Niña']}
 
