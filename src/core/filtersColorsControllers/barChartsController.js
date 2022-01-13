@@ -2,7 +2,7 @@ const Business = require("../../domain/model/businessDao");
 
 const coloresRGB = require("./../../utils/index");
 
-organizarQueryfilter1 = (query) => {
+let organizarQueryfilter1 = (query) => {
     let obj = {};
     let inn = [];
 
@@ -30,12 +30,55 @@ organizarQueryfilter1 = (query) => {
     return obj;
 }
 
+let organizarQueryfilter2 = (query) => {
+    let obj = {};
+    let inn = [];
+
+
+    if(query.origin !== undefined) {
+        obj.origin = {$in: query.origin};
+    }
+    if(query.sku !== ''){
+        obj.estado = {$ne: "descontinuados"};
+    }
+    if(query.discount !== ''){
+        obj.descuento = {$ne: null};
+    }
+    if(query.new !== ''){
+        obj.estado = {$eq: "nuevo"};
+    }  
+
+    if(query.categoria !== undefined) {
+        obj.categoria = {$in: query.categoria};
+    }
+    if(query.subCategoria !== undefined){
+        obj.subCategoria = {$in: query.subCategoria};
+    }
+    if(query.tipoPrenda !== undefined){
+        obj.tipoPrenda = {$in: query.tipoPrenda};
+    }  
+    if(query.fechaInicio !== '' && query.fechaFin === '') {
+        let inicio = query.fechaInicio + "T00:00:00.000Z";
+        let fin = query.fechaInicio + "T23:59:59.999Z";
+        console.log(query.fechaInicio);
+        obj.fecha_consulta = {$gte: inicio, $lte: fin}
+    }
+    if(query.fechaInicio !== '' && query.fechaFin !== '') {
+        obj.fecha_consulta = {$gte: query.fechaInicio, $lte: query.fechaFin}
+    }
+
+
+    return obj;
+}
+
+
+
 
 // metodo para calcular la frecuencia y colores de sku vista general colores pie chart
 exports.colorGeneralChart = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQueryfilter1(filtro);
+    filtro = organizarQueryfilter2(filtro);
     filtro.discontinued = false;
 
     //mes actual
@@ -104,7 +147,7 @@ let GeneralColorChart = (arr) => {
 exports.colorGeneralChartMateriales = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQueryfilter1(filtro);
+    filtro = organizarQueryfilter2(filtro);
     filtro.discontinued = false;
 
     //mes actual

@@ -825,7 +825,7 @@ exports.tablePrendasInfo = async (req, res) => {
     }
 
     try {
-        arr = await Business.find(filtro,{"precio":1, "descuento": 1, "origin":1, "categoria":1, "subCategoria": 1,"estado":1, "createdAt":1, "tipoPrenda": 1, "base64": 1, "color":1, "talla":1, "tallasAgotadas":1});
+        arr = await Business.find(filtro,{"precio":1, "descuento": 1, "origin":1, "categoria":1, "subCategoria": 1,"estado":1, "createdAt":1, "tipoPrenda": 1, "base64": 1, "color":1, "talla":1, "tallasAgotadas":1, "porcentajeDescuento": 1});
 
     } catch (error) {
         console.log(error);
@@ -847,13 +847,6 @@ exports.tablePrendasInfo = async (req, res) => {
         // determinar la diferencia porcentual en los precios
         differences = percentageDifferencePrice(precioPromedio, precioPromedioAnterior);
 
-        valuesDiscount = avgDiscount.averageDiscountMonthGeneral(arr);
-
-        if(valuesDiscount[month] === 0 || valuesDiscount[month + 24] === 0){
-            descuentoPromedio = ((valuesDiscount[month] + valuesDiscount[month + 24])).toFixed(2);
-        } else {
-            descuentoPromedio = ((valuesDiscount[month] + valuesDiscount[month + 24])/2).toFixed(2);
-        }
 
         
     } else if(req.query.origin === 'Zara'){
@@ -862,23 +855,11 @@ exports.tablePrendasInfo = async (req, res) => {
         precioPromedio = values[month];
         precioPromedioAnterior = values[lastMonth];
 
-        valuesDiscount = avgDiscount.averageDiscount(arr);
-        // obtener precios promedio mes actual y anterior 
-        descuentoPromedio = valuesDiscount[month].toFixed(2);
-        // determinar la diferencia porcentual en los precios
-        differences = percentageDifferencePrice(precioPromedio, precioPromedioAnterior);
-
     } else if(req.query.origin === 'Mango'){
         values = avgPrice.averagePriceMonthOrigin(arr);
         // obtener precios promedio mes actual y anterior 
         precioPromedio = values[month];
         precioPromedioAnterior = values[lastMonth];
-
-        valuesDiscount = avgDiscount.averageDiscount(arr);
-        // obtener precios promedio mes actual y anterior 
-        descuentoPromedio = valuesDiscount[month].toFixed(2);
-        // determinar la diferencia porcentual en los precios
-        differences = percentageDifferencePrice(precioPromedio, precioPromedioAnterior);
     }
 
     precioPromedio = precioPromedio.toFixed();
@@ -887,9 +868,6 @@ exports.tablePrendasInfo = async (req, res) => {
     // respuesta para el frontend
     obj = {
         arr,
-        precioPromedio,
-        differences,
-        descuentoPromedio
     }
 
 
@@ -1216,15 +1194,6 @@ exports.tableSKUInfo = async (req, res) => {
     let arr;
     let arr2;
     let obj;
-    let SKU = 0;
-    let SKUAnterior = 0;
-    let differences = [];
-    let precioPromedio = 0;
-    let valuesNuevos = 0;
-    let nuevosPromedio = 0;
-    let descuentoPromedio = 0;
-    let valuesDiscount = 0;
-    let tasaFrescura = 0;
 
     //mes actual
     let date = new Date();
@@ -1326,7 +1295,7 @@ exports.prendasInfo = async (req, res) => {
     
     // TODO: organizar desde el .ts para enviar fecha y cambiar a organizarQueryTest
     filtro = organizarQueryPrenda(filtro);
-    console.log(filtro);
+    // console.log(filtro);
 
     //mes actual
     let date = new Date();
