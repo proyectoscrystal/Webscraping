@@ -269,19 +269,19 @@ exports.cardsInfo = async (req, res) => {
         }
 
 
-        newsCounts = avgNews.averageNewsMonthGeneral(arr2); // calcula el precio promedio por mes dos marcas 2 años
+        newsCounts = avgNews.averageNewsMonthGeneral(arr2); // calcula productos nuevos promedio por mes dos marcas 2 años
         nzm[0] = newsCounts[lastMonth];
         nzm[1] =  newsCounts[month]; // valor actual de zara 
         nzm[0] += newsCounts[month + 23];
         nzm[1] += newsCounts[month + 24]; // valor actual de mango
         nuevos = ((newsCounts[month] + newsCounts[month + 24]));
 
-        discontinuedCounts = discontinued.averageDiscontinuedMonthGeneral(arr); // calcula el precio promedio por mes dos marcas 2 años
+        discontinuedCounts = discontinued.averageDiscontinuedMonthGeneral(arr); // calcula los descontinuados promedio por mes dos marcas 2 años
         ddzm[0] = discontinuedCounts[lastMonth];
         ddzm[1] =  discontinuedCounts[month]; // valor actual de zara 
         ddzm[0] += discontinuedCounts[month + 23];
         ddzm[1] += discontinuedCounts[month + 24]; // valor actual de mango
-        discontinueds = (ddzm[1] + ddzm[0]);
+        discontinueds = (ddzm[1]);
 
 
         skuCounts = avgSKU.averageSKUMonthGeneral(arr2); // calcula el precio promedio por mes dos marcas 2 años
@@ -1154,14 +1154,16 @@ exports.tableNewsInfo = async (req, res) => {
 
 exports.tableSKUInfo = async (req, res) => {
     let filtro = req.query;
+    let filtro2 = req.query;
     
     filtro = organizarQuery(filtro);
+    filtro2 = queryGroupBy(filtro2);
     filtro.discontinued = false;
+    filtro2.discontinued = false;
+
     let arr;
+    let arr2;
     let obj;
-    let values = [];
-    let valuesPrice = [];
-    let origin = '';
     let SKU = 0;
     let SKUAnterior = 0;
     let differences = [];
@@ -1183,106 +1185,83 @@ exports.tableSKUInfo = async (req, res) => {
     }
 
     try {
-        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1, "discontinued": 1});
+        arr = await Business.find(filtro,{"precio":1});
+
+        arr2 = await Business.aggregate([
+            {
+              '$match': 
+                filtro2
+              
+            }, {
+              '$project': {
+                'porcentajeDescuento': '$porcentajeDescuento', 
+                'numeroTallas': '$numeroTallas', 
+                'precio': '$precio', 
+                'categoria': '$categoria', 
+                'subCategoria': '$subCategoria', 
+                'tipoPrenda': '$tipoPrenda', 
+                'nuevos': {
+                  '$cond': {
+                    'if': {
+                      '$eq': [
+                        '$estado', 'nuevo'
+                      ]
+                    }, 
+                    'then': {
+                      '$sum': 1
+                    }, 
+                    'else': {
+                      '$sum': 0
+                    }
+                  }
+                }
+              }
+            }, {
+              '$group': {
+                '_id': {
+                  'tipoPrenda': '$tipoPrenda', 
+                  'categoria': '$categoria', 
+                  'subCategoria': '$subCategoria'
+                }, 
+                'nuevos': {
+                  '$sum': 1
+                }, 
+                'SKU': {
+                  '$sum': '$numeroTallas'
+                }, 
+                'precioPromedio': {
+                  '$avg': '$precio'
+                }, 
+                'porcentajeDescuento': {
+                  '$avg': '$porcentajeDescuento'
+                }
+              }
+            }, {
+              '$sort': {
+                'SKU': -1
+              }
+            }
+          ]);
+
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
-    if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
-        values = avgSKU.averageSKUMonthGeneral(arr);
-        // obtener precios promedio mes actual y anterior 
-        SKU = (values[month] + values[month + 24]);
-        SKUAnterior = (values[lastMonth] + values[month + 23]);
+    
+    let totalElements = arr.length;
+    arr2 = arr2.map(element => {
+        if(element.precioPromedio !== null) element.precioPromedio = (element.precioPromedio).toFixed();
 
-        valuesPrice = avgPrice.averagePriceMonthGeneral(arr);
-        // obtener precios promedio mes actual y anterior 
-        if(valuesPrice[month] === 0 || valuesPrice[month + 24] === 0){
-            precioPromedio = ((valuesPrice[month] + valuesPrice[month + 24])).toFixed();
-        } else {
-            precioPromedio = ((valuesPrice[month] + valuesPrice[month + 24])/2).toFixed();
-        }
+        element.tasaFrescura = (element.nuevos/totalElements).toFixed(3); 
 
-        valuesNuevos = avgNews.averageNewsMonthGeneral(arr);
-        // obtener precios promedio mes actual y anterior 
-        nuevosPromedio = (valuesNuevos[month] + valuesNuevos[month + 24]);
-
-        valuesDiscount = avgDiscount.averageDiscountMonthGeneral(arr);
-        // console.log(values);
-        // obtener precios promedio mes actual y anterior 
-        if(valuesDiscount[month] === 0 || valuesDiscount[month + 24] === 0){
-            descuentoPromedio = ((valuesDiscount[month] + valuesDiscount[month + 24])).toFixed(2);
-        } else {
-            descuentoPromedio = ((valuesDiscount[month] + valuesDiscount[month + 24])/2).toFixed(2);
-        }
-
-        // obtener tasa de tasaFrescura
-        tasaFrescura = (nuevosPromedio/arr.length).toFixed(2);
-
-
-        // determinar la diferencia porcentual en los precios
-        differences = percentageDifferencesSku(SKU, SKUAnterior);
-
-        
-    } else if(req.query.origin === 'Zara'){
-        values = avgSKU.averageSKUMonthOrigin(arr);
-        // obtener precios promedio mes actual y anterior 
-        SKU = values[month];
-        SKUAnterior = values[lastMonth];
-
-        valuesPrice = avgPrice.averagePriceMonthOrigin(arr);
-        // obtener precios promedio mes actual y anterior 
-        precioPromedio = valuesPrice[month].toFixed();
-
-        valuesNuevos = avgNews.averageNewsMonthOrigin(arr);
-        // obtener descuentos promedio mes actual y anterior 
-        nuevosPromedio = valuesNuevos[month];
-
-        valuesDiscount = avgDiscount.averageDiscount(arr);
-        // obtener precios promedio mes actual y anterior 
-        descuentoPromedio = valuesDiscount[month].toFixed(2);
-
-        // obtener tasa de tasaFrescura
-        tasaFrescura = (nuevosPromedio/arr.length).toFixed(2);
-
-        // determinar la diferencia porcentual en los precios
-        differences = percentageDifferencesSku(SKU, SKUAnterior);
-
-    } else if(req.query.origin === 'Mango'){
-        values = avgSKU.averageSKUMonthOrigin(arr);
-        // obtener precios promedio mes actual y anterior 
-        SKU = values[month];
-        SKUAnterior = values[lastMonth];
-
-        valuesPrice = avgPrice.averagePriceMonthOrigin(arr);
-        // obtener precios promedio mes actual y anterior 
-        precioPromedio = valuesPrice[month].toFixed();
-
-        valuesNuevos = avgNews.averageNewsMonthOrigin(arr);
-        // obtener descuentos promedio mes actual y anterior 
-        nuevosPromedio = valuesNuevos[month];
-
-        valuesDiscount = avgDiscount.averageDiscount(arr);
-        // obtener precios promedio mes actual y anterior 
-        descuentoPromedio = valuesDiscount[month].toFixed(2);
-
-        // obtener tasa de tasaFrescura
-        tasaFrescura = (nuevosPromedio/arr.length).toFixed(2);
-
-        // determinar la diferencia porcentual en los precios
-        differences = percentageDifferencesSku(SKU, SKUAnterior);
-    }
+        return element;
+    });
 
 
     // respuesta para el frontend
     obj = { 
-        arr,
-        SKU,
-        differences,
-        precioPromedio,
-        nuevosPromedio,
-        descuentoPromedio,
-        tasaFrescura
+        arr2
     }
 
 
