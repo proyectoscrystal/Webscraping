@@ -17,6 +17,7 @@ module.exports = (router) => {
 
     // rutas para las tablas
     router.get('/m_tablePriceInfo',scrapingCtl.tablePriceInfo);
+    router.get('/m_tablePrendasInfo',scrapingCtl.tablePrendasInfo);
     router.get('/m_tableDiscountInfo',scrapingCtl.tableDiscountInfo);
     router.get('/m_tableDiscountinuedInfo',scrapingCtl.tableDiscountinuedInfo);
     router.get('/m_tableNewsInfo',scrapingCtl.tableNewsInfo);
