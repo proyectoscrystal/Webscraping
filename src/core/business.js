@@ -176,12 +176,11 @@ exports.getImages = async (request, res) => {
   request.user_id = request.user_id.trim();
 
   const consulta = await Business.aggregate([
-    // {
-    //   $match: {
-    //     discontinued: false,
-    //     origin: {'$neq': ['$origin',null]}
-    //   },
-    // },
+    {
+      $match: {
+        $or:[{discontinued:false},{discontinued:undefined} ]
+      },
+    },
     {
       $lookup: {
         from: "users",
