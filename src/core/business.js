@@ -507,8 +507,7 @@ exports.updateInfo = async (req, res) => {
  */
 exports.getImagesFilter = async (request, response) => {
   const { query } = request;
-
-  console.log("Sidebar: ", query);
+  console.log(query);
 
   const q = {};
   const queryArray = [];
@@ -561,6 +560,12 @@ exports.getImagesFilter = async (request, response) => {
         },
       };
       queryArray.push(queryDB);
+      const queryDB2 = {
+        categoria: {
+          $in: [query.categoria],
+        },
+      };
+      queryArray.push(queryDB2);
     } else {
       const queryDB = {
         gender: {
@@ -568,6 +573,12 @@ exports.getImagesFilter = async (request, response) => {
         },
       };
       queryArray.push(queryDB);
+      const queryDB2 = {
+        categoria: {
+          $in: query.categoria,
+        },
+      };
+      queryArray.push(queryDB2);
     }
   }
 
@@ -579,6 +590,12 @@ exports.getImagesFilter = async (request, response) => {
         },
       };
       queryArray.push(queryDB);
+      const queryDB2 = {
+        subCategoria: {
+          $in: [query.subCategoria],
+        },
+      };
+      queryArray.push(queryDB2);
     } else {
       const queryDB = {
         use: {
@@ -586,6 +603,12 @@ exports.getImagesFilter = async (request, response) => {
         },
       };
       queryArray.push(queryDB);
+      const queryDB2 = {
+        subCategoria: {
+          $in: query.subCategoria,
+        },
+      };
+      queryArray.push(queryDB2);
     }
   }
 
@@ -608,21 +631,35 @@ exports.getImagesFilter = async (request, response) => {
   }
 
   if (query.feature !== undefined) {
+    
     if (typeof query.feature !== "object") {
       const queryDB = {
         prendasGenerales: {
           $in: [query.feature],
-        },
+        }
       };
       queryArray.push(queryDB);
+      const queryDB2 = {
+        tipoPrenda: {
+          $in: [query.tipoPrenda],
+        }
+      };
+      queryArray.push(queryDB2);
+
     } else {
       const queryDB = {
         prendasGenerales: {
           $in: query.feature,
-        },
+        }
       };
-
       queryArray.push(queryDB);
+      const queryDB2 = {
+        tipoPrenda: {
+          $in: query.tipoPrenda,
+        }
+      };
+      queryArray.push(queryDB2);
+
     }
   } 
 
@@ -635,6 +672,12 @@ exports.getImagesFilter = async (request, response) => {
           },
         };
         queryArray.push(queryDB);
+        const queryDB2 = {
+          color: {
+            $in: [query.color2],
+          },
+        };
+        queryArray.push(queryDB2);
       } else {
         const queryDB = {
           principalColors: {
@@ -642,6 +685,12 @@ exports.getImagesFilter = async (request, response) => {
           },
         };
         queryArray.push(queryDB);
+        const queryDB2 = {
+          color: {
+            $in: [query.color2],
+          },
+        };
+        queryArray.push(queryDB2);
       }
     } else {
       const queryDB = {
@@ -650,6 +699,12 @@ exports.getImagesFilter = async (request, response) => {
         },
       };
       queryArray.push(queryDB);
+      const queryDB2 = {
+        color: {
+          $in: query.color2,
+        },
+      };
+      queryArray.push(queryDB2);
     }
   }
 
@@ -684,7 +739,7 @@ exports.getImagesFilter = async (request, response) => {
   }
 
   if (queryArray.length > 0) {
-    const consulta = await Business.aggregate([
+    let consulta = await Business.aggregate([
       {
         $lookup: {
           from: "users",
@@ -695,10 +750,16 @@ exports.getImagesFilter = async (request, response) => {
       },
       {
         $match: {
-          $and: queryArray,
+          $or: queryArray,
         },
       },
     ]);
+
+    consulta = consulta.filter((element) => {
+      if (element.discontinued === false || element.discontinued === undefined)
+        return element;
+    })
+
     response.send(consulta);
   } else {
     /**
@@ -712,6 +773,11 @@ exports.getImagesFilter = async (request, response) => {
           localField: "user",
           foreignField: "_id",
           as: "usuario",
+        },
+      },
+      {
+        $match: {
+          $or:[{discontinued:false},{discontinued:undefined} ]
         },
       },
     ]).sort({

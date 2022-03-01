@@ -165,6 +165,19 @@ let queryGroupBy = (query) => {
     return obj;
 }
 
+let generateGroup = (query) => {
+    let group = {}
+
+    group = {
+        '_id': {'categoria':'$categoria','subCategoria':'$subCategoria', 'tipoPrenda':'$tipoPrenda'},
+        'precioPromedio': {
+        $avg: '$precio'
+        }
+    }
+
+    return group
+}
+
 // info cards response
 exports.cardsInfo = async (req, res) => {
     let filtro = req.query;
@@ -704,6 +717,7 @@ exports.tableCategoryInfo = async (req, res) => {
 exports.tablePriceInfo = async (req, res) => {
     let filtro4 = req.query;
     let filtro2 = queryGroupBy(filtro4);
+    let group = generateGroup(filtro4);
 
     filtro2.discontinued = false;
 
@@ -730,12 +744,8 @@ exports.tablePriceInfo = async (req, res) => {
                 '$match': 
                     filtro2
             }, {
-                '$group': {
-                    '_id': {'categoria':'$categoria','subCategoria':'$subCategoria', 'tipoPrenda':'$tipoPrenda'},
-                    'precioPromedio': {
-                    $avg: '$precio'
-                    }
-                }
+                '$group': 
+                    group
             }, {
                 $sort:{"precioPromedio":-1}
             }
