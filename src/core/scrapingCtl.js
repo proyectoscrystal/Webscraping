@@ -167,13 +167,26 @@ let queryGroupBy = (query) => {
 
 let generateGroup = (query) => {
     let group = {}
+    // || query.allSubCategory === 'false' || query.allTipoPrenda === 'false'
+    // 'categoria':'$categoria','subCategoria':'$subCategoria',
 
-    group = {
-        '_id': {'categoria':'$categoria','subCategoria':'$subCategoria', 'tipoPrenda':'$tipoPrenda'},
-        'precioPromedio': {
-        $avg: '$precio'
+    if (query.allCategory === 'true') {
+        group = {
+            '_id': { 'tipoPrenda':'$tipoPrenda'},
+            'precioPromedio': {
+            $avg: '$precio'
+            }
+        }
+    } else {
+        group = {
+            '_id': {'categoria':'$categoria','subCategoria':'$subCategoria', 'tipoPrenda':'$tipoPrenda'},
+            'precioPromedio': {
+            $avg: '$precio'
+            }
         }
     }
+
+    // console.log(group)
 
     return group
 }
@@ -718,10 +731,13 @@ exports.tablePriceInfo = async (req, res) => {
     let filtro4 = req.query;
     let filtro2 = queryGroupBy(filtro4);
     let group = generateGroup(filtro4);
-
+    
     filtro2.discontinued = false;
-
+    
+    console.log(filtro2)
+    console.log(group)
     let arr3 = [];
+    let arr2 = [];
     let arr = [];
     let obj;
     let differences;
@@ -737,9 +753,9 @@ exports.tablePriceInfo = async (req, res) => {
     }
 
     try {
-        arr = await Business.find(filtro2,{"precio":1, "descuento": 1, "origin":1,  "categoria":1, "subCategoria": 1, "createdAt":1, "discontinued":1});
+        arr = await Business.find(filtro2,{"precio":1, "descuento": 1, "origin":1,"createdAt":1, "discontinued":1});
 
-        arr3 = await Business.aggregate([
+        arr2 = await Business.aggregate([
             {
                 '$match': 
                     filtro2
@@ -755,8 +771,8 @@ exports.tablePriceInfo = async (req, res) => {
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
-    arr3 = arr3.map(element => {
-        if(element.precioPromedio !== null) element.precioPromedio = element.precioPromedio.toFixed();
+    arr3 = arr2.filter(element => {
+        if(element.precioPromedio !== null && element._id.tipoPrenda !== null) element.precioPromedio = element.precioPromedio.toFixed();
 
         return element;
     });
