@@ -7,6 +7,20 @@ const avgSKU = require("./filtersScraping/SKU");
 const prendasInfo = require("./filtersScraping/prendasInfo");
 const { copyArrayDiscontinued } = require("./filtersScraping/weekFilters/weekFilter");
 
+let objsize = (obj) => 
+    {
+    let size = 0, key;
+  
+    for (key in obj)
+        {
+       if (obj.hasOwnProperty(key))
+         size++;
+             }
+  
+    return size;
+  
+    };
+
 let organizarQueryTest = (query) => {
     let obj = {};
 
@@ -117,8 +131,14 @@ let organizarQueryPrenda = (query) => {
     return obj;
 }
 
+// create match
 let queryGroupBy = (query) => {
     let obj = {};
+
+
+    if ( objsize(query) <= 3 && (query.allCategory === 'true' || query.allSubCategory === 'true' || query.allTipoPrenda === 'true') ) return obj;
+
+
 
     if(query.origin !== undefined && Array.isArray(query.origin)) {
         obj.origin = {$in: query.origin};
@@ -161,18 +181,61 @@ let queryGroupBy = (query) => {
         
     }
 
+    
+
 
     return obj;
 }
 
-let generateGroup = (query) => {
+// filtro para crear el group de precios promedio
+let generateGroupPrice = (query) => {
     let group = {}
-    // || query.allSubCategory === 'false' || query.allTipoPrenda === 'false'
-    // 'categoria':'$categoria','subCategoria':'$subCategoria',
 
-    if (query.allCategory === 'true') {
+    if (query.allCategory === 'true' && query.allSubCategory === 'true' && query.allTipoPrenda === 'true') {
+        group = {
+            '_id': { 'todos':'$__v'},
+            'precioPromedio': {
+            $avg: '$precio'
+            }
+        }
+    } else if (query.allTipoPrenda === 'true' && query.allSubCategory === 'true') {
+        group = {
+            '_id': { 'categoria':'$categoria'},
+            'precioPromedio': {
+            $avg: '$precio'
+            }
+        }
+    } else if (query.allTipoPrenda === 'true' && query.allCategory === 'true') {
+        group = {
+            '_id': { 'subCategoria':'$subCategoria'},
+            'precioPromedio': {
+            $avg: '$precio'
+            }
+        }
+    } else if (query.allSubCategory === 'true' && query.allCategory === 'true') {
         group = {
             '_id': { 'tipoPrenda':'$tipoPrenda'},
+            'precioPromedio': {
+            $avg: '$precio'
+            }
+        }
+    } else if (query.allCategory === 'true') {
+        group = {
+            '_id': { 'tipoPrenda':'$tipoPrenda','subCategoria':'$subCategoria'},
+            'precioPromedio': {
+            $avg: '$precio'
+            }
+        }
+    } else if (query.allSubCategory === 'true') {
+        group = {
+            '_id': { 'tipoPrenda':'$tipoPrenda','categoria':'$categoria'},
+            'precioPromedio': {
+            $avg: '$precio'
+            }
+        }
+    } else if (query.allTipoPrenda === 'true') {
+        group = {
+            '_id': { 'categoria':'$categoria','subCategoria':'$subCategoria'},
             'precioPromedio': {
             $avg: '$precio'
             }
@@ -186,7 +249,365 @@ let generateGroup = (query) => {
         }
     }
 
-    // console.log(group)
+
+    return group
+}
+
+// filtro para crear el group de descuento promedio
+let generateGroupDiscount = (query) => {
+    let group = {}
+
+    if (query.allCategory === 'true' && query.allSubCategory === 'true' && query.allTipoPrenda === 'true') {
+        group = {
+            '_id': { 'todos':'$__v'},
+            'porcentajeDescuento': {
+            $avg: '$porcentajeDescuento'
+            }
+        }
+    } else if (query.allTipoPrenda === 'true' && query.allSubCategory === 'true') {
+        group = {
+            '_id': { 'categoria':'$categoria'},
+            'porcentajeDescuento': {
+            $avg: '$porcentajeDescuento'
+            }
+        }
+    } else if (query.allTipoPrenda === 'true' && query.allCategory === 'true') {
+        group = {
+            '_id': { 'subCategoria':'$subCategoria'},
+            'porcentajeDescuento': {
+            $avg: '$porcentajeDescuento'
+            }
+        }
+    } else if (query.allSubCategory === 'true' && query.allCategory === 'true') {
+        group = {
+            '_id': { 'tipoPrenda':'$tipoPrenda'},
+            'porcentajeDescuento': {
+            $avg: '$porcentajeDescuento'
+            }
+        }
+    } else if (query.allCategory === 'true') {
+        group = {
+            '_id': { 'tipoPrenda':'$tipoPrenda','subCategoria':'$subCategoria'},
+            'porcentajeDescuento': {
+            $avg: '$porcentajeDescuento'
+            }
+        }
+    } else if (query.allSubCategory === 'true') {
+        group = {
+            '_id': { 'tipoPrenda':'$tipoPrenda','categoria':'$categoria'},
+            'porcentajeDescuento': {
+            $avg: '$porcentajeDescuento'
+            }
+        }
+    } else if (query.allTipoPrenda === 'true') {
+        group = {
+                '_id': { 'categoria':'$categoria','subCategoria':'$subCategoria'},
+                'porcentajeDescuento': {
+                $avg: '$procentajeDescuento'
+            }
+        }
+    } else {
+        group = {
+            '_id': {'categoria':'$categoria','subCategoria':'$subCategoria', 'tipoPrenda':'$tipoPrenda'},
+            'porcentajeDescuento': {
+            $avg: '$porcentajeDescuento'
+            }
+        }
+    }
+
+
+    return group
+}
+
+// filtro para crear el group de nuevos promedio
+let generateGroupNews = (query) => {
+    let group = {}
+
+    if (query.allCategory === 'true' && query.allSubCategory === 'true' && query.allTipoPrenda === 'true') {
+        group = {
+            '_id': { 'todos':'$__v'},
+            'nuevos': {
+            $sum: 1
+            }
+        }
+    } else if (query.allTipoPrenda === 'true' && query.allSubCategory === 'true') {
+        group = {
+            '_id': { 'categoria':'$categoria'},
+            'nuevos': {
+            $sum: 1
+            }
+        }
+    } else if (query.allTipoPrenda === 'true' && query.allCategory === 'true') {
+        group = {
+            '_id': { 'subCategoria':'$subCategoria'},
+            'nuevos': {
+            $sum: 1
+            }
+        }
+    } else if (query.allSubCategory === 'true' && query.allCategory === 'true') {
+        group = {
+            '_id': { 'tipoPrenda':'$tipoPrenda'},
+            'nuevos': {
+            $sum: 1
+            }
+        }
+    } else if (query.allCategory === 'true') {
+        group = {
+            '_id': { 'tipoPrenda':'$tipoPrenda','subCategoria':'$subCategoria'},
+            'nuevos': {
+            $sum: 1
+            }
+        }
+    } else if (query.allSubCategory === 'true') {
+        group = {
+            '_id': { 'tipoPrenda':'$tipoPrenda','categoria':'$categoria'},
+            'nuevos': {
+            $sum: 1
+            }
+        }
+    } else if (query.allTipoPrenda === 'true') {
+        group = {
+                '_id': { 'categoria':'$categoria','subCategoria':'$subCategoria'},
+                'nuevos': {
+                $sum: 1
+            }
+        }
+    } else {
+        group = {
+            '_id': {'categoria':'$categoria','subCategoria':'$subCategoria', 'tipoPrenda':'$tipoPrenda'},
+            'nuevos': {
+            $sum: 1
+            }
+        }
+    }
+
+
+    return group
+}
+
+// filtro para crear el group de descontinuados promedio
+let generateGroupDiscontinued = (query) => {
+    let group = {}
+
+    if (query.allCategory === 'true' && query.allSubCategory === 'true' && query.allTipoPrenda === 'true') {
+        group = {
+            '_id': { 'todos':'$__v'},
+            'descontinuados': {
+            $sum: 1
+            }
+        }
+    } else if (query.allTipoPrenda === 'true' && query.allSubCategory === 'true') {
+        group = {
+            '_id': { 'categoria':'$categoria'},
+            'descontinuados': {
+            $sum: 1
+            }
+        }
+    } else if (query.allTipoPrenda === 'true' && query.allCategory === 'true') {
+        group = {
+            '_id': { 'subCategoria':'$subCategoria'},
+            'descontinuados': {
+            $sum: 1
+            }
+        }
+    } else if (query.allSubCategory === 'true' && query.allCategory === 'true') {
+        group = {
+            '_id': { 'tipoPrenda':'$tipoPrenda'},
+            'descontinuados': {
+            $sum: 1
+            }
+        }
+    } else if (query.allCategory === 'true') {
+        group = {
+            '_id': { 'tipoPrenda':'$tipoPrenda','subCategoria':'$subCategoria'},
+            'descontinuados': {
+            $sum: 1
+            }
+        }
+    } else if (query.allSubCategory === 'true') {
+        group = {
+            '_id': { 'tipoPrenda':'$tipoPrenda','categoria':'$categoria'},
+            'descontinuados': {
+            $sum: 1
+            }
+        }
+    } else if (query.allTipoPrenda === 'true') {
+        group = {
+                '_id': { 'categoria':'$categoria','subCategoria':'$subCategoria'},
+                'descontinuados': {
+                $sum: 1
+            }
+        }
+    } else {
+        group = {
+            '_id': {'categoria':'$categoria','subCategoria':'$subCategoria', 'tipoPrenda':'$tipoPrenda'},
+            'descontinuados': {
+            $sum: 1
+            }
+        }
+    }
+
+
+    return group
+}
+
+// filtro para crear el group de descontinuados promedio
+let generateGroupSKU = (query) => {
+    let group = {}
+
+    console.log(query)
+
+    if (query.allCategory === 'true' && query.allSubCategory === 'true' && query.allTipoPrenda === 'true') {
+        group = {
+            '_id': {
+              'todos': "$__v"
+            }, 
+            'nuevos': {
+              '$sum': 1
+            }, 
+            'SKU': {
+              '$sum': '$numeroTallas'
+            }, 
+            'precioPromedio': {
+              '$avg': '$precio'
+            }, 
+            'porcentajeDescuento': {
+              '$avg': '$porcentajeDescuento'
+            }
+          }
+    } else if (query.allTipoPrenda === 'true' && query.allSubCategory === 'true') {
+        group = {
+            '_id': { 
+              'categoria': '$categoria'
+            }, 
+            'nuevos': {
+              '$sum': 1
+            }, 
+            'SKU': {
+              '$sum': '$numeroTallas'
+            }, 
+            'precioPromedio': {
+              '$avg': '$precio'
+            }, 
+            'porcentajeDescuento': {
+              '$avg': '$porcentajeDescuento'
+            }
+          }
+    } else if (query.allTipoPrenda === 'true' && query.allCategory === 'true') {
+        group = {
+            '_id': {
+              'subCategoria': '$subCategoria'
+            }, 
+            'nuevos': {
+              '$sum': 1
+            }, 
+            'SKU': {
+              '$sum': '$numeroTallas'
+            }, 
+            'precioPromedio': {
+              '$avg': '$precio'
+            }, 
+            'porcentajeDescuento': {
+              '$avg': '$porcentajeDescuento'
+            }
+          }
+    } else if (query.allSubCategory === 'true' && query.allCategory === 'true') {
+        group = {
+            '_id': {
+              'tipoPrenda': '$tipoPrenda'
+            }, 
+            'nuevos': {
+              '$sum': 1
+            }, 
+            'SKU': {
+              '$sum': '$numeroTallas'
+            }, 
+            'precioPromedio': {
+              '$avg': '$precio'
+            }, 
+            'porcentajeDescuento': {
+              '$avg': '$porcentajeDescuento'
+            }
+          }
+    } else if (query.allCategory === 'true') {
+        group = {
+            '_id': {
+              'tipoPrenda': '$tipoPrenda', 
+              'subCategoria': '$subCategoria'
+            }, 
+            'nuevos': {
+              '$sum': 1
+            }, 
+            'SKU': {
+              '$sum': '$numeroTallas'
+            }, 
+            'precioPromedio': {
+              '$avg': '$precio'
+            }, 
+            'porcentajeDescuento': {
+              '$avg': '$porcentajeDescuento'
+            }
+          }
+    } else if (query.allSubCategory === 'true') {
+        group = {
+            '_id': {
+              'tipoPrenda': '$tipoPrenda', 
+              'categoria': '$categoria',
+            }, 
+            'nuevos': {
+              '$sum': 1
+            }, 
+            'SKU': {
+              '$sum': '$numeroTallas'
+            }, 
+            'precioPromedio': {
+              '$avg': '$precio'
+            }, 
+            'porcentajeDescuento': {
+              '$avg': '$porcentajeDescuento'
+            }
+          }
+    } else if (query.allTipoPrenda === 'true') {
+        group = {
+            '_id': { 
+              'categoria': '$categoria', 
+              'subCategoria': '$subCategoria'
+            }, 
+            'nuevos': {
+              '$sum': 1
+            }, 
+            'SKU': {
+              '$sum': '$numeroTallas'
+            }, 
+            'precioPromedio': {
+              '$avg': '$precio'
+            }, 
+            'porcentajeDescuento': {
+              '$avg': '$porcentajeDescuento'
+            }
+          }
+    } else {
+        group = {
+            '_id': {
+              'tipoPrenda': '$tipoPrenda', 
+              'categoria': '$categoria', 
+              'subCategoria': '$subCategoria'
+            }, 
+            'nuevos': {
+              '$sum': 1
+            }, 
+            'SKU': {
+              '$sum': '$numeroTallas'
+            }, 
+            'precioPromedio': {
+              '$avg': '$precio'
+            }, 
+            'porcentajeDescuento': {
+              '$avg': '$porcentajeDescuento'
+            }
+          }
+    }
+
 
     return group
 }
@@ -730,12 +1151,9 @@ exports.tableCategoryInfo = async (req, res) => {
 exports.tablePriceInfo = async (req, res) => {
     let filtro4 = req.query;
     let filtro2 = queryGroupBy(filtro4);
-    let group = generateGroup(filtro4);
-    
+    let group = generateGroupPrice(filtro4);
     filtro2.discontinued = false;
     
-    console.log(filtro2)
-    console.log(group)
     let arr3 = [];
     let arr2 = [];
     let arr = [];
@@ -771,11 +1189,16 @@ exports.tablePriceInfo = async (req, res) => {
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
+    
+
     arr3 = arr2.filter(element => {
-        if(element.precioPromedio !== null && element._id.tipoPrenda !== null) element.precioPromedio = element.precioPromedio.toFixed();
+        if(element.precioPromedio !== null && (element._id.categoria !== null && element._id.subCategoria !== null && element._id.tipoPrenda !== null ) ) element.precioPromedio = element.precioPromedio.toFixed();
 
         return element;
     });
+
+    // console.log(arr3)
+
 
     if (req.query.origin === undefined || Array.isArray(req.query.origin) ){
         values = avgPrice.averagePriceMonthGeneral(arr);
@@ -904,6 +1327,8 @@ exports.tablePrendasInfo = async (req, res) => {
 exports.tableDiscountinuedInfo = async (req, res) => {
     let filtro = req.query;
     let filtro2 = req.query;
+
+    let group = generateGroupDiscontinued(filtro2);
     
     filtro = queryGroupBy(filtro);
     filtro.estado = {$eq: "descontinuado"};
@@ -914,10 +1339,6 @@ exports.tableDiscountinuedInfo = async (req, res) => {
     let arr;
     let arr2;
     let obj;
-    // let values = [];
-    // let origin = '';
-    // let descontinuados = 0;
-    // let descuentoPromedioAnterior = 0;
     let differences = [];
     let ddzm = []; 
 
@@ -939,12 +1360,8 @@ exports.tableDiscountinuedInfo = async (req, res) => {
                 '$match': 
                     filtro
             }, {
-                '$group': {
-                    '_id': {'categoria':'$categoria','subCategoria':'$subCategoria', 'tipoPrenda':'$tipoPrenda'},
-                    'descontinuados': {
-                    $sum: 1
-                    }
-                }
+                '$group': 
+                    group
             }, {
                 $sort:{"descontinuados":-1}
             }
@@ -1012,8 +1429,8 @@ exports.tableDiscountInfo = async (req, res) => {
     filtro.discontinued = false;
     filtro.porcentajeDescuento = {$ne: undefined};
 
-    filtro2.estado = "promocion";
-    filtro2.discontinued = false;
+    let group = generateGroupDiscount(filtro2);
+    
     
 
     // let arr;
@@ -1041,12 +1458,8 @@ exports.tableDiscountInfo = async (req, res) => {
                 '$match': 
                     filtro
             }, {
-                '$group': {
-                    '_id': {'categoria':'$categoria','subCategoria':'$subCategoria', 'tipoPrenda':'$tipoPrenda'},
-                    'porcentajeDescuento': {
-                    $avg: '$porcentajeDescuento'
-                    }
-                }
+                '$group': 
+                group
             }, {
                 $sort:{"porcentajeDescuento":-1}
             }
@@ -1118,7 +1531,7 @@ exports.tableNewsInfo = async (req, res) => {
     let filtro = req.query;
     let filtro2 = req.query;
     
-    // filtro = organizarQuery(filtro);
+    let group = generateGroupNews(filtro);
     filtro = queryGroupBy(filtro);
     filtro.estado = "nuevo";
     filtro.discontinued = false;
@@ -1126,14 +1539,10 @@ exports.tableNewsInfo = async (req, res) => {
     filtro2 = organizarQuery(filtro2);
     filtro2.estado = "nuevo";
     filtro2.discontinued = false;
-    
+
     let arr;
     let arr2;
     let obj;
-    // let values = [];
-    // let origin = '';
-    // let nuevosPromedio = 0;
-    // let nuevosPromedioAnterior = 0;
     let differences = [];
 
     //mes actual
@@ -1155,12 +1564,8 @@ exports.tableNewsInfo = async (req, res) => {
                 '$match': 
                     filtro
             }, {
-                '$group': {
-                    '_id': {'categoria':'$categoria','subCategoria':'$subCategoria', 'tipoPrenda':'$tipoPrenda'},
-                    'nuevos': {
-                    $sum: 1
-                    }
-                }
+                '$group': 
+                    group
             }, {
                 $sort:{"nuevos":-1}
             }
@@ -1208,9 +1613,12 @@ exports.tableNewsInfo = async (req, res) => {
     res.status(200).json({obj});
 }
 
+// table sku info in prendas section
 exports.tableSKUInfo = async (req, res) => {
     let filtro = req.query;
     let filtro2 = req.query;
+
+    let group = generateGroupSKU(filtro2);
     
     filtro = organizarQuery(filtro);
     filtro2 = queryGroupBy(filtro2);
@@ -1264,25 +1672,8 @@ exports.tableSKUInfo = async (req, res) => {
                 }
               }
             }, {
-              '$group': {
-                '_id': {
-                  'tipoPrenda': '$tipoPrenda', 
-                  'categoria': '$categoria', 
-                  'subCategoria': '$subCategoria'
-                }, 
-                'nuevos': {
-                  '$sum': 1
-                }, 
-                'SKU': {
-                  '$sum': '$numeroTallas'
-                }, 
-                'precioPromedio': {
-                  '$avg': '$precio'
-                }, 
-                'porcentajeDescuento': {
-                  '$avg': '$porcentajeDescuento'
-                }
-              }
+              '$group': 
+                group
             }, {
               '$sort': {
                 'SKU': -1
@@ -1315,13 +1706,12 @@ exports.tableSKUInfo = async (req, res) => {
     res.status(200).json({obj});
 }
 
-// cards prendas 
+// cards prendas info categorias
 exports.prendasInfo = async (req, res) => {
     let filtro = req.query;
     
-    // TODO: organizar desde el .ts para enviar fecha y cambiar a organizarQueryTest
+
     filtro = organizarQueryPrenda(filtro);
-    // console.log(filtro);
 
     //mes actual
     let date = new Date();
