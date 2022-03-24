@@ -455,7 +455,6 @@ let generateGroupDiscontinued = (query) => {
 let generateGroupSKU = (query) => {
     let group = {}
 
-    console.log(query)
 
     if (query.allCategory === 'true' && query.allSubCategory === 'true' && query.allTipoPrenda === 'true') {
         group = {
@@ -665,7 +664,6 @@ exports.cardsInfo = async (req, res) => {
     try {
         arr = await Business.find(filtro,{"precio":1, "descuento": 1,  "origin":1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tag": 1, "discontinued":1}, { allowDiskUse: true});
         // probando nuevo filtro
-        // console.log("Total: ", arr.length);
     } catch (error) {
         console.log(error);
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
@@ -749,7 +747,6 @@ exports.cardsInfo = async (req, res) => {
         
 
     } else if(req.query.origin === 'Zara'){
-        // console.log("entro a zara");
         origin = 'Zara';
         discounts = avgDiscount.averageDiscount(arr); // calcula los promedios por mes una marca 2 años
         values = avgPrice.averagePriceMonthOrigin(arr); // promedio precio de la marca seleccionada por mes 2 años
@@ -907,7 +904,6 @@ exports.averageDiscount = async (req, res) => {
     filtro = organizarQuery(filtro);
     filtro.descuento = {$ne: null};
     filtro.discontinued = false;
-    // console.log(filtro);
     
     let arr;
     let obj;
@@ -956,7 +952,6 @@ exports.averageDiscountinued = async (req, res) => {
     
     filtro = organizarQuery(filtro);
     filtro.estado = {$eq: "descontinuado"};
-    // console.log(filtro);
     
     let arr;
     let obj;
@@ -1149,10 +1144,12 @@ exports.tableCategoryInfo = async (req, res) => {
 
 // respuesta para la table precios promedio
 exports.tablePriceInfo = async (req, res) => {
+    const fecha = new Date();
     let filtro4 = req.query;
     let filtro2 = queryGroupBy(filtro4);
     let group = generateGroupPrice(filtro4);
     filtro2.discontinued = false;
+    filtro2.createdAt = { $gte :  new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-01T00:00:00.000Z`), $lte : new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-31T23:59:35.835Z`) };
     
     let arr3 = [];
     let arr2 = [];
@@ -1196,8 +1193,6 @@ exports.tablePriceInfo = async (req, res) => {
 
         return element;
     });
-
-    // console.log(arr3)
 
 
     if (req.query.origin === undefined || Array.isArray(req.query.origin) ){
@@ -1332,6 +1327,8 @@ exports.tableDiscountinuedInfo = async (req, res) => {
     
     filtro = queryGroupBy(filtro);
     filtro.estado = {$eq: "descontinuado"};
+    let fecha = new Date();
+    filtro.createdAt = { $gte :  new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-01T00:00:00.000Z`), $lte : new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-31T23:59:35.835Z`) };
     
     filtro2 = queryGroupBy(filtro2);
     filtro2.estado = {$eq: "descontinuado"};
@@ -1366,7 +1363,6 @@ exports.tableDiscountinuedInfo = async (req, res) => {
                 $sort:{"descontinuados":-1}
             }
             ]);
-        // console.log(arr.length);
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
@@ -1423,14 +1419,18 @@ exports.tableDiscountinuedInfo = async (req, res) => {
 exports.tableDiscountInfo = async (req, res) => {
     let filtro = req.query;
     let filtro2 = req.query;
+    const fecha = new Date();
     
+    let filtro1 = organizarQuery(req.query);
+    filtro1.discontinued = false;
+
     filtro = queryGroupBy(filtro);
     filtro.estado = "promocion";
     filtro.discontinued = false;
     filtro.porcentajeDescuento = {$ne: undefined};
+    filtro.createdAt = { $gte :  new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-01T00:00:00.000Z`), $lte : new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-31T23:59:35.835Z`) };
 
     let group = generateGroupDiscount(filtro2);
-    
     
 
     // let arr;
@@ -1451,7 +1451,7 @@ exports.tableDiscountInfo = async (req, res) => {
     }
 
     try {
-        arr = await Business.find(filtro2,{"precio":1, "descuento": 1, "origin":1,  "categoria":1, "subCategoria": 1, "createdAt":1, "discontinued":1});
+        arr = await Business.find(filtro1,{"precio":1, "descuento": 1, "origin":1,  "categoria":1, "subCategoria": 1, "createdAt":1, "discontinued":1});
 
         arr2 = await Business.aggregate([
             {
@@ -1479,7 +1479,6 @@ exports.tableDiscountInfo = async (req, res) => {
 
     if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
         values = avgDiscount.averageDiscountMonthGeneral(arr);
-        // console.log(values);
         
         // obtener precios promedio mes actual y anterior 
 
@@ -1527,15 +1526,21 @@ exports.tableDiscountInfo = async (req, res) => {
     res.status(200).json({obj});
 }
 
+// table news 
 exports.tableNewsInfo = async (req, res) => {
     let filtro = req.query;
     let filtro2 = req.query;
-    
+    const fecha = new Date();
+
+    // creando el group en funcion del filtro
     let group = generateGroupNews(filtro);
+    // creando el contenido del match para el query
     filtro = queryGroupBy(filtro);
     filtro.estado = "nuevo";
     filtro.discontinued = false;
+    filtro.createdAt = { $gte :  new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-01T00:00:00.000Z`), $lte : new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-31T23:59:35.835Z`) };
     
+    // datos para la diferencia
     filtro2 = organizarQuery(filtro2);
     filtro2.estado = "nuevo";
     filtro2.discontinued = false;
@@ -1562,7 +1567,7 @@ exports.tableNewsInfo = async (req, res) => {
         arr2 = await Business.aggregate([
             {
                 '$match': 
-                    filtro
+                    filtro                    
             }, {
                 '$group': 
                     group
@@ -1574,6 +1579,7 @@ exports.tableNewsInfo = async (req, res) => {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
+
 
     if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
         values = avgNews.averageNewsMonthGeneral(arr);
