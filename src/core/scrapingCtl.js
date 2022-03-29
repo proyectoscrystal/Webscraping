@@ -462,7 +462,7 @@ let generateGroupSKU = (query) => {
               'todos': "$__v"
             }, 
             'nuevos': {
-              '$sum': 1
+              '$sum': '$nuevos'
             }, 
             'SKU': {
               '$sum': '$numeroTallas'
@@ -480,7 +480,7 @@ let generateGroupSKU = (query) => {
               'categoria': '$categoria'
             }, 
             'nuevos': {
-              '$sum': 1
+              '$sum': '$nuevos'
             }, 
             'SKU': {
               '$sum': '$numeroTallas'
@@ -498,7 +498,7 @@ let generateGroupSKU = (query) => {
               'subCategoria': '$subCategoria'
             }, 
             'nuevos': {
-              '$sum': 1
+              '$sum': '$nuevos'
             }, 
             'SKU': {
               '$sum': '$numeroTallas'
@@ -516,7 +516,7 @@ let generateGroupSKU = (query) => {
               'tipoPrenda': '$tipoPrenda'
             }, 
             'nuevos': {
-              '$sum': 1
+              '$sum': '$nuevos'
             }, 
             'SKU': {
               '$sum': '$numeroTallas'
@@ -535,7 +535,7 @@ let generateGroupSKU = (query) => {
               'subCategoria': '$subCategoria'
             }, 
             'nuevos': {
-              '$sum': 1
+              '$sum': '$nuevos'
             }, 
             'SKU': {
               '$sum': '$numeroTallas'
@@ -554,7 +554,7 @@ let generateGroupSKU = (query) => {
               'categoria': '$categoria',
             }, 
             'nuevos': {
-              '$sum': 1
+              '$sum': '$nuevos'
             }, 
             'SKU': {
               '$sum': '$numeroTallas'
@@ -573,7 +573,7 @@ let generateGroupSKU = (query) => {
               'subCategoria': '$subCategoria'
             }, 
             'nuevos': {
-              '$sum': 1
+              '$sum': '$nuevos'
             }, 
             'SKU': {
               '$sum': '$numeroTallas'
@@ -593,7 +593,7 @@ let generateGroupSKU = (query) => {
               'subCategoria': '$subCategoria'
             }, 
             'nuevos': {
-              '$sum': 1
+              '$sum': '$nuevos'
             }, 
             'SKU': {
               '$sum': '$numeroTallas'
@@ -1318,6 +1318,98 @@ exports.tablePrendasInfo = async (req, res) => {
     res.status(200).json({obj});
 }
 
+// table principal in prendas section
+exports.tablePrendasInfo2 = async (req, res) => {
+    let filtro = req.query;
+    let filtro2 = req.query;
+    let fecha = new Date();
+
+    let group = generateGroupSKU(filtro2);
+    
+    filtro = organizarQuery(filtro);
+    filtro2 = queryGroupBy(filtro2);
+
+    let arr;
+    let arr2;
+    let obj;
+
+    //mes actual
+    let date = new Date();
+    let month = date.getMonth(); 
+    let lastMonth;
+    if(month === 0){
+        lastMonth = 11;
+    } else {
+        lastMonth = month - 1;
+    }
+
+    try {
+        arr = await Business.find(filtro,{"precio":1});
+
+        arr2 = await Business.aggregate([
+            {
+              '$match': 
+                filtro2
+              
+            }, {
+              '$project': {
+                'porcentajeDescuento': '$porcentajeDescuento', 
+                'numeroTallas': '$numeroTallas', 
+                'precio': '$precio', 
+                'categoria': '$categoria', 
+                'subCategoria': '$subCategoria', 
+                'tipoPrenda': '$tipoPrenda', 
+                'nuevos': {
+                  '$cond': {
+                    'if': {
+                      '$eq': [
+                        '$estado', 'nuevo'
+                      ]
+                    }, 
+                    'then': {
+                      '$sum': 1
+                    }, 
+                    'else': {
+                      '$sum': 0
+                    }
+                  }
+                }
+              }
+            }, {
+              '$group': 
+                group
+            }, {
+              '$sort': {
+                'SKU': -1
+              }
+            }
+          ]);
+
+    } catch (error) {
+        console.log("no se obtuvo respuesta");
+        return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
+    }
+
+    
+    let totalElements = arr.length;
+    arr2 = arr2.map(element => {
+        if(element.precioPromedio !== null) element.precioPromedio = (element.precioPromedio).toFixed();
+
+        element.tasaFrescura = (element.nuevos/totalElements).toFixed(3); 
+
+        return element;
+    });
+
+
+    // respuesta para el frontend
+    obj = { 
+        arr2
+    }
+
+
+    res.status(200).json({obj});
+}
+
 // table info descontinuados
 exports.tableDiscountinuedInfo = async (req, res) => {
     let filtro = req.query;
@@ -1623,6 +1715,7 @@ exports.tableNewsInfo = async (req, res) => {
 exports.tableSKUInfo = async (req, res) => {
     let filtro = req.query;
     let filtro2 = req.query;
+    let fecha = new Date();
 
     let group = generateGroupSKU(filtro2);
     
@@ -1630,6 +1723,7 @@ exports.tableSKUInfo = async (req, res) => {
     filtro2 = queryGroupBy(filtro2);
     filtro.discontinued = false;
     filtro2.discontinued = false;
+    filtro2.createdAt = { $gte :  new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-01T00:00:00.000Z`), $lte : new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-31T23:59:35.835Z`) };
 
     let arr;
     let arr2;
