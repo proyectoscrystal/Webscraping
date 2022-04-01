@@ -92,6 +92,7 @@ organizarQuery = (query) => {
     return obj;
 }
 
+// metodo para organizar query de vista prendas en categorias, 
 let organizarQueryPrenda = (query) => {
     let obj = {};
 
@@ -118,6 +119,9 @@ let organizarQueryPrenda = (query) => {
         obj.fecha_consulta = {$gte: inicio, $lte: fin}
     }else if(query.fechaInicio !== '' && query.fechaFin !== "") {
         obj.fecha_consulta = {$gte: query.fechaInicio, $lte: query.fechaFin}
+    } else {
+        let fecha = new Date();
+        obj.createdAt = {$gte :  new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-01T00:00:00.000Z`), $lte : new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-31T23:59:35.835Z`)}
     }
 
     if(query.composicion !== undefined && (typeof query.composicion === 'string')) {
@@ -131,7 +135,7 @@ let organizarQueryPrenda = (query) => {
     return obj;
 }
 
-// create match
+// create match for table in prendas view 
 let queryGroupBy = (query) => {
     let obj = {};
 
@@ -166,13 +170,65 @@ let queryGroupBy = (query) => {
         obj.color = query.color;
     }
 
-    // if(query.fechaInicio !== "" && query.fechaFin === "") {
-    //     let inicio = query.fechaInicio + "T00:00:00.000Z";
-    //     let fin = query.fechaInicio + "T23:59:59.999Z";
-    //     obj.fecha_consulta = {$gte: inicio, $lte: fin}
-    // }else if(query.fechaInicio !== '' && query.fechaFin !== "") {
-    //     obj.fecha_consulta = {$gte: query.fechaInicio, $lte: query.fechaFin}
-    // }
+    if(query.composicion !== undefined && (typeof query.composicion === 'string')) {
+        obj.material1 = query.composicion;
+    } else if (query.composicion !== undefined && query.composicion.length > 1) {
+        obj.material1 = {$in: query.composicion};
+        
+    }
+
+    
+
+
+    return obj;
+}
+
+// create match for table in prendas view 
+let queryGroupBysku = (query) => {
+    let obj = {};
+
+
+    if ( objsize(query) <= 3 && (query.allCategory === 'true' || query.allSubCategory === 'true' || query.allTipoPrenda === 'true') ) return obj;
+
+
+
+    if(query.origin !== undefined && Array.isArray(query.origin)) {
+        obj.origin = {$in: query.origin};
+    } else if(query.origin !== undefined) {
+        obj.origin = query.origin;
+    }
+    if(query.categoria !== undefined && Array.isArray(query.categoria)){
+        obj.categoria = {$in: query.categoria};
+    } else if(query.categoria !== undefined) {
+        obj.categoria = query.categoria;
+    }
+    if(query.subCategoria !== undefined && Array.isArray(query.subCategoria)){
+        obj.subCategoria = {$in: query.subCategoria};
+    } else if(query.subCategoria !== undefined) {
+        obj.subCategoria = query.subCategoria;
+    }
+    if(query.tipoPrenda !== undefined && Array.isArray(query.tipoPrenda)){
+        obj.tipoPrenda = {$in: query.tipoPrenda};
+    } else if(query.tipoPrenda !== undefined) {
+        obj.tipoPrenda = query.tipoPrenda;
+    }
+    if(query.color !== undefined && Array.isArray(query.color)){
+        obj.color = {$in: query.color};
+    } else if(query.color !== undefined) {
+        obj.color = query.color;
+    }
+
+    // fecha para las tablas para poder mostrar la info del mes actual o la fecha especificada
+    if(query.fechaInicio !== "" && query.fechaFin === "") {
+        let inicio = query.fechaInicio + "T00:00:00.000Z";
+        let fin = query.fechaInicio + "T23:59:59.999Z";
+        obj.fecha_consulta = {$gte: inicio, $lte: fin}
+    }else if(query.fechaInicio !== '' && query.fechaFin !== "") {
+        obj.fecha_consulta = {$gte: query.fechaInicio, $lte: query.fechaFin}
+    } else {
+        let fecha = new Date();
+        obj.createdAt = {$gte :  new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-01T00:00:00.000Z`), $lte : new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-31T23:59:35.835Z`)}
+    }
 
     if(query.composicion !== undefined && (typeof query.composicion === 'string')) {
         obj.material1 = query.composicion;
@@ -451,7 +507,7 @@ let generateGroupDiscontinued = (query) => {
     return group
 }
 
-// filtro para crear el group de descontinuados promedio
+// filtro para crear el group de table sku
 let generateGroupSKU = (query) => {
     let group = {}
 
@@ -1322,26 +1378,16 @@ exports.tablePrendasInfo = async (req, res) => {
 exports.tablePrendasInfo2 = async (req, res) => {
     let filtro = req.query;
     let filtro2 = req.query;
-    let fecha = new Date();
+    
 
     let group = generateGroupSKU(filtro2);
-    
+
     filtro = organizarQuery(filtro);
-    filtro2 = queryGroupBy(filtro2);
+    filtro2 = queryGroupBysku(filtro2);
 
     let arr;
     let arr2;
     let obj;
-
-    //mes actual
-    let date = new Date();
-    let month = date.getMonth(); 
-    let lastMonth;
-    if(month === 0){
-        lastMonth = 11;
-    } else {
-        lastMonth = month - 1;
-    }
 
     try {
         arr = await Business.find(filtro,{"precio":1});
@@ -1519,8 +1565,7 @@ exports.tableDiscountInfo = async (req, res) => {
     filtro = queryGroupBy(filtro);
     filtro.estado = "promocion";
     filtro.discontinued = false;
-    filtro.porcentajeDescuento = {$ne: undefined};
-    filtro.createdAt = { $gte :  new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-01T00:00:00.000Z`), $lte : new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-31T23:59:35.835Z`) };
+    filtro.createdAt = { $gte :  new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-01T00:00:00.000Z`), $lte : new Date(`${fecha.getFullYear()}-0${(fecha.getMonth()+1)}-31T23:59:35.835Z`) };
 
     let group = generateGroupDiscount(filtro2);
     
@@ -1561,6 +1606,7 @@ exports.tableDiscountInfo = async (req, res) => {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
+    
 
     arr2 = arr2.map(element => {
         if(element.porcentajeDescuento !== null) element.porcentajeDescuento = element.porcentajeDescuento.toFixed(2);
@@ -1812,10 +1858,6 @@ exports.prendasInfo = async (req, res) => {
     
 
     filtro = organizarQueryPrenda(filtro);
-
-    //mes actual
-    let date = new Date();
-    let month = date.getMonth();
     
     try {
         arr = await Business.find(filtro,{"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
