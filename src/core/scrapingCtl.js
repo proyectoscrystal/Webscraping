@@ -1374,88 +1374,6 @@ exports.tablePrendasInfo = async (req, res) => {
     res.status(200).json({obj});
 }
 
-// table principal in prendas section
-exports.tablePrendasInfo2 = async (req, res) => {
-    let filtro = req.query;
-    let filtro2 = req.query;
-    
-
-    let group = generateGroupSKU(filtro2);
-
-    filtro = organizarQuery(filtro);
-    filtro2 = queryGroupBysku(filtro2);
-
-    let arr;
-    let arr2;
-    let obj;
-
-    try {
-        arr = await Business.find(filtro,{"precio":1});
-
-        arr2 = await Business.aggregate([
-            {
-              '$match': 
-                filtro2
-              
-            }, {
-              '$project': {
-                'porcentajeDescuento': '$porcentajeDescuento', 
-                'numeroTallas': '$numeroTallas', 
-                'precio': '$precio', 
-                'categoria': '$categoria', 
-                'subCategoria': '$subCategoria', 
-                'tipoPrenda': '$tipoPrenda', 
-                'nuevos': {
-                  '$cond': {
-                    'if': {
-                      '$eq': [
-                        '$estado', 'nuevo'
-                      ]
-                    }, 
-                    'then': {
-                      '$sum': 1
-                    }, 
-                    'else': {
-                      '$sum': 0
-                    }
-                  }
-                }
-              }
-            }, {
-              '$group': 
-                group
-            }, {
-              '$sort': {
-                'SKU': -1
-              }
-            }
-          ]);
-
-    } catch (error) {
-        console.log("no se obtuvo respuesta");
-        return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
-    }
-
-    
-    let totalElements = arr.length;
-    arr2 = arr2.map(element => {
-        if(element.precioPromedio !== null) element.precioPromedio = (element.precioPromedio).toFixed();
-
-        element.tasaFrescura = (element.nuevos/totalElements).toFixed(3); 
-
-        return element;
-    });
-
-
-    // respuesta para el frontend
-    obj = { 
-        arr2
-    }
-
-
-    res.status(200).json({obj});
-}
-
 // table info descontinuados
 exports.tableDiscountinuedInfo = async (req, res) => {
     let filtro = req.query;
@@ -1836,6 +1754,90 @@ exports.tableSKUInfo = async (req, res) => {
     let totalElements = arr.length;
     arr2 = arr2.map(element => {
         if(element.precioPromedio !== null) element.precioPromedio = (element.precioPromedio).toFixed();
+
+        element.tasaFrescura = (element.nuevos/totalElements).toFixed(3); 
+
+        return element;
+    });
+
+
+    // respuesta para el frontend
+    obj = { 
+        arr2
+    }
+
+
+    res.status(200).json({obj});
+}
+
+// table principal in prendas section
+exports.tablePrendasInfo2 = async (req, res) => {
+    let filtro = req.query;
+    let filtro2 = req.query;
+    
+
+    let group = generateGroupSKU(filtro2);
+
+    filtro = organizarQuery(filtro);
+    filtro2 = queryGroupBysku(filtro2);
+
+    let arr;
+    let arr2;
+    let obj;
+
+    try {
+        arr = await Business.find(filtro,{"precio":1});
+
+        arr2 = await Business.aggregate([
+            {
+              '$match': 
+                filtro2
+              
+            }, {
+              '$project': {
+                'porcentajeDescuento': '$porcentajeDescuento', 
+                'numeroTallas': '$numeroTallas', 
+                'precio': '$precio', 
+                'categoria': '$categoria', 
+                'subCategoria': '$subCategoria', 
+                'tipoPrenda': '$tipoPrenda', 
+                'nuevos': {
+                  '$cond': {
+                    'if': {
+                      '$eq': [
+                        '$estado', 'nuevo'
+                      ]
+                    }, 
+                    'then': {
+                      '$sum': 1
+                    }, 
+                    'else': {
+                      '$sum': 0
+                    }
+                  }
+                }
+              }
+            }, {
+              '$group': 
+                group
+            }, {
+              '$sort': {
+                'SKU': -1
+              }
+            }
+          ]);
+
+    } catch (error) {
+        console.log("no se obtuvo respuesta");
+        return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
+    }
+
+    
+    let totalElements = arr.length;
+    arr2 = arr2.map(element => {
+        if(element.porcentajeDescuento !== null) element.porcentajeDescuento = (element.porcentajeDescuento).toFixed(3);
+        
+        console.log(element.porcentajeDescuento);
 
         element.tasaFrescura = (element.nuevos/totalElements).toFixed(3); 
 

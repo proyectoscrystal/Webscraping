@@ -229,6 +229,8 @@ let coloresFrecuentes = (arr) => {
     arrayColoresSub = [...new Set(arrayColoresSub)];
     // eliminando los undefined
     arrayColoresSub = arrayColoresSub.filter(element => (element !== undefined));
+    arrayColoresSub = arrayColoresSub.filter(element => (element !== null));
+    arrayColoresSub = arrayColoresSub.filter(element => (element.length > 3));
     //se inicializa el array count con la cantidad de colores existente
     arrayColoresSub.forEach((element, index) => {
         arrayCountsSub[index] = 0;
