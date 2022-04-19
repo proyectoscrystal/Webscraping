@@ -521,6 +521,8 @@ exports.tipoPrenda = [
 ]
 
 exports.colorSinHomologar = [
+  'kaki',
+  'palo',
 'amarillo',
 'arena',
 'azul',
@@ -648,6 +650,8 @@ exports.colorSinHomologar = [
 ]
 
 exports.colorHomologado = [
+  'beige',
+  'rosado',
 'amarillo',
 'beige',
 'azul',
