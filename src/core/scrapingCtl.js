@@ -761,13 +761,19 @@ exports.cardsInfo = async (req, res) => {
         zm[1] =  values[month]; // valor actual de zara 
         zm[0] += values[month + 23];
         zm[1] += values[month + 24]; // valor actual de mango
-        if(values[month] === 0 || values[month + 24] === 0){
-            precioPromedio = ((values[month] + values[month + 24])).toFixed();
-            differencePrice =  percentageDifferencePrice(zm[1], zm[0]);
-        } else {
-            precioPromedio = ((values[month] + values[month + 24])/2).toFixed();
-            differencePrice =  percentageDifferencePrice(zm[1]/2, zm[0]/2);
-        }
+        // valores de Gef
+        zm[0] += values[month + 47];
+        zm[1] += values[month + 48];
+        let countM = 0;
+        // contando si hay valores en las marcas
+        if(values[month] !== 0) countM += 1;
+        if(values[month + 24] !== 0) countM += 1;
+        if(values[month + 48] !== 0) countM += 1;            
+        
+   
+        precioPromedio = ((values[month] + values[month + 24] + values[month + 48])/countM).toFixed();
+        differencePrice =  percentageDifferencePrice(zm[1]/countM, zm[0]/countM);
+        
 
 
         newsCounts = avgNews.averageNewsMonthGeneral(arr2); // calcula productos nuevos promedio por mes dos marcas 2 años
@@ -775,7 +781,9 @@ exports.cardsInfo = async (req, res) => {
         nzm[1] =  newsCounts[month]; // valor actual de zara 
         nzm[0] += newsCounts[month + 23];
         nzm[1] += newsCounts[month + 24]; // valor actual de mango
-        nuevos = ((newsCounts[month] + newsCounts[month + 24]));
+        nzm[0] += newsCounts[month + 47];
+        nzm[1] += newsCounts[month + 48]; // valor actual de mango
+        nuevos = ((newsCounts[month] + newsCounts[month + 24] + newsCounts[month + 48]));
 
         discontinuedCounts = discontinued.averageDiscontinuedMonthGeneral(arr); // calcula los descontinuados promedio por mes dos marcas 2 años
         ddzm[0] = discontinuedCounts[lastMonth];
@@ -802,16 +810,16 @@ exports.cardsInfo = async (req, res) => {
         differenceSKU = percentageDifferencesSku(skuzm[1], skuzm[0]);
         
 
-    } else if(req.query.origin === 'Zara'){
-        origin = 'Zara';
-        discounts = avgDiscount.averageDiscount(arr); // calcula los promedios por mes una marca 2 años
-        values = avgPrice.averagePriceMonthOrigin(arr); // promedio precio de la marca seleccionada por mes 2 años
+    } else {
+        origin = req.query.origin;
+        discounts = avgDiscount.averageDiscount(arr2); // calcula los promedios por mes una marca 2 años
+        values = avgPrice.averagePriceMonthOrigin(arr2); // promedio precio de la marca seleccionada por mes 2 años
         precioPromedio = (values[month]).toFixed();
-        newsCounts = avgNews.averageNewsMonthOrigin(arr); // promedio precio de la marca seleccionada por mes 2 años
+        newsCounts = avgNews.averageNewsMonthOrigin(arr2); // promedio precio de la marca seleccionada por mes 2 años
         nuevos = (newsCounts[month]).toFixed();
         discontinuedCounts = discontinued.averageDiscontinuedMonthOrigin(arr); // discontinued
         discontinueds = (discontinuedCounts[month]).toFixed();
-        skuCounts = avgSKU.averageSKUMonthOrigin(arr); // calcula el precio promedio por mes dos marcas 2 años
+        skuCounts = avgSKU.averageSKUMonthOrigin(arr2); // calcula el precio promedio por mes dos marcas 2 años
         sku = skuCounts[month];
         discount = discounts[month];
         
@@ -840,46 +848,7 @@ exports.cardsInfo = async (req, res) => {
         differenceSKU = percentageDifferencesSku(skuzm[1], skuzm[0]);
         differenceDiscontinued = percentageDifferencesDiscontinued(ddzm[1], ddzm[0]);
 
-    // } else if(filtro.origin === 'Mango'){
-    } else if(req.query.origin === 'Mango'){
-        origin = 'Mango';
-        discounts = avgDiscount.averageDiscount(arr); // calcula los promedios por mes
-        values = avgPrice.averagePriceMonthOrigin(arr); // precio promedio por mes dos años una marca
-        precioPromedio = (values[month]).toFixed();
-        newsCounts = avgNews.averageNewsMonthOrigin(arr); // nuevos de la marca seleccionada por mes 2 años
-        nuevos = newsCounts[month];
-        discontinuedCounts = discontinued.averageDiscontinuedMonthOrigin(arr); // discontinued
-        discontinueds = discontinuedCounts[month];
-        discount = discounts[month];
-        skuCounts = avgSKU.averageSKUMonthOrigin(arr); // calcula el precio promedio por mes dos marcas 2 años
-        sku = skuCounts[month];
-        
-
-        // valores de diferencia de porcentajes
-        dzm[0] = discounts[lastMonth];
-        dzm[1] = discounts[month];
-
-        // valores de diferencia de nuevos
-        nzm[0] = newsCounts[lastMonth];
-        nzm[1] = newsCounts[month];
-
-        // valores de diferencia de nuevos
-        ddzm[0] = discontinuedCounts[lastMonth];
-        ddzm[1] = discontinuedCounts[month];
-
-        // valores de diferencia de nuevos
-        skuzm[0] = skuCounts[lastMonth];
-        skuzm[1] = skuCounts[month];
-
-        zm[0] = values[lastMonth];
-        zm[1] =  values[month]; // valor actual de zara 
-
-        differencePrice =  percentageDifferencePrice(zm[1], zm[0]);
-        differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
-        differenceNew = percentageDifferencesnews(nzm[1], nzm[0]);
-        differenceSKU = percentageDifferencesSku(skuzm[1], skuzm[0]);
-        differenceDiscontinued = percentageDifferencesDiscontinued(ddzm[1], ddzm[0]);
-    }
+    } 
 
     
     // respuesta para el frontend
@@ -907,7 +876,7 @@ exports.cardsInfo = async (req, res) => {
 // fin info cards response
 
 
-// precio promedio por los ultimos 2 años y descuento promedio (charts)
+// precio promedio por los ultimos 2 años (charts)
 exports.averagePrice = async (req, res) => {
     let filtro = req.query;
     
@@ -929,18 +898,13 @@ exports.averagePrice = async (req, res) => {
         values = avgPrice.averagePriceMonthGeneral(arr);
         origin = 'general';
         
-    } else if(req.query.origin === 'Zara'){
-        origin = 'Zara';
-        values = avgPrice.averagePriceMonthOrigin(arr);
-
-    } else if(req.query.origin === 'Mango'){
-        origin = 'Mango';
+    } else {
+        origin = req.query.origin;
         values = avgPrice.averagePriceMonthOrigin(arr);
     }
 
     months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
-    
     
     // respuesta para el frontend
     obj = {  
@@ -953,7 +917,7 @@ exports.averagePrice = async (req, res) => {
     res.status(200).json({obj});
 }
 
-// descontinuados chart
+// descuentos chart
 exports.averageDiscount = async (req, res) => {
     let filtro = req.query;
     
@@ -1073,14 +1037,10 @@ exports.averageNews = async (req, res) => {
         values = avgNews.averageNewsMonthGeneral(arr);
         origin = 'general';
         
-    } else if(req.query.origin === 'Zara'){
-        origin = 'Zara';
+    } else {
+        origin = req.query.origin;
         values = avgNews.averageNewsMonthOrigin(arr);
-
-    } else if(req.query.origin === 'Mango'){
-        origin = 'Mango';
-        values = avgNews.averageNewsMonthOrigin(arr);
-    }
+    } 
 
     // cantidad de prendas nuevas
     let nuevos = 0;
@@ -1211,7 +1171,7 @@ exports.tablePriceInfo = async (req, res) => {
     let arr2 = [];
     let arr = [];
     let obj;
-    let differences;
+    let differences = [];
 
     //mes actual
     let date = new Date();
@@ -1283,6 +1243,9 @@ exports.tablePriceInfo = async (req, res) => {
         precioPromedioAnterior = values[lastMonth];
 
         differences = percentageDifferencePrice(precioPromedio, precioPromedioAnterior);
+    } else {
+        differences[0] = 0;
+        differences[1] = 0;
     }
 
 
@@ -1457,14 +1420,15 @@ exports.tableDiscountinuedInfo = async (req, res) => {
         ddzm[1] = discontinuedCounts[month];;
         // determinar la diferencia porcentual en los descuentos
         differences = percentageDifferencesDiscontinued(ddzm[1], ddzm[0]);
+    } else {
+        differences[0] = 0;
+        differences[1] = 0;
     }
 
     // respuesta para el frontend
     obj = { 
         arr2,
         differences
-        // arr,
-        // descontinuados,
     }
 
 
@@ -1567,6 +1531,9 @@ exports.tableDiscountInfo = async (req, res) => {
         descuentoPromedioAnterior = values[lastMonth];
         // determinar la diferencia porcentual en los descuentos
         differences = percentageDifferencesDiscount(descuentoPromedio, descuentoPromedioAnterior);
+    } else {
+        differences[0] = 0;
+        differences[1] = 0;
     }
 
 
@@ -1660,6 +1627,9 @@ exports.tableNewsInfo = async (req, res) => {
         nuevosPromedioAnterior = values[lastMonth];
         // determinar la diferencia porcentual en los nuevoss
         differences = percentageDifferencesnews(nuevosPromedio, nuevosPromedioAnterior);
+    } else {
+        differences[0] = 0;
+        differences[1] = 0;
     }
 
 
@@ -1916,7 +1886,7 @@ news = arr => {
 }
 
 // se calcula el porcentaje de diferencia entre mes actual y anterior
-percentageDifferencePrice = (current, before) => {
+let percentageDifferencePrice = (current, before) => {
     // 1 positive 0 negative
     let difference = [];
     if (current >= before  && current !== 0) {
@@ -1927,11 +1897,7 @@ percentageDifferencePrice = (current, before) => {
         difference[0] = 0;
         difference[1] =  parseFloat(Math.abs( ((current*100)/before)-100 ).toFixed(2));
         return difference;
-    } else {
-        difference[0] = 0;
-        difference[1] = 0;
-        return difference;
-    }
+    } 
 
 }
 

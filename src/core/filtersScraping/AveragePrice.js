@@ -16,7 +16,7 @@ exports.averagePriceYear = (arr) => {
   }
 };
 
-// metodo para filtrar por ambas marcas mango y zara por terminar
+// metodo para filtrar por marca
 exports.averagePriceMonthGeneral = (arr) => {
   let eneZ = [];
   let febZ = [];
@@ -460,7 +460,227 @@ exports.averagePriceMonthGeneral = (arr) => {
   valuesZ[45] = setAveragePriceMonth(oct2);
   valuesZ[46] = setAveragePriceMonth(nov2);
   valuesZ[47] = setAveragePriceMonth(dic2);
-  valuesZ[48] = currentMonth;
+
+  // datos de mango desde la posicion [48] a la [47]
+
+  let eneG = [];
+  let febG = [];
+  let marG = [];
+  let abrG = [];
+  let mayG = [];
+  let junG = [];
+  let julG = [];
+  let agosG = [];
+  let sepG = [];
+  let octG = [];
+  let novG = [];
+  let dicG = [];
+
+  let ene3 = [];
+  let feb3 = [];
+  let mar3 = [];
+  let abr3 = [];
+  let may3 = [];
+  let jun3 = [];
+  let jul3 = [];
+  let agos3 = [];
+  let sep3 = [];
+  let oct3 = [];
+  let nov3 = [];
+  let dic3 = [];
+
+  // let count = 1;
+
+  try {
+    arr.forEach((element) => {
+      let date = new Date();
+      let currentYear = date.getFullYear();
+      let lastYear = date.getFullYear() - 1;
+      let fecha = element.createdAt + ""; // funcion para obtener la fecha
+      let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero
+      let year = parseInt(fecha.split(" ")[3]);
+
+      if (year === currentYear && element.origin == 'Gef') {
+        if (mes === "Jan" && element.descuento === null) {
+          // estructura interna del if
+          return eneG.push(element.precio);
+        } else if (mes === "Jan" && element.descuento !== null) {
+          eneG.push(element.descuento);
+        }
+        if (mes === "Feb" && element.descuento === null) {
+          // estructura interna del if
+          return febG.push(element.precio);
+        } else if (mes === "Feb" && element.descuento !== null) {
+          febG.push(element.descuento);
+        }
+        if (mes === "Mar" && element.descuento === null) {
+          // estructura interna del if
+          return marG.push(element.precio);
+        } else if (mes === "Mar" && element.descuento !== null) {
+          marG.push(element.descuento);
+        }
+        if (mes === "Apr" && element.descuento === null) {
+          // estructura interna del if
+          return abrG.push(element.precio);
+        } else if (mes === "Apr" && element.descuento !== null) {
+          abrG.push(element.descuento);
+        }
+        if (mes === "May" && element.descuento === null) {
+          // estructura interna del if
+          return mayG.push(element.precio);
+        } else if (mes === "May" && element.descuento !== null) {
+          mayG.push(element.descuento);
+        }
+        if (mes === "Jun" && element.descuento === null) {
+          // estructura interna del if
+          return junG.push(element.precio);
+        } else if (mes === "Jun" && element.descuento !== null) {
+          junG.push(element.descuento);
+        }
+        if (mes === "Jul" && element.descuento === null) {
+          // estructura interna del if
+          return julG.push(element.precio);
+        } else if (mes === "Jul" && element.descuento !== null) {
+          julG.push(element.descuento);
+        }
+        if (mes === "Aug" && element.descuento === null) {
+          // estructura interna del if
+          return agosG.push(element.precio);
+        } else if (mes === "Aug" && element.descuento !== null) {
+          agosG.push(element.descuento);
+        }
+        if (mes === "Sep" && element.descuento === null) {
+          // estructura interna del if
+          return sepG.push(element.precio);
+        } else if (mes === "Sep" && element.descuento !== null) {
+          sepG.push(element.descuento);
+        }
+        if (mes === "Oct" && element.descuento === null) {
+          // estructura interna del if
+          return octG.push(element.precio);
+        } else if (mes === "Oct" && element.descuento !== null) {
+          octG.push(element.descuento);
+        }
+        if (mes === "Nov" && element.descuento === null) {
+          // estructura interna del if
+          return novG.push(element.precio);
+        } else if (mes === "Nov" && element.descuento !== null) {
+          novG.push(element.descuento);
+        }
+        if (mes === "Dec" && element.descuento === null) {
+          // estructura interna del if
+          return dicG.push(element.precio);
+        } else if (mes === "Dec" && element.descuento !== null) {
+          dicG.push(element.descuento);
+        }
+      }
+
+      if (year === lastYear  && element.origin == 'Gef') {
+        if (mes === "Jan" && element.descuento === null) {
+          // estructura interna del if
+          return ene3.push(element.precio);
+        } else if (mes === "Jan" && element.descuento !== null) {
+          ene3.push(element.descuento);
+        }
+        if (mes === "Feb" && element.descuento === null) {
+          // estructura interna del if
+          return feb3.push(element.precio);
+        } else if (mes === "Feb" && element.descuento !== null) {
+          feb3.push(element.descuento);
+        }
+        if (mes === "Mar" && element.descuento === null) {
+          // estructura interna del if
+          return mar3.push(element.precio);
+        } else if (mes === "Mar" && element.descuento !== null) {
+          mar3.push(element.descuento);
+        }
+        if (mes === "Apr" && element.descuento === null) {
+          // estructura interna del if
+          return abr3.push(element.precio);
+        } else if (mes === "Apr" && element.descuento !== null) {
+          abr3.push(element.descuento);
+        }
+        if (mes === "May" && element.descuento === null) {
+          // estructura interna del if
+          return may3.push(element.precio);
+        } else if (mes === "May" && element.descuento !== null) {
+          may3.push(element.descuento);
+        }
+        if (mes === "Jun" && element.descuento === null) {
+          // estructura interna del if
+          return jun3.push(element.precio);
+        } else if (mes === "Jun" && element.descuento !== null) {
+          jun3.push(element.descuento);
+        }
+        if (mes === "Jul" && element.descuento === null) {
+          // estructura interna del if
+          return jul3.push(element.precio);
+        } else if (mes === "Jul" && element.descuento !== null) {
+          jul3.push(element.descuento);
+        }
+        if (mes === "Aug" && element.descuento === null) {
+          // estructura interna del if
+          return agos3.push(element.precio);
+        } else if (mes === "Aug" && element.descuento !== null) {
+          agos3.push(element.descuento);
+        }
+        if (mes === "Sep" && element.descuento === null) {
+          // estructura interna del if
+          return sep3.push(element.precio);
+        } else if (mes === "Sep" && element.descuento !== null) {
+          sep3.push(element.descuento);
+        }
+        if (mes === "Oct" && element.descuento === null) {
+          // estructura interna del if
+          return oct3.push(element.precio);
+        } else if (mes === "Oct" && element.descuento !== null) {
+          oct3.push(element.descuento);
+        }
+        if (mes === "Nov" && element.descuento === null) {
+          // estructura interna del if
+          return nov3.push(element.precio);
+        } else if (mes === "Nov" && element.descuento !== null) {
+          nov3.push(element.descuento);
+        }
+        if (mes === "Dec" && element.descuento === null) {
+          // estructura interna del if
+          return dic3.push(element.precio);
+        } else if (mes === "Dec" && element.descuento !== null) {
+          dic3.push(element.descuento);
+        }
+      }
+    }); // fin del ciclo que guarda los precios de cada mes
+  } catch (error) {
+    console.log(error);
+  }
+
+  valuesZ[48] = setAveragePriceMonth(eneG);
+  valuesZ[49] = setAveragePriceMonth(febG);
+  valuesZ[50] = setAveragePriceMonth(marG);
+  valuesZ[51] = setAveragePriceMonth(abrG);
+  valuesZ[52] = setAveragePriceMonth(mayG);
+  valuesZ[53] = setAveragePriceMonth(junG);
+  valuesZ[54] = setAveragePriceMonth(julG);
+  valuesZ[55] = setAveragePriceMonth(agosG);
+  valuesZ[56] = setAveragePriceMonth(sepG);
+  valuesZ[57] = setAveragePriceMonth(octG);
+  valuesZ[58] = setAveragePriceMonth(novG);
+  valuesZ[59] = setAveragePriceMonth(dicG);
+
+  // valores del año anterior mango
+  valuesZ[60] = setAveragePriceMonth(ene3);
+  valuesZ[61] = setAveragePriceMonth(feb3);
+  valuesZ[62] = setAveragePriceMonth(mar3);
+  valuesZ[63] = setAveragePriceMonth(abr3);
+  valuesZ[64] = setAveragePriceMonth(may3);
+  valuesZ[65] = setAveragePriceMonth(jun3);
+  valuesZ[66] = setAveragePriceMonth(jul3);
+  valuesZ[67] = setAveragePriceMonth(agos3);
+  valuesZ[68] = setAveragePriceMonth(sep3);
+  valuesZ[69] = setAveragePriceMonth(oct3);
+  valuesZ[70] = setAveragePriceMonth(nov3);
+  valuesZ[71] = setAveragePriceMonth(dic3);
+
 
   return valuesZ;
 
