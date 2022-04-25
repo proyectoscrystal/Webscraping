@@ -1727,7 +1727,7 @@ exports.tableSKUInfo = async (req, res) => {
             element.precioPromedio = (element.precioPromedio).toFixed();
         }
         if(element.porcentajeDescuento !== null) {
-            element.porcentajeDescuento = (element.porcentajeDescuento).toFixed(3);
+            element.porcentajeDescuento = (element.porcentajeDescuento).toFixed(2);
         }
 
         element.tasaFrescura = (element.nuevos/totalElements).toFixed(3); 
@@ -1811,7 +1811,7 @@ exports.tablePrendasInfo2 = async (req, res) => {
     let totalElements = arr.length;
     arr2 = arr2.map(element => {
         if(element.porcentajeDescuento !== null) {
-        element.porcentajeDescuento = (element.porcentajeDescuento).toFixed(3);
+        element.porcentajeDescuento = (element.porcentajeDescuento).toFixed(2);
 
         element.precioPromedio = (element.precioPromedio).toFixed();
         }
