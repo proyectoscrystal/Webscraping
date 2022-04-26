@@ -307,7 +307,107 @@ exports.averageDiscontinuedMonthGeneral = (arr) => {
     valuesZ[45] = oct2;
     valuesZ[46] = nov2;
     valuesZ[47] = dic2;
-    valuesZ[48] = currentMonth;
+
+
+    // datos de Gef desde la posicion [48] a la [71]
+  
+    let eneG = 0;
+    let febG = 0;
+    let marG = 0;
+    let abrG = 0;
+    let mayG = 0;
+    let junG = 0;
+    let julG = 0;
+    let agosG = 0;
+    let sepG = 0;
+    let octG = 0;
+    let novG = 0;
+    let dicG = 0;
+  
+    let ene3 = 0;
+    let feb3 = 0;
+    let mar3 = 0;
+    let abr3 = 0;
+    let may3 = 0;
+    let jun3 = 0;
+    let jul3 = 0;
+    let agos3 = 0;
+    let sep3 = 0;
+    let oct3 = 0;
+    let nov3 = 0;
+    let dic3 = 0;
+  
+    // let count = 1;
+  
+    try {
+      arr.forEach((element) => {
+        let date = new Date();
+        let currentYear = date.getFullYear();
+        let lastYear = date.getFullYear() - 1;
+        let fecha = element.createdAt + ""; // funcion para obtener la fecha
+        let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero
+        let year = parseInt(fecha.split(" ")[3]);
+  
+        if (year === currentYear && element.origin == 'Gef') {
+          if (mes === "Jan" && element.estado === "descontinuado") return eneG++;
+          if (mes === "Feb" && element.estado === "descontinuado") return febG++;
+          if (mes === "Mar" && element.estado === "descontinuado") return marG++;
+          if (mes === "Apr" && element.estado === "descontinuado") return abrG++;
+          if (mes === "May" && element.estado === "descontinuado") return mayG++;
+          if (mes === "Jun" && element.estado === "descontinuado") return junG++;
+          if (mes === "Jul" && element.estado === "descontinuado") return julG++;
+          if (mes === "Aug" && element.estado === "descontinuado") return agosG++;
+          if (mes === "Sep" && element.estado === "descontinuado") return sepG++;
+          if (mes === "Oct" && element.estado === "descontinuado") return octG++;
+          if (mes === "Nov" && element.estado === "descontinuado") return novG++;
+          if (mes === "Dec" && element.estado === "descontinuado") return dicG++;
+        }
+  
+        if (year === lastYear  && element.origin == 'Gef') {
+          if (mes === "Jan" && element.estado === "descontinuado") return ene3++;
+          if (mes === "Feb" && element.estado === "descontinuado") return feb3++;
+          if (mes === "Mar" && element.estado === "descontinuado") return mar3++;
+          if (mes === "Apr" && element.estado === "descontinuado") return abr3++;
+          if (mes === "May" && element.estado === "descontinuado") return may3++;
+          if (mes === "Jun" && element.estado === "descontinuado") return jun3++;
+          if (mes === "Jul" && element.estado === "descontinuado") return jul3++;
+          if (mes === "Aug" && element.estado === "descontinuado") return agos3++;
+          if (mes === "Sep" && element.estado === "descontinuado") return sep3++;
+          if (mes === "Oct" && element.estado === "descontinuado") return oct3++;
+          if (mes === "Nov" && element.estado === "descontinuado") return nov3++;
+          if (mes === "Dec" && element.estado === "descontinuado") return dic3++;
+        }
+      }); // fin del ciclo que guarda los precios de cada mes
+    } catch (error) {
+      console.log(error);
+    }
+  
+    valuesZ[48] = eneG;
+    valuesZ[49] = febG;
+    valuesZ[50] = marG;
+    valuesZ[51] = abrG;
+    valuesZ[52] = mayG;
+    valuesZ[53] = junG;
+    valuesZ[54] = julG;
+    valuesZ[55] = agosG;
+    valuesZ[56] = sepG;
+    valuesZ[57] = octG;
+    valuesZ[58] = novG;
+    valuesZ[59] = dicG;
+  
+    // valores del año anterior Gef
+    valuesZ[60] = ene2;
+    valuesZ[61] = feb2;
+    valuesZ[62] = mar2;
+    valuesZ[63] = abr2;
+    valuesZ[64] = may2;
+    valuesZ[65] = jun2;
+    valuesZ[66] = jul2;
+    valuesZ[67] = agos2;
+    valuesZ[68] = sep2;
+    valuesZ[69] = oct2;
+    valuesZ[70] = nov2;
+    valuesZ[71] = dic2;
 
     
   

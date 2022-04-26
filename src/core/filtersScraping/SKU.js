@@ -160,6 +160,33 @@ exports.averageSKUMonthGeneral = (arr) => {
     let nov2 = 0;
     let dic2 = 0;
   
+    // variables Gef
+    let eneG = 0;
+    let febG = 0;
+    let marG = 0;
+    let abrG = 0;
+    let mayG = 0;
+    let junG = 0;
+    let julG = 0;
+    let agosG = 0;
+    let sepG = 0;
+    let octG = 0;
+    let novG = 0;
+    let dicG = 0;
+  
+    let ene3 = 0;
+    let feb3 = 0;
+    let mar3 = 0;
+    let abr3 = 0;
+    let may3 = 0;
+    let jun3 = 0;
+    let jul3 = 0;
+    let agos3 = 0;
+    let sep3 = 0;
+    let oct3 = 0;
+    let nov3 = 0;
+    let dic3 = 0;
+  
     
     let date = new Date();
     let currentMonth = date.getMonth() - 1;
@@ -234,6 +261,36 @@ exports.averageSKUMonthGeneral = (arr) => {
             if (mes === "Dec") return dic2 += element.numeroTallas;
           }
 
+        if (year === currentYear && element.origin == 'Gef' && element.discontinued === false) {
+            if (mes === "Jan") return eneG += element.numeroTallas;
+            if (mes === "Feb") return febG += element.numeroTallas;
+            if (mes === "Mar") return marG += element.numeroTallas;
+            if (mes === "Apr") return abrG += element.numeroTallas;
+            if (mes === "May") return mayG += element.numeroTallas;
+            if (mes === "Jun") return junG += element.numeroTallas;
+            if (mes === "Jul") return julG += element.numeroTallas;
+            if (mes === "Aug") return agosG += element.numeroTallas;
+            if (mes === "Sep") return sepG += element.numeroTallas;
+            if (mes === "Oct") return octG += element.numeroTallas;
+            if (mes === "Nov") return novG += element.numeroTallas;
+            if (mes === "Dec") return dicG += element.numeroTallas;
+          }
+    
+          if (year === lastYear  && element.origin == 'Gef' && element.discontinued === false) {
+            if (mes === "Jan") return ene3 += element.numeroTallas;
+            if (mes === "Feb") return feb3 += element.numeroTallas;
+            if (mes === "Mar") return mar3 += element.numeroTallas;
+            if (mes === "Apr") return abr3 += element.numeroTallas;
+            if (mes === "May") return may3 += element.numeroTallas;
+            if (mes === "Jun") return jun3 += element.numeroTallas;
+            if (mes === "Jul") return jul3 += element.numeroTallas;
+            if (mes === "Aug") return agos3 += element.numeroTallas;
+            if (mes === "Sep") return sep3 += element.numeroTallas;
+            if (mes === "Oct") return oct3 += element.numeroTallas;
+            if (mes === "Nov") return nov3 += element.numeroTallas;
+            if (mes === "Dec") return dic3 += element.numeroTallas;
+          }
+
 
       }); // fin del ciclo que guarda los precios de cada mes
     } catch (error) {
@@ -267,7 +324,6 @@ exports.averageSKUMonthGeneral = (arr) => {
     valuesZ[23] = dic;
   
     // datos de mango desde la posicion [24] a la [47]
-
   
     valuesZ[24] = enem;
     valuesZ[25] = febm;
@@ -295,7 +351,35 @@ exports.averageSKUMonthGeneral = (arr) => {
     valuesZ[45] = oct2;
     valuesZ[46] = nov2;
     valuesZ[47] = dic2;
-    valuesZ[48] = currentMonth;
+
+    // datos de Gef desde la posicion [48] a la [71]
+  
+    valuesZ[48] = eneG;
+    valuesZ[49] = febG;
+    valuesZ[50] = marG;
+    valuesZ[51] = abrG;
+    valuesZ[52] = mayG;
+    valuesZ[53] = junG;
+    valuesZ[54] = julG;
+    valuesZ[55] = agosG;
+    valuesZ[56] = sepG;
+    valuesZ[57] = octG;
+    valuesZ[58] = novG;
+    valuesZ[59] = dicG;
+  
+    // valores del año anterior Gef
+    valuesZ[60] = ene3;
+    valuesZ[61] = feb3;
+    valuesZ[62] = mar3;
+    valuesZ[63] = abr3;
+    valuesZ[64] = may3;
+    valuesZ[65] = jun3;
+    valuesZ[66] = jul3;
+    valuesZ[67] = agos3;
+    valuesZ[68] = sep3;
+    valuesZ[69] = oct3;
+    valuesZ[70] = nov3;
+    valuesZ[71] = dic3;
   
     return valuesZ;
   

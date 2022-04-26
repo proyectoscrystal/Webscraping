@@ -733,27 +733,38 @@ exports.cardsInfo = async (req, res) => {
     if (req.query.origin === undefined || Array.isArray(req.query.origin) ) {
 
         discounts = avgDiscount.averageDiscountMonthGeneral(arr2); // calcula los promedios por mes x 2 años una marca
-        let flag = false;
+        // let flag = false;
         dzm[0] = discounts[lastMonth];
         dzm[1] = discounts[month];
-        if(dzm[1] === 0) flag = true;
+        // if(dzm[1] === 0) flag = true;
         dzm[0] += discounts[month + 23];
         dzm[1] += discounts[month + 24];
-        if(discounts[month + 24] === 0) flag = true;
-        if(!flag === true) {
-            dzm[1] = (dzm[1]/2);
-            dzm[0] = (dzm[0]/2);
-        } 
+        // descuentos Gef
+        dzm[0] += discounts[month + 47];
+        dzm[1] += discounts[month + 48];
+        // if(discounts[month + 24] === 0) flag = true;
+        // if(!flag === true) {
+        //     dzm[1] = (dzm[1]/2);
+        //     dzm[0] = (dzm[0]/2);
+        // } 
+
+        let countD = 0;
+        // contando si hay valores en las marcas
+        if(discounts[month] !== 0) countD += 1;
+        if(discounts[month + 24] !== 0) countD += 1;
+        if(discounts[month + 48] !== 0) countD += 1;  
         // descuento promedio mes actualizado
         
+        discount = (dzm[1]/countD).toFixed(2);
+        differencePorcentage =  percentageDifferencesDiscount(dzm[1]/countD, dzm[0]/countD);
 
-        if(discounts[month] === 0 || discounts[month + 24] === 0){
-            discount = ((discounts[month] + discounts[month + 24])).toFixed(2);
-            differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
-        } else {
-            discount = ((discounts[month] + discounts[month + 24])/2).toFixed(2);
-            differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
-        }
+        // if(discounts[month] === 0 || discounts[month + 24] === 0){
+        //     discount = ((discounts[month] + discounts[month + 24])).toFixed(2);
+        //     differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
+        // } else {
+        //     discount = ((discounts[month] + discounts[month + 24])/2).toFixed(2);
+        //     differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
+        // }
 
 
         values = avgPrice.averagePriceMonthGeneral(arr2); // calcula el precio promedio por mes dos marcas 2 años
@@ -782,7 +793,7 @@ exports.cardsInfo = async (req, res) => {
         nzm[0] += newsCounts[month + 23];
         nzm[1] += newsCounts[month + 24]; // valor actual de mango
         nzm[0] += newsCounts[month + 47];
-        nzm[1] += newsCounts[month + 48]; // valor actual de mango
+        nzm[1] += newsCounts[month + 48]; // valor actual de Gef
         nuevos = ((newsCounts[month] + newsCounts[month + 24] + newsCounts[month + 48]));
 
         discontinuedCounts = discontinued.averageDiscontinuedMonthGeneral(arr); // calcula los descontinuados promedio por mes dos marcas 2 años
@@ -790,6 +801,8 @@ exports.cardsInfo = async (req, res) => {
         ddzm[1] =  discontinuedCounts[month]; // valor actual de zara 
         ddzm[0] += discontinuedCounts[month + 23];
         ddzm[1] += discontinuedCounts[month + 24]; // valor actual de mango
+        ddzm[0] += discontinuedCounts[month + 47];
+        ddzm[1] += discontinuedCounts[month + 48]; // valor actual de Gef
         discontinueds = (ddzm[1]);
 
 
@@ -798,7 +811,10 @@ exports.cardsInfo = async (req, res) => {
         skuzm[1] =  skuCounts[month]; // valor actual de zara 
         skuzm[0] += skuCounts[month + 23];
         skuzm[1] += skuCounts[month + 24]; // valor actual de mango
-        sku = (skuCounts[month] + skuCounts[month + 24]) ;
+        skuzm[0] += skuCounts[month + 47];
+        skuzm[1] += skuCounts[month + 48]; // valor actual de Gef
+        // sku = (skuCounts[month] + skuCounts[month + 24]) ;
+        sku = (skuzm[1]) ;
 
 
         origin = 'general';        
@@ -941,13 +957,10 @@ exports.averageDiscount = async (req, res) => {
         values = avgDiscount.averageDiscountMonthGeneral(arr);        
         origin = 'general';
         
-    } else if(req.query.origin === 'Zara'){
-        origin = 'Zara';
+    } else {
+        origin = req.query.origin;
         values = avgDiscount.averageDiscount(arr);
 
-    } else if(req.query.origin === 'Mango'){
-        origin = 'Mango';
-        values = avgDiscount.averageDiscount(arr);
     }
 
     months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -989,14 +1002,11 @@ exports.averageDiscountinued = async (req, res) => {
         values = discontinued.averageDiscontinuedMonthGeneral(arr);        
         origin = 'general';
         
-    } else if(req.query.origin === 'Zara'){
-        origin = 'Zara';
+    } else {
+        origin = req.query.origin;
         values = discontinued.averageDiscontinuedMonthOrigin(arr);
 
-    } else if(req.query.origin === 'Mango'){
-        origin = 'Mango';
-        values = discontinued.averageDiscontinuedMonthOrigin(arr);
-    }
+    } 
 
     months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
@@ -1088,14 +1098,11 @@ exports.averageSKU = async (req, res) => {
         values = avgSKU.averageSKUMonthGeneral(arr);        
         origin = 'general';
         
-    } else if(req.query.origin === 'Zara'){
-        origin = 'Zara';
+    } else {
+        origin = req.query.origin;
         values = avgSKU.averageSKUMonthOrigin(arr);
 
-    } else if(req.query.origin === 'Mango'){
-        origin = 'Mango';
-        values = avgSKU.averageSKUMonthOrigin(arr);
-    }
+    } 
 
     months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
     
