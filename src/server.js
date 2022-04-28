@@ -27,7 +27,6 @@ app.use(
 );
 
 
-
 // Configuraciones
 const properties = require('./config/properties');
 const routes = require('./routes/routes');
