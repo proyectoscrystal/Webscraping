@@ -167,7 +167,7 @@ exports.averagePriceWeekGeneral = (arr) => {
     let weeksActualYearMango = [];
     let weeksLastYearMango = [];
   
-    // arreglos para descuentos promedio zara por semana año anterior
+    // arreglos para descuentos promedio mango por semana año anterior
     let lmene1_7 = [];
     let lmene8_14 = [];
     let lmene15_21 = [];

@@ -742,29 +742,28 @@ exports.cardsInfo = async (req, res) => {
         // descuentos Gef
         dzm[0] += discounts[month + 47];
         dzm[1] += discounts[month + 48];
-        // if(discounts[month + 24] === 0) flag = true;
-        // if(!flag === true) {
-        //     dzm[1] = (dzm[1]/2);
-        //     dzm[0] = (dzm[0]/2);
-        // } 
+        // descuentos Punto blanco
+        dzm[0] += discounts[month + 71];
+        dzm[1] += discounts[month + 72];
+        // descuentos Baby fresh
+        dzm[0] += discounts[month + 95];
+        dzm[1] += discounts[month + 96];
+        // // descuentos Galax
+        dzm[0] += discounts[month + 119];
+        dzm[1] += discounts[month + 120];
 
         let countD = 0;
-        // contando si hay valores en las marcas
         if(discounts[month] !== 0) countD += 1;
         if(discounts[month + 24] !== 0) countD += 1;
         if(discounts[month + 48] !== 0) countD += 1;  
+        if(discounts[month + 72] !== 0) countD += 1;  
+        if(discounts[month + 96] !== 0) countD += 1;  
+        if(discounts[month + 120] !== 0) countD += 1;  
         // descuento promedio mes actualizado
         
         discount = (dzm[1]/countD).toFixed(2);
         differencePorcentage =  percentageDifferencesDiscount(dzm[1]/countD, dzm[0]/countD);
 
-        // if(discounts[month] === 0 || discounts[month + 24] === 0){
-        //     discount = ((discounts[month] + discounts[month + 24])).toFixed(2);
-        //     differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
-        // } else {
-        //     discount = ((discounts[month] + discounts[month + 24])/2).toFixed(2);
-        //     differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
-        // }
 
 
         values = avgPrice.averagePriceMonthGeneral(arr2); // calcula el precio promedio por mes dos marcas 2 años
@@ -775,14 +774,26 @@ exports.cardsInfo = async (req, res) => {
         // valores de Gef
         zm[0] += values[month + 47];
         zm[1] += values[month + 48];
+        // valores de Punto blanco
+        zm[0] += values[month + 71];
+        zm[1] += values[month + 72];
+        // valores de baby fresh
+        zm[0] += values[month + 95];
+        zm[1] += values[month + 96];
+        // valores de Galax
+        zm[0] += values[month + 119];
+        zm[1] += values[month + 120];
         let countM = 0;
         // contando si hay valores en las marcas
         if(values[month] !== 0) countM += 1;
         if(values[month + 24] !== 0) countM += 1;
         if(values[month + 48] !== 0) countM += 1;            
+        if(values[month + 72] !== 0) countM += 1;            
+        if(values[month + 96] !== 0) countM += 1;            
+        if(values[month + 120] !== 0) countM += 1;            
         
    
-        precioPromedio = ((values[month] + values[month + 24] + values[month + 48])/countM).toFixed();
+        precioPromedio = ((zm[1])/countM).toFixed();
         differencePrice =  percentageDifferencePrice(zm[1]/countM, zm[0]/countM);
         
 
@@ -794,7 +805,13 @@ exports.cardsInfo = async (req, res) => {
         nzm[1] += newsCounts[month + 24]; // valor actual de mango
         nzm[0] += newsCounts[month + 47];
         nzm[1] += newsCounts[month + 48]; // valor actual de Gef
-        nuevos = ((newsCounts[month] + newsCounts[month + 24] + newsCounts[month + 48]));
+        nzm[0] += newsCounts[month + 71];
+        nzm[1] += newsCounts[month + 72]; // valor actual de Punto blanco
+        nzm[0] += newsCounts[month + 95];
+        nzm[1] += newsCounts[month + 96]; // valor actual de baby fresh
+        nzm[0] += newsCounts[month + 119];
+        nzm[1] += newsCounts[month + 120]; // valor actual de Galax
+        nuevos = ((nzm[1]));
 
         discontinuedCounts = discontinued.averageDiscontinuedMonthGeneral(arr); // calcula los descontinuados promedio por mes dos marcas 2 años
         ddzm[0] = discontinuedCounts[lastMonth];
@@ -803,6 +820,12 @@ exports.cardsInfo = async (req, res) => {
         ddzm[1] += discontinuedCounts[month + 24]; // valor actual de mango
         ddzm[0] += discontinuedCounts[month + 47];
         ddzm[1] += discontinuedCounts[month + 48]; // valor actual de Gef
+        ddzm[0] += discontinuedCounts[month + 71];
+        ddzm[1] += discontinuedCounts[month + 72]; // valor actual de Punto blanco
+        ddzm[0] += discontinuedCounts[month + 95];
+        ddzm[1] += discontinuedCounts[month + 96]; // valor actual de Baby fresh
+        ddzm[0] += discontinuedCounts[month + 119];
+        ddzm[1] += discontinuedCounts[month + 120]; // valor actual de Galax
         discontinueds = (ddzm[1]);
 
 
@@ -813,6 +836,12 @@ exports.cardsInfo = async (req, res) => {
         skuzm[1] += skuCounts[month + 24]; // valor actual de mango
         skuzm[0] += skuCounts[month + 47];
         skuzm[1] += skuCounts[month + 48]; // valor actual de Gef
+        skuzm[0] += skuCounts[month + 71];
+        skuzm[1] += skuCounts[month + 72]; // valor actual de Punto blanco
+        skuzm[0] += skuCounts[month + 95];
+        skuzm[1] += skuCounts[month + 96]; // valor actual de Baby fresh
+        skuzm[0] += skuCounts[month + 119];
+        skuzm[1] += skuCounts[month + 120]; // valor actual de Galax
         // sku = (skuCounts[month] + skuCounts[month + 24]) ;
         sku = (skuzm[1]) ;
 
