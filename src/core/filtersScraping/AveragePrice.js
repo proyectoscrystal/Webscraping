@@ -501,7 +501,7 @@ exports.averagePriceMonthGeneral = (arr) => {
       let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero
       let year = parseInt(fecha.split(" ")[3]);
 
-      if (year === currentYear && element.origin == 'Gef') {
+      if (year === currentYear && element.origin == 'Gef' && element.precio !== undefined) {
         if (mes === "Jan" && element.descuento === null) {
           // estructura interna del if
           return eneG.push(element.precio);
@@ -576,7 +576,7 @@ exports.averagePriceMonthGeneral = (arr) => {
         }
       }
 
-      if (year === lastYear  && element.origin == 'Gef') {
+      if (year === lastYear  && element.origin == 'Gef' && element.precio !== undefined) {
         if (mes === "Jan" && element.descuento === null) {
           // estructura interna del if
           return ene3.push(element.precio);
@@ -721,7 +721,7 @@ exports.averagePriceMonthGeneral = (arr) => {
        let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero
        let year = parseInt(fecha.split(" ")[3]);
  
-       if (year === currentYear && element.origin == 'Punto blanco') {
+       if (year === currentYear && element.origin == 'Punto blanco' && element.precio !== undefined) {
          if (mes === "Jan" && element.descuento === null) {
            // estructura interna del if
            return enePB.push(element.precio);
@@ -796,7 +796,7 @@ exports.averagePriceMonthGeneral = (arr) => {
          }
        }
  
-       if (year === lastYear  && element.origin == 'Punto blanco') {
+       if (year === lastYear  && element.origin == 'Punto blanco' && element.precio !== undefined) {
          if (mes === "Jan" && element.descuento === null) {
            // estructura interna del if
            return ene4.push(element.precio);
@@ -940,7 +940,7 @@ exports.averagePriceMonthGeneral = (arr) => {
        let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero
        let year = parseInt(fecha.split(" ")[3]);
  
-       if (year === currentYear && element.origin == 'Baby fresh') {
+       if (year === currentYear && element.origin == 'Baby fresh' && element.precio !== undefined) {
          if (mes === "Jan" && element.descuento === null) {
            // estructura interna del if
            return eneBF.push(element.precio);
@@ -1015,7 +1015,7 @@ exports.averagePriceMonthGeneral = (arr) => {
          }
        }
  
-       if (year === lastYear  && element.origin == 'Baby fresh') {
+       if (year === lastYear  && element.origin == 'Baby fresh' && element.precio !== undefined) {
          if (mes === "Jan" && element.descuento === null) {
            // estructura interna del if
            return ene5.push(element.precio);
@@ -1159,7 +1159,7 @@ exports.averagePriceMonthGeneral = (arr) => {
         let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero
         let year = parseInt(fecha.split(" ")[3]);
   
-        if (year === currentYear && element.origin == 'Galax') {
+        if (year === currentYear && element.origin == 'Galax' && element.precio !== undefined) {
           if (mes === "Jan" && element.descuento === null) {
             // estructura interna del if
             return eneGA.push(element.precio);
@@ -1234,7 +1234,7 @@ exports.averagePriceMonthGeneral = (arr) => {
           }
         }
   
-        if (year === lastYear  && element.origin == 'Galax') {
+        if (year === lastYear  && element.origin == 'Galax' && element.precio !== undefined) {
           if (mes === "Jan" && element.descuento === null) {
             // estructura interna del if
             return ene6.push(element.precio);

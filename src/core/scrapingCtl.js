@@ -704,18 +704,17 @@ exports.cardsInfo = async (req, res) => {
     let discontinuedCounts = 0;
     let skuCounts = 0;
     // variables para la diferencia entre mes actual y anterior
-    let differencePrice = [];
-    let differencePorcentage = [];
-    let differenceNew = [];
-    let differenceDiscontinued = [];
-    let differenceSKU = [];
+    let differencePrice = [0,0];
+    let differencePorcentage = [0,0];
+    let differenceNew = [0,0];
+    let differenceDiscontinued = [0,0];
+    let differenceSKU = [0,0];
     let origin = '';
     let precioPromedio = 0;
     let discountinueds = '';
     let discount = 0;
     let nuevos = 0;
 
-    
 
     try {
         arr = await Business.find(filtro,{"precio":1, "descuento": 1,  "origin":1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tag": 1, "discontinued":1}, { allowDiskUse: true});
@@ -761,9 +760,21 @@ exports.cardsInfo = async (req, res) => {
         if(discounts[month + 120] !== 0) countD += 1;  
         // descuento promedio mes actualizado
         
-        discount = (dzm[1]/countD).toFixed(2);
-        differencePorcentage =  percentageDifferencesDiscount(dzm[1]/countD, dzm[0]/countD);
+        if(countD !== 0) {
+            discount = (dzm[1]/countD).toFixed(2);
+            differencePorcentage =  percentageDifferencesDiscount(dzm[1]/countD, dzm[0]/countD);
+        } else {
+            let countLM = 0;
+            if(discounts[month - 1] !== 0) countLM += 1;
+            if(discounts[month + 23] !== 0) countLM += 1;
+            if(discounts[month + 47] !== 0) countLM += 1;  
+            if(discounts[month + 71] !== 0) countLM += 1;  
+            if(discounts[month + 95] !== 0) countLM += 1;  
+            if(discounts[month + 119] !== 0) countLM += 1; 
 
+            differencePorcentage =  percentageDifferencesDiscount(dzm[1]/countLM, dzm[0]/countLM);
+            discount = dzm[1];
+        }
 
 
         values = avgPrice.averagePriceMonthGeneral(arr2); // calcula el precio promedio por mes dos marcas 2 años
@@ -793,8 +804,20 @@ exports.cardsInfo = async (req, res) => {
         if(values[month + 120] !== 0) countM += 1;            
         
    
-        precioPromedio = ((zm[1])/countM).toFixed();
-        differencePrice =  percentageDifferencePrice(zm[1]/countM, zm[0]/countM);
+        if(countM !== 0) {
+            precioPromedio = ((zm[1])/countM).toFixed();
+            differencePrice =  percentageDifferencePrice(zm[1]/countM, zm[0]/countM);
+        } else {
+            let countlm
+            if(values[month - 1] !== 0) countlm += 1;
+            if(values[month + 23] !== 0) countlm += 1;
+            if(values[month + 47] !== 0) countlm += 1;            
+            if(values[month + 71] !== 0) countlm += 1;            
+            if(values[month + 95] !== 0) countlm += 1;            
+            if(values[month + 119] !== 0) countlm += 1;
+            precioPromedio = ((zm[1])).toFixed();
+            differencePrice =  percentageDifferencePrice(zm[1]/countlm, zm[0]/countlm);
+        }
         
 
 
