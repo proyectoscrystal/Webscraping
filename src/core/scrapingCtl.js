@@ -732,7 +732,8 @@ exports.cardsInfo = async (req, res) => {
     if (req.query.origin === undefined || Array.isArray(req.query.origin) ) {
 
         discounts = avgDiscount.averageDiscountMonthGeneral(arr2); // calcula los promedios por mes x 2 años una marca
-        // let flag = false;
+        
+
         dzm[0] = discounts[lastMonth];
         dzm[1] = discounts[month];
         // if(dzm[1] === 0) flag = true;
@@ -765,7 +766,7 @@ exports.cardsInfo = async (req, res) => {
             differencePorcentage =  percentageDifferencesDiscount(dzm[1]/countD, dzm[0]/countD);
         } else {
             let countLM = 0;
-            if(discounts[month - 1] !== 0) countLM += 1;
+            if(discounts[lastMonth] !== 0) countLM += 1;
             if(discounts[month + 23] !== 0) countLM += 1;
             if(discounts[month + 47] !== 0) countLM += 1;  
             if(discounts[month + 71] !== 0) countLM += 1;  
@@ -803,13 +804,21 @@ exports.cardsInfo = async (req, res) => {
         if(values[month + 96] !== 0) countM += 1;            
         if(values[month + 120] !== 0) countM += 1;            
         
+        let countM2 = 0;
+        if(values[lastMonth] !== 0) countM2 += 1;
+        if(values[month + 23] !== 0) countM2 += 1;
+        if(values[month + 47] !== 0) countM2 += 1;            
+        if(values[month + 71] !== 0) countM2 += 1;            
+        if(values[month + 95] !== 0) countM2 += 1;            
+        if(values[month + 119] !== 0) countM2 += 1;            
+        
    
         if(countM !== 0) {
             precioPromedio = ((zm[1])/countM).toFixed();
-            differencePrice =  percentageDifferencePrice(zm[1]/countM, zm[0]/countM);
+            differencePrice =  percentageDifferencePrice(zm[1]/countM, zm[0]/countM2);
         } else {
             let countlm
-            if(values[month - 1] !== 0) countlm += 1;
+            if(values[lastMonth] !== 0) countlm += 1;
             if(values[month + 23] !== 0) countlm += 1;
             if(values[month + 47] !== 0) countlm += 1;            
             if(values[month + 71] !== 0) countlm += 1;            
@@ -817,6 +826,7 @@ exports.cardsInfo = async (req, res) => {
             if(values[month + 119] !== 0) countlm += 1;
             precioPromedio = ((zm[1])).toFixed();
             differencePrice =  percentageDifferencePrice(zm[1]/countlm, zm[0]/countlm);
+            
         }
         
 
@@ -871,8 +881,7 @@ exports.cardsInfo = async (req, res) => {
 
         origin = 'general';        
 
-        // array de dos valores para setear la diferencia entre mes actual y anterior
-        differencePrice =  percentageDifferencePrice(zm[1], zm[0]);        
+        // array de dos valores para setear la diferencia entre mes actual y anterior    
         differenceNew = percentageDifferencesnews(nzm[1], nzm[0]);
         differenceDiscontinued = percentageDifferencesDiscontinued(ddzm[1], ddzm[0]);
         differenceSKU = percentageDifferencesSku(skuzm[1], skuzm[0]);
@@ -1229,8 +1238,10 @@ exports.tablePriceInfo = async (req, res) => {
     let arr3 = [];
     let arr2 = [];
     let arr = [];
+    let zm = [];
     let obj;
     let differences = [];
+    let precioPromedio = 0;
 
     //mes actual
     let date = new Date();
@@ -1273,21 +1284,63 @@ exports.tablePriceInfo = async (req, res) => {
     if (req.query.origin === undefined || Array.isArray(req.query.origin) ){
         values = avgPrice.averagePriceMonthGeneral(arr);
         // obtener precios promedio mes actual y anterior 
+        
 
-        if(values[month] === 0 || values[month + 24] === 0){
-            precioPromedio = ((values[month] + values[month + 24]));
-            precioPromedioAnterior = (values[lastMonth] + values[month + 23]);
+        zm[0] = values[lastMonth];
+        zm[1] =  values[month]; // valor actual de zara 
+        zm[0] += values[month + 23];
+        zm[1] += values[month + 24]; // valor actual de mango
+        // valores de Gef
+        zm[0] += values[month + 47];
+        zm[1] += values[month + 48];
+        // valores de Punto blanco
+        zm[0] += values[month + 71];
+        zm[1] += values[month + 72];
+        // valores de baby fresh
+        zm[0] += values[month + 95];
+        zm[1] += values[month + 96];
+        // valores de Galax
+        zm[0] += values[month + 119];
+        zm[1] += values[month + 120];
+
+        let countM = 0;
+        // contando si hay valores en las marcas
+        if(values[month] !== 0) countM += 1;
+        if(values[month + 24] !== 0) countM += 1;
+        if(values[month + 48] !== 0) countM += 1;            
+        if(values[month + 72] !== 0) countM += 1;            
+        if(values[month + 96] !== 0) countM += 1;            
+        if(values[month + 120] !== 0) countM += 1;            
+        
+        let countM2 = 0;
+        if(values[lastMonth] !== 0) countM2 += 1;
+        if(values[month + 23] !== 0) countM2 += 1;
+        if(values[month + 47] !== 0) countM2 += 1;            
+        if(values[month + 71] !== 0) countM2 += 1;            
+        if(values[month + 95] !== 0) countM2 += 1;            
+        if(values[month + 119] !== 0) countM2 += 1; 
+        if(countM2 === 0) countM2++;           
+        
+   
+        if(countM !== 0) {
+            precioPromedio = ((zm[1])/countM).toFixed();
+            differences =  percentageDifferencePrice(zm[1]/countM, zm[0]/countM2);
+            
         } else {
-            precioPromedio = ((values[month] + values[month + 24])/2);
-            precioPromedioAnterior = ((values[lastMonth] + values[month + 23])/2);
+            let countlm
+            if(values[lastMonth] !== 0) countlm += 1;
+            if(values[month + 23] !== 0) countlm += 1;
+            if(values[month + 47] !== 0) countlm += 1;            
+            if(values[month + 71] !== 0) countlm += 1;            
+            if(values[month + 95] !== 0) countlm += 1;            
+            if(values[month + 119] !== 0) countlm += 1;
+            precioPromedio = ((zm[1])).toFixed();
+            differences =  percentageDifferencePrice(zm[1]/countlm, zm[0]/countlm);
+            
         }
 
-        // determinar la diferencia porcentual en los precios
-        differences = percentageDifferencePrice(precioPromedio, precioPromedioAnterior);
-
-
         
-    } else if(req.query.origin === 'Zara'){
+    } else if(req.query.origin !== undefined || !Array.isArray(req.query.origin)){
         values = avgPrice.averagePriceMonthOrigin(arr);
         // obtener precios promedio mes actual y anterior 
         precioPromedio = values[month];
@@ -1295,13 +1348,6 @@ exports.tablePriceInfo = async (req, res) => {
 
         differences = percentageDifferencePrice(precioPromedio, precioPromedioAnterior);
 
-    } else if(req.query.origin === 'Mango'){
-        values = avgPrice.averagePriceMonthOrigin(arr);
-        // obtener precios promedio mes actual y anterior 
-        precioPromedio = values[month];
-        precioPromedioAnterior = values[lastMonth];
-
-        differences = percentageDifferencePrice(precioPromedio, precioPromedioAnterior);
     } else {
         differences[0] = 0;
         differences[1] = 0;

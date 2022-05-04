@@ -1377,8 +1377,6 @@ exports.averageDiscountMonthGeneral = (arr) => {
   valuesZ[142] = setAverageDiscount(nov6);
   valuesZ[143] = setAverageDiscount(dic6);
 
-
-
   return valuesZ;
 
 };
@@ -1614,7 +1612,7 @@ exports.averageDiscount = arr => {
   };
   
   // metodo para sacar el promedio
-  setAverageDiscount = (arr) => {
+  let setAverageDiscount = (arr) => {
     let descuentoPromedio = 0;
     arr.forEach((element) => {
         descuentoPromedio += element
