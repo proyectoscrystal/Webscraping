@@ -143,7 +143,6 @@ let queryGroupBy = (query) => {
     if ( objsize(query) <= 3 && (query.allCategory === 'true' || query.allSubCategory === 'true' || query.allTipoPrenda === 'true') ) return obj;
 
 
-
     if(query.origin !== undefined && Array.isArray(query.origin)) {
         obj.origin = {$in: query.origin};
     } else if(query.origin !== undefined) {
@@ -1234,7 +1233,7 @@ exports.tablePriceInfo = async (req, res) => {
     let group = generateGroupPrice(filtro4);
     filtro2.discontinued = false;
     filtro2.createdAt = { $gte :  new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-01T00:00:00.000Z`), $lte : new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-31T23:59:35.835Z`) };
-    
+    // console.log(filtro2)
     let arr3 = [];
     let arr2 = [];
     let arr = [];
