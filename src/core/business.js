@@ -814,7 +814,7 @@ exports.getImagesFilter = async (request, response) => {
           $or: queryArray
         }
       },
-    ]);
+    ]).limit(10000);
 
     // $or: queryArray,  esta en el match forma anterior
     consulta = consulta.filter((element) => {
@@ -844,7 +844,7 @@ exports.getImagesFilter = async (request, response) => {
       },
     ]).sort({
       _id: -1,
-    });
+    }).limit(10000);
     response.send(consulta);
   }
 };
