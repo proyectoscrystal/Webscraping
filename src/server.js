@@ -4,7 +4,6 @@ const express = require('express');
 const session = require('express-session');
 
 
-
 const app = express();
 
 // Base de datos
@@ -15,9 +14,9 @@ db();
 
 
 // Middlewares
-app.use(express.json({ limit: '50mb', extended: true }));
+app.use(express.json({ limit: '80mb', extended: true }));
 app.use(cors());
-app.use(express.urlencoded({ limit: '50mb', extended: true }));
+app.use(express.urlencoded({ limit: '80mb', extended: true }));
 app.use(
   session({
     secret: 'bboxSecretKeyWord',
@@ -25,7 +24,6 @@ app.use(
     saveUninitialized: true,
   }),
 );
-
 
 
 // Configuraciones

@@ -7,6 +7,20 @@ const avgSKU = require("./filtersScraping/SKU");
 const prendasInfo = require("./filtersScraping/prendasInfo");
 const { copyArrayDiscontinued } = require("./filtersScraping/weekFilters/weekFilter");
 
+let objsize = (obj) => 
+    {
+    let size = 0, key;
+  
+    for (key in obj)
+        {
+       if (obj.hasOwnProperty(key))
+         size++;
+             }
+  
+    return size;
+  
+    };
+
 let organizarQueryTest = (query) => {
     let obj = {};
 
@@ -78,6 +92,7 @@ organizarQuery = (query) => {
     return obj;
 }
 
+// metodo para organizar query de vista prendas en categorias, 
 let organizarQueryPrenda = (query) => {
     let obj = {};
 
@@ -104,6 +119,9 @@ let organizarQueryPrenda = (query) => {
         obj.fecha_consulta = {$gte: inicio, $lte: fin}
     }else if(query.fechaInicio !== '' && query.fechaFin !== "") {
         obj.fecha_consulta = {$gte: query.fechaInicio, $lte: query.fechaFin}
+    } else {
+        let fecha = new Date();
+        obj.createdAt = {$gte :  new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-01T00:00:00.000Z`), $lte : new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-31T23:59:35.835Z`)}
     }
 
     if(query.composicion !== undefined && (typeof query.composicion === 'string')) {
@@ -117,8 +135,13 @@ let organizarQueryPrenda = (query) => {
     return obj;
 }
 
+// create match for table in prendas view 
 let queryGroupBy = (query) => {
     let obj = {};
+
+
+    if ( objsize(query) <= 3 && (query.allCategory === 'true' || query.allSubCategory === 'true' || query.allTipoPrenda === 'true') ) return obj;
+
 
     if(query.origin !== undefined && Array.isArray(query.origin)) {
         obj.origin = {$in: query.origin};
@@ -146,13 +169,65 @@ let queryGroupBy = (query) => {
         obj.color = query.color;
     }
 
-    // if(query.fechaInicio !== "" && query.fechaFin === "") {
-    //     let inicio = query.fechaInicio + "T00:00:00.000Z";
-    //     let fin = query.fechaInicio + "T23:59:59.999Z";
-    //     obj.fecha_consulta = {$gte: inicio, $lte: fin}
-    // }else if(query.fechaInicio !== '' && query.fechaFin !== "") {
-    //     obj.fecha_consulta = {$gte: query.fechaInicio, $lte: query.fechaFin}
-    // }
+    if(query.composicion !== undefined && (typeof query.composicion === 'string')) {
+        obj.material1 = query.composicion;
+    } else if (query.composicion !== undefined && query.composicion.length > 1) {
+        obj.material1 = {$in: query.composicion};
+        
+    }
+
+    
+
+
+    return obj;
+}
+
+// create match for table in prendas view 
+let queryGroupBysku = (query) => {
+    let obj = {};
+
+
+    if ( objsize(query) <= 3 && (query.allCategory === 'true' || query.allSubCategory === 'true' || query.allTipoPrenda === 'true') ) return obj;
+
+
+
+    if(query.origin !== undefined && Array.isArray(query.origin)) {
+        obj.origin = {$in: query.origin};
+    } else if(query.origin !== undefined) {
+        obj.origin = query.origin;
+    }
+    if(query.categoria !== undefined && Array.isArray(query.categoria)){
+        obj.categoria = {$in: query.categoria};
+    } else if(query.categoria !== undefined) {
+        obj.categoria = query.categoria;
+    }
+    if(query.subCategoria !== undefined && Array.isArray(query.subCategoria)){
+        obj.subCategoria = {$in: query.subCategoria};
+    } else if(query.subCategoria !== undefined) {
+        obj.subCategoria = query.subCategoria;
+    }
+    if(query.tipoPrenda !== undefined && Array.isArray(query.tipoPrenda)){
+        obj.tipoPrenda = {$in: query.tipoPrenda};
+    } else if(query.tipoPrenda !== undefined) {
+        obj.tipoPrenda = query.tipoPrenda;
+    }
+    if(query.color !== undefined && Array.isArray(query.color)){
+        obj.color = {$in: query.color};
+    } else if(query.color !== undefined) {
+        obj.color = query.color;
+    }
+
+    // fecha para las tablas para poder mostrar la info del mes actual o la fecha especificada
+    if(query.fechaInicio !== "" && query.fechaFin === "") {
+        let inicio = query.fechaInicio + "T00:00:00.000Z";
+        let fin = query.fechaInicio + "T23:59:59.999Z";
+        obj.fecha_consulta = {$gte: inicio, $lte: fin}
+    }else if(query.fechaInicio !== '' && query.fechaFin !== "") {
+        obj.fecha_consulta = {$gte: query.fechaInicio, $lte: query.fechaFin}
+    } else {
+        let fecha = new Date();
+        obj.createdAt = {$gte :  new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-01T00:00:00.000Z`), $lte : new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-31T23:59:35.835Z`)}
+    }
 
     if(query.composicion !== undefined && (typeof query.composicion === 'string')) {
         obj.material1 = query.composicion;
@@ -161,8 +236,434 @@ let queryGroupBy = (query) => {
         
     }
 
+    
+
 
     return obj;
+}
+
+// filtro para crear el group de precios promedio
+let generateGroupPrice = (query) => {
+    let group = {}
+
+    if (query.allCategory === 'true' && query.allSubCategory === 'true' && query.allTipoPrenda === 'true') {
+        group = {
+            '_id': { 'todos':'$__v'},
+            'precioPromedio': {
+            $avg: '$precio'
+            }
+        }
+    } else if (query.allTipoPrenda === 'true' && query.allSubCategory === 'true') {
+        group = {
+            '_id': { 'categoria':'$categoria'},
+            'precioPromedio': {
+            $avg: '$precio'
+            }
+        }
+    } else if (query.allTipoPrenda === 'true' && query.allCategory === 'true') {
+        group = {
+            '_id': { 'subCategoria':'$subCategoria'},
+            'precioPromedio': {
+            $avg: '$precio'
+            }
+        }
+    } else if (query.allSubCategory === 'true' && query.allCategory === 'true') {
+        group = {
+            '_id': { 'tipoPrenda':'$tipoPrenda'},
+            'precioPromedio': {
+            $avg: '$precio'
+            }
+        }
+    } else if (query.allCategory === 'true') {
+        group = {
+            '_id': { 'tipoPrenda':'$tipoPrenda','subCategoria':'$subCategoria'},
+            'precioPromedio': {
+            $avg: '$precio'
+            }
+        }
+    } else if (query.allSubCategory === 'true') {
+        group = {
+            '_id': { 'tipoPrenda':'$tipoPrenda','categoria':'$categoria'},
+            'precioPromedio': {
+            $avg: '$precio'
+            }
+        }
+    } else if (query.allTipoPrenda === 'true') {
+        group = {
+            '_id': { 'categoria':'$categoria','subCategoria':'$subCategoria'},
+            'precioPromedio': {
+            $avg: '$precio'
+            }
+        }
+    } else {
+        group = {
+            '_id': {'categoria':'$categoria','subCategoria':'$subCategoria', 'tipoPrenda':'$tipoPrenda'},
+            'precioPromedio': {
+            $avg: '$precio'
+            }
+        }
+    }
+
+
+    return group
+}
+
+// filtro para crear el group de descuento promedio
+let generateGroupDiscount = (query) => {
+    let group = {}
+
+    if (query.allCategory === 'true' && query.allSubCategory === 'true' && query.allTipoPrenda === 'true') {
+        group = {
+            '_id': { 'todos':'$__v'},
+            'porcentajeDescuento': {
+            $avg: '$porcentajeDescuento'
+            }
+        }
+    } else if (query.allTipoPrenda === 'true' && query.allSubCategory === 'true') {
+        group = {
+            '_id': { 'categoria':'$categoria'},
+            'porcentajeDescuento': {
+            $avg: '$porcentajeDescuento'
+            }
+        }
+    } else if (query.allTipoPrenda === 'true' && query.allCategory === 'true') {
+        group = {
+            '_id': { 'subCategoria':'$subCategoria'},
+            'porcentajeDescuento': {
+            $avg: '$porcentajeDescuento'
+            }
+        }
+    } else if (query.allSubCategory === 'true' && query.allCategory === 'true') {
+        group = {
+            '_id': { 'tipoPrenda':'$tipoPrenda'},
+            'porcentajeDescuento': {
+            $avg: '$porcentajeDescuento'
+            }
+        }
+    } else if (query.allCategory === 'true') {
+        group = {
+            '_id': { 'tipoPrenda':'$tipoPrenda','subCategoria':'$subCategoria'},
+            'porcentajeDescuento': {
+            $avg: '$porcentajeDescuento'
+            }
+        }
+    } else if (query.allSubCategory === 'true') {
+        group = {
+            '_id': { 'tipoPrenda':'$tipoPrenda','categoria':'$categoria'},
+            'porcentajeDescuento': {
+            $avg: '$porcentajeDescuento'
+            }
+        }
+    } else if (query.allTipoPrenda === 'true') {
+        group = {
+                '_id': { 'categoria':'$categoria','subCategoria':'$subCategoria'},
+                'porcentajeDescuento': {
+                $avg: '$procentajeDescuento'
+            }
+        }
+    } else {
+        group = {
+            '_id': {'categoria':'$categoria','subCategoria':'$subCategoria', 'tipoPrenda':'$tipoPrenda'},
+            'porcentajeDescuento': {
+            $avg: '$porcentajeDescuento'
+            }
+        }
+    }
+
+
+    return group
+}
+
+// filtro para crear el group de nuevos promedio
+let generateGroupNews = (query) => {
+    let group = {}
+
+    if (query.allCategory === 'true' && query.allSubCategory === 'true' && query.allTipoPrenda === 'true') {
+        group = {
+            '_id': { 'todos':'$__v'},
+            'nuevos': {
+            $sum: 1
+            }
+        }
+    } else if (query.allTipoPrenda === 'true' && query.allSubCategory === 'true') {
+        group = {
+            '_id': { 'categoria':'$categoria'},
+            'nuevos': {
+            $sum: 1
+            }
+        }
+    } else if (query.allTipoPrenda === 'true' && query.allCategory === 'true') {
+        group = {
+            '_id': { 'subCategoria':'$subCategoria'},
+            'nuevos': {
+            $sum: 1
+            }
+        }
+    } else if (query.allSubCategory === 'true' && query.allCategory === 'true') {
+        group = {
+            '_id': { 'tipoPrenda':'$tipoPrenda'},
+            'nuevos': {
+            $sum: 1
+            }
+        }
+    } else if (query.allCategory === 'true') {
+        group = {
+            '_id': { 'tipoPrenda':'$tipoPrenda','subCategoria':'$subCategoria'},
+            'nuevos': {
+            $sum: 1
+            }
+        }
+    } else if (query.allSubCategory === 'true') {
+        group = {
+            '_id': { 'tipoPrenda':'$tipoPrenda','categoria':'$categoria'},
+            'nuevos': {
+            $sum: 1
+            }
+        }
+    } else if (query.allTipoPrenda === 'true') {
+        group = {
+                '_id': { 'categoria':'$categoria','subCategoria':'$subCategoria'},
+                'nuevos': {
+                $sum: 1
+            }
+        }
+    } else {
+        group = {
+            '_id': {'categoria':'$categoria','subCategoria':'$subCategoria', 'tipoPrenda':'$tipoPrenda'},
+            'nuevos': {
+            $sum: 1
+            }
+        }
+    }
+
+
+    return group
+}
+
+// filtro para crear el group de descontinuados promedio
+let generateGroupDiscontinued = (query) => {
+    let group = {}
+
+    if (query.allCategory === 'true' && query.allSubCategory === 'true' && query.allTipoPrenda === 'true') {
+        group = {
+            '_id': { 'todos':'$__v'},
+            'descontinuados': {
+            $sum: 1
+            }
+        }
+    } else if (query.allTipoPrenda === 'true' && query.allSubCategory === 'true') {
+        group = {
+            '_id': { 'categoria':'$categoria'},
+            'descontinuados': {
+            $sum: 1
+            }
+        }
+    } else if (query.allTipoPrenda === 'true' && query.allCategory === 'true') {
+        group = {
+            '_id': { 'subCategoria':'$subCategoria'},
+            'descontinuados': {
+            $sum: 1
+            }
+        }
+    } else if (query.allSubCategory === 'true' && query.allCategory === 'true') {
+        group = {
+            '_id': { 'tipoPrenda':'$tipoPrenda'},
+            'descontinuados': {
+            $sum: 1
+            }
+        }
+    } else if (query.allCategory === 'true') {
+        group = {
+            '_id': { 'tipoPrenda':'$tipoPrenda','subCategoria':'$subCategoria'},
+            'descontinuados': {
+            $sum: 1
+            }
+        }
+    } else if (query.allSubCategory === 'true') {
+        group = {
+            '_id': { 'tipoPrenda':'$tipoPrenda','categoria':'$categoria'},
+            'descontinuados': {
+            $sum: 1
+            }
+        }
+    } else if (query.allTipoPrenda === 'true') {
+        group = {
+                '_id': { 'categoria':'$categoria','subCategoria':'$subCategoria'},
+                'descontinuados': {
+                $sum: 1
+            }
+        }
+    } else {
+        group = {
+            '_id': {'categoria':'$categoria','subCategoria':'$subCategoria', 'tipoPrenda':'$tipoPrenda'},
+            'descontinuados': {
+            $sum: 1
+            }
+        }
+    }
+
+
+    return group
+}
+
+// filtro para crear el group de table sku
+let generateGroupSKU = (query) => {
+    let group = {}
+
+
+    if (query.allCategory === 'true' && query.allSubCategory === 'true' && query.allTipoPrenda === 'true') {
+        group = {
+            '_id': {
+              'todos': "$__v"
+            }, 
+            'nuevos': {
+              '$sum': '$nuevos'
+            }, 
+            'SKU': {
+              '$sum': '$numeroTallas'
+            }, 
+            'precioPromedio': {
+              '$avg': '$precio'
+            }, 
+            'porcentajeDescuento': {
+              '$avg': '$porcentajeDescuento'
+            }
+          }
+    } else if (query.allTipoPrenda === 'true' && query.allSubCategory === 'true') {
+        group = {
+            '_id': { 
+              'categoria': '$categoria'
+            }, 
+            'nuevos': {
+              '$sum': '$nuevos'
+            }, 
+            'SKU': {
+              '$sum': '$numeroTallas'
+            }, 
+            'precioPromedio': {
+              '$avg': '$precio'
+            }, 
+            'porcentajeDescuento': {
+              '$avg': '$porcentajeDescuento'
+            }
+          }
+    } else if (query.allTipoPrenda === 'true' && query.allCategory === 'true') {
+        group = {
+            '_id': {
+              'subCategoria': '$subCategoria'
+            }, 
+            'nuevos': {
+              '$sum': '$nuevos'
+            }, 
+            'SKU': {
+              '$sum': '$numeroTallas'
+            }, 
+            'precioPromedio': {
+              '$avg': '$precio'
+            }, 
+            'porcentajeDescuento': {
+              '$avg': '$porcentajeDescuento'
+            }
+          }
+    } else if (query.allSubCategory === 'true' && query.allCategory === 'true') {
+        group = {
+            '_id': {
+              'tipoPrenda': '$tipoPrenda'
+            }, 
+            'nuevos': {
+              '$sum': '$nuevos'
+            }, 
+            'SKU': {
+              '$sum': '$numeroTallas'
+            }, 
+            'precioPromedio': {
+              '$avg': '$precio'
+            }, 
+            'porcentajeDescuento': {
+              '$avg': '$porcentajeDescuento'
+            }
+          }
+    } else if (query.allCategory === 'true') {
+        group = {
+            '_id': {
+              'tipoPrenda': '$tipoPrenda', 
+              'subCategoria': '$subCategoria'
+            }, 
+            'nuevos': {
+              '$sum': '$nuevos'
+            }, 
+            'SKU': {
+              '$sum': '$numeroTallas'
+            }, 
+            'precioPromedio': {
+              '$avg': '$precio'
+            }, 
+            'porcentajeDescuento': {
+              '$avg': '$porcentajeDescuento'
+            }
+          }
+    } else if (query.allSubCategory === 'true') {
+        group = {
+            '_id': {
+              'tipoPrenda': '$tipoPrenda', 
+              'categoria': '$categoria',
+            }, 
+            'nuevos': {
+              '$sum': '$nuevos'
+            }, 
+            'SKU': {
+              '$sum': '$numeroTallas'
+            }, 
+            'precioPromedio': {
+              '$avg': '$precio'
+            }, 
+            'porcentajeDescuento': {
+              '$avg': '$porcentajeDescuento'
+            }
+          }
+    } else if (query.allTipoPrenda === 'true') {
+        group = {
+            '_id': { 
+              'categoria': '$categoria', 
+              'subCategoria': '$subCategoria'
+            }, 
+            'nuevos': {
+              '$sum': '$nuevos'
+            }, 
+            'SKU': {
+              '$sum': '$numeroTallas'
+            }, 
+            'precioPromedio': {
+              '$avg': '$precio'
+            }, 
+            'porcentajeDescuento': {
+              '$avg': '$porcentajeDescuento'
+            }
+          }
+    } else {
+        group = {
+            '_id': {
+              'tipoPrenda': '$tipoPrenda', 
+              'categoria': '$categoria', 
+              'subCategoria': '$subCategoria'
+            }, 
+            'nuevos': {
+              '$sum': '$nuevos'
+            }, 
+            'SKU': {
+              '$sum': '$numeroTallas'
+            }, 
+            'precioPromedio': {
+              '$avg': '$precio'
+            }, 
+            'porcentajeDescuento': {
+              '$avg': '$porcentajeDescuento'
+            }
+          }
+    }
+
+
+    return group
 }
 
 // info cards response
@@ -202,23 +703,21 @@ exports.cardsInfo = async (req, res) => {
     let discontinuedCounts = 0;
     let skuCounts = 0;
     // variables para la diferencia entre mes actual y anterior
-    let differencePrice = [];
-    let differencePorcentage = [];
-    let differenceNew = [];
-    let differenceDiscontinued = [];
-    let differenceSKU = [];
+    let differencePrice = [0,0];
+    let differencePorcentage = [0,0];
+    let differenceNew = [0,0];
+    let differenceDiscontinued = [0,0];
+    let differenceSKU = [0,0];
     let origin = '';
     let precioPromedio = 0;
     let discountinueds = '';
     let discount = 0;
     let nuevos = 0;
 
-    
 
     try {
         arr = await Business.find(filtro,{"precio":1, "descuento": 1,  "origin":1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tag": 1, "discontinued":1}, { allowDiskUse: true});
         // probando nuevo filtro
-        // console.log("Total: ", arr.length);
     } catch (error) {
         console.log(error);
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
@@ -232,26 +731,49 @@ exports.cardsInfo = async (req, res) => {
     if (req.query.origin === undefined || Array.isArray(req.query.origin) ) {
 
         discounts = avgDiscount.averageDiscountMonthGeneral(arr2); // calcula los promedios por mes x 2 años una marca
-        let flag = false;
-        dzm[0] = discounts[lastMonth];
-        dzm[1] = discounts[month];
-        if(dzm[1] === 0) flag = true;
-        dzm[0] += discounts[month + 23];
-        dzm[1] += discounts[month + 24];
-        if(discounts[month + 24] === 0) flag = true;
-        if(!flag === true) {
-            dzm[1] = (dzm[1]/2);
-            dzm[0] = (dzm[0]/2);
-        } 
-        // descuento promedio mes actualizado
         
 
-        if(discounts[month] === 0 || discounts[month + 24] === 0){
-            discount = ((discounts[month] + discounts[month + 24])).toFixed(2);
-            differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
+        dzm[0] = discounts[lastMonth];
+        dzm[1] = discounts[month];
+        // if(dzm[1] === 0) flag = true;
+        dzm[0] += discounts[month + 23];
+        dzm[1] += discounts[month + 24];
+        // descuentos Gef
+        dzm[0] += discounts[month + 47];
+        dzm[1] += discounts[month + 48];
+        // descuentos Punto blanco
+        dzm[0] += discounts[month + 71];
+        dzm[1] += discounts[month + 72];
+        // descuentos Baby fresh
+        dzm[0] += discounts[month + 95];
+        dzm[1] += discounts[month + 96];
+        // // descuentos Galax
+        dzm[0] += discounts[month + 119];
+        dzm[1] += discounts[month + 120];
+
+        let countD = 0;
+        if(discounts[month] !== 0) countD += 1;
+        if(discounts[month + 24] !== 0) countD += 1;
+        if(discounts[month + 48] !== 0) countD += 1;  
+        if(discounts[month + 72] !== 0) countD += 1;  
+        if(discounts[month + 96] !== 0) countD += 1;  
+        if(discounts[month + 120] !== 0) countD += 1;  
+        // descuento promedio mes actualizado
+        
+        if(countD !== 0) {
+            discount = (dzm[1]/countD).toFixed(2);
+            differencePorcentage =  percentageDifferencesDiscount(dzm[1]/countD, dzm[0]/countD);
         } else {
-            discount = ((discounts[month] + discounts[month + 24])/2).toFixed(2);
-            differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
+            let countLM = 0;
+            if(discounts[lastMonth] !== 0) countLM += 1;
+            if(discounts[month + 23] !== 0) countLM += 1;
+            if(discounts[month + 47] !== 0) countLM += 1;  
+            if(discounts[month + 71] !== 0) countLM += 1;  
+            if(discounts[month + 95] !== 0) countLM += 1;  
+            if(discounts[month + 119] !== 0) countLM += 1; 
+
+            differencePorcentage =  percentageDifferencesDiscount(dzm[1]/countLM, dzm[0]/countLM);
+            discount = dzm[1];
         }
 
 
@@ -260,13 +782,52 @@ exports.cardsInfo = async (req, res) => {
         zm[1] =  values[month]; // valor actual de zara 
         zm[0] += values[month + 23];
         zm[1] += values[month + 24]; // valor actual de mango
-        if(values[month] === 0 || values[month + 24] === 0){
-            precioPromedio = ((values[month] + values[month + 24])).toFixed();
-            differencePrice =  percentageDifferencePrice(zm[1], zm[0]);
+        // valores de Gef
+        zm[0] += values[month + 47];
+        zm[1] += values[month + 48];
+        // valores de Punto blanco
+        zm[0] += values[month + 71];
+        zm[1] += values[month + 72];
+        // valores de baby fresh
+        zm[0] += values[month + 95];
+        zm[1] += values[month + 96];
+        // valores de Galax
+        zm[0] += values[month + 119];
+        zm[1] += values[month + 120];
+        let countM = 0;
+        // contando si hay valores en las marcas
+        if(values[month] !== 0) countM += 1;
+        if(values[month + 24] !== 0) countM += 1;
+        if(values[month + 48] !== 0) countM += 1;            
+        if(values[month + 72] !== 0) countM += 1;            
+        if(values[month + 96] !== 0) countM += 1;            
+        if(values[month + 120] !== 0) countM += 1;            
+        
+        let countM2 = 0;
+        if(values[lastMonth] !== 0) countM2 += 1;
+        if(values[month + 23] !== 0) countM2 += 1;
+        if(values[month + 47] !== 0) countM2 += 1;            
+        if(values[month + 71] !== 0) countM2 += 1;            
+        if(values[month + 95] !== 0) countM2 += 1;            
+        if(values[month + 119] !== 0) countM2 += 1;            
+        
+   
+        if(countM !== 0) {
+            precioPromedio = ((zm[1])/countM).toFixed();
+            differencePrice =  percentageDifferencePrice(zm[1]/countM, zm[0]/countM2);
         } else {
-            precioPromedio = ((values[month] + values[month + 24])/2).toFixed();
-            differencePrice =  percentageDifferencePrice(zm[1]/2, zm[0]/2);
+            let countlm
+            if(values[lastMonth] !== 0) countlm += 1;
+            if(values[month + 23] !== 0) countlm += 1;
+            if(values[month + 47] !== 0) countlm += 1;            
+            if(values[month + 71] !== 0) countlm += 1;            
+            if(values[month + 95] !== 0) countlm += 1;            
+            if(values[month + 119] !== 0) countlm += 1;
+            precioPromedio = ((zm[1])).toFixed();
+            differencePrice =  percentageDifferencePrice(zm[1]/countlm, zm[0]/countlm);
+            
         }
+        
 
 
         newsCounts = avgNews.averageNewsMonthGeneral(arr2); // calcula productos nuevos promedio por mes dos marcas 2 años
@@ -274,13 +835,29 @@ exports.cardsInfo = async (req, res) => {
         nzm[1] =  newsCounts[month]; // valor actual de zara 
         nzm[0] += newsCounts[month + 23];
         nzm[1] += newsCounts[month + 24]; // valor actual de mango
-        nuevos = ((newsCounts[month] + newsCounts[month + 24]));
+        nzm[0] += newsCounts[month + 47];
+        nzm[1] += newsCounts[month + 48]; // valor actual de Gef
+        nzm[0] += newsCounts[month + 71];
+        nzm[1] += newsCounts[month + 72]; // valor actual de Punto blanco
+        nzm[0] += newsCounts[month + 95];
+        nzm[1] += newsCounts[month + 96]; // valor actual de baby fresh
+        nzm[0] += newsCounts[month + 119];
+        nzm[1] += newsCounts[month + 120]; // valor actual de Galax
+        nuevos = ((nzm[1]));
 
         discontinuedCounts = discontinued.averageDiscontinuedMonthGeneral(arr); // calcula los descontinuados promedio por mes dos marcas 2 años
         ddzm[0] = discontinuedCounts[lastMonth];
         ddzm[1] =  discontinuedCounts[month]; // valor actual de zara 
         ddzm[0] += discontinuedCounts[month + 23];
         ddzm[1] += discontinuedCounts[month + 24]; // valor actual de mango
+        ddzm[0] += discontinuedCounts[month + 47];
+        ddzm[1] += discontinuedCounts[month + 48]; // valor actual de Gef
+        ddzm[0] += discontinuedCounts[month + 71];
+        ddzm[1] += discontinuedCounts[month + 72]; // valor actual de Punto blanco
+        ddzm[0] += discontinuedCounts[month + 95];
+        ddzm[1] += discontinuedCounts[month + 96]; // valor actual de Baby fresh
+        ddzm[0] += discontinuedCounts[month + 119];
+        ddzm[1] += discontinuedCounts[month + 120]; // valor actual de Galax
         discontinueds = (ddzm[1]);
 
 
@@ -289,29 +866,36 @@ exports.cardsInfo = async (req, res) => {
         skuzm[1] =  skuCounts[month]; // valor actual de zara 
         skuzm[0] += skuCounts[month + 23];
         skuzm[1] += skuCounts[month + 24]; // valor actual de mango
-        sku = (skuCounts[month] + skuCounts[month + 24]) ;
+        skuzm[0] += skuCounts[month + 47];
+        skuzm[1] += skuCounts[month + 48]; // valor actual de Gef
+        skuzm[0] += skuCounts[month + 71];
+        skuzm[1] += skuCounts[month + 72]; // valor actual de Punto blanco
+        skuzm[0] += skuCounts[month + 95];
+        skuzm[1] += skuCounts[month + 96]; // valor actual de Baby fresh
+        skuzm[0] += skuCounts[month + 119];
+        skuzm[1] += skuCounts[month + 120]; // valor actual de Galax
+        // sku = (skuCounts[month] + skuCounts[month + 24]) ;
+        sku = (skuzm[1]) ;
 
 
         origin = 'general';        
 
-        // array de dos valores para setear la diferencia entre mes actual y anterior
-        differencePrice =  percentageDifferencePrice(zm[1], zm[0]);        
+        // array de dos valores para setear la diferencia entre mes actual y anterior    
         differenceNew = percentageDifferencesnews(nzm[1], nzm[0]);
         differenceDiscontinued = percentageDifferencesDiscontinued(ddzm[1], ddzm[0]);
         differenceSKU = percentageDifferencesSku(skuzm[1], skuzm[0]);
         
 
-    } else if(req.query.origin === 'Zara'){
-        // console.log("entro a zara");
-        origin = 'Zara';
-        discounts = avgDiscount.averageDiscount(arr); // calcula los promedios por mes una marca 2 años
-        values = avgPrice.averagePriceMonthOrigin(arr); // promedio precio de la marca seleccionada por mes 2 años
+    } else {
+        origin = req.query.origin;
+        discounts = avgDiscount.averageDiscount(arr2); // calcula los promedios por mes una marca 2 años
+        values = avgPrice.averagePriceMonthOrigin(arr2); // promedio precio de la marca seleccionada por mes 2 años
         precioPromedio = (values[month]).toFixed();
-        newsCounts = avgNews.averageNewsMonthOrigin(arr); // promedio precio de la marca seleccionada por mes 2 años
+        newsCounts = avgNews.averageNewsMonthOrigin(arr2); // promedio precio de la marca seleccionada por mes 2 años
         nuevos = (newsCounts[month]).toFixed();
         discontinuedCounts = discontinued.averageDiscontinuedMonthOrigin(arr); // discontinued
         discontinueds = (discontinuedCounts[month]).toFixed();
-        skuCounts = avgSKU.averageSKUMonthOrigin(arr); // calcula el precio promedio por mes dos marcas 2 años
+        skuCounts = avgSKU.averageSKUMonthOrigin(arr2); // calcula el precio promedio por mes dos marcas 2 años
         sku = skuCounts[month];
         discount = discounts[month];
         
@@ -340,46 +924,7 @@ exports.cardsInfo = async (req, res) => {
         differenceSKU = percentageDifferencesSku(skuzm[1], skuzm[0]);
         differenceDiscontinued = percentageDifferencesDiscontinued(ddzm[1], ddzm[0]);
 
-    // } else if(filtro.origin === 'Mango'){
-    } else if(req.query.origin === 'Mango'){
-        origin = 'Mango';
-        discounts = avgDiscount.averageDiscount(arr); // calcula los promedios por mes
-        values = avgPrice.averagePriceMonthOrigin(arr); // precio promedio por mes dos años una marca
-        precioPromedio = (values[month]).toFixed();
-        newsCounts = avgNews.averageNewsMonthOrigin(arr); // nuevos de la marca seleccionada por mes 2 años
-        nuevos = newsCounts[month];
-        discontinuedCounts = discontinued.averageDiscontinuedMonthOrigin(arr); // discontinued
-        discontinueds = discontinuedCounts[month];
-        discount = discounts[month];
-        skuCounts = avgSKU.averageSKUMonthOrigin(arr); // calcula el precio promedio por mes dos marcas 2 años
-        sku = skuCounts[month];
-        
-
-        // valores de diferencia de porcentajes
-        dzm[0] = discounts[lastMonth];
-        dzm[1] = discounts[month];
-
-        // valores de diferencia de nuevos
-        nzm[0] = newsCounts[lastMonth];
-        nzm[1] = newsCounts[month];
-
-        // valores de diferencia de nuevos
-        ddzm[0] = discontinuedCounts[lastMonth];
-        ddzm[1] = discontinuedCounts[month];
-
-        // valores de diferencia de nuevos
-        skuzm[0] = skuCounts[lastMonth];
-        skuzm[1] = skuCounts[month];
-
-        zm[0] = values[lastMonth];
-        zm[1] =  values[month]; // valor actual de zara 
-
-        differencePrice =  percentageDifferencePrice(zm[1], zm[0]);
-        differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
-        differenceNew = percentageDifferencesnews(nzm[1], nzm[0]);
-        differenceSKU = percentageDifferencesSku(skuzm[1], skuzm[0]);
-        differenceDiscontinued = percentageDifferencesDiscontinued(ddzm[1], ddzm[0]);
-    }
+    } 
 
     
     // respuesta para el frontend
@@ -407,7 +952,7 @@ exports.cardsInfo = async (req, res) => {
 // fin info cards response
 
 
-// precio promedio por los ultimos 2 años y descuento promedio (charts)
+// precio promedio por los ultimos 2 años (charts)
 exports.averagePrice = async (req, res) => {
     let filtro = req.query;
     
@@ -429,18 +974,13 @@ exports.averagePrice = async (req, res) => {
         values = avgPrice.averagePriceMonthGeneral(arr);
         origin = 'general';
         
-    } else if(req.query.origin === 'Zara'){
-        origin = 'Zara';
-        values = avgPrice.averagePriceMonthOrigin(arr);
-
-    } else if(req.query.origin === 'Mango'){
-        origin = 'Mango';
+    } else {
+        origin = req.query.origin;
         values = avgPrice.averagePriceMonthOrigin(arr);
     }
 
     months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
-    
     
     // respuesta para el frontend
     obj = {  
@@ -453,14 +993,13 @@ exports.averagePrice = async (req, res) => {
     res.status(200).json({obj});
 }
 
-// descontinuados chart
+// descuentos chart
 exports.averageDiscount = async (req, res) => {
     let filtro = req.query;
     
     filtro = organizarQuery(filtro);
     filtro.descuento = {$ne: null};
     filtro.discontinued = false;
-    // console.log(filtro);
     
     let arr;
     let obj;
@@ -478,13 +1017,10 @@ exports.averageDiscount = async (req, res) => {
         values = avgDiscount.averageDiscountMonthGeneral(arr);        
         origin = 'general';
         
-    } else if(req.query.origin === 'Zara'){
-        origin = 'Zara';
+    } else {
+        origin = req.query.origin;
         values = avgDiscount.averageDiscount(arr);
 
-    } else if(req.query.origin === 'Mango'){
-        origin = 'Mango';
-        values = avgDiscount.averageDiscount(arr);
     }
 
     months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
@@ -509,7 +1045,6 @@ exports.averageDiscountinued = async (req, res) => {
     
     filtro = organizarQuery(filtro);
     filtro.estado = {$eq: "descontinuado"};
-    // console.log(filtro);
     
     let arr;
     let obj;
@@ -527,14 +1062,11 @@ exports.averageDiscountinued = async (req, res) => {
         values = discontinued.averageDiscontinuedMonthGeneral(arr);        
         origin = 'general';
         
-    } else if(req.query.origin === 'Zara'){
-        origin = 'Zara';
+    } else {
+        origin = req.query.origin;
         values = discontinued.averageDiscontinuedMonthOrigin(arr);
 
-    } else if(req.query.origin === 'Mango'){
-        origin = 'Mango';
-        values = discontinued.averageDiscontinuedMonthOrigin(arr);
-    }
+    } 
 
     months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
@@ -575,14 +1107,10 @@ exports.averageNews = async (req, res) => {
         values = avgNews.averageNewsMonthGeneral(arr);
         origin = 'general';
         
-    } else if(req.query.origin === 'Zara'){
-        origin = 'Zara';
+    } else {
+        origin = req.query.origin;
         values = avgNews.averageNewsMonthOrigin(arr);
-
-    } else if(req.query.origin === 'Mango'){
-        origin = 'Mango';
-        values = avgNews.averageNewsMonthOrigin(arr);
-    }
+    } 
 
     // cantidad de prendas nuevas
     let nuevos = 0;
@@ -630,14 +1158,11 @@ exports.averageSKU = async (req, res) => {
         values = avgSKU.averageSKUMonthGeneral(arr);        
         origin = 'general';
         
-    } else if(req.query.origin === 'Zara'){
-        origin = 'Zara';
+    } else {
+        origin = req.query.origin;
         values = avgSKU.averageSKUMonthOrigin(arr);
 
-    } else if(req.query.origin === 'Mango'){
-        origin = 'Mango';
-        values = avgSKU.averageSKUMonthOrigin(arr);
-    }
+    } 
 
     months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
     
@@ -702,15 +1227,20 @@ exports.tableCategoryInfo = async (req, res) => {
 
 // respuesta para la table precios promedio
 exports.tablePriceInfo = async (req, res) => {
+    const fecha = new Date();
     let filtro4 = req.query;
     let filtro2 = queryGroupBy(filtro4);
-
+    let group = generateGroupPrice(filtro4);
     filtro2.discontinued = false;
-
+    filtro2.createdAt = { $gte :  new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-01T00:00:00.000Z`), $lte : new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-31T23:59:35.835Z`) };
+    // console.log(filtro2)
     let arr3 = [];
+    let arr2 = [];
     let arr = [];
+    let zm = [];
     let obj;
-    let differences;
+    let differences = [];
+    let precioPromedio = 0;
 
     //mes actual
     let date = new Date();
@@ -723,19 +1253,15 @@ exports.tablePriceInfo = async (req, res) => {
     }
 
     try {
-        arr = await Business.find(filtro2,{"precio":1, "descuento": 1, "origin":1,  "categoria":1, "subCategoria": 1, "createdAt":1, "discontinued":1});
+        arr = await Business.find(filtro2,{"precio":1, "descuento": 1, "origin":1,"createdAt":1, "discontinued":1});
 
-        arr3 = await Business.aggregate([
+        arr2 = await Business.aggregate([
             {
                 '$match': 
                     filtro2
             }, {
-                '$group': {
-                    '_id': {'categoria':'$categoria','subCategoria':'$subCategoria', 'tipoPrenda':'$tipoPrenda'},
-                    'precioPromedio': {
-                    $avg: '$precio'
-                    }
-                }
+                '$group': 
+                    group
             }, {
                 $sort:{"precioPromedio":-1}
             }
@@ -745,30 +1271,75 @@ exports.tablePriceInfo = async (req, res) => {
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
-    arr3 = arr3.map(element => {
-        if(element.precioPromedio !== null) element.precioPromedio = element.precioPromedio.toFixed();
+    
+
+    arr3 = arr2.filter(element => {
+        if(element.precioPromedio !== null && (element._id.categoria !== null && element._id.subCategoria !== null && element._id.tipoPrenda !== null ) ) element.precioPromedio = element.precioPromedio.toFixed();
 
         return element;
     });
 
+
     if (req.query.origin === undefined || Array.isArray(req.query.origin) ){
         values = avgPrice.averagePriceMonthGeneral(arr);
         // obtener precios promedio mes actual y anterior 
+        
 
-        if(values[month] === 0 || values[month + 24] === 0){
-            precioPromedio = ((values[month] + values[month + 24]));
-            precioPromedioAnterior = (values[lastMonth] + values[month + 23]);
+        zm[0] = values[lastMonth];
+        zm[1] =  values[month]; // valor actual de zara 
+        zm[0] += values[month + 23];
+        zm[1] += values[month + 24]; // valor actual de mango
+        // valores de Gef
+        zm[0] += values[month + 47];
+        zm[1] += values[month + 48];
+        // valores de Punto blanco
+        zm[0] += values[month + 71];
+        zm[1] += values[month + 72];
+        // valores de baby fresh
+        zm[0] += values[month + 95];
+        zm[1] += values[month + 96];
+        // valores de Galax
+        zm[0] += values[month + 119];
+        zm[1] += values[month + 120];
+
+        let countM = 0;
+        // contando si hay valores en las marcas
+        if(values[month] !== 0) countM += 1;
+        if(values[month + 24] !== 0) countM += 1;
+        if(values[month + 48] !== 0) countM += 1;            
+        if(values[month + 72] !== 0) countM += 1;            
+        if(values[month + 96] !== 0) countM += 1;            
+        if(values[month + 120] !== 0) countM += 1;            
+        
+        let countM2 = 0;
+        if(values[lastMonth] !== 0) countM2 += 1;
+        if(values[month + 23] !== 0) countM2 += 1;
+        if(values[month + 47] !== 0) countM2 += 1;            
+        if(values[month + 71] !== 0) countM2 += 1;            
+        if(values[month + 95] !== 0) countM2 += 1;            
+        if(values[month + 119] !== 0) countM2 += 1; 
+        if(countM2 === 0) countM2++;           
+        
+   
+        if(countM !== 0) {
+            precioPromedio = ((zm[1])/countM).toFixed();
+            differences =  percentageDifferencePrice(zm[1]/countM, zm[0]/countM2);
+            
         } else {
-            precioPromedio = ((values[month] + values[month + 24])/2);
-            precioPromedioAnterior = ((values[lastMonth] + values[month + 23])/2);
+            let countlm
+            if(values[lastMonth] !== 0) countlm += 1;
+            if(values[month + 23] !== 0) countlm += 1;
+            if(values[month + 47] !== 0) countlm += 1;            
+            if(values[month + 71] !== 0) countlm += 1;            
+            if(values[month + 95] !== 0) countlm += 1;            
+            if(values[month + 119] !== 0) countlm += 1;
+            precioPromedio = ((zm[1])).toFixed();
+            differences =  percentageDifferencePrice(zm[1]/countlm, zm[0]/countlm);
+            
         }
 
-        // determinar la diferencia porcentual en los precios
-        differences = percentageDifferencePrice(precioPromedio, precioPromedioAnterior);
-
-
         
-    } else if(req.query.origin === 'Zara'){
+    } else if(req.query.origin !== undefined || !Array.isArray(req.query.origin)){
         values = avgPrice.averagePriceMonthOrigin(arr);
         // obtener precios promedio mes actual y anterior 
         precioPromedio = values[month];
@@ -776,13 +1347,9 @@ exports.tablePriceInfo = async (req, res) => {
 
         differences = percentageDifferencePrice(precioPromedio, precioPromedioAnterior);
 
-    } else if(req.query.origin === 'Mango'){
-        values = avgPrice.averagePriceMonthOrigin(arr);
-        // obtener precios promedio mes actual y anterior 
-        precioPromedio = values[month];
-        precioPromedioAnterior = values[lastMonth];
-
-        differences = percentageDifferencePrice(precioPromedio, precioPromedioAnterior);
+    } else {
+        differences[0] = 0;
+        differences[1] = 0;
     }
 
 
@@ -878,9 +1445,13 @@ exports.tablePrendasInfo = async (req, res) => {
 exports.tableDiscountinuedInfo = async (req, res) => {
     let filtro = req.query;
     let filtro2 = req.query;
+
+    let group = generateGroupDiscontinued(filtro2);
     
     filtro = queryGroupBy(filtro);
     filtro.estado = {$eq: "descontinuado"};
+    let fecha = new Date();
+    filtro.createdAt = { $gte :  new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-01T00:00:00.000Z`), $lte : new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-31T23:59:35.835Z`) };
     
     filtro2 = queryGroupBy(filtro2);
     filtro2.estado = {$eq: "descontinuado"};
@@ -888,10 +1459,6 @@ exports.tableDiscountinuedInfo = async (req, res) => {
     let arr;
     let arr2;
     let obj;
-    // let values = [];
-    // let origin = '';
-    // let descontinuados = 0;
-    // let descuentoPromedioAnterior = 0;
     let differences = [];
     let ddzm = []; 
 
@@ -913,17 +1480,12 @@ exports.tableDiscountinuedInfo = async (req, res) => {
                 '$match': 
                     filtro
             }, {
-                '$group': {
-                    '_id': {'categoria':'$categoria','subCategoria':'$subCategoria', 'tipoPrenda':'$tipoPrenda'},
-                    'descontinuados': {
-                    $sum: 1
-                    }
-                }
+                '$group': 
+                    group
             }, {
                 $sort:{"descontinuados":-1}
             }
             ]);
-        // console.log(arr.length);
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
@@ -962,6 +1524,9 @@ exports.tableDiscountinuedInfo = async (req, res) => {
         ddzm[1] = discontinuedCounts[month];;
         // determinar la diferencia porcentual en los descuentos
         differences = percentageDifferencesDiscontinued(ddzm[1], ddzm[0]);
+    } else {
+        differences[0] = 0;
+        differences[1] = 0;
     }
 
     // respuesta para el frontend
@@ -980,14 +1545,17 @@ exports.tableDiscountinuedInfo = async (req, res) => {
 exports.tableDiscountInfo = async (req, res) => {
     let filtro = req.query;
     let filtro2 = req.query;
+    const fecha = new Date();
     
+    let filtro1 = organizarQuery(req.query);
+    filtro1.discontinued = false;
+
     filtro = queryGroupBy(filtro);
     filtro.estado = "promocion";
     filtro.discontinued = false;
-    filtro.porcentajeDescuento = {$ne: undefined};
+    filtro.createdAt = { $gte :  new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-01T00:00:00.000Z`), $lte : new Date(`${fecha.getFullYear()}-0${(fecha.getMonth()+1)}-31T23:59:35.835Z`) };
 
-    filtro2.estado = "promocion";
-    filtro2.discontinued = false;
+    let group = generateGroupDiscount(filtro2);
     
 
     // let arr;
@@ -1008,19 +1576,15 @@ exports.tableDiscountInfo = async (req, res) => {
     }
 
     try {
-        arr = await Business.find(filtro2,{"precio":1, "descuento": 1, "origin":1,  "categoria":1, "subCategoria": 1, "createdAt":1, "discontinued":1});
+        arr = await Business.find(filtro1,{"precio":1, "descuento": 1, "origin":1,  "categoria":1, "subCategoria": 1, "createdAt":1, "discontinued":1});
 
         arr2 = await Business.aggregate([
             {
                 '$match': 
                     filtro
             }, {
-                '$group': {
-                    '_id': {'categoria':'$categoria','subCategoria':'$subCategoria', 'tipoPrenda':'$tipoPrenda'},
-                    'porcentajeDescuento': {
-                    $avg: '$porcentajeDescuento'
-                    }
-                }
+                '$group': 
+                group
             }, {
                 $sort:{"porcentajeDescuento":-1}
             }
@@ -1030,6 +1594,14 @@ exports.tableDiscountInfo = async (req, res) => {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
+    
+
+    arr2 = arr2.map(element => {
+        if(element.porcentajeDescuento !== null) element.porcentajeDescuento = element.porcentajeDescuento.toFixed(2);
+
+
+        return element;
+    });
 
     arr2 = arr2.map(element => {
         if(element.porcentajeDescuento !== null) element.porcentajeDescuento = element.porcentajeDescuento.toFixed(2);
@@ -1040,7 +1612,6 @@ exports.tableDiscountInfo = async (req, res) => {
 
     if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
         values = avgDiscount.averageDiscountMonthGeneral(arr);
-        // console.log(values);
         
         // obtener precios promedio mes actual y anterior 
 
@@ -1073,6 +1644,9 @@ exports.tableDiscountInfo = async (req, res) => {
         descuentoPromedioAnterior = values[lastMonth];
         // determinar la diferencia porcentual en los descuentos
         differences = percentageDifferencesDiscount(descuentoPromedio, descuentoPromedioAnterior);
+    } else {
+        differences[0] = 0;
+        differences[1] = 0;
     }
 
 
@@ -1088,26 +1662,28 @@ exports.tableDiscountInfo = async (req, res) => {
     res.status(200).json({obj});
 }
 
+// table news 
 exports.tableNewsInfo = async (req, res) => {
     let filtro = req.query;
     let filtro2 = req.query;
-    
-    // filtro = organizarQuery(filtro);
+    const fecha = new Date();
+
+    // creando el group en funcion del filtro
+    let group = generateGroupNews(filtro);
+    // creando el contenido del match para el query
     filtro = queryGroupBy(filtro);
     filtro.estado = "nuevo";
     filtro.discontinued = false;
+    filtro.createdAt = { $gte :  new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-01T00:00:00.000Z`), $lte : new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-31T23:59:35.835Z`) };
     
+    // datos para la diferencia
     filtro2 = organizarQuery(filtro2);
     filtro2.estado = "nuevo";
     filtro2.discontinued = false;
-    
+
     let arr;
     let arr2;
     let obj;
-    // let values = [];
-    // let origin = '';
-    // let nuevosPromedio = 0;
-    // let nuevosPromedioAnterior = 0;
     let differences = [];
 
     //mes actual
@@ -1127,14 +1703,10 @@ exports.tableNewsInfo = async (req, res) => {
         arr2 = await Business.aggregate([
             {
                 '$match': 
-                    filtro
+                    filtro                    
             }, {
-                '$group': {
-                    '_id': {'categoria':'$categoria','subCategoria':'$subCategoria', 'tipoPrenda':'$tipoPrenda'},
-                    'nuevos': {
-                    $sum: 1
-                    }
-                }
+                '$group': 
+                    group
             }, {
                 $sort:{"nuevos":-1}
             }
@@ -1143,6 +1715,7 @@ exports.tableNewsInfo = async (req, res) => {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
+
 
     if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
         values = avgNews.averageNewsMonthGeneral(arr);
@@ -1167,6 +1740,9 @@ exports.tableNewsInfo = async (req, res) => {
         nuevosPromedioAnterior = values[lastMonth];
         // determinar la diferencia porcentual en los nuevoss
         differences = percentageDifferencesnews(nuevosPromedio, nuevosPromedioAnterior);
+    } else {
+        differences[0] = 0;
+        differences[1] = 0;
     }
 
 
@@ -1182,14 +1758,19 @@ exports.tableNewsInfo = async (req, res) => {
     res.status(200).json({obj});
 }
 
+// table sku info in prendas section
 exports.tableSKUInfo = async (req, res) => {
     let filtro = req.query;
     let filtro2 = req.query;
+    let fecha = new Date();
+
+    let group = generateGroupSKU(filtro2);
     
     filtro = organizarQuery(filtro);
     filtro2 = queryGroupBy(filtro2);
     filtro.discontinued = false;
     filtro2.discontinued = false;
+    filtro2.createdAt = { $gte :  new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-01T00:00:00.000Z`), $lte : new Date(`${fecha.getFullYear()}-0${fecha.getMonth() + 1}-31T23:59:35.835Z`) };
 
     let arr;
     let arr2;
@@ -1238,25 +1819,8 @@ exports.tableSKUInfo = async (req, res) => {
                 }
               }
             }, {
-              '$group': {
-                '_id': {
-                  'tipoPrenda': '$tipoPrenda', 
-                  'categoria': '$categoria', 
-                  'subCategoria': '$subCategoria'
-                }, 
-                'nuevos': {
-                  '$sum': 1
-                }, 
-                'SKU': {
-                  '$sum': '$numeroTallas'
-                }, 
-                'precioPromedio': {
-                  '$avg': '$precio'
-                }, 
-                'porcentajeDescuento': {
-                  '$avg': '$porcentajeDescuento'
-                }
-              }
+              '$group': 
+                group
             }, {
               '$sort': {
                 'SKU': -1
@@ -1272,7 +1836,12 @@ exports.tableSKUInfo = async (req, res) => {
     
     let totalElements = arr.length;
     arr2 = arr2.map(element => {
-        if(element.precioPromedio !== null) element.precioPromedio = (element.precioPromedio).toFixed();
+        if(element.precioPromedio !== null) {
+            element.precioPromedio = (element.precioPromedio).toFixed();
+        }
+        if(element.porcentajeDescuento !== null) {
+            element.porcentajeDescuento = (element.porcentajeDescuento).toFixed(2);
+        }
 
         element.tasaFrescura = (element.nuevos/totalElements).toFixed(3); 
 
@@ -1289,17 +1858,98 @@ exports.tableSKUInfo = async (req, res) => {
     res.status(200).json({obj});
 }
 
-// cards prendas 
+// table principal in prendas section
+exports.tablePrendasInfo2 = async (req, res) => {
+    let filtro = req.query;
+    let filtro2 = req.query;
+    
+
+    let group = generateGroupSKU(filtro2);
+
+    filtro = organizarQuery(filtro);
+    filtro2 = queryGroupBysku(filtro2);
+
+    let arr;
+    let arr2;
+    let obj;
+
+    try {
+        arr = await Business.find(filtro,{"precio":1});
+
+        arr2 = await Business.aggregate([
+            {
+              '$match': 
+                filtro2
+              
+            }, {
+              '$project': {
+                'porcentajeDescuento': '$porcentajeDescuento', 
+                'numeroTallas': '$numeroTallas', 
+                'precio': '$precio', 
+                'categoria': '$categoria', 
+                'subCategoria': '$subCategoria', 
+                'tipoPrenda': '$tipoPrenda', 
+                'nuevos': {
+                  '$cond': {
+                    'if': {
+                      '$eq': [
+                        '$estado', 'nuevo'
+                      ]
+                    }, 
+                    'then': {
+                      '$sum': 1
+                    }, 
+                    'else': {
+                      '$sum': 0
+                    }
+                  }
+                }
+              }
+            }, {
+              '$group': 
+                group
+            }, {
+              '$sort': {
+                'SKU': -1
+              }
+            }
+          ]);
+
+    } catch (error) {
+        console.log("no se obtuvo respuesta");
+        return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
+    }
+
+    
+    let totalElements = arr.length;
+    arr2 = arr2.map(element => {
+        if(element.porcentajeDescuento !== null) {
+        element.porcentajeDescuento = (element.porcentajeDescuento).toFixed(2);
+
+        element.precioPromedio = (element.precioPromedio).toFixed();
+        }
+
+        element.tasaFrescura = (element.nuevos/totalElements).toFixed(3); 
+
+        return element;
+    });
+
+
+    // respuesta para el frontend
+    obj = { 
+        arr2
+    }
+
+
+    res.status(200).json({obj});
+}
+
+// cards prendas info categorias
 exports.prendasInfo = async (req, res) => {
     let filtro = req.query;
     
-    // TODO: organizar desde el .ts para enviar fecha y cambiar a organizarQueryTest
-    filtro = organizarQueryPrenda(filtro);
-    // console.log(filtro);
 
-    //mes actual
-    let date = new Date();
-    let month = date.getMonth();
+    filtro = organizarQueryPrenda(filtro);
     
     try {
         arr = await Business.find(filtro,{"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
@@ -1349,7 +1999,7 @@ news = arr => {
 }
 
 // se calcula el porcentaje de diferencia entre mes actual y anterior
-percentageDifferencePrice = (current, before) => {
+let percentageDifferencePrice = (current, before) => {
     // 1 positive 0 negative
     let difference = [];
     if (current >= before  && current !== 0) {
@@ -1360,11 +2010,7 @@ percentageDifferencePrice = (current, before) => {
         difference[0] = 0;
         difference[1] =  parseFloat(Math.abs( ((current*100)/before)-100 ).toFixed(2));
         return difference;
-    } else {
-        difference[0] = 0;
-        difference[1] = 0;
-        return difference;
-    }
+    } 
 
 }
 
