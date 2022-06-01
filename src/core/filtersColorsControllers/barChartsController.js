@@ -2,10 +2,51 @@ const Business = require("../../domain/model/businessDao");
 
 const coloresRGB = require("./../../utils/index");
 
-organizarQueryfilter1 = (query) => {
+// let organizarQueryfilter1 = (query) => {
+//     let obj = {};
+//     let inn = [];
+
+
+//     if(query.categoria !== undefined) {
+//         obj.categoria = {$in: query.categoria};
+//     }
+//     if(query.subCategoria !== undefined){
+//         obj.subCategoria = {$in: query.subCategoria};
+//     }
+//     if(query.tipoPrenda !== undefined){
+//         obj.tipoPrenda = {$in: query.tipoPrenda};
+//     }  
+//     if(query.fechaInicio !== '' && query.fechaFin === '') {
+//         let inicio = query.fechaInicio + "T00:00:00.000Z";
+//         let fin = query.fechaInicio + "T23:59:59.999Z";
+//         console.log(query.fechaInicio);
+//         obj.fecha_consulta = {$gte: inicio, $lte: fin}
+//     }
+//     if(query.fechaInicio !== '' && query.fechaFin !== '') {
+//         obj.fecha_consulta = {$gte: query.fechaInicio, $lte: query.fechaFin}
+//     }
+
+
+//     return obj;
+// }
+
+let organizarQueryfilter2 = (query) => {
     let obj = {};
     let inn = [];
 
+
+    if(query.origin !== undefined) {
+        obj.origin = {$in: query.origin};
+    }
+    if(query.sku !== ''){
+        obj.estado = {$ne: "descontinuados"};
+    }
+    if(query.discount !== ''){
+        obj.descuento = {$ne: null};
+    }
+    if(query.new !== ''){
+        obj.estado = {$eq: "nuevo"};
+    }  
 
     if(query.categoria !== undefined) {
         obj.categoria = {$in: query.categoria};
@@ -31,11 +72,13 @@ organizarQueryfilter1 = (query) => {
 }
 
 
+
+
 // metodo para calcular la frecuencia y colores de sku vista general colores pie chart
 exports.colorGeneralChart = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQueryfilter1(filtro);
+    filtro = organizarQueryfilter2(filtro);
     filtro.discontinued = false;
 
     //mes actual
@@ -100,11 +143,11 @@ let GeneralColorChart = (arr) => {
     return obj;
 }
 
-// metodo para calcular la frecuencia y colores de sku vista general colores pie chart
+// metodo para calcular la frecuencia y colores de sku vista general colores chart materiales
 exports.colorGeneralChartMateriales = async (req, res) => {
     let filtro = req.query;
     
-    filtro = organizarQueryfilter1(filtro);
+    filtro = organizarQueryfilter2(filtro);
     filtro.discontinued = false;
 
     //mes actual
@@ -142,14 +185,18 @@ let Data = (arr) => {
     let arrayCountsMaterials = [];
     let obj = {};
 
-    // ser crea un arreglo con todos los colores
+    // ser crea un arreglo con todos los materiales
     for (let i = 0; i < arr.length; i++) {
             arrayMaterials.push(arr[i].material1);
     }
 
     // se eliminan los repetidos
     arrayMaterials = [...new Set(arrayMaterials)];
-    //se inicializa el array count con la cantidad de colores existente
+    // se elimina base y principal del arreglo
+    arrayMaterials = arrayMaterials.filter(element => (element !== "principal") )
+    arrayMaterials = arrayMaterials.filter(element => (element !== "base") )
+    arrayMaterials = arrayMaterials.filter(element => (element !== undefined) )
+    //se inicializa el array count con la cantidad de materiales existente
     arrayMaterials.forEach((element, index) => {
         arrayCountsMaterials[index] = 0;
     })
@@ -180,6 +227,10 @@ let coloresFrecuentes = (arr) => {
     }
     // se eliminan los repetidos
     arrayColoresSub = [...new Set(arrayColoresSub)];
+    // eliminando los undefined
+    arrayColoresSub = arrayColoresSub.filter(element => (element !== undefined));
+    arrayColoresSub = arrayColoresSub.filter(element => (element !== null));
+    arrayColoresSub = arrayColoresSub.filter(element => (element.length > 3));
     //se inicializa el array count con la cantidad de colores existente
     arrayColoresSub.forEach((element, index) => {
         arrayCountsSub[index] = 0;

@@ -74,6 +74,10 @@ const businessSchema = new Schema(
       require: false,
       trim: false,
     },
+    porcentajeDescuento: {
+      type: Number,
+      require: false,
+    },
     caracteristicas: [
       {
         type: String,

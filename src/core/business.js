@@ -177,6 +177,11 @@ exports.getImages = async (request, res) => {
 
   const consulta = await Business.aggregate([
     {
+      $match: {
+        $or:[{discontinued:false},{discontinued:undefined} ]
+      },
+    },
+    {
       $lookup: {
         from: "users",
         localField: "user",
@@ -497,16 +502,72 @@ exports.updateInfo = async (req, res) => {
   );
 };
 
+// metodo para estructurar el filtro de imagenes
+let queryStructure = (query) => {
+  let obj = {};
+
+
+
+  if(query.year !== undefined && Array.isArray(query.year)) {
+      obj.year = {$in: query.year};
+  } else if(query.year !== undefined) {
+      obj.year = query.year;
+  }
+  if(query.origin !== undefined && Array.isArray(query.origin)) {
+      obj.origin = {$in: query.origin};
+  } else if(query.origin !== undefined) {
+      obj.origin = query.origin;
+  }
+  if(query.subCategoria !== undefined && Array.isArray(query.subCategoria)){
+    obj.subCategoria = {$in: query.subCategoria};
+    obj.use = {$in: query.use};
+  } else if(query.subCategoria !== undefined) {
+    obj.subCategoria = query.subCategoria ,
+    obj.use = query.use
+  }
+  if(query.tipoPrenda !== undefined && Array.isArray(query.tipoPrenda)){
+    obj.tipoPrenda = {$in: query.tipoPrenda};
+  } else if(query.tipoPrenda !== undefined) {
+    obj.tipoPrenda = query.tipoPrenda;
+  }
+  if(query.categoria !== undefined && Array.isArray(query.categoria)){
+      obj.$or = [{'categoria' : {$in: query.categoria} },
+        {'gender' : {$in: query.gender}} ]
+    } else if(query.categoria !== undefined) {
+      obj.$or = [{'gender' : query.gender},  
+        {'categoria' : query.categoria}]
+  }
+  
+  
+  if(query.color !== undefined && Array.isArray(query.color)){
+      obj.color = {$in: query.color};
+  } else if(query.color !== undefined) {
+      obj.color = query.color;
+  }
+
+  if(query.quarter !== undefined && Array.isArray(query.quarter)){
+    obj.quarter = {$in: query.quarter};
+  } else if(query.quarter !== undefined) {
+      obj.quarter = query.quarter;
+  }
+  
+
+
+  return obj;
+}
+
 /*
- * Filtrar imágenes
+ * Filtrar imágenes, desde inicio
  */
 exports.getImagesFilter = async (request, response) => {
   const { query } = request;
-
-  console.log("Sidebar: ", query);
+  console.log(query);
 
   const q = {};
   const queryArray = [];
+
+  // let filtro = queryStructure(query);
+  // console.log(filtro);
 
   if (query.year !== undefined) {
     q.year = query.year;
@@ -521,8 +582,9 @@ exports.getImagesFilter = async (request, response) => {
     } else {
       const queryDB = {
         year: {
-          $in: query.year,
-        },
+          $in : query.year
+        }
+        
       };
       queryArray.push(queryDB);
     }
@@ -556,6 +618,12 @@ exports.getImagesFilter = async (request, response) => {
         },
       };
       queryArray.push(queryDB);
+      const queryDB2 = {
+        categoria: {
+          $in: [query.categoria],
+        },
+      };
+      queryArray.push(queryDB2);
     } else {
       const queryDB = {
         gender: {
@@ -563,6 +631,12 @@ exports.getImagesFilter = async (request, response) => {
         },
       };
       queryArray.push(queryDB);
+      const queryDB2 = {
+        categoria: {
+          $in: query.categoria,
+        },
+      };
+      queryArray.push(queryDB2);
     }
   }
 
@@ -574,6 +648,12 @@ exports.getImagesFilter = async (request, response) => {
         },
       };
       queryArray.push(queryDB);
+      const queryDB2 = {
+        subCategoria: {
+          $in: [query.subCategoria],
+        },
+      };
+      queryArray.push(queryDB2);
     } else {
       const queryDB = {
         use: {
@@ -581,6 +661,12 @@ exports.getImagesFilter = async (request, response) => {
         },
       };
       queryArray.push(queryDB);
+      const queryDB2 = {
+        subCategoria: {
+          $in: query.subCategoria,
+        },
+      };
+      queryArray.push(queryDB2);
     }
   }
 
@@ -603,21 +689,35 @@ exports.getImagesFilter = async (request, response) => {
   }
 
   if (query.feature !== undefined) {
+    
     if (typeof query.feature !== "object") {
       const queryDB = {
         prendasGenerales: {
           $in: [query.feature],
-        },
+        }
       };
       queryArray.push(queryDB);
+      const queryDB2 = {
+        tipoPrenda: {
+          $in: [query.tipoPrenda],
+        }
+      };
+      queryArray.push(queryDB2);
+
     } else {
       const queryDB = {
         prendasGenerales: {
           $in: query.feature,
-        },
+        }
       };
-
       queryArray.push(queryDB);
+      const queryDB2 = {
+        tipoPrenda: {
+          $in: query.tipoPrenda,
+        }
+      };
+      queryArray.push(queryDB2);
+
     }
   } 
 
@@ -630,6 +730,12 @@ exports.getImagesFilter = async (request, response) => {
           },
         };
         queryArray.push(queryDB);
+        const queryDB2 = {
+          color: {
+            $in: [query.color2],
+          },
+        };
+        queryArray.push(queryDB2);
       } else {
         const queryDB = {
           principalColors: {
@@ -637,6 +743,12 @@ exports.getImagesFilter = async (request, response) => {
           },
         };
         queryArray.push(queryDB);
+        const queryDB2 = {
+          color: {
+            $in: [query.color2],
+          },
+        };
+        queryArray.push(queryDB2);
       }
     } else {
       const queryDB = {
@@ -645,6 +757,12 @@ exports.getImagesFilter = async (request, response) => {
         },
       };
       queryArray.push(queryDB);
+      const queryDB2 = {
+        color: {
+          $in: query.color2,
+        },
+      };
+      queryArray.push(queryDB2);
     }
   }
 
@@ -678,8 +796,11 @@ exports.getImagesFilter = async (request, response) => {
     }
   }
 
+  // console.log(queryArray);
+  // testiar la estructura del filtro final
+
   if (queryArray.length > 0) {
-    const consulta = await Business.aggregate([
+    let consulta = await Business.aggregate([
       {
         $lookup: {
           from: "users",
@@ -690,10 +811,17 @@ exports.getImagesFilter = async (request, response) => {
       },
       {
         $match: {
-          $and: queryArray,
-        },
+          $or: queryArray
+        }
       },
-    ]);
+    ]).limit(10000);
+
+    // $or: queryArray,  esta en el match forma anterior
+    consulta = consulta.filter((element) => {
+      if (element.discontinued === false || element.discontinued === undefined)
+        return element;
+    })
+
     response.send(consulta);
   } else {
     /**
@@ -709,9 +837,14 @@ exports.getImagesFilter = async (request, response) => {
           as: "usuario",
         },
       },
+      {
+        $match: {
+          $or:[{discontinued:false},{discontinued:undefined} ]
+        },
+      },
     ]).sort({
       _id: -1,
-    });
+    }).limit(10000);
     response.send(consulta);
   }
 };

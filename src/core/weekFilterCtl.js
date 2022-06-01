@@ -87,8 +87,6 @@ exports.cardsInfoWeek = async (req, res) => {
 
     // arreglo de mango y zara para los precios 
     let zm = [];
-    // arreglo de mango y zara para los descuentos
-    let dzm = [];
     // arreglo de mango y zara para los nuevos
     let nzm = [];
     // arreglo de mango y zara para los descontinuados
@@ -129,7 +127,7 @@ exports.cardsInfoWeek = async (req, res) => {
     
 
     try {
-        array = await Business.find(filtro,{"precio":1, "descuento": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1}, { allowDiskUse: true});
+        array = await Business.find(filtro,{"precio":1, "descuento": 1,  "origin":1, "use":1,"estado":1, "createdAt":1, "numeroTallas":1, "tag": 1, "discontinued":1}, { allowDiskUse: true});
         // console.log("Total actual: ", array.length);
     } catch (error) {
         console.log("no se obtuvo respuesta");
@@ -137,66 +135,46 @@ exports.cardsInfoWeek = async (req, res) => {
     }
 
     try {
-        array2 = await Business.find(filtro2,{"precio":1, "descuento": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1}, { allowDiskUse: true});
+        array2 = await Business.find(filtro2,{"precio":1, "descuento": 1,  "origin":1, "use":1,"estado":1, "createdAt":1, "numeroTallas":1, "tag": 1, "discontinued":1}, { allowDiskUse: true});
         // console.log("Total: ", array2.length);
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
     }
 
-    arr = cardsInfo.copyArray(array);
-    arr2 = cardsInfo.copyArray(array2);
-
-    // semana actual descuento
-    arr = arr.filter((element) => {
-        return element.descuento !== null;
-    })
-    // semana anterior descuento
-    arr2 = arr2.filter((element) => {
-        return element.descuento !== null;
-    })
-    console.log(arr.length);
+    arr = cardsInfo.copyArrayPromocion(array);
+    arr2 = cardsInfo.copyArrayPromocion(array2);
+    
     discounts = cardsInfo.averageDiscountWeek(arr); // descuento semana actual y anterior
     discounts2 = cardsInfo.averageDiscountWeek(arr2); // descuento semana actual y anterior
-    dzm[0] = discounts2;
-    dzm[1] = discounts;
 
     // descuento promedio semana
     if(discounts === 0 || discounts2 === 0){
         discount = ((discounts + discounts2)).toFixed(2);
-        differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
+        differencePorcentage =  percentageDifferencesDiscount(discounts, discounts2);
     } else {
         discount = ((discounts + discounts2)/2).toFixed(2);
-        differencePorcentage =  percentageDifferencesDiscount(dzm[1]/2, dzm[0]/2);
+        differencePorcentage =  percentageDifferencesDiscount(discounts, discounts2);
     }
 
     // precios cards
     arrPrice = cardsInfo.copyArray(array);
     arrPrice2 = cardsInfo.copyArray(array2);
 
-    values = cardsInfo.averagePriceWeek(arrPrice); 
-    values2 = cardsInfo.averagePriceWeek(arrPrice2); 
-    zm[0] = values2;
-    zm[1] =  values; 
+    values = cardsInfo.averagePriceWeek(arrPrice);    
+    values2 = cardsInfo.averagePriceWeek(arrPrice2);
+
     if(values === 0 || values2 === 0){
         precioPromedio = ((values + values2)).toFixed();
-        differencePrice =  percentageDifferencePrice(zm[1], zm[0]); 
+        differencePrice =  percentageDifferencePrice(values, values2); 
     } else {
         precioPromedio = ((values + values2)/2).toFixed();
-        differencePrice =  percentageDifferencePrice(zm[1]/2, zm[0]/2); 
+        differencePrice =  percentageDifferencePrice(values, values2); 
     }
 
-    // semana actual nuevos
-    arrNews = cardsInfo.copyArray(array);
-    arrNews2 = cardsInfo.copyArray(array2)
-
-    arrNews = arrNews.filter((element) => {
-        return element.estado === "nuevo";
-    })
-    // semana anterior nuevos
-    arrNews2 = arrNews2.filter((element) => {
-        return element.estado === "nuevo";
-    })
+    // semana actual nuevos = cardsInfo.copyArray(array);
+    arrNews = cardsInfo.copyArrayNew(array)
+    arrNews2 = cardsInfo.copyArrayNew(array2)
 
     nzm[0] = arrNews2.length;
     nzm[1] =  arrNews.length; 
@@ -205,29 +183,21 @@ exports.cardsInfoWeek = async (req, res) => {
     differenceNew = percentageDifferencesnews(nzm[1], nzm[0]);
 
     // descontinuedos
+    
     let arrDiscontinued = cardsInfo.copyArrayDiscontinued(array);
-    let arrDiscontinued2 = cardsInfo.copyArrayDiscontinued(array2)
-    
-
-    // semana actual descontinuados
-    arrDiscontinued = arrDiscontinued.filter((element) => {
-        return element.estado === "descontinuado";
-    })
-    // semana anterior descontinuados
-    arrDiscontinued2 = arrDiscontinued2.filter((element) => {
-        return element.estado === "descontinuado";
-    })
+    let arrDiscontinued2 = cardsInfo.copyArrayDiscontinued(array2);
+    // console.log(arrDiscontinued2);
 
     
-    ddzm[0] = arrDiscontinued2.length;
-    ddzm[1] =  arrDiscontinued.length;
-    discontinueds = (arrDiscontinued.length + arrDiscontinued2.length);
+    ddzm[0] = arrDiscontinued2;
+    ddzm[1] =  arrDiscontinued;
+    discontinueds = (arrDiscontinued + arrDiscontinued2);
     differenceDiscontinued = percentageDifferencesDiscontinued(ddzm[1], ddzm[0]);
 
     // metodo para los sku por semana
 
-    arrSKU = cardsInfo.copyArray(array);
-    arrSKU2 = cardsInfo.copyArray(array2)
+    arrSKU = cardsInfo.copyArraySKU(array);
+    arrSKU2 = cardsInfo.copyArraySKU(array2);
 
 
     skuCounts = cardsInfo.averageSKUWeek(arrSKU); 
@@ -278,7 +248,7 @@ exports.averagePriceWeek = async (req, res) => {
     let origin = '';
 
     try {
-        arr = await Business.find(filtro,{"base64":1,"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
+        arr = await Business.find(filtro,{"precio":1, "descuento": 1, "imageName": 1, "origin":1, "color":1, "categoria":1,"caracteristicas":1, "subCategoria": 1, "use":1,"estado":1, "createdAt":1, "talla":1, "numeroTallas":1, "tipoPrenda": 1, "tag": 1});
     } catch (error) {
         console.log("no se obtuvo respuesta");
         return res.json({mensaje: 1}); // 1 quiere decir que no hubieron coincidencias para la busqueda
@@ -288,13 +258,10 @@ exports.averagePriceWeek = async (req, res) => {
         values = avgPrice.averagePriceWeekGeneral(arr);
         origin = 'general';
         
-    } else if(req.query.origin === 'Zara'){
-        origin = 'Zara';
+    } else {
+        origin = req.query.origin;
         values = avgPrice.averagePriceWeekOrigin(arr);
 
-    } else if(req.query.origin === 'Mango'){
-        origin = 'Mango';
-        values = avgPrice.averagePriceWeekOrigin(arr);
     }
 
     let weeks = ['Ene 1-7','Ene 8-14','Ene 15-21','Ene 22-31','Feb 1-11','Feb 12-18','Feb 19-25','Feb 26-29','Mar 1-11','Mar 12-18','Mar 19-25','Mar 26-31','Abr 1-8','Abr 9-15','Abr 16-22','Abr 26-31','May 1-6','May 7-13','May 14-20','May 21-31','Jun 1-10','Jun 11-17','Jun 18-24','Jun 25-30','Jul 1-8','Jul 9-15','Jul 16-22','Jul 23-31','Ago 1-5','Ago 6-12','Ago 13-19','Ago 20-26','Ago 27-31','Sep 1-9','Sep 10-16','Sep 17-23','Sep 24-30','Oct 1-7','Oct 8-14','Oct 15-21','Oct 22-31','Nov 1-5','Nov 6-11','Nov 12-18','Nov 19-25','Nov 26-30','Dic 1-9','Dic 10-17','Dic 18-24','Dic 25-31'];
@@ -334,7 +301,7 @@ exports.averageDiscountWeek = async (req, res) => {
     }
 
     if (req.query.origin === undefined || Array.isArray(req.query.origin)) {
-        values = avgDiscountWeek.averageDiscountWeekGeneral(arr);        
+        values = avgDiscountWeek.averageDiscountWeekGeneral(arr);      
         origin = 'general';
         
     } else if(req.query.origin === 'Zara'){

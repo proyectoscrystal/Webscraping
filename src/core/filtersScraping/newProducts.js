@@ -307,9 +307,406 @@ exports.averageNewsMonthGeneral = (arr) => {
     valuesZ[45] = oct2;
     valuesZ[46] = nov2;
     valuesZ[47] = dic2;
-    valuesZ[48] = currentMonth;
 
-    
+    // datos de Gef desde la posicion [48] a la [59]
+    // datos de Gef año anterior desde la posicion [60] a la [71]
+  
+    let eneG = 0;
+    let febG = 0;
+    let marG = 0;
+    let abrG = 0;
+    let mayG = 0;
+    let junG = 0;
+    let julG = 0;
+    let agosG = 0;
+    let sepG = 0;
+    let octG = 0;
+    let novG = 0;
+    let dicG = 0;
+  
+    let ene3 = 0;
+    let feb3 = 0;
+    let mar3 = 0;
+    let abr3 = 0;
+    let may3 = 0;
+    let jun3 = 0;
+    let jul3 = 0;
+    let agos3 = 0;
+    let sep3 = 0;
+    let oct3 = 0;
+    let nov3 = 0;
+    let dic3 = 0;
+  
+    // let count = 1;
+  
+    try {
+      arr.forEach((element) => {
+        let date = new Date();
+        let currentYear = date.getFullYear();
+        let lastYear = date.getFullYear() - 1;
+        let fecha = element.createdAt + ""; // funcion para obtener la fecha
+        let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero
+        let year = parseInt(fecha.split(" ")[3]);
+  
+        if (year === currentYear && element.origin == 'Gef') {
+          if (mes === "Jan" && element.tag === "nuevo") return eneG++;
+          if (mes === "Feb" && element.tag === "nuevo") return febG++;
+          if (mes === "Mar" && element.tag === "nuevo") return marG++;
+          if (mes === "Apr" && element.tag === "nuevo") return abrG++;
+          if (mes === "May" && element.tag === "nuevo") return mayG++;
+          if (mes === "Jun" && element.tag === "nuevo") return junG++;
+          if (mes === "Jul" && element.tag === "nuevo") return julG++;
+          if (mes === "Aug" && element.tag === "nuevo") return agosG++;
+          if (mes === "Sep" && element.tag === "nuevo") return sepG++;
+          if (mes === "Oct" && element.tag === "nuevo") return octG++;
+          if (mes === "Nov" && element.tag === "nuevo") return novG++;
+          if (mes === "Dec" && element.tag === "nuevo") return dicG++;
+        }
+  
+        if (year === lastYear  && element.origin == 'Gef') {
+          if (mes === "Jan" && element.tag === "nuevo") return ene3++;
+          if (mes === "Feb" && element.tag === "nuevo") return feb3++;
+          if (mes === "Mar" && element.tag === "nuevo") return mar3++;
+          if (mes === "Apr" && element.tag === "nuevo") return abr3++;
+          if (mes === "May" && element.tag === "nuevo") return may3++;
+          if (mes === "Jun" && element.tag === "nuevo") return jun3++;
+          if (mes === "Jul" && element.tag === "nuevo") return jul3++;
+          if (mes === "Aug" && element.tag === "nuevo") return agos3++;
+          if (mes === "Sep" && element.tag === "nuevo") return sep3++;
+          if (mes === "Oct" && element.tag === "nuevo") return oct3++;
+          if (mes === "Nov" && element.tag === "nuevo") return nov3++;
+          if (mes === "Dec" && element.tag === "nuevo") return dic3++;
+        }
+      }); // fin del ciclo que guarda los precios de cada mes
+    } catch (error) {
+      console.log(error);
+    }
+  
+    valuesZ[48] = eneG;
+    valuesZ[49] = febG;
+    valuesZ[50] = marG;
+    valuesZ[51] = abrG;
+    valuesZ[52] = mayG;
+    valuesZ[53] = junG;
+    valuesZ[54] = julG;
+    valuesZ[55] = agosG;
+    valuesZ[56] = sepG;
+    valuesZ[57] = octG;
+    valuesZ[58] = novG;
+    valuesZ[59] = dicG;
+  
+    // valores del año anterior Gef
+    valuesZ[60] = ene3;
+    valuesZ[61] = feb3;
+    valuesZ[62] = mar3;
+    valuesZ[63] = abr3;
+    valuesZ[64] = may3;
+    valuesZ[65] = jun3;
+    valuesZ[66] = jul3;
+    valuesZ[67] = agos3;
+    valuesZ[68] = sep3;
+    valuesZ[68] = oct3;
+    valuesZ[70] = nov3;
+    valuesZ[71] = dic3;
+
+    // nuevos para punto blanco
+    let enePB = 0;
+    let febPB = 0;
+    let marPB = 0;
+    let abrPB = 0;
+    let mayPB = 0;
+    let junPB = 0;
+    let julPB = 0;
+    let agosPB = 0;
+    let sepPB = 0;
+    let octPB = 0;
+    let novPB = 0;
+    let dicPB = 0;
+  
+    let ene4 = 0;
+    let feb4 = 0;
+    let mar4 = 0;
+    let abr4 = 0;
+    let may4 = 0;
+    let jun4 = 0;
+    let jul4 = 0;
+    let agos4 = 0;
+    let sep4 = 0;
+    let oct4 = 0;
+    let nov4 = 0;
+    let dic4 = 0;
+  
+    // let count = 1;
+  
+    try {
+      arr.forEach((element) => {
+        let date = new Date();
+        let currentYear = date.getFullYear();
+        let lastYear = date.getFullYear() - 1;
+        let fecha = element.createdAt + ""; // funcion para obtener la fecha
+        let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero
+        let year = parseInt(fecha.split(" ")[3]);
+  
+        if (year === currentYear && element.origin == 'Punto blanco') {
+          if (mes === "Jan" && element.tag === "nuevo") return enePB++;
+          if (mes === "Feb" && element.tag === "nuevo") return febPB++;
+          if (mes === "Mar" && element.tag === "nuevo") return marPB++;
+          if (mes === "Apr" && element.tag === "nuevo") return abrPB++;
+          if (mes === "May" && element.tag === "nuevo") return mayPB++;
+          if (mes === "Jun" && element.tag === "nuevo") return junPB++;
+          if (mes === "Jul" && element.tag === "nuevo") return julPB++;
+          if (mes === "Aug" && element.tag === "nuevo") return agosPB++;
+          if (mes === "Sep" && element.tag === "nuevo") return sepPB++;
+          if (mes === "Oct" && element.tag === "nuevo") return octPB++;
+          if (mes === "Nov" && element.tag === "nuevo") return novPB++;
+          if (mes === "Dec" && element.tag === "nuevo") return dicPB++;
+        }
+  
+        if (year === lastYear  && element.origin == 'Punto blanco') {
+          if (mes === "Jan" && element.tag === "nuevo") return ene4++;
+          if (mes === "Feb" && element.tag === "nuevo") return feb4++;
+          if (mes === "Mar" && element.tag === "nuevo") return mar4++;
+          if (mes === "Apr" && element.tag === "nuevo") return abr4++;
+          if (mes === "May" && element.tag === "nuevo") return may4++;
+          if (mes === "Jun" && element.tag === "nuevo") return jun4++;
+          if (mes === "Jul" && element.tag === "nuevo") return jul4++;
+          if (mes === "Aug" && element.tag === "nuevo") return agos4++;
+          if (mes === "Sep" && element.tag === "nuevo") return sep4++;
+          if (mes === "Oct" && element.tag === "nuevo") return oct4++;
+          if (mes === "Nov" && element.tag === "nuevo") return nov4++;
+          if (mes === "Dec" && element.tag === "nuevo") return dic4++;
+        }
+      }); // fin del ciclo que guarda los precios de cada mes
+    } catch (error) {
+      console.log(error);
+    }
+  
+    valuesZ[72] = enePB;
+    valuesZ[73] = febPB;
+    valuesZ[74] = marPB;
+    valuesZ[75] = abrPB;
+    valuesZ[76] = mayPB;
+    valuesZ[77] = junPB;
+    valuesZ[78] = julPB;
+    valuesZ[79] = agosPB;
+    valuesZ[80] = sepPB;
+    valuesZ[81] = octPB;
+    valuesZ[82] = novPB;
+    valuesZ[83] = dicPB;
+  
+    // valores del año anterior Punto blanco
+    valuesZ[84] = ene4;
+    valuesZ[85] = feb4;
+    valuesZ[86] = mar4;
+    valuesZ[87] = abr4;
+    valuesZ[88] = may4;
+    valuesZ[89] = jun4;
+    valuesZ[90] = jul4;
+    valuesZ[91] = agos4;
+    valuesZ[92] = sep4;
+    valuesZ[93] = oct4;
+    valuesZ[94] = nov4;
+    valuesZ[95] = dic4;
+
+     // nuevos para Baby fresh
+     let eneBF = 0;
+     let febBF = 0;
+     let marBF = 0;
+     let abrBF = 0;
+     let mayBF = 0;
+     let junBF = 0;
+     let julBF = 0;
+     let agosBF = 0;
+     let sepBF = 0;
+     let octBF = 0;
+     let novBF = 0;
+     let dicBF = 0;
+   
+     let ene5 = 0;
+     let feb5 = 0;
+     let mar5 = 0;
+     let abr5 = 0;
+     let may5 = 0;
+     let jun5 = 0;
+     let jul5 = 0;
+     let agos5 = 0;
+     let sep5 = 0;
+     let oct5 = 0;
+     let nov5 = 0;
+     let dic5 = 0;
+   
+     // let count = 1;
+   
+     try {
+       arr.forEach((element) => {
+         let date = new Date();
+         let currentYear = date.getFullYear();
+         let lastYear = date.getFullYear() - 1;
+         let fecha = element.createdAt + ""; // funcion para obtener la fecha
+         let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero
+         let year = parseInt(fecha.split(" ")[3]);
+   
+         if (year === currentYear && element.origin == 'Baby fresh') {
+           if (mes === "Jan" && element.tag === "nuevo") return eneBF++;
+           if (mes === "Feb" && element.tag === "nuevo") return febBF++;
+           if (mes === "Mar" && element.tag === "nuevo") return marBF++;
+           if (mes === "Apr" && element.tag === "nuevo") return abrBF++;
+           if (mes === "May" && element.tag === "nuevo") return mayBF++;
+           if (mes === "Jun" && element.tag === "nuevo") return junBF++;
+           if (mes === "Jul" && element.tag === "nuevo") return julBF++;
+           if (mes === "Aug" && element.tag === "nuevo") return agosBF++;
+           if (mes === "Sep" && element.tag === "nuevo") return sepBF++;
+           if (mes === "Oct" && element.tag === "nuevo") return octBF++;
+           if (mes === "Nov" && element.tag === "nuevo") return novBF++;
+           if (mes === "Dec" && element.tag === "nuevo") return dicBF++;
+         }
+   
+         if (year === lastYear  && element.origin == 'Baby fresh') {
+           if (mes === "Jan" && element.tag === "nuevo") return ene5++;
+           if (mes === "Feb" && element.tag === "nuevo") return feb5++;
+           if (mes === "Mar" && element.tag === "nuevo") return mar5++;
+           if (mes === "Apr" && element.tag === "nuevo") return abr5++;
+           if (mes === "May" && element.tag === "nuevo") return may5++;
+           if (mes === "Jun" && element.tag === "nuevo") return jun5++;
+           if (mes === "Jul" && element.tag === "nuevo") return jul5++;
+           if (mes === "Aug" && element.tag === "nuevo") return agos5++;
+           if (mes === "Sep" && element.tag === "nuevo") return sep5++;
+           if (mes === "Oct" && element.tag === "nuevo") return oct5++;
+           if (mes === "Nov" && element.tag === "nuevo") return nov5++;
+           if (mes === "Dec" && element.tag === "nuevo") return dic5++;
+         }
+       }); // fin del ciclo que guarda los precios de cada mes
+     } catch (error) {
+       console.log(error);
+     }
+   
+     valuesZ[96] = eneBF;
+     valuesZ[97] = febBF;
+     valuesZ[98] = marBF;
+     valuesZ[99] = abrBF;
+     valuesZ[100] = mayBF;
+     valuesZ[101] = junBF;
+     valuesZ[102] = julBF;
+     valuesZ[103] = agosBF;
+     valuesZ[104] = sepBF;
+     valuesZ[105] = octBF;
+     valuesZ[106] = novBF;
+     valuesZ[107] = dicBF;
+   
+     // valores del año anterior Baby fresh
+     valuesZ[108] = ene5;
+     valuesZ[109] = feb5;
+     valuesZ[110] = mar5;
+     valuesZ[111] = abr5;
+     valuesZ[112] = may5;
+     valuesZ[113] = jun5;
+     valuesZ[114] = jul5;
+     valuesZ[115] = agos5;
+     valuesZ[116] = sep5;
+     valuesZ[117] = oct5;
+     valuesZ[118] = nov5;
+     valuesZ[119] = dic5;
+ 
+
+     // nuevos para Baby fresh
+     let eneGA = 0;
+     let febGA = 0;
+     let marGA = 0;
+     let abrGA = 0;
+     let mayGA = 0;
+     let junGA = 0;
+     let julGA = 0;
+     let agosGA = 0;
+     let sepGA = 0;
+     let octGA = 0;
+     let novGA = 0;
+     let dicGA = 0;
+   
+     let ene6 = 0;
+     let feb6 = 0;
+     let mar6 = 0;
+     let abr6 = 0;
+     let may6 = 0;
+     let jun6 = 0;
+     let jul6 = 0;
+     let agos6 = 0;
+     let sep6 = 0;
+     let oct6 = 0;
+     let nov6 = 0;
+     let dic6 = 0;
+   
+     // let count = 1;
+   
+     try {
+       arr.forEach((element) => {
+         let date = new Date();
+         let currentYear = date.getFullYear();
+         let lastYear = date.getFullYear() - 1;
+         let fecha = element.createdAt + ""; // funcion para obtener la fecha
+         let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero
+         let year = parseInt(fecha.split(" ")[3]);
+   
+         if (year === currentYear && element.origin == 'Galax') {
+           if (mes === "Jan" && element.tag === "nuevo") return eneGA++;
+           if (mes === "Feb" && element.tag === "nuevo") return febGA++;
+           if (mes === "Mar" && element.tag === "nuevo") return marGA++;
+           if (mes === "Apr" && element.tag === "nuevo") return abrGA++;
+           if (mes === "May" && element.tag === "nuevo") return mayGA++;
+           if (mes === "Jun" && element.tag === "nuevo") return junGA++;
+           if (mes === "Jul" && element.tag === "nuevo") return julGA++;
+           if (mes === "Aug" && element.tag === "nuevo") return agosGA++;
+           if (mes === "Sep" && element.tag === "nuevo") return sepGA++;
+           if (mes === "Oct" && element.tag === "nuevo") return octGA++;
+           if (mes === "Nov" && element.tag === "nuevo") return novGA++;
+           if (mes === "Dec" && element.tag === "nuevo") return dicGA++;
+         }
+   
+         if (year === lastYear  && element.origin == 'Galax') {
+           if (mes === "Jan" && element.tag === "nuevo") return ene6++;
+           if (mes === "Feb" && element.tag === "nuevo") return feb6++;
+           if (mes === "Mar" && element.tag === "nuevo") return mar6++;
+           if (mes === "Apr" && element.tag === "nuevo") return abr6++;
+           if (mes === "May" && element.tag === "nuevo") return may6++;
+           if (mes === "Jun" && element.tag === "nuevo") return jun6++;
+           if (mes === "Jul" && element.tag === "nuevo") return jul6++;
+           if (mes === "Aug" && element.tag === "nuevo") return agos6++;
+           if (mes === "Sep" && element.tag === "nuevo") return sep6++;
+           if (mes === "Oct" && element.tag === "nuevo") return oct6++;
+           if (mes === "Nov" && element.tag === "nuevo") return nov6++;
+           if (mes === "Dec" && element.tag === "nuevo") return dic6++;
+         }
+       }); // fin del ciclo que guarda los precios de cada mes
+     } catch (error) {
+       console.log(error);
+     }
+   
+     valuesZ[120] = eneBF;
+     valuesZ[121] = febBF;
+     valuesZ[122] = marBF;
+     valuesZ[123] = abrBF;
+     valuesZ[124] = mayBF;
+     valuesZ[125] = junBF;
+     valuesZ[126] = julBF;
+     valuesZ[127] = agosBF;
+     valuesZ[128] = sepBF;
+     valuesZ[129] = octBF;
+     valuesZ[130] = novBF;
+     valuesZ[131] = dicBF;
+   
+     // valores del año anterior Galax
+     valuesZ[132] = ene5;
+     valuesZ[133] = feb5;
+     valuesZ[134] = mar5;
+     valuesZ[135] = abr5;
+     valuesZ[136] = may5;
+     valuesZ[137] = jun5;
+     valuesZ[138] = jul5;
+     valuesZ[139] = agos5;
+     valuesZ[140] = sep5;
+     valuesZ[141] = oct5;
+     valuesZ[142] = nov5;
+     valuesZ[143] = dic5;
+
   
     return valuesZ;
   

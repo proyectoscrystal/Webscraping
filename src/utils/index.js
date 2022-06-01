@@ -124,7 +124,6 @@ exports.subCategoria = [
   'ropa exterior',
   'ropa exterior',
   'ropa exterior',
-  'ropa exterior',
   'ropa interior',
   'ropa interior',
   'ropa interior',
@@ -249,7 +248,7 @@ exports.subCategoria = [
 exports.tipoPrendaHomologada = [
   'chaquetas',
   'chaquetas',
-  'chaquetas',
+  'vestidos',
   'camisetas',
   'camisa',
   'camisetas',
@@ -522,6 +521,8 @@ exports.tipoPrenda = [
 ]
 
 exports.colorSinHomologar = [
+  'kaki',
+  'palo',
 'amarillo',
 'arena',
 'azul',
@@ -649,6 +650,8 @@ exports.colorSinHomologar = [
 ]
 
 exports.colorHomologado = [
+  'beige',
+  'rosado',
 'amarillo',
 'beige',
 'azul',
@@ -1028,3 +1031,112 @@ exports.materialesScrapingHomologados = [
   'metal',
 
   ]
+
+
+// // query precios promedios
+// ([
+//   {
+//     '$match': {
+//       $or: [{categoria:"Hombre"},{categoria:"Mujer"}], 
+//       'subCategoria': 'accesorios',
+//       'tipoPrenda': 'accesorios pet'
+//     }
+//   }, {
+//     '$group': {
+//       '_id': {'categoria':'$categoria','subCategoria':'$subCategoria','tipoPrenda':'$tipoPrenda'}, 
+//       'promedioPrecio': {
+//         '$avg': '$precio'
+//       }
+//     }
+//   }
+// ])
+
+// // query precios promedios
+// ([
+//   {
+//     '$match': {
+//       $or: [{categoria:"Hombre"},{categoria:"Mujer"}], 
+//       'subCategoria': 'accesorios',
+//       'tipoPrenda': 'accesorios pet'
+//     }
+//   }, {
+//     '$group': {
+//       '_id': {'categoria':'$categoria','subCategoria':'$subCategoria','tipoPrenda':'$tipoPrenda'}, 
+//       'promedioPrecio': {
+//         '$avg': '$precio'
+//       }
+//     }
+//   }
+// ])
+
+// // query descuentos promedio
+// ([
+//   {
+//     '$match': {
+//       $or: [{categoria:"Hombre"},{categoria:"Mujer"}], 
+//       'subCategoria': 'accesorios',
+//       'tipoPrenda': 'accesorios pet'
+//     }
+//   }, {
+//     '$group': {
+//       '_id': {'categoria':'$categoria','subCategoria':'$subCategoria','tipoPrenda':'$tipoPrenda'}, 
+//       'promedioPrecio': {
+//         '$avg': '$precio'
+//       }
+//     }
+//   }
+// ])
+
+// // query productos nuevos
+// ([
+//   {
+//     '$match': {
+//       $or: [{categoria:"Hombre"},{categoria:"Mujer"}], 
+//       'subCategoria': 'accesorios',
+//       'tipoPrenda': 'accesorios pet'
+//     }
+//   }, {
+//     '$group': {
+//       '_id': {'categoria':'$categoria','subCategoria':'$subCategoria','tipoPrenda':'$tipoPrenda'}, 
+//       // 'nuevos': {
+//       //   '$count': {'$precio': }
+//       // }
+//     }
+//   }
+// ])
+
+// // query precios descontinuados
+// ([
+//   {
+//     '$match': {
+//       $or: [{categoria:"Hombre"},{categoria:"Mujer"}], 
+//       'subCategoria': 'accesorios',
+//       'tipoPrenda': 'accesorios pet'
+//     }
+//   }, {
+//     '$group': {
+//       '_id': {'categoria':'$categoria','subCategoria':'$subCategoria','tipoPrenda':'$tipoPrenda'}, 
+//       'promedioPrecio': {
+//         '$avg': '$precio'
+//       }
+//     }
+//   }
+// ])
+
+// // query precios sku
+// ([
+//   {
+//     '$match': {
+//       $or: [{categoria:"Hombre"},{categoria:"Mujer"}], 
+//       'subCategoria': 'accesorios',
+//       'tipoPrenda': 'accesorios pet'
+//     }
+//   }, {
+//     '$group': {
+//       '_id': {'categoria':'$categoria','subCategoria':'$subCategoria','tipoPrenda':'$tipoPrenda'}, 
+//       'promedioPrecio': {
+//         '$avg': '$precio'
+//       }
+//     }
+//   }
+// ])
