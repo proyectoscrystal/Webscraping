@@ -811,18 +811,21 @@ exports.cardsInfo = async (req, res) => {
         if(values[month + 95] !== 0) countM2 += 1;            
         if(values[month + 119] !== 0) countM2 += 1;            
         
-   
+        
         if(countM !== 0) {
             precioPromedio = ((zm[1])/countM).toFixed();
             differencePrice =  percentageDifferencePrice(zm[1]/countM, zm[0]/countM2);
+            
         } else {
-            let countlm
+            // here is the problem
+            let countlm = 0;
             if(values[lastMonth] !== 0) countlm += 1;
             if(values[month + 23] !== 0) countlm += 1;
             if(values[month + 47] !== 0) countlm += 1;            
             if(values[month + 71] !== 0) countlm += 1;            
             if(values[month + 95] !== 0) countlm += 1;            
             if(values[month + 119] !== 0) countlm += 1;
+            if(countlm === 0) countlm = 1;
             precioPromedio = ((zm[1])).toFixed();
             differencePrice =  percentageDifferencePrice(zm[1]/countlm, zm[0]/countlm);
             
@@ -938,13 +941,14 @@ exports.cardsInfo = async (req, res) => {
         values, // precio promedio 
         newsCounts, // nuevos 
         skuCounts,
-        discontinueds,
-        differencePrice, // porcentaje de diferencia
+        discontinueds, // porcentaje de diferencia
         differencePorcentage,
         differenceNew,
         differenceSKU,
-        differenceDiscontinued
+        differenceDiscontinued,
+        differencePrice
     }
+
 
 
     res.status(200).json({obj});
