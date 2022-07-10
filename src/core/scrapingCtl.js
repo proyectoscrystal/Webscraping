@@ -796,23 +796,24 @@ exports.cardsInfo = async (req, res) => {
         zm[1] += values[month + 120];
         let countM = 0;
         // contando si hay valores en las marcas
-        if(values[month] !== 0) countM += 1;
-        if(values[month + 24] !== 0) countM += 1;
-        if(values[month + 48] !== 0) countM += 1;            
-        if(values[month + 72] !== 0) countM += 1;            
-        if(values[month + 96] !== 0) countM += 1;            
-        if(values[month + 120] !== 0) countM += 1;            
+        if(values[month] !== 0 || values[month] === 0) countM += 1;
+        if(values[month + 24] !== 0 || values[month + 24] === 0) countM += 1;
+        if(values[month + 48] !== 0 || values[month + 48] === 0) countM += 1;            
+        if(values[month + 72] !== 0 || values[month + 72] === 0) countM += 1;            
+        if(values[month + 96] !== 0 || values[month + 96] === 0) countM += 1;            
+        if(values[month + 120] !== 0 || values[month + 120] === 0) countM += 1;            
         
         let countM2 = 0;
-        if(values[lastMonth] !== 0) countM2 += 1;
-        if(values[month + 23] !== 0) countM2 += 1;
-        if(values[month + 47] !== 0) countM2 += 1;            
-        if(values[month + 71] !== 0) countM2 += 1;            
-        if(values[month + 95] !== 0) countM2 += 1;            
-        if(values[month + 119] !== 0) countM2 += 1;            
+        if(values[lastMonth] !== 0 || values[lastMonth] === 0) countM2 += 1;
+        if(values[month + 23] !== 0 || values[month + 23] === 0) countM2 += 1;
+        if(values[month + 47] !== 0 || values[month + 47] === 0) countM2 += 1;            
+        if(values[month + 71] !== 0 || values[month + 71] === 0) countM2 += 1;            
+        if(values[month + 95] !== 0 || values[month + 95] === 0) countM2 += 1;            
+        if(values[month + 119] !== 0 || values[month + 119] === 0) countM2 += 1;            
         
+        console.log(zm[0], zm[1]);
    
-        if(countM !== 0) {
+        if(countM !== 0 && countM2 !== 0) {
             precioPromedio = ((zm[1])/countM).toFixed();
             differencePrice =  percentageDifferencePrice(zm[1]/countM, zm[0]/countM2);
         } else {
@@ -827,6 +828,7 @@ exports.cardsInfo = async (req, res) => {
             differencePrice =  percentageDifferencePrice(zm[1]/countlm, zm[0]/countlm);
             
         }
+        
         
 
 

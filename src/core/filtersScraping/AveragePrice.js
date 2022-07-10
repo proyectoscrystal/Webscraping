@@ -312,10 +312,10 @@ exports.averagePriceMonthGeneral = (arr) => {
         } else if (mes === "May" && element.descuento !== null) {
           maym.push(element.descuento);
         }
-        if (mes === "Jun" && element.descuento === null) {
+        if (mes === "Jun" && element.descuento === null && isNaN(element.precio) === false) {
           // estructura interna del if
           return junm.push(element.precio);
-        } else if (mes === "Jun" && element.descuento !== null) {
+        } else if (mes === "Jun" && element.descuento !== null && isNaN(element.descuento) === false) {
           junm.push(element.descuento);
         }
         if (mes === "Jul" && element.descuento === null) {
@@ -440,7 +440,9 @@ exports.averagePriceMonthGeneral = (arr) => {
   valuesZ[26] = setAveragePriceMonth(marm);
   valuesZ[27] = setAveragePriceMonth(abrm);
   valuesZ[28] = setAveragePriceMonth(maym);
+  console.log(junm);
   valuesZ[29] = setAveragePriceMonth(junm);
+  // console.log(valuesZ[29]);
   valuesZ[30] = setAveragePriceMonth(julm);
   valuesZ[31] = setAveragePriceMonth(agosm);
   valuesZ[32] = setAveragePriceMonth(sepm);
