@@ -321,37 +321,37 @@ exports.averagePriceMonthGeneral = (arr) => {
         if (mes === "Jul" && element.descuento === null) {
           // estructura interna del if
           return julm.push(element.precio);
-        } else if (mes === "Jul" && element.descuento !== null) {
+        } else if (mes === "Jul" && element.descuento !== null  && isNaN(element.descuento) === false) {
           julm.push(element.descuento);
         }
         if (mes === "Aug" && element.descuento === null) {
           // estructura interna del if
           return agosm.push(element.precio);
-        } else if (mes === "Aug" && element.descuento !== null) {
+        } else if (mes === "Aug" && element.descuento !== null  && isNaN(element.descuento) === false) {
           agosm.push(element.descuento);
         }
         if (mes === "Sep" && element.descuento === null) {
           // estructura interna del if
           return sepm.push(element.precio);
-        } else if (mes === "Sep" && element.descuento !== null) {
+        } else if (mes === "Sep" && element.descuento !== null  && isNaN(element.descuento) === false) {
           sepm.push(element.descuento);
         }
         if (mes === "Oct" && element.descuento === null) {
           // estructura interna del if
           return octm.push(element.precio);
-        } else if (mes === "Oct" && element.descuento !== null) {
+        } else if (mes === "Oct" && element.descuento !== null && isNaN(element.descuento) === false) {
           octm.push(element.descuento);
         }
         if (mes === "Nov" && element.descuento === null) {
           // estructura interna del if
           return novm.push(element.precio);
-        } else if (mes === "Nov" && element.descuento !== null) {
+        } else if (mes === "Nov" && element.descuento !== null && isNaN(element.descuento) === false) {
           novm.push(element.descuento);
         }
         if (mes === "Dec" && element.descuento === null) {
           // estructura interna del if
           return dicm.push(element.precio);
-        } else if (mes === "Dec" && element.descuento !== null) {
+        } else if (mes === "Dec" && element.descuento !== null && isNaN(element.descuento) === false) {
           dicm.push(element.descuento);
         }
       }
@@ -360,73 +360,73 @@ exports.averagePriceMonthGeneral = (arr) => {
         if (mes === "Jan" && element.descuento === null) {
           // estructura interna del if
           return ene2.push(element.precio);
-        } else if (mes === "Jan" && element.descuento !== null) {
+        } else if (mes === "Jan" && element.descuento !== null && isNaN(element.descuento) === false) {
           ene2.push(element.descuento);
         }
         if (mes === "Feb" && element.descuento === null) {
           // estructura interna del if
           return feb2.push(element.precio);
-        } else if (mes === "Feb" && element.descuento !== null) {
+        } else if (mes === "Feb" && element.descuento !== null && isNaN(element.descuento) === false) {
           feb2.push(element.descuento);
         }
         if (mes === "Mar" && element.descuento === null) {
           // estructura interna del if
           return mar2.push(element.precio);
-        } else if (mes === "Mar" && element.descuento !== null) {
+        } else if (mes === "Mar" && element.descuento !== null && isNaN(element.descuento) === false) {
           mar2.push(element.descuento);
         }
         if (mes === "Apr" && element.descuento === null) {
           // estructura interna del if
           return abr2.push(element.precio);
-        } else if (mes === "Apr" && element.descuento !== null) {
+        } else if (mes === "Apr" && element.descuento !== null && isNaN(element.descuento) === false) {
           abr2.push(element.descuento);
         }
         if (mes === "May" && element.descuento === null) {
           // estructura interna del if
           return may2.push(element.precio);
-        } else if (mes === "May" && element.descuento !== null) {
+        } else if (mes === "May" && element.descuento !== null && isNaN(element.descuento) === false) {
           may2.push(element.descuento);
         }
         if (mes === "Jun" && element.descuento === null) {
           // estructura interna del if
           return jun2.push(element.precio);
-        } else if (mes === "Jun" && element.descuento !== null) {
+        } else if (mes === "Jun" && element.descuento !== null && isNaN(element.descuento) === false) {
           jun2.push(element.descuento);
         }
         if (mes === "Jul" && element.descuento === null) {
           // estructura interna del if
           return jul2.push(element.precio);
-        } else if (mes === "Jul" && element.descuento !== null) {
+        } else if (mes === "Jul" && element.descuento !== null && isNaN(element.descuento) === false) {
           jul2.push(element.descuento);
         }
         if (mes === "Aug" && element.descuento === null) {
           // estructura interna del if
           return agos2.push(element.precio);
-        } else if (mes === "Aug" && element.descuento !== null) {
+        } else if (mes === "Aug" && element.descuento !== null && isNaN(element.descuento) === false) {
           agos2.push(element.descuento);
         }
         if (mes === "Sep" && element.descuento === null) {
           // estructura interna del if
           return sep2.push(element.precio);
-        } else if (mes === "Sep" && element.descuento !== null) {
+        } else if (mes === "Sep" && element.descuento !== null && isNaN(element.descuento) === false) {
           sep2.push(element.descuento);
         }
         if (mes === "Oct" && element.descuento === null) {
           // estructura interna del if
           return oct2.push(element.precio);
-        } else if (mes === "Oct" && element.descuento !== null) {
+        } else if (mes === "Oct" && element.descuento !== null && isNaN(element.descuento) === false) {
           oct2.push(element.descuento);
         }
         if (mes === "Nov" && element.descuento === null) {
           // estructura interna del if
           return nov2.push(element.precio);
-        } else if (mes === "Nov" && element.descuento !== null) {
+        } else if (mes === "Nov" && element.descuento !== null && isNaN(element.descuento) === false) {
           nov2.push(element.descuento);
         }
         if (mes === "Dec" && element.descuento === null) {
           // estructura interna del if
           return dic2.push(element.precio);
-        } else if (mes === "Dec" && element.descuento !== null) {
+        } else if (mes === "Dec" && element.descuento !== null && isNaN(element.descuento) === false) {
           dic2.push(element.descuento);
         }
       }
@@ -440,9 +440,7 @@ exports.averagePriceMonthGeneral = (arr) => {
   valuesZ[26] = setAveragePriceMonth(marm);
   valuesZ[27] = setAveragePriceMonth(abrm);
   valuesZ[28] = setAveragePriceMonth(maym);
-  console.log(junm);
   valuesZ[29] = setAveragePriceMonth(junm);
-  // console.log(valuesZ[29]);
   valuesZ[30] = setAveragePriceMonth(julm);
   valuesZ[31] = setAveragePriceMonth(agosm);
   valuesZ[32] = setAveragePriceMonth(sepm);

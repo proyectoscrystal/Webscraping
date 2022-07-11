@@ -810,8 +810,7 @@ exports.cardsInfo = async (req, res) => {
         if(values[month + 71] !== 0 || values[month + 71] === 0) countM2 += 1;            
         if(values[month + 95] !== 0 || values[month + 95] === 0) countM2 += 1;            
         if(values[month + 119] !== 0 || values[month + 119] === 0) countM2 += 1;            
-        
-        console.log(zm[0], zm[1]);
+
    
         if(countM !== 0 && countM2 !== 0) {
             precioPromedio = ((zm[1])/countM).toFixed();
