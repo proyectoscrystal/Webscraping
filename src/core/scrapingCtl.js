@@ -732,10 +732,10 @@ exports.cardsInfo = async (req, res) => {
 
         discounts = avgDiscount.averageDiscountMonthGeneral(arr2); // calcula los promedios por mes x 2 años una marca
         
-
+        // zara
         dzm[0] = discounts[lastMonth];
         dzm[1] = discounts[month];
-        // if(dzm[1] === 0) flag = true;
+        // mango
         dzm[0] += discounts[month + 23];
         dzm[1] += discounts[month + 24];
         // descuentos Gef
@@ -750,7 +750,7 @@ exports.cardsInfo = async (req, res) => {
         // // descuentos Galax
         dzm[0] += discounts[month + 119];
         dzm[1] += discounts[month + 120];
-        console.log(dzm);
+        
 
         let countD = 0;
         if(discounts[month] !== 0) countD += 1;
@@ -764,7 +764,6 @@ exports.cardsInfo = async (req, res) => {
         if(countD !== 0) {
             discount = (dzm[1]/countD).toFixed(2);
             differencePorcentage =  percentageDifferencesDiscount(dzm[1]/countD, dzm[0]/countD);
-            console.log(differencePorcentage);
         } else {
             let countLM = 0;
             if(discounts[lastMonth] !== 0) countLM += 1;
@@ -773,7 +772,6 @@ exports.cardsInfo = async (req, res) => {
             if(discounts[month + 71] !== 0) countLM += 1;  
             if(discounts[month + 95] !== 0) countLM += 1;  
             if(discounts[month + 119] !== 0) countLM += 1; 
-
             differencePorcentage =  percentageDifferencesDiscount(dzm[1]/countLM, dzm[0]/countLM);
             discount = dzm[1];
         }
