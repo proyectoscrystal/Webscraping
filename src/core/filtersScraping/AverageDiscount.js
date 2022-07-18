@@ -44,7 +44,7 @@ exports.averageDiscountMonthGeneral = (arr) => {
       let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero
       let year = parseInt(fecha.split(" ")[3]);
 
-      if (year === currentYear && element.origin == 'Zara' && element.discontinued === false) {
+      if (year === currentYear && element.origin == 'Zara' && element.discontinued === false && isNaN(element.descuento) === false) {
         if (mes === 'Jan' && element.descuento !== null) {
           let { precio, descuento} = element;
           let discount = 0;
@@ -135,7 +135,7 @@ exports.averageDiscountMonthGeneral = (arr) => {
       }
       
 
-      if (year === lastYear && element.origin === 'Zara' && element.discontinued === false) {
+      if (year === lastYear && element.origin === 'Zara' && element.discontinued === false && isNaN(element.descuento) === false) {
         if(mes === 'Jan' && element.descuento !== null)  {
           let { precio, descuento} = element;
           let discount = 0;
@@ -296,7 +296,7 @@ exports.averageDiscountMonthGeneral = (arr) => {
       let year = parseInt(fecha.split(" ")[3]);
 
       if (year === currentYear && element.origin == 'Mango' && element.discontinued === false) {
-        if (mes === 'Jan' && element.descuento !== null) {
+        if (mes === 'Jan' && element.descuento !== null && isNaN(element.descuento) === false) {
           // estructura interna del if
           let { precio, descuento} = element;
           let discount = 0;
@@ -304,69 +304,69 @@ exports.averageDiscountMonthGeneral = (arr) => {
 
           return enem.push(discount);
         } 
-        if(mes === 'Feb' && element.descuento !== null)  {
+        if(mes === 'Feb' && element.descuento !== null && isNaN(element.descuento) === false)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
 
           febm.push(discount);
         }
-         if(mes === 'Mar' && element.descuento !== null)  {
+         if(mes === 'Mar' && element.descuento !== null && isNaN(element.descuento) === false)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
 
           marm.push(discount);
         }
-        if(mes === 'Apr' && element.descuento !== null)  {
+        if(mes === 'Apr' && element.descuento !== null && isNaN(element.descuento) === false)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
           abrm.push(discount);
         }
-        if(mes === 'May' && element.descuento !== null)  {
+        if(mes === 'May' && element.descuento !== null && isNaN(element.descuento) === false)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
           maym.push(discount);
         }
-        if(mes === 'Jun' && element.descuento !== null)  {
+        if(mes === 'Jun' && element.descuento !== null && isNaN(element.descuento) === false)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
           junm.push(discount);
         }
-        if(mes === 'Jul' && element.descuento !== null)  {
+        if(mes === 'Jul' && element.descuento !== null && isNaN(element.descuento) === false)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
           julZ.push(discount);
         }
-        if(mes === 'Aug' && element.descuento !== null)  {
+        if(mes === 'Aug' && element.descuento !== null && isNaN(element.descuento) === false)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
           agosm.push(discount);
         }
-        if(mes === 'Sep' && element.descuento !== null)  {
+        if(mes === 'Sep' && element.descuento !== null && isNaN(element.descuento) === false)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
           sepm.push(discount);
         }
-        if(mes === 'Oct' && element.descuento !== null)  {
+        if(mes === 'Oct' && element.descuento !== null && isNaN(element.descuento) === false)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
           octm.push(discount);
         }
-        if(mes === 'Nov' && element.descuento !== null)  {
+        if(mes === 'Nov' && element.descuento !== null && isNaN(element.descuento) === false)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));          
           novm.push(discount);
         }
-        if(mes === 'Dec' && element.descuento !== null)  {
+        if(mes === 'Dec' && element.descuento !== null && isNaN(element.descuento) === false)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
@@ -375,73 +375,73 @@ exports.averageDiscountMonthGeneral = (arr) => {
       }
 
       if (year === lastYear && element.origin === 'Mango' && element.discontinued === false) {
-        if(mes === 'Jan' && element.descuento !== null)  {
+        if(mes === 'Jan' && element.descuento !== null && isNaN(element.descuento) === false)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
           ene2.push(discount);
         }
-        if(mes === 'Feb' && element.descuento !== null)  {
+        if(mes === 'Feb' && element.descuento !== null && isNaN(element.descuento) === false)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
           feb2.push(discount);
         }
-        if(mes === 'Mar' && element.descuento !== null)  {
+        if(mes === 'Mar' && element.descuento !== null && isNaN(element.descuento) === false)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
           mar2.push(discount);
         }
-        if(mes === 'Apr' && element.descuento !== null)  {
+        if(mes === 'Apr' && element.descuento !== null && isNaN(element.descuento) === false)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
           abr2.push(discount);
         }
-        if(mes === 'May' && element.descuento !== null)  {
+        if(mes === 'May' && element.descuento !== null && isNaN(element.descuento) === false)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
           may2.push(discount);
         }
-        if (mes === 'Jun' && element.descuento !== null)  {
+        if (mes === 'Jun' && element.descuento !== null && isNaN(element.descuento) === false)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
           jun2.push(discount);
         }
-        if (mes === 'Jul' && element.descuento !== null)  {
+        if (mes === 'Jul' && element.descuento !== null && isNaN(element.descuento) === false)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
           jul2.push(discount);
         }
-        if (mes === 'Aug' && element.descuento !== null)  {
+        if (mes === 'Aug' && element.descuento !== null && isNaN(element.descuento) === false)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
           agos2.push(discount);
         }
-        if (mes === 'Sep' && element.descuento !== null)  {
+        if (mes === 'Sep' && element.descuento !== null && isNaN(element.descuento) === false)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
           sep2.push(discount);
         }
-        if (mes === 'Oct' && element.descuento !== null)  {
+        if (mes === 'Oct' && element.descuento !== null && isNaN(element.descuento) === false)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
           oct2.push(discount);
         }
-        if (mes === 'Nov' && element.descuento !== null)  {
+        if (mes === 'Nov' && element.descuento !== null && isNaN(element.descuento) === false)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));
           nov2.push(discount);
         }
-        if (mes === 'Dec' && element.descuento !== null)  {
+        if (mes === 'Dec' && element.descuento !== null && isNaN(element.descuento) === false)  {
           let { precio, descuento} = element;
           let discount = 0;
           discount = parseFloat(Math.abs( ((descuento*100)/precio)-100 ).toFixed(2));

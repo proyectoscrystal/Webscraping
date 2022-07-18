@@ -750,6 +750,7 @@ exports.cardsInfo = async (req, res) => {
         // // descuentos Galax
         dzm[0] += discounts[month + 119];
         dzm[1] += discounts[month + 120];
+        console.log(dzm);
 
         let countD = 0;
         if(discounts[month] !== 0) countD += 1;
@@ -763,6 +764,7 @@ exports.cardsInfo = async (req, res) => {
         if(countD !== 0) {
             discount = (dzm[1]/countD).toFixed(2);
             differencePorcentage =  percentageDifferencesDiscount(dzm[1]/countD, dzm[0]/countD);
+            console.log(differencePorcentage);
         } else {
             let countLM = 0;
             if(discounts[lastMonth] !== 0) countLM += 1;
@@ -874,7 +876,6 @@ exports.cardsInfo = async (req, res) => {
         skuzm[1] += skuCounts[month + 96]; // valor actual de Baby fresh
         skuzm[0] += skuCounts[month + 119];
         skuzm[1] += skuCounts[month + 120]; // valor actual de Galax
-        // sku = (skuCounts[month] + skuCounts[month + 24]) ;
         sku = (skuzm[1]) ;
 
 
@@ -1607,7 +1608,6 @@ exports.tableDiscountInfo = async (req, res) => {
         
         // obtener precios promedio mes actual y anterior 
 
-
         if(values[month] === 0 || values[month + 24] === 0){
             descuentoPromedio = ((values[month] + values[month + 24])).toFixed(2);
             descuentoPromedioAnterior = ((values[lastMonth] + values[month + 23])).toFixed(2);
@@ -1615,7 +1615,6 @@ exports.tableDiscountInfo = async (req, res) => {
             descuentoPromedio = ((values[month] + values[month + 24])/2).toFixed(2);
             descuentoPromedioAnterior = ((values[lastMonth] + values[month + 23])).toFixed(2);
         }
-        
         // determinar la diferencia porcentual en los descuentos
         differences = percentageDifferencesDiscount(descuentoPromedio, descuentoPromedioAnterior);
 

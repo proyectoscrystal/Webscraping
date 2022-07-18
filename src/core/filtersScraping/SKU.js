@@ -281,7 +281,7 @@ exports.averageSKUMonthGeneral = (arr) => {
         let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero
         let year = parseInt(fecha.split(" ")[3]);
   
-        if (year === currentYear && element.origin == 'Zara' && element.discontinued === false) {
+        if (year === currentYear && element.origin == 'Zara' && element.discontinued === false && isNaN(element.numeroTallas) === false) {
           if (mes === "Jan") return eneZ += element.numeroTallas;
           if (mes === "Feb") return febZ += element.numeroTallas;
           if (mes === "Mar") return marZ += element.numeroTallas;
@@ -296,7 +296,7 @@ exports.averageSKUMonthGeneral = (arr) => {
           if (mes === "Dec") return dicZ += element.numeroTallas;
         }
   
-        if (year === lastYear  && element.origin == 'Zara' && element.discontinued === false) {
+        if (year === lastYear  && element.origin == 'Zara' && element.discontinued === false && isNaN(element.numeroTallas) === false) {
           if (mes === "Jan") return ene += element.numeroTallas;
           if (mes === "Feb") return feb += element.numeroTallas;
           if (mes === "Mar") return mar += element.numeroTallas;
@@ -312,7 +312,7 @@ exports.averageSKUMonthGeneral = (arr) => {
           
         }
 
-        if (year === currentYear && element.origin == 'Mango' && element.discontinued === false) {
+        if (year === currentYear && element.origin == 'Mango' && element.discontinued === false && isNaN(element.numeroTallas) === false) {
             if (mes === "Jan") return enem += element.numeroTallas;
             if (mes === "Feb") return febm += element.numeroTallas;
             if (mes === "Mar") return marm += element.numeroTallas;
@@ -327,7 +327,7 @@ exports.averageSKUMonthGeneral = (arr) => {
             if (mes === "Dec") return dicm += element.numeroTallas;
           }
     
-          if (year === lastYear  && element.origin == 'Mango' && element.discontinued === false) {
+          if (year === lastYear  && element.origin == 'Mango' && element.discontinued === false && isNaN(element.numeroTallas) === false) {
             if (mes === "Jan") return ene2 += element.numeroTallas;
             if (mes === "Feb") return feb2 += element.numeroTallas;
             if (mes === "Mar") return mar2 += element.numeroTallas;
@@ -342,7 +342,7 @@ exports.averageSKUMonthGeneral = (arr) => {
             if (mes === "Dec") return dic2 += element.numeroTallas;
           }
 
-        if (year === currentYear && element.origin == 'Gef' && element.discontinued === false) {
+        if (year === currentYear && element.origin == 'Gef' && element.discontinued === false && isNaN(element.numeroTallas) === false) {
             if (mes === "Jan") return eneG += element.numeroTallas;
             if (mes === "Feb") return febG += element.numeroTallas;
             if (mes === "Mar") return marG += element.numeroTallas;
@@ -357,7 +357,7 @@ exports.averageSKUMonthGeneral = (arr) => {
             if (mes === "Dec") return dicG += element.numeroTallas;
           }
     
-          if (year === lastYear  && element.origin == 'Gef' && element.discontinued === false) {
+          if (year === lastYear  && element.origin == 'Gef' && element.discontinued === false && isNaN(element.numeroTallas) === false) {
             if (mes === "Jan") return ene3 += element.numeroTallas;
             if (mes === "Feb") return feb3 += element.numeroTallas;
             if (mes === "Mar") return mar3 += element.numeroTallas;
@@ -372,7 +372,7 @@ exports.averageSKUMonthGeneral = (arr) => {
             if (mes === "Dec") return dic3 += element.numeroTallas;
           }
 
-        if (year === currentYear && element.origin == 'Punto blanco' && element.discontinued === false) {
+        if (year === currentYear && element.origin == 'Punto blanco' && element.discontinued === false && isNaN(element.numeroTallas) === false) {
             if (mes === "Jan") return enePB += element.numeroTallas;
             if (mes === "Feb") return febPB += element.numeroTallas;
             if (mes === "Mar") return marPB += element.numeroTallas;
@@ -387,7 +387,7 @@ exports.averageSKUMonthGeneral = (arr) => {
             if (mes === "Dec") return dicPB += element.numeroTallas;
           }
     
-          if (year === lastYear  && element.origin == 'Punto blanco' && element.discontinued === false) {
+          if (year === lastYear  && element.origin == 'Punto blanco' && element.discontinued === false && isNaN(element.numeroTallas) === false) {
             if (mes === "Jan") return ene4 += element.numeroTallas;
             if (mes === "Feb") return feb4 += element.numeroTallas;
             if (mes === "Mar") return mar4 += element.numeroTallas;
@@ -402,7 +402,7 @@ exports.averageSKUMonthGeneral = (arr) => {
             if (mes === "Dec") return dic4 += element.numeroTallas;
           }
 
-        if (year === currentYear && element.origin == 'Baby fresh' && element.discontinued === false) {
+        if (year === currentYear && element.origin == 'Baby fresh' && element.discontinued === false && isNaN(element.numeroTallas) === false) {
             if (mes === "Jan") return eneBF += element.numeroTallas;
             if (mes === "Feb") return febBF += element.numeroTallas;
             if (mes === "Mar") return marBF += element.numeroTallas;
@@ -417,7 +417,7 @@ exports.averageSKUMonthGeneral = (arr) => {
             if (mes === "Dec") return dicBF += element.numeroTallas;
           }
     
-          if (year === lastYear  && element.origin == 'Baby fresh' && element.discontinued === false) {
+          if (year === lastYear  && element.origin == 'Baby fresh' && element.discontinued === false && isNaN(element.numeroTallas) === false) {
             if (mes === "Jan") return ene5 += element.numeroTallas;
             if (mes === "Feb") return feb5 += element.numeroTallas;
             if (mes === "Mar") return mar5 += element.numeroTallas;
@@ -432,7 +432,7 @@ exports.averageSKUMonthGeneral = (arr) => {
             if (mes === "Dec") return dic5 += element.numeroTallas;
           }
 
-          if (year === currentYear && element.origin == 'Galax' && element.discontinued === false) {
+          if (year === currentYear && element.origin == 'Galax' && element.discontinued === false && isNaN(element.numeroTallas) === false) {
             if (mes === "Jan") return eneGA += element.numeroTallas;
             if (mes === "Feb") return febGA += element.numeroTallas;
             if (mes === "Mar") return marGA += element.numeroTallas;
@@ -447,7 +447,7 @@ exports.averageSKUMonthGeneral = (arr) => {
             if (mes === "Dec") return dicGA += element.numeroTallas;
           }
     
-          if (year === lastYear  && element.origin == 'Galax' && element.discontinued === false) {
+          if (year === lastYear  && element.origin == 'Galax' && element.discontinued === false && isNaN(element.numeroTallas) === false) {
             if (mes === "Jan") return ene6 += element.numeroTallas;
             if (mes === "Feb") return feb6 += element.numeroTallas;
             if (mes === "Mar") return mar6 += element.numeroTallas;
