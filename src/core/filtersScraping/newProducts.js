@@ -99,7 +99,6 @@ exports.averageNewsMonthOrigin = (arr) => {
     valuesZ[21] = oct;
     valuesZ[22] = nov;
     valuesZ[23] = dic;
-    valuesZ[24] = currentMonth; // mes actual
   
     return valuesZ;
 }
@@ -348,7 +347,7 @@ exports.averageNewsMonthGeneral = (arr) => {
         let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero
         let year = parseInt(fecha.split(" ")[3]);
   
-        if (year === currentYear && element.origin == 'Gef') {
+        if (year === currentYear && element.origin === 'Gef') {
           if (mes === "Jan" && element.tag === "nuevo") return eneG++;
           if (mes === "Feb" && element.tag === "nuevo") return febG++;
           if (mes === "Mar" && element.tag === "nuevo") return marG++;
@@ -363,7 +362,7 @@ exports.averageNewsMonthGeneral = (arr) => {
           if (mes === "Dec" && element.tag === "nuevo") return dicG++;
         }
   
-        if (year === lastYear  && element.origin == 'Gef') {
+        if (year === lastYear  && element.origin === 'Gef') {
           if (mes === "Jan" && element.tag === "nuevo") return ene3++;
           if (mes === "Feb" && element.tag === "nuevo") return feb3++;
           if (mes === "Mar" && element.tag === "nuevo") return mar3++;
@@ -447,7 +446,7 @@ exports.averageNewsMonthGeneral = (arr) => {
         let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero
         let year = parseInt(fecha.split(" ")[3]);
   
-        if (year === currentYear && element.origin == 'Punto blanco') {
+        if (year === currentYear && element.origin === 'Punto blanco') {
           if (mes === "Jan" && element.tag === "nuevo") return enePB++;
           if (mes === "Feb" && element.tag === "nuevo") return febPB++;
           if (mes === "Mar" && element.tag === "nuevo") return marPB++;
@@ -462,7 +461,7 @@ exports.averageNewsMonthGeneral = (arr) => {
           if (mes === "Dec" && element.tag === "nuevo") return dicPB++;
         }
   
-        if (year === lastYear  && element.origin == 'Punto blanco') {
+        if (year === lastYear  && element.origin === 'Punto blanco') {
           if (mes === "Jan" && element.tag === "nuevo") return ene4++;
           if (mes === "Feb" && element.tag === "nuevo") return feb4++;
           if (mes === "Mar" && element.tag === "nuevo") return mar4++;
@@ -546,7 +545,7 @@ exports.averageNewsMonthGeneral = (arr) => {
          let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero
          let year = parseInt(fecha.split(" ")[3]);
    
-         if (year === currentYear && element.origin == 'Baby fresh') {
+         if (year === currentYear && element.origin === 'Baby fresh') {
            if (mes === "Jan" && element.tag === "nuevo") return eneBF++;
            if (mes === "Feb" && element.tag === "nuevo") return febBF++;
            if (mes === "Mar" && element.tag === "nuevo") return marBF++;
@@ -561,7 +560,7 @@ exports.averageNewsMonthGeneral = (arr) => {
            if (mes === "Dec" && element.tag === "nuevo") return dicBF++;
          }
    
-         if (year === lastYear  && element.origin == 'Baby fresh') {
+         if (year === lastYear  && element.origin === 'Baby fresh') {
            if (mes === "Jan" && element.tag === "nuevo") return ene5++;
            if (mes === "Feb" && element.tag === "nuevo") return feb5++;
            if (mes === "Mar" && element.tag === "nuevo") return mar5++;
@@ -646,7 +645,7 @@ exports.averageNewsMonthGeneral = (arr) => {
          let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero
          let year = parseInt(fecha.split(" ")[3]);
    
-         if (year === currentYear && element.origin == 'Galax') {
+         if (year === currentYear && element.origin === 'Galax') {
            if (mes === "Jan" && element.tag === "nuevo") return eneGA++;
            if (mes === "Feb" && element.tag === "nuevo") return febGA++;
            if (mes === "Mar" && element.tag === "nuevo") return marGA++;
@@ -661,7 +660,7 @@ exports.averageNewsMonthGeneral = (arr) => {
            if (mes === "Dec" && element.tag === "nuevo") return dicGA++;
          }
    
-         if (year === lastYear  && element.origin == 'Galax') {
+         if (year === lastYear  && element.origin === 'Galax') {
            if (mes === "Jan" && element.tag === "nuevo") return ene6++;
            if (mes === "Feb" && element.tag === "nuevo") return feb6++;
            if (mes === "Mar" && element.tag === "nuevo") return mar6++;
@@ -680,32 +679,32 @@ exports.averageNewsMonthGeneral = (arr) => {
        console.log(error);
      }
    
-     valuesZ[120] = eneBF;
-     valuesZ[121] = febBF;
-     valuesZ[122] = marBF;
-     valuesZ[123] = abrBF;
-     valuesZ[124] = mayBF;
-     valuesZ[125] = junBF;
-     valuesZ[126] = julBF;
-     valuesZ[127] = agosBF;
-     valuesZ[128] = sepBF;
-     valuesZ[129] = octBF;
-     valuesZ[130] = novBF;
-     valuesZ[131] = dicBF;
+     valuesZ[120] = eneGA;
+     valuesZ[121] = febGA;
+     valuesZ[122] = marGA;
+     valuesZ[123] = abrGA;
+     valuesZ[124] = mayGA;
+     valuesZ[125] = junGA;
+     valuesZ[126] = julGA;
+     valuesZ[127] = agosGA;
+     valuesZ[128] = sepGA;
+     valuesZ[129] = octGA;
+     valuesZ[130] = novGA;
+     valuesZ[131] = dicGA;
    
      // valores del año anterior Galax
-     valuesZ[132] = ene5;
-     valuesZ[133] = feb5;
-     valuesZ[134] = mar5;
-     valuesZ[135] = abr5;
-     valuesZ[136] = may5;
-     valuesZ[137] = jun5;
-     valuesZ[138] = jul5;
-     valuesZ[139] = agos5;
-     valuesZ[140] = sep5;
-     valuesZ[141] = oct5;
-     valuesZ[142] = nov5;
-     valuesZ[143] = dic5;
+     valuesZ[132] = ene6;
+     valuesZ[133] = feb6;
+     valuesZ[134] = mar6;
+     valuesZ[135] = abr6;
+     valuesZ[136] = may6;
+     valuesZ[137] = jun6;
+     valuesZ[138] = jul6;
+     valuesZ[139] = agos6;
+     valuesZ[140] = sep6;
+     valuesZ[141] = oct6;
+     valuesZ[142] = nov6;
+     valuesZ[143] = dic6;
 
   
     return valuesZ;

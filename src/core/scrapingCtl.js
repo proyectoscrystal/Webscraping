@@ -891,6 +891,7 @@ exports.cardsInfo = async (req, res) => {
         values = avgPrice.averagePriceMonthOrigin(arr2); // promedio precio de la marca seleccionada por mes 2 años
         precioPromedio = (values[month]).toFixed();
         newsCounts = avgNews.averageNewsMonthOrigin(arr2); // promedio precio de la marca seleccionada por mes 2 años
+        console.log(newsCounts);
         nuevos = (newsCounts[month]).toFixed();
         discontinuedCounts = discontinued.averageDiscontinuedMonthOrigin(arr); // discontinued
         discontinueds = (discontinuedCounts[month]).toFixed();

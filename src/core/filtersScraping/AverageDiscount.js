@@ -1192,7 +1192,7 @@ exports.averageDiscountMonthGeneral = (arr) => {
       let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero
       let year = parseInt(fecha.split(" ")[3]);
 
-      if (year === currentYear && element.origin == 'Galax' && element.discontinued === false) {
+      if (year === currentYear && element.origin == 'Galax' && element.discontinued === false && isNaN(element.descuento) === false) {
         if (mes === 'Jan' && element.descuento !== null) {
           // estructura interna del if
           let { precio, descuento} = element;
@@ -1424,7 +1424,7 @@ exports.averageDiscount = arr => {
         let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero      
         let year = parseInt(fecha.split(" ")[3]);
   
-        if (year === currentYear && element.discontinued === false) {
+        if (year === currentYear && element.discontinued === false && isNaN(element.descuento) === false) {
           if (mes === 'Jan' && element.descuento !== null) {
             // estructura interna del if
             let { precio, descuento} = element;
@@ -1503,7 +1503,7 @@ exports.averageDiscount = arr => {
           }
         }
   
-        if (year === lastYear && element.discontinued === false) {
+        if (year === lastYear && element.discontinued === false && isNaN(element.descuento) === false) {
           if(mes === 'Jan' && element.descuento !== null)  {
             let { precio, descuento} = element;
             let discount = 0;
