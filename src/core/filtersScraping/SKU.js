@@ -39,7 +39,7 @@ exports.averageSKUMonthOrigin = (arr) => {
         let mes = fecha.split(" ")[1]; // funcion para obtener el mes como numero
         let year = parseInt(fecha.split(" ")[3]);
   
-        if (year === currentYear && element.discontinued === false) {
+        if (year === currentYear && element.discontinued === false && isNaN(element.numeroTallas) === false) {
           if (mes === "Jan")  return eneZ += element.numeroTallas; 
           if (mes === "Feb")  return febZ += element.numeroTallas;
           if (mes === "Mar")  return marZ += element.numeroTallas;
