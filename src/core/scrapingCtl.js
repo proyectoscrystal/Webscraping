@@ -916,7 +916,7 @@ exports.cardsInfo = async (req, res) => {
 
         zm[0] = values[lastMonth];
         zm[1] =  values[month]; // valor actual 
-
+        
         differencePrice =  percentageDifferencePrice(zm[1], zm[0]);
         differencePorcentage =  percentageDifferencesDiscount(dzm[1], dzm[0]);
         differenceNew = percentageDifferencesnews(nzm[1], nzm[0]);
@@ -1991,7 +1991,11 @@ news = arr => {
 let percentageDifferencePrice = (current, before) => {
     // 1 positive 0 negative
     let difference = [];
-    if (current >= before  && current !== 0) {
+    if (current === 0 && before === 0) {
+        difference[0] = 0;
+        difference[1] = 0; 
+        return difference;        
+    } else if (current >= before  && current !== 0) {
         difference[0] = 1;
         difference[1] =  parseFloat(Math.abs( (((before*100)/current)-100) ).toFixed(2));
         return difference;
